@@ -4,7 +4,7 @@ English | [简体中文](README.zh.md)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-**Multi‑agent workflows for Codex CLI.**
+**Role‑simulated workflows for Codex CLI.**
 
 *Less prompt‑tuning, more shipping.*
 
@@ -18,6 +18,16 @@ Inspired by **oh‑my‑claudecode**, rebuilt for **Codex architecture**, and in
 **Recommended (one command)**
 ```bash
 ./scripts/install-codex.sh --all
+```
+
+Force overwrite:
+```bash
+./scripts/install-codex-force.sh --all
+```
+
+Incremental (skip existing files):
+```bash
+./scripts/install-codex-incremental.sh --all
 ```
 
 Installs:

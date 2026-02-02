@@ -9,12 +9,24 @@ This repo adapts the oh-my-claudecode workflows to **OpenAI Codex CLI** by packa
 ./scripts/install-codex.sh
 ```
 
+Force overwrite:
+```bash
+./scripts/install-codex-force.sh
+```
+
+Incremental (skip existing files):
+```bash
+./scripts/install-codex-incremental.sh
+```
+
 ### Option B: Repo-local
 ```bash
 cp -R .codex/skills /path/to/your/repo/.codex/
 ```
 
 Codex will automatically load skills from both locations.
+
+Note: The installer prefers `.agent/skills` when present, and falls back to `.codex/skills`.
 
 ## Enable Codex Plan Mode (0.9+)
 

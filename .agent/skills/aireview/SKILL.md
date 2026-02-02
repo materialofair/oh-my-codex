@@ -1,11 +1,11 @@
 ---
 name: aireview
-description: Professional multi-agent AI code review with confidence scoring
+description: Professional role-simulated AI code review with confidence scoring
 ---
 
 # aireview - Enhanced AI Code Review
 
-## Pseudo Multi-Agent Protocol (Codex)
+## 角色模拟协议 (Codex)
 
 Codex does not support native subagents. Simulate role handoffs with explicit sections.
 
@@ -19,7 +19,7 @@ Required sections (in order):
 
 > Codex invocation: use `aireview: ...` or `$aireview ...`
 
-Professional code review combining multi-agent parallel analysis with direct CLI invocations.
+Professional code review combining role-simulated analysis with direct CLI invocations.
 
 ## Language Configuration
 
@@ -52,33 +52,33 @@ aireview ./src/auth/service.ts --model codex
 
 ## Enhanced Architecture
 
-### Multi-Agent Parallel Review (Inspired by Official Plugin)
+### 角色模拟审查 (Codex 单次响应)
 
 ```
 aireview --diff
     ↓
-Step 1: Eligibility Check (Haiku Agent)
+Step 1: Eligibility Check (Single-pass, fast)
     - Check if review needed
     - Skip if: closed PR, draft, trivial change, already reviewed
     ↓
-Step 2: Gather Context (Haiku Agent)
-    - Find CLAUDE.md files (root + modified directories)
+Step 2: Gather Context (Single-pass, fast)
+    - Find AGENTS.md files (root + modified directories)
     - Get change summary
     ↓
-Step 3: Parallel Review (5 Specialized Agents)
+Step 3: Simulated Review (5 Specialized Roles)
     ┌─────────────────────────────────────────────┐
-    │ Agent #1 (INTJ): CLAUDE.md Compliance       │
+    │ Agent #1 (INTJ): AGENTS.md Compliance       │
     │ Agent #2 (ISTJ): Bug Detection (changes)    │
     │ Agent #3 (INTP): Git History Context        │
     │ Agent #4 (ENTP): Related PR Analysis        │
     │ Agent #5 (ISFJ): Code Comment Compliance    │
     └─────────────────────────────────────────────┘
     ↓
-Step 4: Confidence Scoring (Parallel Haiku Agents)
+Step 4: Confidence Scoring (Self-scored in same response)
     - Score each issue 0-100
     - Filter issues < 80 confidence
     ↓
-Step 5: Generate Report (Main agent)
+Step 5: Generate Report (主输出)
     - Format and present findings
     - Link to specific code lines
 ```
@@ -88,7 +88,7 @@ Step 5: Generate Report (Main agent)
 ```
 aireview --diff --deep
     ↓
-Layer 1: Parallel Multi-Agent Review (Step 1-3 above)
+Layer 1: 角色模拟审查 (Step 1-3 above)
     ↓
 Layer 2: Gemini Deep Analysis (via gemp)
     - Architecture review (INTJ persona)
@@ -140,11 +140,11 @@ If first argument starts with "origin/":
       MODE = "deep"     # Large PR, deep review
 
 If MODE == "pr":
-  Launch Haiku agent to check:
+  Check:
   1. Is PR closed?
   2. Is PR draft?
   3. Is change trivial (< 10 lines, auto-generated)?
-  4. Already reviewed by Claude Code?
+  4. Already reviewed?
 
   If any is true → Exit with message
 ```
@@ -161,27 +161,27 @@ If MODE == "remote-branch":
   COMMIT_LOG = git log output
   
   # For remote branch, use simplified context gathering
-  Find CLAUDE.md in root (skip directory-specific CLAUDE.md)
+  Find AGENTS.md in root (skip directory-specific AGENTS.md)
 
 Else:
-  Launch Haiku agent to:
-  1. Find CLAUDE.md files:
-     - Root CLAUDE.md
-     - CLAUDE.md in modified directories
+  Gather context in a single pass:
+  1. Find AGENTS.md files:
+     - Root AGENTS.md
+     - AGENTS.md in modified directories
 
   2. Get change summary:
      - Files modified
      - Lines changed
      - Overall purpose
 
-Return: {claude_md_files: [], summary: "", diff_content: ""}
+Return: {agents_md_files: [], summary: "", diff_content: ""}
 ```
 
-### Step 3: Launch Parallel Review Agents
+### Step 3: 角色模拟审查
 
 ```markdown
 If MODE == "quick":
-  # Quick mode: Skip parallel agents, use single fast Gemini review
+  # Quick mode: Skip role simulation, use single fast Gemini review
   
   Execute quick review via gemp:
   
@@ -221,24 +221,24 @@ If MODE == "quick":
   Skip to Step 6 (Generate Report)
 
 Else:
-  Launch 5 parallel agents (use Task tool with model="haiku" for speed):
+  Simulate 5 role-based reviewers in one response:
 
-Agent #1 - CLAUDE.md Compliance (INTJ Persona):
+Agent #1 - AGENTS.md Compliance (INTJ Persona):
   Prompt: |
     你是 INTJ 架构师，专注于规范合规性审查。
 
-    CLAUDE.md 规范文件：
-    {claude_md_files}
+    AGENTS.md 规范文件：
+    {agents_md_files}
 
     代码变更：
     {diff_content}
 
-    任务：检查代码是否违反 CLAUDE.md 中的明确指令。
+    任务：检查代码是否违反 AGENTS.md 中的明确指令。
     只标记明确违反的情况，避免泛泛的代码质量问题。
 
     输出格式：
     - 问题描述
-    - 违反的 CLAUDE.md 指令（引用原文）
+    - 违反的 AGENTS.md 指令（引用原文）
     - 建议修复方案
     - 初步置信度 (0-100)
 
@@ -313,20 +313,20 @@ Agent #5 - Code Comment Compliance (ISFJ Persona):
 ### Step 4: Confidence Scoring & Filtering
 
 ```markdown
-For each issue from Step 3, launch a Haiku agent:
+For each issue from Step 3, score within the same response:
 
 Prompt: |
   你是专业的代码审查评分员。
 
   问题描述：{issue}
   代码变更：{diff_content}
-  CLAUDE.md 文件：{claude_md_files}
+  AGENTS.md 文件：{agents_md_files}
 
   评分标准 (0-100)：
   - 0: 完全不确定，明显的误报
-  - 25: 有点怀疑，可能是误报，未明确在 CLAUDE.md 中提到
+  - 25: 有点怀疑，可能是误报，未明确在 AGENTS.md 中提到
   - 50: 中等确信，已验证是真实问题，但不是很重要
-  - 75: 高度确信，双重检查过，会影响功能，或 CLAUDE.md 明确提到
+  - 75: 高度确信，双重检查过，会影响功能，或 AGENTS.md 明确提到
   - 100: 绝对确定，确认是真实问题，经常发生
 
   False Positive 规则（降低分数）：
@@ -334,8 +334,8 @@ Prompt: |
   - 看起来像 bug 但实际不是
   - 吹毛求疵的小问题
   - linter/typechecker 会捕获的问题
-  - 缺少测试覆盖率（除非 CLAUDE.md 要求）
-  - CLAUDE.md 提到但代码中明确忽略的问题
+  - 缺少测试覆盖率（除非 AGENTS.md 要求）
+  - AGENTS.md 提到但代码中明确忽略的问题
   - 可能是有意的功能变更
   - 真实问题，但在用户未修改的行上
 
@@ -424,12 +424,12 @@ If filtered_issues.length == 0:
 
     未发现问题。已检查：
     - Bugs
-    - CLAUDE.md 合规性
+    - AGENTS.md 合规性
     - 历史上下文
     - 相关 PR
     - 代码注释合规性
 
-    🤖 Generated with Claude Code
+    🤖 Generated with Codex CLI
 
 Else:
   Output: |
@@ -444,7 +444,7 @@ Else:
     ### {severity} - {issue.title}
 
     **置信度**: {issue.confidence}/100
-    **来源**: {issue.agent} ({issue.persona})
+    **来源**: {issue.role} ({issue.persona})
     **文件**: `{issue.file}:{issue.line}`
 
     {issue.description}
@@ -473,7 +473,7 @@ Else:
     {codex_highlights}
     {end if}
 
-    🤖 Generated with Claude Code
+    🤖 Generated with Codex CLI
 
     {if pr_mode}
     <sub>- 如果这个审查有帮助，请回复 👍。否则，回复 👎。</sub>
@@ -487,7 +487,7 @@ If --comment flag && pr_mode:
 
 | Agent Role | MBTI Persona | Focus Area |
 |-----------|--------------|------------|
-| CLAUDE.md Compliance | INTJ 架构师 | 规范遵守、系统设计 |
+| AGENTS.md Compliance | INTJ 架构师 | 规范遵守、系统设计 |
 | Bug Detection | ISTJ 工程师 | 细节、逻辑错误 |
 | Git History | INTP 性能极客 | 模式、历史上下文 |
 | Related PR | ENTP 创新者 | 关联性、创新视角 |
@@ -500,7 +500,7 @@ If --comment flag && pr_mode:
 | 0 | 完全不确定 | 明显误报、预存在问题 |
 | 25 | 有点怀疑 | 可能是问题，但未验证 |
 | 50 | 中等确信 | 真实问题，但不重要 |
-| 75 | 高度确信 | 影响功能，CLAUDE.md 明确提到 |
+| 75 | 高度确信 | 影响功能，AGENTS.md 明确提到 |
 | 100 | 绝对确定 | 确认的真实问题，经常发生 |
 
 **过滤阈值**: 80+ (只展示高度确信的问题)
@@ -511,20 +511,20 @@ If --comment flag && pr_mode:
 
 1. **预存在的问题** - 在变更前就存在
 2. **工具可捕获** - linter、typechecker、compiler 会发现
-3. **样式问题** - 格式、命名（除非 CLAUDE.md 明确要求）
+3. **样式问题** - 格式、命名（除非 AGENTS.md 明确要求）
 4. **吹毛求疵** - 资深工程师不会提的小问题
 5. **有意变更** - 功能变更可能是有意的
 6. **未修改行** - 问题在用户未修改的代码行
-7. **明确忽略** - CLAUDE.md 提到但代码中明确忽略（lint ignore）
-8. **缺少测试** - 除非 CLAUDE.md 明确要求测试覆盖率
+7. **明确忽略** - AGENTS.md 提到但代码中明确忽略（lint ignore）
+8. **缺少测试** - 除非 AGENTS.md 明确要求测试覆盖率
 
 ## Core Advantages
 
 ### From Official Plugin
-- ✅ 多 agent 并行审查 (5 agents)
+- ✅ 角色模拟审查 (5 roles)
 - ✅ 置信度评分系统 (0-100)
 - ✅ False positive 过滤 (阈值 80)
-- ✅ CLAUDE.md 合规性检查
+- ✅ AGENTS.md 合规性检查
 - ✅ GitHub PR 集成
 
 ### From Original aireview
@@ -538,7 +538,7 @@ If --comment flag && pr_mode:
 - ✅ Git history 上下文分析
 - ✅ 相关 PR 分析
 - ✅ 代码注释合规性检查
-- ✅ 分层分析 (multi-agent → Gemini → Codex → synthesis)
+- ✅ 分层分析 (角色模拟 → Gemini → Codex → synthesis)
 - ✅ 详���的置信度评分标准
 
 ## CLI Implementation Templates
@@ -569,7 +569,7 @@ cat /tmp/codex_prompt.txt | codex exec --dangerously-bypass-approvals-and-sandbo
 - Gemini CLI (gemp/long_task_runner.js) configured
 - Codex CLI configured
 - GitHub CLI (`gh`) for PR mode
-- CLAUDE.md files (optional but recommended)
+- AGENTS.md files (optional but recommended)
 
 ## Usage Examples
 
@@ -577,11 +577,11 @@ cat /tmp/codex_prompt.txt | codex exec --dangerously-bypass-approvals-and-sandbo
 ```bash
 $ aireview --diff
 
-🔍 正在执行多 agent 并行审查...
+🔍 正在执行角色模拟审查...
 
 ✅ Step 1: 资格检查通过
-✅ Step 2: 找到 2 个 CLAUDE.md 文件
-✅ Step 3: 启动 5 个并行审查 agents
+✅ Step 2: 找到 2 个 AGENTS.md 文件
+✅ Step 3: 启动 5 个角色模拟审查角色
 ✅ Step 4: 置信度评分完成，过滤后保留 3 个问题
 
 ## AI 审查报告
@@ -635,7 +635,7 @@ $ aireview origin/feature-cr
 **审查时间**: 2025-12-29 14:00
 **耗时**: < 30 秒
 
-🤖 Generated with Claude Code
+🤖 Generated with Codex CLI
 ```
 
 ### Example 3: Remote Branch Deep Review
@@ -649,7 +649,7 @@ $ aireview origin/feature-payment --deep
 
 🔍 正在执行深度多模型审查...
 
-✅ Layer 1: 多 agent 并行审查 (5 agents)
+✅ Layer 1: 角色模拟审查 (5 roles)
 ✅ Layer 2: Gemini 架构分析 (INTJ)
 ✅ Layer 3: Codex 质量审计 (ISTJ)
 ✅ Layer 4: 综合分析
@@ -664,7 +664,7 @@ $ aireview --diff --deep
 
 🔍 正在执行深度多模型审查...
 
-✅ Layer 1: 多 agent 并行审查 (5 agents)
+✅ Layer 1: 角色模拟审查 (5 roles)
 ✅ Layer 2: Gemini 架构分析 (INTJ)
 ✅ Layer 3: Codex 质量审计 (ISTJ)
 ✅ Layer 4: 综合分析
@@ -685,8 +685,8 @@ $ aireview --pr 123 --comment
 ---
 
 **核心创新**:
-1. 结合官方的多 agent 并行架构
+1. 结合官方的角色模拟审查架构
 2. 保留原有的 CLI 直接调用优势
 3. 引入置信度评分和 false positive 过滤
 4. 增强的 MBTI 人格专业化
-5. 分层深度分析 (multi-agent → Gemini → Codex)
+5. 分层深度分析 (角色模拟 → Gemini → Codex)
