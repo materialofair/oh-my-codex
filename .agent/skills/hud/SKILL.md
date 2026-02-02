@@ -22,7 +22,7 @@ Required sections (in order):
 
 > Codex invocation: use `$hud ...` or `hud: ...`
 
-> Codex limitation: This workflow references Claude Code plugin features. Treat steps as documentation only.
+> Codex limitation: This workflow references Codex CLI plugin features. Treat steps as documentation only.
 
 
 
@@ -45,7 +45,7 @@ When you run `$hud` or `$hud setup`, the system will automatically:
 1. Check if `~/.codex/hud/omc-hud.mjs` exists
 2. Check if `statusLine` is configured in `~/.codex/settings.json`
 3. If missing, create the HUD wrapper script and configure settings
-4. Report status and prompt to restart Claude Code if changes were made
+4. Report status and prompt to restart Codex if changes were made
 
 **IMPORTANT**: If the argument is `setup` OR if the HUD script doesn't exist at `~/.codex/hud/omc-hud.mjs`, you MUST create the HUD files directly using the instructions below.
 
@@ -137,8 +137,8 @@ async function main() {
 
   // 2. Development paths
   const devPaths = [
-    join(home, "Workspace/oh-my-claude-sisyphus/dist/hud/index.js"),
-    join(home, "workspace/oh-my-claude-sisyphus/dist/hud/index.js"),
+    join(home, "Workspace/oh-my-codex/dist/hud/index.js"),
+    join(home, "workspace/oh-my-codex/dist/hud/index.js"),
     join(home, "Workspace/oh-my-codex/dist/hud/index.js"),
     join(home, "workspace/oh-my-codex/dist/hud/index.js"),
   ];
@@ -206,7 +206,7 @@ Use the Edit tool to add/update this field while preserving other settings.
 rm -f ~/.codex/hud/sisyphus-hud.mjs 2>/dev/null
 ```
 
-**Step 6:** Tell the user to restart Claude Code for changes to take effect.
+**Step 6:** Tell the user to restart Codex for changes to take effect.
 
 ## Display Presets
 
@@ -295,7 +295,7 @@ You can manually edit the config file:
 
 If the HUD is not showing:
 1. Run `$hud setup` to auto-install and configure
-2. Restart Claude Code after setup completes
+2. Restart Codex after setup completes
 3. If still not working, run `$doctor` for full diagnostics
 
 Manual verification:

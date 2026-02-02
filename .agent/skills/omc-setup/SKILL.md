@@ -20,7 +20,7 @@ Required sections (in order):
 
 > Codex invocation: use `$omc-setup ...` or `omc-setup: ...`
 
-> Codex limitation: This workflow references Claude Code plugin features. Treat steps as documentation only.
+> Codex limitation: This workflow references Codex CLI plugin features. Treat steps as documentation only.
 
 
 
@@ -129,8 +129,8 @@ echo "Setup completed successfully. State cleared."
 This skill handles three scenarios:
 
 1. **Initial Setup (no flags)**: First-time installation wizard
-2. **Local Configuration (`--local`)**: Configure project-specific settings (.codex/CLAUDE.md)
-3. **Global Configuration (`--global`)**: Configure global settings (~/.codex/CLAUDE.md)
+2. **Local Configuration (`--local`)**: Configure project-specific settings (.codex/CODEX.md)
+3. **Global Configuration (`--global`)**: Configure global settings (~/.codex/CODEX.md)
 
 ## Mode Detection
 
@@ -148,12 +148,12 @@ Use the AskUserQuestion tool to prompt the user:
 **Question:** "Where should I configure oh-my-codex?"
 
 **Options:**
-1. **Local (this project)** - Creates `.codex/CLAUDE.md` in current project directory. Best for project-specific configurations.
-2. **Global (all projects)** - Creates `~/.codex/CLAUDE.md` for all Claude Code sessions. Best for consistent behavior everywhere.
+1. **Local (this project)** - Creates `.codex/CODEX.md` in current project directory. Best for project-specific configurations.
+2. **Global (all projects)** - Creates `~/.codex/CODEX.md` for all Codex sessions. Best for consistent behavior everywhere.
 
 ## Step 2A: Local Configuration (--local flag or user chose LOCAL)
 
-**CRITICAL**: This ALWAYS downloads fresh CLAUDE.md from GitHub to the local project. DO NOT use the Write tool - use bash curl exclusively.
+**CRITICAL**: This ALWAYS downloads fresh CODEX.md from GitHub to the local project. DO NOT use the Write tool - use bash curl exclusively.
 
 ### Create Local .codex Directory
 
@@ -162,26 +162,26 @@ Use the AskUserQuestion tool to prompt the user:
 mkdir -p .codex && echo ".codex directory ready"
 ```
 
-### Download Fresh CLAUDE.md
+### Download Fresh CODEX.md
 
 ```bash
 # Extract old version before download
-OLD_VERSION=$(grep -m1 "^# oh-my-codex" .codex/CLAUDE.md 2>/dev/null | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' || echo "none")
+OLD_VERSION=$(grep -m1 "^# oh-my-codex" .codex/CODEX.md 2>/dev/null | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' || echo "none")
 
-# Backup existing CLAUDE.md before overwriting (if it exists)
-if [ -f ".codex/CLAUDE.md" ]; then
+# Backup existing CODEX.md before overwriting (if it exists)
+if [ -f ".codex/CODEX.md" ]; then
   BACKUP_DATE=$(date +%Y-%m-%d)
-  BACKUP_PATH=".codex/CLAUDE.md.backup.${BACKUP_DATE}"
-  cp .codex/CLAUDE.md "$BACKUP_PATH"
-  echo "Backed up existing CLAUDE.md to $BACKUP_PATH"
+  BACKUP_PATH=".codex/CODEX.md.backup.${BACKUP_DATE}"
+  cp .codex/CODEX.md "$BACKUP_PATH"
+  echo "Backed up existing CODEX.md to $BACKUP_PATH"
 fi
 
 # Download fresh CLAUDE.md from GitHub
-curl -fsSL "https://raw.githubusercontent.com/Yeachan-Heo/oh-my-codex/main/docs/CLAUDE.md" -o .codex/CLAUDE.md && \
-echo "Downloaded CLAUDE.md to .codex/CLAUDE.md"
+curl -fsSL "https://raw.githubusercontent.com/Yeachan-Heo/oh-my-codex/main/docs/CODEX.md" -o .codex/CODEX.md && \
+echo "Downloaded CODEX.md to .codex/CODEX.md"
 
 # Extract new version and report
-NEW_VERSION=$(grep -m1 "^# oh-my-codex" .codex/CLAUDE.md 2>/dev/null | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' || echo "unknown")
+NEW_VERSION=$(grep -m1 "^# oh-my-codex" .codex/CODEX.md 2>/dev/null | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' || echo "unknown")
 if [ "$OLD_VERSION" = "none" ]; then
   echo "Installed CLAUDE.md: $NEW_VERSION"
 elif [ "$OLD_VERSION" = "$NEW_VERSION" ]; then
@@ -191,15 +191,15 @@ else
 fi
 ```
 
-**Note**: The downloaded CLAUDE.md includes Context Persistence instructions with `<remember>` tags for surviving conversation compaction.
+**Note**: The downloaded CODEX.md includes Context Persistence instructions with `<remember>` tags for surviving conversation compaction.
 
-**Note**: If an existing CLAUDE.md is found, it will be backed up to `.codex/CLAUDE.md.backup.YYYY-MM-DD` before downloading the new version.
+**Note**: If an existing CODEX.md is found, it will be backed up to `.codex/CODEX.md.backup.YYYY-MM-DD` before downloading the new version.
 
 **MANDATORY**: Always run this command. Do NOT skip. Do NOT use Write tool.
 
 **FALLBACK** if curl fails:
 Tell user to manually download from:
-https://raw.githubusercontent.com/Yeachan-Heo/oh-my-codex/main/docs/CLAUDE.md
+https://raw.githubusercontent.com/Yeachan-Heo/oh-my-codex/main/docs/CODEX.md
 
 ### Verify Plugin Installation
 
@@ -224,8 +224,8 @@ EOF
 ```
 
 **OMC Project Configuration Complete**
-- CLAUDE.md: Updated with latest configuration from GitHub at ./.codex/CLAUDE.md
-- Backup: Previous CLAUDE.md backed up to `.codex/CLAUDE.md.backup.YYYY-MM-DD` (if existed)
+- CODEX.md: Updated with latest configuration from GitHub at ./.codex/CODEX.md
+- Backup: Previous CODEX.md backed up to `.codex/CODEX.md.backup.YYYY-MM-DD` (if existed)
 - Scope: **PROJECT** - applies only to this project
 - Hooks: Provided by plugin (no manual installation needed)
 - Agents: 28+ available (base + tiered variants)
@@ -241,38 +241,38 @@ Do not continue to HUD setup or other steps.
 
 ## Step 2B: Global Configuration (--global flag or user chose GLOBAL)
 
-**CRITICAL**: This ALWAYS downloads fresh CLAUDE.md from GitHub to global config. DO NOT use the Write tool - use bash curl exclusively.
+**CRITICAL**: This ALWAYS downloads fresh CODEX.md from GitHub to global config. DO NOT use the Write tool - use bash curl exclusively.
 
-### Download Fresh CLAUDE.md
+### Download Fresh CODEX.md
 
 ```bash
 # Extract old version before download
-OLD_VERSION=$(grep -m1 "^# oh-my-codex" ~/.codex/CLAUDE.md 2>/dev/null | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' || echo "none")
+OLD_VERSION=$(grep -m1 "^# oh-my-codex" ~/.codex/CODEX.md 2>/dev/null | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' || echo "none")
 
-# Backup existing CLAUDE.md before overwriting (if it exists)
-if [ -f "$HOME/.codex/CLAUDE.md" ]; then
+# Backup existing CODEX.md before overwriting (if it exists)
+if [ -f "$HOME/.codex/CODEX.md" ]; then
   BACKUP_DATE=$(date +%Y-%m-%d)
-  BACKUP_PATH="$HOME/.codex/CLAUDE.md.backup.${BACKUP_DATE}"
-  cp "$HOME/.codex/CLAUDE.md" "$BACKUP_PATH"
-  echo "Backed up existing CLAUDE.md to $BACKUP_PATH"
+  BACKUP_PATH="$HOME/.codex/CODEX.md.backup.${BACKUP_DATE}"
+  cp "$HOME/.codex/CODEX.md" "$BACKUP_PATH"
+  echo "Backed up existing CODEX.md to $BACKUP_PATH"
 fi
 
-# Download fresh CLAUDE.md to global config
-curl -fsSL "https://raw.githubusercontent.com/Yeachan-Heo/oh-my-codex/main/docs/CLAUDE.md" -o ~/.codex/CLAUDE.md && \
-echo "Downloaded CLAUDE.md to ~/.codex/CLAUDE.md"
+# Download fresh CODEX.md to global config
+curl -fsSL "https://raw.githubusercontent.com/Yeachan-Heo/oh-my-codex/main/docs/CODEX.md" -o ~/.codex/CODEX.md && \
+echo "Downloaded CODEX.md to ~/.codex/CODEX.md"
 
 # Extract new version and report
-NEW_VERSION=$(grep -m1 "^# oh-my-codex" ~/.codex/CLAUDE.md 2>/dev/null | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' || echo "unknown")
+NEW_VERSION=$(grep -m1 "^# oh-my-codex" ~/.codex/CODEX.md 2>/dev/null | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' || echo "unknown")
 if [ "$OLD_VERSION" = "none" ]; then
-  echo "Installed CLAUDE.md: $NEW_VERSION"
+  echo "Installed CODEX.md: $NEW_VERSION"
 elif [ "$OLD_VERSION" = "$NEW_VERSION" ]; then
-  echo "CLAUDE.md unchanged: $NEW_VERSION"
+  echo "CODEX.md unchanged: $NEW_VERSION"
 else
-  echo "Updated CLAUDE.md: $OLD_VERSION -> $NEW_VERSION"
+  echo "Updated CODEX.md: $OLD_VERSION -> $NEW_VERSION"
 fi
 ```
 
-**Note**: If an existing CLAUDE.md is found, it will be backed up to `~/.codex/CLAUDE.md.backup.YYYY-MM-DD` before downloading the new version.
+**Note**: If an existing CODEX.md is found, it will be backed up to `~/.codex/CODEX.md.backup.YYYY-MM-DD` before downloading the new version.
 
 ### Clean Up Legacy Hooks (if present)
 
@@ -314,9 +314,9 @@ EOF
 ```
 
 **OMC Global Configuration Complete**
-- CLAUDE.md: Updated with latest configuration from GitHub at ~/.codex/CLAUDE.md
-- Backup: Previous CLAUDE.md backed up to `~/.codex/CLAUDE.md.backup.YYYY-MM-DD` (if existed)
-- Scope: **GLOBAL** - applies to all Claude Code sessions
+- CODEX.md: Updated with latest configuration from GitHub at ~/.codex/CODEX.md
+- Backup: Previous CODEX.md backed up to `~/.codex/CODEX.md.backup.YYYY-MM-DD` (if existed)
+- Scope: **GLOBAL** - applies to all Codex sessions
 - Hooks: Provided by plugin (no manual installation needed)
 - Agents: 28+ available (base + tiered variants)
 - Model routing: Haiku/Sonnet/Opus based on task complexity
@@ -333,7 +333,7 @@ Do not continue to HUD setup or other steps.
 
 **Note**: If resuming and lastCompletedStep >= 3, skip to Step 3.5.
 
-The HUD shows real-time status in Claude Code's status bar. **Invoke the hud skill** to set up and configure:
+The HUD shows real-time status in Codex's status bar. **Invoke the hud skill** to set up and configure:
 
 Use the Skill tool to invoke: `hud` with args: `setup`
 
@@ -396,12 +396,12 @@ if [ -z "$INSTALLED_VERSION" ] && [ -f ".omc-version.json" ]; then
   INSTALLED_VERSION=$(grep -oE '"version":\s*"[^"]+' .omc-version.json | cut -d'"' -f4)
 fi
 
-# Try CLAUDE.md header third (local first, then global)
+# Try CODEX.md header third (local first, then global)
 if [ -z "$INSTALLED_VERSION" ]; then
-  if [ -f ".codex/CLAUDE.md" ]; then
-    INSTALLED_VERSION=$(grep -m1 "^# oh-my-codex" .codex/CLAUDE.md 2>/dev/null | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' | sed 's/^v//')
-  elif [ -f "$HOME/.codex/CLAUDE.md" ]; then
-    INSTALLED_VERSION=$(grep -m1 "^# oh-my-codex" "$HOME/.codex/CLAUDE.md" 2>/dev/null | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' | sed 's/^v//')
+  if [ -f ".codex/CODEX.md" ]; then
+    INSTALLED_VERSION=$(grep -m1 "^# oh-my-codex" .codex/CODEX.md 2>/dev/null | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' | sed 's/^v//')
+  elif [ -f "$HOME/.codex/CODEX.md" ]; then
+    INSTALLED_VERSION=$(grep -m1 "^# oh-my-codex" "$HOME/.codex/CODEX.md" 2>/dev/null | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' | sed 's/^v//')
   fi
 fi
 
@@ -483,7 +483,7 @@ grep -q "oh-my-codex" ~/.codex/settings.json && echo "Plugin verified" || echo "
 
 ## Step 5: Offer MCP Server Configuration
 
-MCP servers extend Claude Code with additional tools (web search, GitHub, etc.).
+MCP servers extend Codex with additional tools (web search, GitHub, etc.).
 
 Ask user: "Would you like to configure MCP servers for enhanced capabilities? (Context7, Exa search, GitHub, etc.)"
 
@@ -572,7 +572,7 @@ MAGIC KEYWORDS (power-user shortcuts):
 | plan | /plan | "plan the endpoints" |
 
 HUD STATUSLINE:
-The status bar now shows OMC state. Restart Claude Code to see it.
+The status bar now shows OMC state. Restart Codex to see it.
 
 CLI ANALYTICS (if installed):
 - omc           - Full dashboard (stats + agents + cost)
@@ -646,28 +646,28 @@ OMC Setup - Configure oh-my-codex
 
 USAGE:
   $omc-setup           Run initial setup wizard
-  $omc-setup --local   Configure local project (.codex/CLAUDE.md)
-  $omc-setup --global  Configure global settings (~/.codex/CLAUDE.md)
+  $omc-setup --local   Configure local project (.codex/CODEX.md)
+  $omc-setup --global  Configure global settings (~/.codex/CODEX.md)
   $omc-setup --help    Show this help
 
 MODES:
   Initial Setup (no flags)
     - Interactive wizard for first-time setup
-    - Configures CLAUDE.md (local or global)
+    - Configures CODEX.md (local or global)
     - Sets up HUD statusline
     - Checks for updates
     - Offers MCP server configuration
 
   Local Configuration (--local)
-    - Downloads fresh CLAUDE.md to ./.codex/
-    - Backs up existing CLAUDE.md to .codex/CLAUDE.md.backup.YYYY-MM-DD
+    - Downloads fresh CODEX.md to ./.codex/
+    - Backs up existing CODEX.md to .codex/CODEX.md.backup.YYYY-MM-DD
     - Project-specific settings
     - Use this to update project config after OMC upgrades
 
   Global Configuration (--global)
-    - Downloads fresh CLAUDE.md to ~/.codex/
-    - Backs up existing CLAUDE.md to ~/.codex/CLAUDE.md.backup.YYYY-MM-DD
-    - Applies to all Claude Code sessions
+    - Downloads fresh CODEX.md to ~/.codex/
+    - Backs up existing CODEX.md to ~/.codex/CODEX.md.backup.YYYY-MM-DD
+    - Applies to all Codex sessions
     - Cleans up legacy hooks
     - Use this to update global config after OMC upgrades
 

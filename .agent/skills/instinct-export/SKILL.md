@@ -40,7 +40,7 @@ Exports instincts to a shareable format. Perfect for:
 
 ## What to Do
 
-1. Read instincts from `~/.claude/homunculus/instincts/personal/`
+1. Read instincts from `~/.codex/homunculus/instincts/personal/`
 2. Filter based on flags
 3. Strip sensitive information:
    - Remove session IDs

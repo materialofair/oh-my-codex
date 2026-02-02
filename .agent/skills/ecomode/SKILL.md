@@ -25,7 +25,7 @@ Activates token-efficient parallel execution for pro-plan users who prioritize c
 
 ## When Activated
 
-This skill enhances Claude's capabilities by:
+This skill enhances Codex's capabilities by:
 
 1. **Parallel Execution**: Running multiple agents simultaneously for independent tasks
 2. **Token-Conscious Routing**: Preferring Haiku and Sonnet agents, avoiding Opus
@@ -78,7 +78,7 @@ This skill enhances Claude's capabilities by:
 
 ### Routing Examples
 
-**CRITICAL: Always pass `model` parameter explicitly - Claude Code does NOT auto-apply models from agent definitions!**
+**CRITICAL: Always pass `model` parameter explicitly - Codex does NOT auto-apply models from agent definitions!**
 
 ```
 // Simple question → LOW tier (DEFAULT)
@@ -110,7 +110,7 @@ Task(subagent_type="oh-my-codex:explore-medium", model="sonnet", prompt="Find al
 | **UI work** | ✗ NEVER | designer-low/designer |
 | **Docs** | ✗ NEVER | writer |
 
-**Path Exception**: Only write to `.omc/`, `.codex/`, `CLAUDE.md`, `AGENTS.md`
+**Path Exception**: Only write to `.omc/`, `.codex/`, `CODEX.md`, `AGENTS.md`
 
 ## Background Execution Rules
 

@@ -2,7 +2,7 @@
 # Continuous Learning v2 - Observation Hook
 #
 # Captures tool use events for pattern analysis.
-# Claude Code passes hook data via stdin as JSON.
+# Codex passes hook data via stdin as JSON.
 #
 # Hook config (in ~/.claude/settings.json):
 #
@@ -48,7 +48,7 @@ if [ -f "$CONFIG_DIR/disabled" ]; then
   exit 0
 fi
 
-# Read JSON from stdin (Claude Code hook format)
+# Read JSON from stdin (Codex hook format)
 INPUT_JSON=$(cat)
 
 # Exit if no input
@@ -64,7 +64,7 @@ import sys
 try:
     data = json.loads('''$INPUT_JSON''')
 
-    # Extract fields - Claude Code hook format
+    # Extract fields - Codex hook format
     hook_type = data.get('hook_type', 'unknown')  # PreToolUse or PostToolUse
     tool_name = data.get('tool_name', data.get('tool', 'unknown'))
     tool_input = data.get('tool_input', data.get('input', {}))

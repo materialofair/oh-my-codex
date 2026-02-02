@@ -20,7 +20,7 @@ Required sections (in order):
 
 > Codex invocation: use `$doctor ...` or `doctor: ...`
 
-> Codex limitation: This workflow references Claude Code plugin features. Treat steps as documentation only.
+> Codex limitation: This workflow references Codex CLI plugin features. Treat steps as documentation only.
 
 
 
@@ -36,7 +36,7 @@ INSTALLED=$(ls ~/.codex/plugins/cache/omc/oh-my-codex/ 2>/dev/null | sort -V | t
 echo "Installed: $INSTALLED"
 
 # Get latest from npm
-LATEST=$(npm view oh-my-claude-sisyphus version 2>/dev/null)
+LATEST=$(npm view oh-my-codex version 2>/dev/null)
 echo "Latest: $LATEST"
 ```
 
@@ -64,19 +64,19 @@ ls -la ~/.codex/hooks/*.sh 2>/dev/null
 **Diagnosis**:
 - If `keyword-detector.sh`, `persistent-mode.sh`, `session-start.sh`, or `stop-continuation.sh` exist: WARN - legacy scripts (can cause confusion)
 
-### Step 4: Check CLAUDE.md
+### Step 4: Check CODEX.md
 
 ```bash
 # Check if CLAUDE.md exists
-ls -la ~/.codex/CLAUDE.md 2>/dev/null
+ls -la ~/.codex/CODEX.md 2>/dev/null
 
 # Check for OMC marker
-grep -q "oh-my-codex Multi-Agent System" ~/.codex/CLAUDE.md 2>/dev/null && echo "Has OMC config" || echo "Missing OMC config"
+grep -q "oh-my-codex Multi-Agent System" ~/.codex/CODEX.md 2>/dev/null && echo "Has OMC config" || echo "Missing OMC config"
 ```
 
 **Diagnosis**:
-- If missing: CRITICAL - CLAUDE.md not configured
-- If missing OMC marker: WARN - outdated CLAUDE.md
+- If missing: CRITICAL - CODEX.md not configured
+- If missing OMC marker: WARN - outdated CODEX.md
 
 ### Step 5: Check for Stale Plugin Cache
 
@@ -132,7 +132,7 @@ After running all checks, output a report:
 | Plugin Version | OK/WARN/CRITICAL | ... |
 | Legacy Hooks (settings.json) | OK/CRITICAL | ... |
 | Legacy Scripts (~/.codex/hooks/) | OK/WARN | ... |
-| CLAUDE.md | OK/WARN/CRITICAL | ... |
+| CODEX.md | OK/WARN/CRITICAL | ... |
 | Plugin Cache | OK/WARN | ... |
 | Legacy Agents (~/.codex/agents/) | OK/WARN | ... |
 | Legacy Commands (~/.codex/commands/) | OK/WARN | ... |
@@ -168,7 +168,7 @@ rm -f ~/.codex/hooks/stop-continuation.sh
 ### Fix: Outdated Plugin
 ```bash
 rm -rf ~/.codex/plugins/cache/oh-my-codex
-echo "Plugin cache cleared. Restart Claude Code to fetch latest version."
+echo "Plugin cache cleared. Restart Codex to fetch latest version."
 ```
 
 ### Fix: Stale Cache (multiple versions)
@@ -178,10 +178,10 @@ cd ~/.codex/plugins/cache/omc/oh-my-codex/
 ls | sort -V | head -n -1 | xargs rm -rf
 ```
 
-### Fix: Missing/Outdated CLAUDE.md
-Fetch latest from GitHub and write to `~/.codex/CLAUDE.md`:
+### Fix: Missing/Outdated CODEX.md
+Fetch latest from GitHub and write to `~/.codex/CODEX.md`:
 ```
-WebFetch(url: "https://raw.githubusercontent.com/Yeachan-Heo/oh-my-codex/main/docs/CLAUDE.md", prompt: "Return the complete raw markdown content exactly as-is")
+WebFetch(url: "https://raw.githubusercontent.com/Yeachan-Heo/oh-my-codex/main/docs/CODEX.md", prompt: "Return the complete raw markdown content exactly as-is")
 ```
 
 ### Fix: Legacy Curl-Installed Content
@@ -207,4 +207,4 @@ rm -rf ~/.codex/skills
 ## Post-Fix
 
 After applying fixes, inform user:
-> Fixes applied. **Restart Claude Code** for changes to take effect.
+> Fixes applied. **Restart Codex** for changes to take effect.

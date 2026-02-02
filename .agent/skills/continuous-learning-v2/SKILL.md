@@ -19,7 +19,7 @@ Required sections (in order):
 [REVIEWER] Verification + risks
 ```
 
-An advanced learning system that turns your Claude Code sessions into reusable knowledge through atomic "instincts" - small learned behaviors with confidence scoring.
+An advanced learning system that turns your Codex sessions into reusable knowledge through atomic "instincts" - small learned behaviors with confidence scoring.
 
 ## What's New in v2
 
@@ -265,7 +265,7 @@ Confidence evolves over time:
 
 ## Why Hooks vs Skills for Observation?
 
-> "v1 relied on skills to observe. Skills are probabilistic—they fire ~50-80% of the time based on Claude's judgment."
+> "v1 relied on skills to observe. Skills are probabilistic—they fire ~50-80% of the time based on Codex's judgment."
 
 Hooks fire **100% of the time**, deterministically. This means:
 - Every tool call is observed
@@ -294,4 +294,4 @@ v2 is fully compatible with v1:
 
 ---
 
-*Instinct-based learning: teaching Claude your patterns, one observation at a time.*
+*Instinct-based learning: teaching Codex your patterns, one observation at a time.*

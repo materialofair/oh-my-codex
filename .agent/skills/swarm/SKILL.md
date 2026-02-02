@@ -31,7 +31,7 @@ Spawn N coordinated agents working on a shared task list with SQLite-based atomi
 
 ### Parameters
 
-- **N** - Number of agents (1-5, enforced by Claude Code limit)
+- **N** - Number of agents (1-5, enforced by Codex limit)
 - **agent-type** - Agent to spawn (e.g., executor, build-fixer, architect)
 - **task** - High-level task to decompose and distribute
 
@@ -554,7 +554,7 @@ interface SwarmStats {
 
 ## Key Parameters
 
-- **Max Agents:** 5 (enforced by Claude Code background task limit)
+- **Max Agents:** 5 (enforced by Codex background task limit)
 - **Lease Timeout:** 5 minutes (default, configurable)
   - Tasks claimed longer than this without heartbeat are auto-released
 - **Heartbeat Interval:** 60 seconds (recommended)

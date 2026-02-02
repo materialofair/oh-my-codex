@@ -189,10 +189,10 @@ cmd_review() {
         else
             log_success "Tmux session created: $session_name"
 
-            # Launch Claude Code
+            # Launch Codex
             if [[ "$no_claude" != "true" ]]; then
-                log_info "Launching Claude Code..."
-                psm_launch_claude "$session_name"
+                log_info "Launching Codex..."
+                psm_launch_codex "$session_name"
             fi
         fi
     fi

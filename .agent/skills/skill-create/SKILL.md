@@ -24,7 +24,7 @@ Required sections (in order):
 [REVIEWER] Verification + risks
 ```
 
-Analyze your repository's git history to extract coding patterns and generate SKILL.md files that teach Claude your team's practices.
+Analyze your repository's git history to extract coding patterns and generate SKILL.md files that teach Codex your team's practices.
 
 ## Usage
 
@@ -39,7 +39,7 @@ Analyze your repository's git history to extract coding patterns and generate SK
 
 1. **Parses Git History** - Analyzes commits, file changes, and patterns
 2. **Detects Patterns** - Identifies recurring workflows and conventions
-3. **Generates SKILL.md** - Creates valid Claude Code skill files
+3. **Generates SKILL.md** - Creates valid Codex skill files
 4. **Optionally Creates Instincts** - For the continuous-learning-v2 system
 
 ## Analysis Steps

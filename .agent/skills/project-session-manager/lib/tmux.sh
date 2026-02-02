@@ -33,9 +33,9 @@ psm_create_tmux_session() {
     return 0
 }
 
-# Launch Claude Code in tmux session
-# Usage: psm_launch_claude <session_name>
-psm_launch_claude() {
+# Launch Codex in tmux session
+# Usage: psm_launch_codex <session_name>
+psm_launch_codex() {
     local session_name="$1"
 
     if ! tmux has-session -t "$session_name" 2>/dev/null; then
@@ -43,8 +43,8 @@ psm_launch_claude() {
         return 1
     fi
 
-    # Send claude command to the session
-    tmux send-keys -t "$session_name" "claude" Enter
+    # Send codex command to the session
+    tmux send-keys -t "$session_name" "codex" Enter
 
     echo "launched|$session_name"
     return 0
