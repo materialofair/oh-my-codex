@@ -1,0 +1,21 @@
+{
+  "name": "oh-my-codex",
+  "version": "0.1.0",
+  "description": "Codex skill pack and workflow templates",
+  "private": true,
+  "files": [
+    ".codex",
+    "scripts",
+    "docs",
+    "templates",
+    "README.md",
+    "AGENTS.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "install:codex": "./scripts/install-codex.sh",
+    "prompts:codex": "./scripts/generate-codex-prompts.sh",
+    "mcp:codex": "./scripts/generate-codex-mcp-config.sh"
+  },
+  "license": "MIT"
+}
