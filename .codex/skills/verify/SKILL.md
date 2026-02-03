@@ -1,6 +1,6 @@
 ---
 name: verify
-description: Imported from everything-claude-code command verify
+description: Imported from everything-codex command verify
 ---
 
 # Verification Command

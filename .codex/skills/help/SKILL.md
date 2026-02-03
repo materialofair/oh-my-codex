@@ -21,7 +21,7 @@ Required sections (in order):
 > Codex invocation: use `$help ...` or `help: ...`
 
 
-**You don't need to learn any commands!** OMC enhances Claude Code with intelligent behaviors that activate automatically.
+**You don't need to learn any commands!** OMC enhances Codex with intelligent behaviors that activate automatically.
 
 ## What Happens Automatically
 

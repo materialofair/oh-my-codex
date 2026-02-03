@@ -1,6 +1,6 @@
 ---
 name: refactor-clean
-description: Imported from everything-claude-code command refactor-clean
+description: Imported from everything-codex command refactor-clean
 ---
 
 # Refactor Clean

@@ -1,6 +1,6 @@
 ---
 name: evolve
-description: Imported from everything-claude-code command evolve
+description: Imported from everything-codex command evolve
 ---
 
 ---

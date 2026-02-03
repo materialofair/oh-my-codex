@@ -23,13 +23,13 @@ Required sections (in order):
 
 ## The Insight
 
-Reusable skills are not code snippets to copy-paste, but **principles and decision-making heuristics** that teach Claude HOW TO THINK about a class of problems.
+Reusable skills are not code snippets to copy-paste, but **principles and decision-making heuristics** that teach Codex HOW TO THINK about a class of problems.
 
 **The difference:**
 - BAD (mimicking): "When you see ConnectionResetError, add this try/except block"
 - GOOD (reusable skill): "In async network code, any I/O operation can fail independently due to client/server lifecycle mismatches. The principle: wrap each I/O operation separately, because failure between operations is the common case, not the exception."
 
-A good skill changes how Claude APPROACHES problems, not just what code it produces.
+A good skill changes how Codex APPROACHES problems, not just what code it produces.
 
 ## Why This Matters
 
@@ -42,11 +42,7 @@ If a potential skill fails any of these questions, it's not worth saving.
 
 ## Recognition Pattern
 
-Use $learner ONLY after:
-- Solving a tricky bug that required deep investigation
-- Discovering a non-obvious workaround specific to this codebase
-- Finding a hidden gotcha that wastes time when forgotten
-- Uncovering undocumented behavior that affects this project
+When you solve a tricky bug or discover a non-obvious workaround, you can extract it as a skill. Codex will automatically detect and apply these skills in future conversations when it sees matching triggers.
 
 ## The Approach
 
@@ -136,14 +132,14 @@ How do you know when this skill applies? What are the signs?
 Example: "Building any long-lived connection handler (proxy, websocket, SSE)"
 
 ## The Approach
-The decision-making heuristic, not just code. How should Claude THINK about this?
+The decision-making heuristic, not just code. How should Codex THINK about this?
 Example: "For each I/O operation, ask: what if this fails right now? Handle it locally."
 
 ## Example (Optional)
 If code helps, show it - but as illustration of the principle, not copy-paste material.
 ```
 
-**Key**: A skill is REUSABLE if Claude can apply it to NEW situations, not just identical ones.
+**Key**: A skill is REUSABLE if Codex can apply it to NEW situations, not just identical ones.
 
 ## Related Commands
 

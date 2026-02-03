@@ -94,11 +94,11 @@ Result: [tests still pass]
 
 **Remember:** The discipline IS the value. Shortcuts destroy the benefit.
 
-## Imported from everything-claude-code
+## Imported from everything-codex
 
 ---
 name: ecc-tdd
-description: Imported from everything-claude-code command tdd
+description: Imported from everything-codex command tdd
 ---
 
 ---

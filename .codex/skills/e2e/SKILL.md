@@ -1,6 +1,6 @@
 ---
 name: e2e
-description: Imported from everything-claude-code command e2e
+description: Imported from everything-codex command e2e
 ---
 
 ---

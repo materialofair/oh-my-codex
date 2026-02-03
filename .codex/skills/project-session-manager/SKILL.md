@@ -22,7 +22,7 @@ Required sections (in order):
 > Codex invocation: use `$project-session-manager ...` or `project-session-manager: ...`
 
 
-Automate isolated development environments using git worktrees and tmux sessions with Claude Code. Enables parallel work across multiple tasks, projects, and repositories.
+Automate isolated development environments using git worktrees and tmux sessions with Codex. Enables parallel work across multiple tasks, projects, and repositories.
 
 ## Commands
 
@@ -172,9 +172,9 @@ Parse `{{ARGUMENTS}}` to determine:
    tmux new-session -d -s "psm:$project_alias:pr-$pr_number" -c "$worktree_path"
    ```
 
-8. **Launch Claude Code** (unless --no-claude):
+8. **Launch Codex** (unless --no-codex):
    ```bash
-   tmux send-keys -t "psm:$project_alias:pr-$pr_number" "claude" Enter
+   tmux send-keys -t "psm:$project_alias:pr-$pr_number" "codex" Enter
    ```
 
 9. **Output session info**:

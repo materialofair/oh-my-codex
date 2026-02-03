@@ -41,4 +41,4 @@ Skills are reusable workflows invoked via natural language or explicit skill tag
 
 ## Compatibility Notes
 
-Some skills were imported from **everything-claude-code** and adapted for Codex. All skills enforce the **Pseudo Multi‑Agent Protocol** to simulate role handoffs.
+Some skills were imported from **everything-codex** and adapted for Codex. All skills enforce the **Pseudo Multi‑Agent Protocol** to simulate role handoffs.

@@ -30,7 +30,7 @@ Ultrapilot is the parallel evolution of autopilot. It decomposes your task into 
 **Key Capabilities:**
 1. **Decomposes** task into parallel-safe components
 2. **Partitions** files with exclusive ownership (no conflicts)
-3. **Spawns** up to 5 parallel workers (Claude Code limit)
+3. **Spawns** up to 5 parallel workers (Codex limit)
 4. **Coordinates** progress via TaskOutput
 5. **Integrates** changes with sequential handling of shared files
 6. **Validates** full system integrity
@@ -275,7 +275,7 @@ Deliver: Code changes + list of boundary dependencies`,
 - Detect conflicts early
 - Accumulate boundary dependencies
 
-**Max Workers:** 5 (Claude Code limit)
+**Max Workers:** 5 (Codex limit)
 
 ### Phase 4: Integration
 
@@ -380,7 +380,7 @@ Optional settings in `.codex/settings.json`:
 ```
 
 **Settings Explained:**
-- `maxWorkers` - Max parallel workers (5 is Claude Code limit)
+- `maxWorkers` - Max parallel workers (5 is Codex limit)
 - `maxValidationRounds` - Validation retry attempts
 - `conflictPolicy` - "coordinator-handles" or "abort-on-conflict"
 - `fallbackToAutopilot` - Auto-switch if task not parallelizable
@@ -642,7 +642,7 @@ rm -f .omc/state/ultrapilot-ownership.json
 - Resume from integration phase (if validation fails)
 
 **Planned for v4.2:**
-- Multi-machine distribution (if Claude Code supports)
+- Multi-machine distribution (if Codex supports)
 - Real-time progress dashboard
 - Worker performance analytics
 - Auto-tuning of decomposition strategy

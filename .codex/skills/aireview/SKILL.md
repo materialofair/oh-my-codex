@@ -52,7 +52,8 @@ aireview ./src/auth/service.ts --model codex
 
 ## Enhanced Architecture
 
-### Multi-Agent Parallel Review (Inspired by Official Plugin)
+### Multi-Agent Parallel Review
+
 
 ```
 aireview --diff
@@ -144,7 +145,7 @@ If MODE == "pr":
   1. Is PR closed?
   2. Is PR draft?
   3. Is change trivial (< 10 lines, auto-generated)?
-  4. Already reviewed by Claude Code?
+  4. Already reviewed by Codex?
 
   If any is true → Exit with message
 ```
@@ -429,7 +430,7 @@ If filtered_issues.length == 0:
     - 相关 PR
     - 代码注释合规性
 
-    🤖 Generated with Claude Code
+    🤖 Generated with Codex
 
 Else:
   Output: |
@@ -473,7 +474,7 @@ Else:
     {codex_highlights}
     {end if}
 
-    🤖 Generated with Claude Code
+    🤖 Generated with Codex
 
     {if pr_mode}
     <sub>- 如果这个审查有帮助，请回复 👍。否则，回复 👎。</sub>
@@ -520,7 +521,7 @@ If --comment flag && pr_mode:
 
 ## Core Advantages
 
-### From Official Plugin
+### Core Features
 - ✅ 多 agent 并行审查 (5 agents)
 - ✅ 置信度评分系统 (0-100)
 - ✅ False positive 过滤 (阈值 80)
@@ -635,7 +636,7 @@ $ aireview origin/feature-cr
 **审查时间**: 2025-12-29 14:00
 **耗时**: < 30 秒
 
-🤖 Generated with Claude Code
+🤖 Generated with Codex
 ```
 
 ### Example 3: Remote Branch Deep Review
@@ -685,7 +686,7 @@ $ aireview --pr 123 --comment
 ---
 
 **核心创新**:
-1. 结合官方的多 agent 并行架构
+1. Combined with official multi-agent architecture
 2. 保留原有的 CLI 直接调用优势
 3. 引入置信度评分和 false positive 过滤
 4. 增强的 MBTI 人格专业化

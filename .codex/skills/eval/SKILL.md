@@ -1,6 +1,6 @@
 ---
 name: eval
-description: Imported from everything-claude-code command eval
+description: Imported from everything-codex command eval
 ---
 
 # Eval Command

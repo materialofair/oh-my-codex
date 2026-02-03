@@ -18,7 +18,7 @@ Required sections (in order):
 [REVIEWER] Verification + risks
 ```
 
-A comprehensive verification system for Claude Code sessions.
+A comprehensive verification system for Codex sessions.
 
 ## When to Use
 

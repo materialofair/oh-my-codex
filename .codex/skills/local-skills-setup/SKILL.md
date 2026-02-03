@@ -22,7 +22,7 @@ Required sections (in order):
 > Codex invocation: use `$local-skills-setup ...` or `local-skills-setup: ...`
 
 
-This skill provides a guided wizard for setting up and managing your local learned skills. Skills are reusable problem-solving patterns that Claude automatically applies when it detects matching triggers.
+This skill provides a guided wizard for setting up and managing your local learned skills. Skills are reusable problem-solving patterns that Codex automatically applies when it detects matching triggers.
 
 ## Why Local Skills?
 
@@ -30,7 +30,7 @@ Local skills allow you to capture hard-won insights and solutions that are speci
 - **Project-level skills** (.omc/skills/) - Version-controlled with your repo
 - **User-level skills** (~/.codex/skills/omc-learned/) - Portable across all your projects
 
-When you solve a tricky bug or discover a non-obvious workaround, you can extract it as a skill. Claude will automatically detect and apply these skills in future conversations when it sees matching triggers.
+When you solve a tricky bug or discover a non-obvious workaround, you can extract it as a skill. Codex will automatically detect and apply these skills in future conversations when it sees matching triggers.
 
 ## Interactive Workflow
 
@@ -412,13 +412,13 @@ Remind users that good skills are:
 
 When introducing the skill system, explain these benefits:
 
-**Automatic Application**: Claude detects triggers and applies skills automatically - no need to remember or search for solutions.
+**Automatic Application**: Codex detects triggers and applies skills automatically - no need to remember or search for solutions.
 
 **Version Control**: Project-level skills (.omc/skills/) are committed with your code, so the whole team benefits.
 
 **Evolving Knowledge**: Skills improve over time as you discover better approaches and refine triggers.
 
-**Reduced Token Usage**: Instead of re-solving the same problems, Claude applies known patterns efficiently.
+**Reduced Token Usage**: Instead of re-solving the same problems, Codex applies known patterns efficiently.
 
 **Codebase Memory**: Preserves institutional knowledge that would otherwise be lost in conversation history.
 

@@ -1,6 +1,6 @@
 ---
 name: setup-pm
-description: Imported from everything-claude-code command setup-pm
+description: Imported from everything-codex command setup-pm
 ---
 
 ---

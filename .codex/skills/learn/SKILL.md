@@ -1,6 +1,6 @@
 ---
 name: learn
-description: Imported from everything-claude-code command learn
+description: Imported from everything-codex command learn
 ---
 
 # /learn - Extract Reusable Patterns

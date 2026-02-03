@@ -189,10 +189,10 @@ cmd_review() {
         else
             log_success "Tmux session created: $session_name"
 
-            # Launch Claude Code
+            # Launch Codex
             if [[ "$no_claude" != "true" ]]; then
-                log_info "Launching Claude Code..."
-                psm_launch_claude "$session_name"
+                log_info "Launching Codex..."
+                psm_launch_codex "$session_name"
             fi
         fi
     fi
@@ -305,7 +305,7 @@ cmd_fix() {
     psm_create_tmux_session "$session_name" "$worktree_path"
 
     if [[ "$no_claude" != "true" ]]; then
-        psm_launch_claude "$session_name"
+        psm_launch_codex "$session_name"
     fi
 
     # Create metadata
@@ -377,7 +377,7 @@ cmd_feature() {
     local session_id="${project}:feat-${safe_name}"
 
     psm_create_tmux_session "$session_name" "$worktree_path"
-    psm_launch_claude "$session_name"
+    psm_launch_codex "$session_name"
 
     psm_add_session "$session_id" "feature" "$project" "feat-${safe_name}" "$branch_name" "$base" "$session_name" "$worktree_path" "$local_path" "{}"
 

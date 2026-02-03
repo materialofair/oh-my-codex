@@ -170,11 +170,11 @@ If requirements are clear, I'll plan directly. If not, I'll start an interview.
 
 Tell me what you want to accomplish.
 
-## Imported from everything-claude-code
+## Imported from everything-codex
 
 ---
 name: ecc-plan
-description: Imported from everything-claude-code command plan
+description: Imported from everything-codex command plan
 ---
 
 ---

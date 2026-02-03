@@ -1,6 +1,6 @@
 ---
 name: checkpoint
-description: Imported from everything-claude-code command checkpoint
+description: Imported from everything-codex command checkpoint
 ---
 
 # Checkpoint Command
