@@ -24,6 +24,7 @@ PROMPTS=(
   "tdd|Test-driven development mode|TASK=\"<task>\"|tdd: \$TASK"
   "code-review|Comprehensive code review|TASK=\"<scope>\"|code-review: \$TASK"
   "security-review|Security review|TASK=\"<scope>\"|security-review: \$TASK"
+  "planning-with-files|Planning with persistent files|TASK=\"<task>\"|planning-with-files: \$TASK"
   "build-fix|Fix build and type errors|TASK=\"<error>\"|build-fix: \$TASK"
   "learner|Extract reusable skill|TASK=\"<summary>\"|learner: \$TASK"
   "note|Save a note|TASK=\"<content>\"|note: \$TASK"
