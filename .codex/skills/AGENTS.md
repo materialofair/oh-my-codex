@@ -25,7 +25,7 @@ Skills are reusable workflows invoked via natural language or explicit skill tag
 - `ultraqa` — QA cycling until success
 
 ### Planning + Review
-- `plan`, `ralplan`, `review`, `analyze`, `orchestrate`
+- `plan`, `ralplan`, `review`, `analyze`, `orchestrate`, `conductor`
 
 ### Quality + Safety
 - `code-review`, `security-review`, `tdd`, `build-fix`, `verify`, `eval`, `test-coverage`
