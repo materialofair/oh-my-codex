@@ -20,117 +20,17 @@ Required sections (in order):
 
 > Codex invocation: use `$omc-setup ...` or `omc-setup: ...`
 
-> Codex limitation: This workflow references Codex CLI plugin features. Treat steps as documentation only.
-
 
 
 This is the **only command you need to learn**. After running this, everything else is automatic.
-
-## Graceful Interrupt Handling
-
-**IMPORTANT**: This setup process saves progress after each step. If interrupted (Ctrl+C or connection loss), the setup can resume from where it left off.
-
-### State File Location
-- `.omc/state/setup-state.json` - Tracks completed steps
-
-### Resume Detection (Step 0)
-
-Before starting any step, check for existing state:
-
-```bash
-# Check for existing setup state
-STATE_FILE=".omc/state/setup-state.json"
-
-# Cross-platform ISO date to epoch conversion
-iso_to_epoch() {
-  local iso_date="$1"
-  local epoch=""
-  # Try GNU date first (Linux)
-  epoch=$(date -d "$iso_date" +%s 2>/dev/null)
-  if [ $? -eq 0 ] && [ -n "$epoch" ]; then
-    echo "$epoch"
-    return 0
-  fi
-  # Try BSD/macOS date
-  local clean_date=$(echo "$iso_date" | sed 's/[+-][0-9][0-9]:[0-9][0-9]$//' | sed 's/Z$//' | sed 's/T/ /')
-  epoch=$(date -j -f "%Y-%m-%d %H:%M:%S" "$clean_date" +%s 2>/dev/null)
-  if [ $? -eq 0 ] && [ -n "$epoch" ]; then
-    echo "$epoch"
-    return 0
-  fi
-  echo "0"
-}
-
-if [ -f "$STATE_FILE" ]; then
-  # Check if state is stale (older than 24 hours)
-  TIMESTAMP_RAW=$(jq -r '.timestamp // empty' "$STATE_FILE" 2>/dev/null)
-  if [ -n "$TIMESTAMP_RAW" ]; then
-    TIMESTAMP_EPOCH=$(iso_to_epoch "$TIMESTAMP_RAW")
-    NOW_EPOCH=$(date +%s)
-    STATE_AGE=$((NOW_EPOCH - TIMESTAMP_EPOCH))
-  else
-    STATE_AGE=999999  # Force fresh start if no timestamp
-  fi
-  if [ "$STATE_AGE" -gt 86400 ]; then
-    echo "Previous setup state is more than 24 hours old. Starting fresh."
-    rm -f "$STATE_FILE"
-  else
-    LAST_STEP=$(jq -r ".lastCompletedStep // 0" "$STATE_FILE" 2>/dev/null || echo "0")
-    TIMESTAMP=$(jq -r .timestamp "$STATE_FILE" 2>/dev/null || echo "unknown")
-    echo "Found previous setup session (Step $LAST_STEP completed at $TIMESTAMP)"
-  fi
-fi
-```
-
-If state exists, use AskUserQuestion to prompt:
-
-**Question:** "Found a previous setup session. Would you like to resume or start fresh?"
-
-**Options:**
-1. **Resume from step $LAST_STEP** - Continue where you left off
-2. **Start fresh** - Begin from the beginning (clears saved state)
-
-If user chooses "Start fresh":
-```bash
-rm -f ".omc/state/setup-state.json"
-echo "Previous state cleared. Starting fresh setup."
-```
-
-### Save Progress Helper
-
-After completing each major step, save progress:
-
-```bash
-# Save setup progress (call after each step)
-# Usage: save_setup_progress STEP_NUMBER
-save_setup_progress() {
-  mkdir -p .omc/state
-  cat > ".omc/state/setup-state.json" << EOF
-{
-  "lastCompletedStep": $1,
-  "timestamp": "$(date -Iseconds)",
-  "configType": "${CONFIG_TYPE:-unknown}"
-}
-EOF
-}
-```
-
-### Clear State on Completion
-
-After successful setup completion (Step 7/8), remove the state file:
-
-```bash
-rm -f ".omc/state/setup-state.json"
-echo "Setup completed successfully. State cleared."
-```
 
 ## Usage Modes
 
 This skill handles three scenarios:
 
-1. **Initial Setup (no flags)**: First-time installation wizard
-2. **Local Configuration (`--local`)**: Configure project-specific settings (.codex/CODEX.md)
-3. **Global Configuration (`--global`)**: Configure global settings (~/.codex/CODEX.md)
+1. **Initial Setup (no flags)**: Interactive installation wizard
+2. **Local Configuration (`--local`)**: Configure project-specific settings (.codex/CLAUDE.md)
+3. **Global Configuration (`--global`)**: Configure global settings (~/.codex/CLAUDE.md)
 
 ## Mode Detection
 
@@ -141,349 +41,75 @@ Check for flags in the user's invocation:
 
 ## Step 1: Initial Setup Wizard (Default Behavior)
 
-**Note**: If resuming and lastCompletedStep >= 1, skip to the appropriate step based on configType.
-
-Use the AskUserQuestion tool to prompt the user:
+Prompt the user in plain text with numbered choices:
 
 **Question:** "Where should I configure oh-my-codex?"
 
 **Options:**
-1. **Local (this project)** - Creates `.codex/CODEX.md` in current project directory. Best for project-specific configurations.
-2. **Global (all projects)** - Creates `~/.codex/CODEX.md` for all Codex sessions. Best for consistent behavior everywhere.
+1. **Local (this project)** - Creates `.codex/CLAUDE.md` in current project directory. Best for project-specific configurations.
+2. **Global (all projects)** - Creates `~/.codex/CLAUDE.md` for all Codex sessions. Best for consistent behavior everywhere.
+3. **Full Reinstall** - Re-run the full installer script (skills, rules, prompts, mcp)
 
 ## Step 2A: Local Configuration (--local flag or user chose LOCAL)
 
-**CRITICAL**: This ALWAYS downloads fresh CODEX.md from GitHub to the local project. DO NOT use the Write tool - use bash curl exclusively.
-
-### Create Local .codex Directory
+Use the helper script to install project-local configuration:
 
 ```bash
-# Create .codex directory in current project
-mkdir -p .codex && echo ".codex directory ready"
+# Run installer in project mode
+./scripts/install-codex.sh --project --rules
 ```
 
-### Download Fresh CODEX.md
-
-```bash
-# Extract old version before download
-OLD_VERSION=$(grep -m1 "^# oh-my-codex" .codex/CODEX.md 2>/dev/null | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' || echo "none")
-
-# Backup existing CODEX.md before overwriting (if it exists)
-if [ -f ".codex/CODEX.md" ]; then
-  BACKUP_DATE=$(date +%Y-%m-%d)
-  BACKUP_PATH=".codex/CODEX.md.backup.${BACKUP_DATE}"
-  cp .codex/CODEX.md "$BACKUP_PATH"
-  echo "Backed up existing CODEX.md to $BACKUP_PATH"
-fi
-
-# Download fresh CLAUDE.md from GitHub
-curl -fsSL "https://raw.githubusercontent.com/Yeachan-Heo/oh-my-codex/main/docs/CODEX.md" -o .codex/CODEX.md && \
-echo "Downloaded CODEX.md to .codex/CODEX.md"
-
-# Extract new version and report
-NEW_VERSION=$(grep -m1 "^# oh-my-codex" .codex/CODEX.md 2>/dev/null | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' || echo "unknown")
-if [ "$OLD_VERSION" = "none" ]; then
-  echo "Installed CLAUDE.md: $NEW_VERSION"
-elif [ "$OLD_VERSION" = "$NEW_VERSION" ]; then
-  echo "CLAUDE.md unchanged: $NEW_VERSION"
-else
-  echo "Updated CLAUDE.md: $OLD_VERSION -> $NEW_VERSION"
-fi
-```
-
-**Note**: The downloaded CODEX.md includes Context Persistence instructions with `<remember>` tags for surviving conversation compaction.
-
-**Note**: If an existing CODEX.md is found, it will be backed up to `.codex/CODEX.md.backup.YYYY-MM-DD` before downloading the new version.
-
-**MANDATORY**: Always run this command. Do NOT skip. Do NOT use Write tool.
-
-**FALLBACK** if curl fails:
-Tell user to manually download from:
-https://raw.githubusercontent.com/Yeachan-Heo/oh-my-codex/main/docs/CODEX.md
-
-### Verify Plugin Installation
-
-```bash
-grep -q "oh-my-codex" ~/.codex/settings.json && echo "Plugin verified" || echo "Plugin NOT found - run: claude /install-plugin oh-my-codex"
-```
+**What this does:**
+- Copies `templates/CLAUDE.md` or downloads fresh from GitHub
+- Installs local rules to `.codex/rules/`
+- Helper script handles backup automatically
 
 ### Confirm Local Configuration Success
 
-After completing local configuration, save progress and report:
-
-```bash
-# Save progress - Step 2 complete (Local config)
-mkdir -p .omc/state
-cat > ".omc/state/setup-state.json" << EOF
-{
-  "lastCompletedStep": 2,
-  "timestamp": "$(date -Iseconds)",
-  "configType": "local"
-}
-EOF
-```
-
 **OMC Project Configuration Complete**
-- CODEX.md: Updated with latest configuration from GitHub at ./.codex/CODEX.md
-- Backup: Previous CODEX.md backed up to `.codex/CODEX.md.backup.YYYY-MM-DD` (if existed)
+- CLAUDE.md: Installed to ./.codex/CLAUDE.md
 - Scope: **PROJECT** - applies only to this project
-- Hooks: Provided by plugin (no manual installation needed)
-- Agents: 28+ available (base + tiered variants)
-- Model routing: Haiku/Sonnet/Opus based on task complexity
-
-**Note**: This configuration is project-specific and won't affect other projects or global settings.
-
-If `--local` flag was used, clear state and **STOP HERE**:
-```bash
-rm -f ".omc/state/setup-state.json"
-```
-Do not continue to HUD setup or other steps.
+- Skills: Available via `.codex/skills` (if copied) or global fallback
+- Rules: Project-specific rules in `.codex/rules`
 
 ## Step 2B: Global Configuration (--global flag or user chose GLOBAL)
 
-**CRITICAL**: This ALWAYS downloads fresh CODEX.md from GitHub to global config. DO NOT use the Write tool - use bash curl exclusively.
-
-### Download Fresh CODEX.md
+Use the helper script to install global configuration:
 
 ```bash
-# Extract old version before download
-OLD_VERSION=$(grep -m1 "^# oh-my-codex" ~/.codex/CODEX.md 2>/dev/null | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' || echo "none")
-
-# Backup existing CODEX.md before overwriting (if it exists)
-if [ -f "$HOME/.codex/CODEX.md" ]; then
-  BACKUP_DATE=$(date +%Y-%m-%d)
-  BACKUP_PATH="$HOME/.codex/CODEX.md.backup.${BACKUP_DATE}"
-  cp "$HOME/.codex/CODEX.md" "$BACKUP_PATH"
-  echo "Backed up existing CODEX.md to $BACKUP_PATH"
-fi
-
-# Download fresh CODEX.md to global config
-curl -fsSL "https://raw.githubusercontent.com/Yeachan-Heo/oh-my-codex/main/docs/CODEX.md" -o ~/.codex/CODEX.md && \
-echo "Downloaded CODEX.md to ~/.codex/CODEX.md"
-
-# Extract new version and report
-NEW_VERSION=$(grep -m1 "^# oh-my-codex" ~/.codex/CODEX.md 2>/dev/null | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' || echo "unknown")
-if [ "$OLD_VERSION" = "none" ]; then
-  echo "Installed CODEX.md: $NEW_VERSION"
-elif [ "$OLD_VERSION" = "$NEW_VERSION" ]; then
-  echo "CODEX.md unchanged: $NEW_VERSION"
-else
-  echo "Updated CODEX.md: $OLD_VERSION -> $NEW_VERSION"
-fi
+# Run installer in global mode (default)
+./scripts/install-codex.sh --rules
 ```
 
-**Note**: If an existing CODEX.md is found, it will be backed up to `~/.codex/CODEX.md.backup.YYYY-MM-DD` before downloading the new version.
-
-### Clean Up Legacy Hooks (if present)
-
-Check if old manual hooks exist and remove them to prevent duplicates:
-
-```bash
-# Remove legacy bash hook scripts (now handled by plugin system)
-rm -f ~/.codex/hooks/keyword-detector.sh
-rm -f ~/.codex/hooks/stop-continuation.sh
-rm -f ~/.codex/hooks/persistent-mode.sh
-rm -f ~/.codex/hooks/session-start.sh
-echo "Legacy hooks cleaned"
-```
-
-Check `~/.codex/settings.json` for manual hook entries. If the "hooks" key exists with UserPromptSubmit, Stop, or SessionStart entries pointing to bash scripts, inform the user:
-
-> **Note**: Found legacy hooks in settings.json. These should be removed since the plugin now provides hooks automatically. Remove the "hooks" section from ~/.codex/settings.json to prevent duplicate hook execution.
-
-### Verify Plugin Installation
-
-```bash
-grep -q "oh-my-codex" ~/.codex/settings.json && echo "Plugin verified" || echo "Plugin NOT found - run: claude /install-plugin oh-my-codex"
-```
+**What this does:**
+- Copies `templates/CLAUDE.md` or downloads fresh from GitHub to `~/.codex/CLAUDE.md`
+- Installs global rules to `~/.codex/rules/`
+- Helper script handles backup automatically
 
 ### Confirm Global Configuration Success
 
-After completing global configuration, save progress and report:
-
-```bash
-# Save progress - Step 2 complete (Global config)
-mkdir -p .omc/state
-cat > ".omc/state/setup-state.json" << EOF
-{
-  "lastCompletedStep": 2,
-  "timestamp": "$(date -Iseconds)",
-  "configType": "global"
-}
-EOF
-```
-
 **OMC Global Configuration Complete**
-- CODEX.md: Updated with latest configuration from GitHub at ~/.codex/CODEX.md
-- Backup: Previous CODEX.md backed up to `~/.codex/CODEX.md.backup.YYYY-MM-DD` (if existed)
+- CLAUDE.md: Installed to ~/.codex/CLAUDE.md
 - Scope: **GLOBAL** - applies to all Codex sessions
-- Hooks: Provided by plugin (no manual installation needed)
-- Agents: 28+ available (base + tiered variants)
-- Model routing: Haiku/Sonnet/Opus based on task complexity
+- Skills: Available globally in `~/.codex/skills`
+- Rules: Global rules in `~/.codex/rules`
 
-**Note**: Hooks are now managed by the plugin system automatically. No manual hook installation required.
+## Step 3: Full Reinstall (Optional)
 
-If `--global` flag was used, clear state and **STOP HERE**:
-```bash
-rm -f ".omc/state/setup-state.json"
-```
-Do not continue to HUD setup or other steps.
-
-## Step 3: Setup HUD Statusline
-
-**Note**: If resuming and lastCompletedStep >= 3, skip to Step 3.5.
-
-The HUD shows real-time status in Codex's status bar. **Invoke the hud skill** to set up and configure:
-
-Use the Skill tool to invoke: `hud` with args: `setup`
-
-This will:
-1. Install the HUD wrapper script to `~/.codex/hud/omc-hud.mjs`
-2. Configure `statusLine` in `~/.codex/settings.json`
-3. Report status and prompt to restart if needed
-
-After HUD setup completes, save progress:
-```bash
-# Save progress - Step 3 complete (HUD setup)
-mkdir -p .omc/state
-CONFIG_TYPE=$(cat ".omc/state/setup-state.json" 2>/dev/null | grep -oE '"configType":\s*"[^"]+"' | cut -d'"' -f4 || echo "unknown")
-cat > ".omc/state/setup-state.json" << EOF
-{
-  "lastCompletedStep": 3,
-  "timestamp": "$(date -Iseconds)",
-  "configType": "$CONFIG_TYPE"
-}
-EOF
-```
-
-## Step 3.5: Clear Stale Plugin Cache
-
-Clear old cached plugin versions to avoid conflicts:
+If user chose "Full Reinstall", run the comprehensive installer:
 
 ```bash
-# Clear stale plugin cache versions
-CACHE_DIR="$HOME/.codex/plugins/cache/omc/oh-my-codex"
-if [ -d "$CACHE_DIR" ]; then
-  LATEST=$(ls -1 "$CACHE_DIR" | sort -V | tail -1)
-  CLEARED=0
-  for dir in "$CACHE_DIR"/*; do
-    if [ "$(basename "$dir")" != "$LATEST" ]; then
-      rm -rf "$dir"
-      CLEARED=$((CLEARED + 1))
-    fi
-  done
-  [ $CLEARED -gt 0 ] && echo "Cleared $CLEARED stale cache version(s)" || echo "Cache is clean"
-else
-  echo "No cache directory found (normal for new installs)"
-fi
+./scripts/install-codex.sh --all
 ```
 
-## Step 3.6: Check for Updates
+This installs:
+- Skills
+- Rules
+- Prompts (deprecated but included)
+- MCP Config
+- Plan Mode check
 
-Notify user if a newer version is available:
-
-```bash
-# Detect installed version
-INSTALLED_VERSION=""
-
-# Try cache directory first
-if [ -d "$HOME/.codex/plugins/cache/omc/oh-my-codex" ]; then
-  INSTALLED_VERSION=$(ls -1 "$HOME/.codex/plugins/cache/omc/oh-my-codex" | sort -V | tail -1)
-fi
-
-# Try .omc-version.json second
-if [ -z "$INSTALLED_VERSION" ] && [ -f ".omc-version.json" ]; then
-  INSTALLED_VERSION=$(grep -oE '"version":\s*"[^"]+' .omc-version.json | cut -d'"' -f4)
-fi
-
-# Try CODEX.md header third (local first, then global)
-if [ -z "$INSTALLED_VERSION" ]; then
-  if [ -f ".codex/CODEX.md" ]; then
-    INSTALLED_VERSION=$(grep -m1 "^# oh-my-codex" .codex/CODEX.md 2>/dev/null | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' | sed 's/^v//')
-  elif [ -f "$HOME/.codex/CODEX.md" ]; then
-    INSTALLED_VERSION=$(grep -m1 "^# oh-my-codex" "$HOME/.codex/CODEX.md" 2>/dev/null | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' | sed 's/^v//')
-  fi
-fi
-
-# Check npm for latest version
-LATEST_VERSION=$(npm view oh-my-claude-sisyphus version 2>/dev/null)
-
-if [ -n "$INSTALLED_VERSION" ] && [ -n "$LATEST_VERSION" ]; then
-  # Simple version comparison (assumes semantic versioning)
-  if [ "$INSTALLED_VERSION" != "$LATEST_VERSION" ]; then
-    echo ""
-    echo "UPDATE AVAILABLE:"
-    echo "  Installed: v$INSTALLED_VERSION"
-    echo "  Latest:    v$LATEST_VERSION"
-    echo ""
-    echo "To update, run: claude /install-plugin oh-my-codex"
-  else
-    echo "You're on the latest version: v$INSTALLED_VERSION"
-  fi
-elif [ -n "$LATEST_VERSION" ]; then
-  echo "Latest version available: v$LATEST_VERSION"
-fi
-```
-
-## Step 3.7: Set Default Execution Mode
-
-Use the AskUserQuestion tool to prompt the user:
-
-**Question:** "Which parallel execution mode should be your default when you say 'fast' or 'parallel'?"
-
-**Options:**
-1. **ultrawork (maximum capability)** - Uses all agent tiers including Opus for complex tasks. Best for challenging work where quality matters most. (Recommended)
-2. **ecomode (token efficient)** - Prefers Haiku/Sonnet agents, avoids Opus. Best for pro-plan users who want cost efficiency.
-
-Store the preference in `~/.codex/.omc-config.json`:
-
-```bash
-# Read existing config or create empty object
-CONFIG_FILE="$HOME/.codex/.omc-config.json"
-mkdir -p "$(dirname "$CONFIG_FILE")"
-
-if [ -f "$CONFIG_FILE" ]; then
-  EXISTING=$(cat "$CONFIG_FILE")
-else
-  EXISTING='{}'
-fi
-
-# Set defaultExecutionMode (replace USER_CHOICE with "ultrawork" or "ecomode")
-echo "$EXISTING" | jq --arg mode "USER_CHOICE" '. + {defaultExecutionMode: $mode, configuredAt: (now | todate)}' > "$CONFIG_FILE"
-echo "Default execution mode set to: USER_CHOICE"
-```
-
-**Note**: This preference ONLY affects generic keywords ("fast", "parallel"). Explicit keywords ("ulw", "eco") always override this preference.
-
-## Step 3.8: Install CLI Analytics Tools (Optional)
-
-The OMC CLI provides standalone token analytics commands (`omc stats`, `omc agents`, `omc tui`).
-
-Ask user: "Would you like to install the OMC CLI for standalone analytics? (Recommended for tracking token usage and costs)"
-
-**Options:**
-1. **Yes (Recommended)** - Install CLI tools globally for `omc stats`, `omc agents`, etc.
-2. **No** - Skip CLI installation, use only plugin skills
-
-### CLI Installation Note
-
-The CLI (`omc` command) is **no longer supported** via npm/bun global install.
-
-All functionality is available through the plugin system:
-- Use `$help` for guidance
-- Use `$doctor` for diagnostics
-
-Skip this step - the plugin provides all features.
-
-## Step 4: Verify Plugin Installation
-
-```bash
-grep -q "oh-my-codex" ~/.codex/settings.json && echo "Plugin verified" || echo "Plugin NOT found - run: claude /install-plugin oh-my-codex"
-```
-
-## Step 5: Offer MCP Server Configuration
-
-MCP servers extend Codex with additional tools (web search, GitHub, etc.).
+## Step 4: MCP Configuration
 
 Ask user: "Would you like to configure MCP servers for enhanced capabilities? (Context7, Exa search, GitHub, etc.)"
 
@@ -494,24 +120,12 @@ $mcp-setup
 
 If no, skip to next step.
 
-## Step 6: Detect Upgrade from 2.x
-
-Check if user has existing configuration:
-```bash
-# Check for existing 2.x artifacts
-ls ~/.codex/commands/ralph-loop.md 2>/dev/null || ls ~/.codex/commands/ultrawork.md 2>/dev/null
-```
-
-If found, this is an upgrade from 2.x.
-
-## Step 7: Show Welcome Message
-
-### For New Users:
+## Step 5: Show Welcome Message
 
 ```
 OMC Setup Complete!
 
-You don't need to learn any commands. I now have intelligent behaviors that activate automatically.
+You don't need to learn any commands. I now have intelligent behaviors that activate automatically via the Codex CLI.
 
 WHAT HAPPENS AUTOMATICALLY:
 - Complex tasks -> I parallelize and delegate to specialists
@@ -530,62 +144,18 @@ Just include these words naturally in your request:
 | eco | Token-efficient mode | "eco refactor the API" |
 | plan | Planning interview | "plan the new endpoints" |
 
-**ralph includes ultrawork:** When you activate ralph mode, it automatically includes ultrawork's parallel execution. No need to combine keywords.
-
 MCP SERVERS:
 Run $mcp-setup to add tools like web search, GitHub, etc.
 
-HUD STATUSLINE:
-The status bar now shows OMC state. Restart Claude Code to see it.
+CLI ANALYTICS:
+Check 'codex cost' for usage info.
 
-CLI ANALYTICS (if installed):
-- omc           - Full dashboard (stats + agents + cost)
-- omc stats     - View token usage and costs
-- omc agents    - See agent breakdown by cost
-- omc tui       - Launch interactive TUI dashboard
-
-That's it! Just use Claude Code normally.
+That's it! Just use Codex CLI normally.
 ```
 
-### For Users Upgrading from 2.x:
+## Step 6: Ask About Starring Repository
 
-```
-OMC Setup Complete! (Upgraded from 2.x)
-
-GOOD NEWS: Your existing commands still work!
-- /ralph, /ultrawork, /plan, etc. all still function
-
-WHAT'S NEW in 3.0:
-You no longer NEED those commands. Everything is automatic now:
-- Just say "don't stop until done" instead of /ralph
-- Just say "fast" or "parallel" instead of /ultrawork
-- Just say "plan this" instead of /plan
-- Just say "stop" instead of /cancel
-
-MAGIC KEYWORDS (power-user shortcuts):
-| Keyword | Same as old... | Example |
-|---------|----------------|---------|
-| ralph | /ralph | "ralph: fix the bug" |
-| ralplan | /ralplan | "ralplan this feature" |
-| ulw | /ultrawork | "ulw refactor API" |
-| eco | (new!) | "eco fix all errors" |
-| plan | /plan | "plan the endpoints" |
-
-HUD STATUSLINE:
-The status bar now shows OMC state. Restart Codex to see it.
-
-CLI ANALYTICS (if installed):
-- omc           - Full dashboard (stats + agents + cost)
-- omc stats     - View token usage and costs
-- omc agents    - See agent breakdown by cost
-- omc tui       - Launch interactive TUI dashboard
-
-Your workflow won't break - it just got easier!
-```
-
-## Step 8: Ask About Starring Repository
-
-First, check if `gh` CLI is available and authenticated:
+ First, check if `gh` CLI is available and authenticated:
 
 ```bash
 gh auth status &>/dev/null
@@ -593,22 +163,19 @@ gh auth status &>/dev/null
 
 ### If gh is available and authenticated:
 
-Use the AskUserQuestion tool to prompt the user:
+Prompt the user in plain text with numbered choices:
 
 **Question:** "If you're enjoying oh-my-codex, would you like to support the project by starring it on GitHub?"
 
 **Options:**
 1. **Yes, star it!** - Star the repository
 2. **No thanks** - Skip without further prompts
-3. **Maybe later** - Skip without further prompts
 
 If user chooses "Yes, star it!":
 
 ```bash
 gh api -X PUT /user/starred/Yeachan-Heo/oh-my-codex 2>/dev/null && echo "Thanks for starring! ⭐" || true
 ```
-
-**Note:** Fail silently if the API call doesn't work - never block setup completion.
 
 ### If gh is NOT available or not authenticated:
 
@@ -619,62 +186,32 @@ echo "  https://github.com/Yeachan-Heo/oh-my-codex"
 echo ""
 ```
 
-### Clear Setup State on Completion
-
-After Step 8 completes (regardless of star choice), clear the setup state:
-
-```bash
-# Setup complete - clear state file
-rm -f ".omc/state/setup-state.json"
-echo "Setup completed successfully!"
-```
-
-## Keeping Up to Date
-
-After installing oh-my-codex updates (via npm or plugin update), run:
-- `$omc-setup --local` to update project config
-- `$omc-setup --global` to update global config
-
-This ensures you have the newest features and agent configurations.
-
 ## Help Text
 
 When user runs `$omc-setup --help` or just `--help`, display:
 
 ```
-OMC Setup - Configure oh-my-codex
+OMC Setup - Configure oh-my-codex for Codex CLI
 
 USAGE:
   $omc-setup           Run initial setup wizard
-  $omc-setup --local   Configure local project (.codex/CODEX.md)
-  $omc-setup --global  Configure global settings (~/.codex/CODEX.md)
+  $omc-setup --local   Configure local project (.codex/CLAUDE.md)
+  $omc-setup --global  Configure global settings (~/.codex/CLAUDE.md)
   $omc-setup --help    Show this help
 
 MODES:
   Initial Setup (no flags)
     - Interactive wizard for first-time setup
-    - Configures CODEX.md (local or global)
-    - Sets up HUD statusline
-    - Checks for updates
+    - Configures CLAUDE.md (local or global)
     - Offers MCP server configuration
 
   Local Configuration (--local)
-    - Downloads fresh CODEX.md to ./.codex/
-    - Backs up existing CODEX.md to .codex/CODEX.md.backup.YYYY-MM-DD
+    - Installs CLAUDE.md to ./.codex/
     - Project-specific settings
-    - Use this to update project config after OMC upgrades
 
   Global Configuration (--global)
-    - Downloads fresh CODEX.md to ~/.codex/
-    - Backs up existing CODEX.md to ~/.codex/CODEX.md.backup.YYYY-MM-DD
-    - Applies to all Codex sessions
-    - Cleans up legacy hooks
-    - Use this to update global config after OMC upgrades
-
-EXAMPLES:
-  $omc-setup           # First time setup
-  $omc-setup --local   # Update this project
-  $omc-setup --global  # Update all projects
+    - Installs CLAUDE.md to ~/.codex/
+    - Global settings for all Codex sessions
 
 For more info: https://github.com/Yeachan-Heo/oh-my-codex
 ```

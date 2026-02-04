@@ -94,11 +94,11 @@ Result: [tests still pass]
 
 **Remember:** The discipline IS the value. Shortcuts destroy the benefit.
 
-## Imported from everything-claude-code
+## Imported from everything-codex
 
 ---
 name: ecc-tdd
-description: Imported from everything-claude-code command tdd
+description: Imported from everything-codex command tdd
 ---
 
 ---
@@ -436,7 +436,7 @@ Never skip the RED phase. Never write code before tests.
 ## Related Agents
 
 This command invokes the `tdd-guide` agent located at:
-`~/.codex/agents/tdd-guide.md`
+`~/.codex/agents/tdd-guide.md` (if present)
 
 And can reference the `tdd-workflow` skill at:
-`~/.codex/skills/tdd-workflow/`
+`~/.codex/skills/tdd-workflow/` (if present)

@@ -1,6 +1,6 @@
 ---
 name: help
-description: Guide on using oh-my-codex plugin
+description: Guide on using oh-my-codex skills
 ---
 
 # How OMC Works

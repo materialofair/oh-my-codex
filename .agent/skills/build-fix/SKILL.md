@@ -138,11 +138,11 @@ Keeps trying until build passes, even if it takes multiple iterations.
 ```
 Uses: explore → architect → build-fixer workflow.
 
-## Imported from everything-claude-code
+## Imported from everything-codex
 
 ---
 name: ecc-build-fix
-description: Imported from everything-claude-code command build-fix
+description: Imported from everything-codex command build-fix
 ---
 
 # Build and Fix

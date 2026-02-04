@@ -194,11 +194,11 @@ Parallel code review across multiple files.
 - **Consider context** - Some "issues" may be intentional trade-offs
 - **Learn from reviews** - Use feedback to improve coding practices
 
-## Imported from everything-claude-code
+## Imported from everything-codex
 
 ---
 name: ecc-code-review
-description: Imported from everything-claude-code command code-review
+description: Imported from everything-codex command code-review
 ---
 
 # Code Review

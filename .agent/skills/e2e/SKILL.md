@@ -1,6 +1,6 @@
 ---
 name: e2e
-description: Imported from everything-claude-code command e2e
+description: Imported from everything-codex command e2e
 ---
 
 ---
@@ -356,7 +356,7 @@ For PMX, prioritize these E2E tests:
 ## Related Agents
 
 This command invokes the `e2e-runner` agent located at:
-`~/.claude/agents/e2e-runner.md`
+`~/.codex/agents/e2e-runner.md` (if present)
 
 ## Quick Commands
 
@@ -379,4 +379,3 @@ npx playwright codegen http://localhost:3000
 # View report
 npx playwright show-report
 ```
-

@@ -174,7 +174,7 @@ Parse `{{ARGUMENTS}}` to determine:
 
 8. **Launch Codex** (unless --no-codex):
    ```bash
-   tmux send-keys -t "psm:$project_alias:pr-$pr_number" "claude" Enter
+   tmux send-keys -t "psm:$project_alias:pr-$pr_number" "codex" Enter
    ```
 
 9. **Output session info**:

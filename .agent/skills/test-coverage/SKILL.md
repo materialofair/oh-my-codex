@@ -1,6 +1,6 @@
 ---
 name: test-coverage
-description: Imported from everything-claude-code command test-coverage
+description: Imported from everything-codex command test-coverage
 ---
 
 # Test Coverage

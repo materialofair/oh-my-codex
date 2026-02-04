@@ -1,6 +1,6 @@
 ---
 name: update-codemaps
-description: Imported from everything-claude-code command update-codemaps
+description: Imported from everything-codex command update-codemaps
 ---
 
 # Update Codemaps

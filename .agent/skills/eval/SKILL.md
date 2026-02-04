@@ -1,6 +1,6 @@
 ---
 name: eval
-description: Imported from everything-claude-code command eval
+description: Imported from everything-codex command eval
 ---
 
 # Eval Command
@@ -30,7 +30,7 @@ Manage eval-driven development workflow.
 
 Create a new eval definition:
 
-1. Create `.claude/evals/feature-name.md` with template:
+1. Create `.codex/evals/feature-name.md` with template:
 
 ```markdown
 ## EVAL: feature-name
@@ -57,11 +57,11 @@ Created: $(date)
 
 Run evals for a feature:
 
-1. Read eval definition from `.claude/evals/feature-name.md`
+1. Read eval definition from `.codex/evals/feature-name.md`
 2. For each capability eval:
    - Attempt to verify criterion
    - Record PASS/FAIL
-   - Log attempt in `.claude/evals/feature-name.log`
+   - Log attempt in `.codex/evals/feature-name.log`
 3. For each regression eval:
    - Run relevant tests
    - Compare against baseline
@@ -136,4 +136,3 @@ $ARGUMENTS:
 - `report <name>` - Generate full report
 - `list` - Show all evals
 - `clean` - Remove old eval logs (keeps last 10 runs)
-

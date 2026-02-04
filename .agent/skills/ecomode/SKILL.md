@@ -110,7 +110,7 @@ Task(subagent_type="oh-my-codex:explore-medium", model="sonnet", prompt="Find al
 | **UI work** | ✗ NEVER | designer-low/designer |
 | **Docs** | ✗ NEVER | writer |
 
-**Path Exception**: Only write to `.omc/`, `.codex/`, `CODEX.md`, `AGENTS.md`
+**Path Exception**: Only write to `.omc/`, `.codex/`, `CLAUDE.md`, `AGENTS.md`
 
 ## Background Execution Rules
 

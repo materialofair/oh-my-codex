@@ -18,7 +18,7 @@ Required sections (in order):
 [REVIEWER] Verification + risks
 ```
 
-A comprehensive verification system for Claude Code sessions.
+A comprehensive verification system for Codex sessions.
 
 ## When to Use
 
@@ -134,5 +134,5 @@ Run: /verify
 
 ## Integration with Hooks
 
-This skill complements PostToolUse hooks but provides deeper verification.
+This skill complements any available tool hooks but provides deeper verification.
 Hooks catch issues immediately; this skill provides comprehensive review.

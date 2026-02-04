@@ -1,6 +1,6 @@
 ---
 name: skill-create
-description: Imported from everything-claude-code command skill-create
+description: Imported from everything-codex command skill-create
 ---
 
 ---
@@ -189,5 +189,5 @@ For advanced features (10k+ commits, team sharing, auto-PRs), use the [Skill Cre
 
 ---
 
-*Part of [Everything Claude Code](https://github.com/affaan-m/everything-claude-code)*
+*Part of [Everything Codex](https://github.com/affaan-m/everything-codex)*
 

@@ -36,10 +36,6 @@ Required sections (in order):
 
 > Codex invocation: use `$mcp-setup ...` or `mcp-setup: ...`
 
-> Codex limitation: This workflow references Codex CLI plugin features. Treat steps as documentation only.
-
-
-
 Configure Model Context Protocol (MCP) servers to extend Codex's capabilities with external tools like web search, file system access, and GitHub integration.
 
 ## Overview
@@ -48,7 +44,7 @@ MCP servers provide additional tools that Codex agents can use. This skill helps
 
 ## Step 1: Show Available MCP Servers
 
-Present the user with available MCP server options using AskUserQuestion:
+Present the user with available MCP server options in plain text with numbered choices:
 
 **Question:** "Which MCP server would you like to configure?"
 
@@ -92,7 +88,7 @@ Do you have a GitHub Personal Access Token?
 
 ## Step 3: Add MCP Servers Using CLI
 
-Use the `codex mcp add` command to configure each MCP server. The CLI automatically handles settings.json updates and merging.
+Use the `codex mcp add` command to configure each MCP server.
 
 ### Context7 Configuration:
 ```bash

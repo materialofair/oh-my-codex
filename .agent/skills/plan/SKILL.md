@@ -58,9 +58,9 @@ Ask clarifying questions about: Goals, Constraints, Context, Risks, Preferences
 
 **CRITICAL**: Don't assume. Ask until requirements are clear.
 
-**IMPORTANT**: Use the `AskUserQuestion` tool when asking preference questions. This provides a clickable UI for faster responses.
+**IMPORTANT**: Ask preference questions in plain text with numbered options for quick replies.
 
-**Question types requiring AskUserQuestion:**
+**Question types requiring explicit options:**
 - Preference (speed vs quality)
 - Requirement (deadline)
 - Scope (include feature Y?)
@@ -170,11 +170,11 @@ If requirements are clear, I'll plan directly. If not, I'll start an interview.
 
 Tell me what you want to accomplish.
 
-## Imported from everything-claude-code
+## Imported from everything-codex
 
 ---
 name: ecc-plan
-description: Imported from everything-claude-code command plan
+description: Imported from everything-codex command plan
 ---
 
 ---
@@ -302,4 +302,4 @@ After planning:
 ## Related Agents
 
 This command invokes the `planner` agent located at:
-`~/.claude/agents/planner.md`
+`~/.codex/agents/planner.md` (if present)

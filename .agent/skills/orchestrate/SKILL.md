@@ -423,11 +423,11 @@ If the user's approach seems problematic:
 - When uncertain about scope, ask
 </Constraints>
 
-## Imported from everything-claude-code
+## Imported from everything-codex
 
 ---
 name: ecc-orchestrate
-description: Imported from everything-claude-code command orchestrate
+description: Imported from everything-codex command orchestrate
 ---
 
 # Orchestrate Command

@@ -1,6 +1,6 @@
 ---
 name: update-docs
-description: Imported from everything-claude-code command update-docs
+description: Imported from everything-codex command update-docs
 ---
 
 # Update Documentation
