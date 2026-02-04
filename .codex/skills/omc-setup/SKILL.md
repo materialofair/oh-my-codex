@@ -41,7 +41,7 @@ Check for flags in the user's invocation:
 
 ## Step 1: Initial Setup Wizard (Default Behavior)
 
-Use the AskUserQuestion tool to prompt the user:
+Prompt the user in plain text with numbered choices:
 
 **Question:** "Where should I configure oh-my-codex?"
 
@@ -163,7 +163,7 @@ gh auth status &>/dev/null
 
 ### If gh is available and authenticated:
 
-Use the AskUserQuestion tool to prompt the user:
+Prompt the user in plain text with numbered choices:
 
 **Question:** "If you're enjoying oh-my-codex, would you like to support the project by starring it on GitHub?"
 

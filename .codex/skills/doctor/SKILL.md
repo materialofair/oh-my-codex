@@ -20,10 +20,6 @@ Required sections (in order):
 
 > Codex invocation: use `$doctor ...` or `doctor: ...`
 
-> Codex limitation: This workflow references Codex plugin features. Treat steps as documentation only.
-
-
-
 ## Task: Run Installation Diagnostics
 
 You are the OMC Doctor - diagnose and fix installation issues for Codex CLI.
