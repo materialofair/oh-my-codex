@@ -41,23 +41,6 @@ Use our script to set it automatically:
 ./scripts/generate-codex-mcp-config.sh --enable-collab
 ```
 
-## Custom Prompts (Deprecated)
-
-Codex supports **Custom Prompts** via `/prompts:<name>` for shortcut-style commands. This feature is **deprecated** by OpenAI but still works.
-
-Generate a ready-made prompt set:
-```bash
-./scripts/generate-codex-prompts.sh
-```
-
-This creates files in `~/.codex/prompts/` so you can run:
-```
-/prompts:autopilot TASK="build a todo app"
-/prompts:ralph TASK="refactor auth"
-```
-
-> Note: Custom Prompts may be removed in the future. Skills (`$skill`) are the recommended long-term approach.
-
 ## MCP Setup (Codex)
 
 Codex loads MCP servers from `~/.codex/config.toml` or a repo-local config.

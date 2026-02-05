@@ -33,7 +33,6 @@ Incremental (skip existing files):
 Installs:
 - **Skills** → `~/.codex/skills/`
 - **Rules** → `~/.codex/rules/`
-- **Prompts** → `~/.codex/prompts/`
 - **MCP config + Plan mode** → `~/.codex/config.toml`
 
 **Project‑local**
@@ -50,7 +49,6 @@ Installs:
 - **Learning & context**: `continuous-learning`, `strategic-compact`, `iterative-retrieval`, `verification-loop`
 - **Rules & guardrails**: coding, security, testing, performance, git workflow
 - **Plan mode enabled** (Codex 0.9+)
-- **Optional /prompts shortcuts** (deprecated but usable)
 
 ---
 
@@ -60,7 +58,6 @@ Installs:
 |---|---|---|
 | Skills‑based workflows | ✅ | ✅ (primary) |
 | Plan Mode | ⚠️ plugin‑driven | ✅ native (0.9+ with config) |
-| /prompts shortcuts | ❌ | ⚠️ deprecated but usable |
 | MCP support | ✅ | ✅ (config.toml / CLI) |
 
 Note: Some Claude Code features are not available in Codex due to architectural differences. If Codex adds native support later, we will adopt it.
@@ -91,14 +88,6 @@ Install rules automatically:
 
 ---
 
-## /prompts Shortcuts (Deprecated)
-
-Generate shortcut commands like `/prompts:autopilot`:
-```bash
-./scripts/generate-codex-prompts.sh
-```
-
----
 
 ## Quick Start
 
@@ -111,7 +100,6 @@ autopilot: build a REST API for managing tasks
 ## Docs
 
 - `docs/CODEX.md`
-- `docs/PROMPTS.md`
 - `docs/ALIGNMENT.md`
 
 ---

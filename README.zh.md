@@ -23,7 +23,6 @@
 安装内容包括：
 - **Skills** → `~/.codex/skills/`
 - **Rules** → `~/.codex/rules/`
-- **Prompts** → `~/.codex/prompts/`
 - **MCP 配置 + Plan 模式** → `~/.codex/config.toml`
 
 **项目级安装**
@@ -40,7 +39,6 @@
 - **学习与上下文**：`continuous-learning`, `strategic-compact`, `iterative-retrieval`, `verification-loop`
 - **规则与守护**：编码 / 安全 / 测试 / 性能 / Git 工作流
 - **Plan 模式已开启**（Codex 0.9+）
-- **可选 /prompts 快捷指令**（deprecated 但可用）
 
 ---
 
@@ -50,7 +48,6 @@
 |---|---|---|
 | Skills 工作流 | ✅ | ✅（主方式） |
 | Plan 模式 | ⚠️ 插件驱动 | ✅ 原生（0.9+ 配置开启） |
-| /prompts 快捷指令 | ❌ | ⚠️ deprecated 但可用 |
 | MCP 支持 | ✅ | ✅（config.toml/CLI） |
 
 说明：部分 Claude Code 能力因 Codex 架构差异暂不可用。若未来 Codex 原生支持，我们会第一时间跟进。
@@ -81,14 +78,6 @@
 
 ---
 
-## /prompts 快捷指令（Deprecated）
-
-生成快捷指令：
-```bash
-./scripts/generate-codex-prompts.sh
-```
-
----
 
 ## 快速开始
 
@@ -101,7 +90,6 @@ autopilot: build a REST API for managing tasks
 ## 文档
 
 - `docs/CODEX.md`
-- `docs/PROMPTS.md`
 - `docs/ALIGNMENT.md`
 
 ---

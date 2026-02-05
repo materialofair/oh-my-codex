@@ -1,5 +1,0 @@
----
-description: Parallel autopilot with file ownership partitioning
----
-1. View the file at /Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/.agent/skills/ultrapilot/SKILL.md
-2. Follow the instructions in the file to execute the skill.

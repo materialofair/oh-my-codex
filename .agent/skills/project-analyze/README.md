@@ -1,0 +1,42 @@
+# Project Analyze (ProjectMind)
+
+Analyze project architecture, dependencies, and structure using ProjectMind knowledge graph for intelligent project understanding.
+
+## Quick Install
+
+```bash
+# Already installed at:
+~/.claude/skills/project-analyze/
+```
+
+## Usage
+
+```
+"Analyze project structure"
+"Show dependency graph"
+"Identify architectural issues"
+```
+
+## What It Does
+
+- ✅ 40-second intelligent project understanding
+- ✅ Architecture pattern detection
+- ✅ Dependency analysis and visualization
+- ✅ Impact analysis for changes
+- ✅ Knowledge graph generation
+
+## Files
+
+- `SKILL.md` - Complete analysis methodology
+- `README.md` - This quick start guide
+- `HOW_TO_USE.md` - Detailed analysis guide
+- `references/` - Analysis patterns (Phase 2)
+- `assets/` - Report templates (Phase 2)
+
+## When to Use
+
+- Understanding new codebases
+- Onboarding new team members
+- Before making large changes
+- Identifying refactoring opportunities
+- Architecture documentation
