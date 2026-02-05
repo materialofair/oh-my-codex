@@ -11,7 +11,6 @@ GLOBAL_SKILLS="$HOME/.codex/skills"
 GLOBAL_RULES="$HOME/.codex/rules"
 PROJECT_RULES="$PWD/.codex/rules"
 
-PROMPTS="false"
 RULES="false"
 MCP="false"
 ENABLE_COLLAB="false"
@@ -23,8 +22,7 @@ usage() {
 Usage: ./scripts/install-codex.sh [options]
 
 Options:
-  --all             Install skills + prompts + rules + mcp config + plan mode
-  --prompts         Generate /prompts shortcuts
+  --all             Install skills + rules + mcp config + plan mode
   --rules           Install rules (defaults to global ~/.codex/rules)
   --mcp             Generate MCP config
   --enable-collab   Enable Codex plan mode (features.collaboration_modes = true)
@@ -40,7 +38,6 @@ USAGE
 for arg in "$@"; do
   case "$arg" in
     --all) ALL="true" ;;
-    --prompts) PROMPTS="true" ;;
     --rules) RULES="true" ;;
     --mcp) MCP="true" ;;
     --enable-collab) ENABLE_COLLAB="true" ;;
@@ -50,7 +47,6 @@ for arg in "$@"; do
 done
 
 if [[ "$ALL" == "true" ]]; then
-  PROMPTS="true"
   RULES="true"
   MCP="true"
   ENABLE_COLLAB="true"
@@ -89,10 +85,6 @@ install_dir() {
 install_dir "$SKILLS_SRC" "$GLOBAL_SKILLS" "skills"
 
 echo "Installed skills to $GLOBAL_SKILLS"
-
-if [[ "$PROMPTS" == "true" ]]; then
-  "$ROOT_DIR/scripts/generate-codex-prompts.sh"
-fi
 
 if [[ "$RULES" == "true" ]]; then
   if [[ ! -d "$RULES_SRC" ]]; then
