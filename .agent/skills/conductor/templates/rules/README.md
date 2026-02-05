@@ -20,4 +20,4 @@ Edit `.codex/rules/*.md` to add project-specific checks.
 ## Notes
 
 - Codex also supports global rules under `~/.codex/rules/`.
-- These rules are loaded by Codex (not Claude Code plugins).
+- These rules are loaded by Codex (not legacy Claude Code plugins).

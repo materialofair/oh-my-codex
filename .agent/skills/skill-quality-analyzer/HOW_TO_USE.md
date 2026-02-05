@@ -6,11 +6,11 @@
 
 ```
 "Analyze the quality of my aws-solution-architect skill"
-"Check the quality score for ~/.claude/skills/code-review/"
+"Check the quality score for ~/.codex/skills/code-review/"
 "Generate a quality report for the prompt-factory skill"
 ```
 
-**What Claude will do**:
+**What Codex will do**:
 1. Read the skill's SKILL.md file
 2. Evaluate across 6 dimensions
 3. Calculate overall score (0-100)
@@ -20,7 +20,7 @@
 
 ```
 "Give me a detailed quality analysis of skill-debugger with specific recommendations"
-"Analyze ~/.claude/skills/content-researcher/ and tell me what needs improvement"
+"Analyze ~/.codex/skills/content-researcher/ and tell me what needs improvement"
 ```
 
 **Output includes**:
@@ -28,14 +28,14 @@
 - Dimension-by-dimension scores
 - Critical issues (severity-ranked)
 - Prioritized improvement recommendations
-- Comparison with Anthropic best practices
+- Comparison with Codex best practices
 
 ## Advanced Usage
 
 ### Batch Analysis
 
 ```
-"Analyze all skills in ~/.claude/skills/ and rank them by quality"
+"Analyze all skills in ~/.codex/skills/ and rank them by quality"
 "Compare quality scores across all my custom skills"
 "Which of my skills need the most improvement?"
 ```
@@ -43,7 +43,7 @@
 ### Comparative Analysis
 
 ```
-"Compare my code-review skill against Anthropic's official examples"
+"Compare my code-review skill against Codex's official examples"
 "How does my skill-tester compare to best practices?"
 "Show me the quality difference between my top 3 and bottom 3 skills"
 ```
@@ -103,7 +103,7 @@
 **Recommendation**: "Add use case to description (e.g., 'for analyzing...' or 'when you need...')"
 
 **5. Best Practices (15%)**
-- Follows Anthropic guidelines?
+- Follows Codex guidelines?
 - README and HOW_TO_USE present?
 - No backup files or __pycache__?
 
@@ -124,9 +124,9 @@
 
 **User**: "Is my code-review skill good enough to share?"
 
-**Claude**:
+**Codex**:
 ```
-Analyzing ~/.claude/skills/code-review/...
+Analyzing ~/.codex/skills/code-review/...
 
 Overall Score: 87 (Good)
 
@@ -146,7 +146,7 @@ Recommendation: Safe to share, but add sample_input.json and version info for be
 
 **User**: "Why is my skill-tester score only 65?"
 
-**Claude**:
+**Codex**:
 ```
 Quality Analysis: skill-tester (65 - Needs Work)
 
@@ -167,7 +167,7 @@ Fix these 3 issues to reach 80+ (Good quality).
 
 **User**: "Compare quality of all my skills"
 
-**Claude**:
+**Codex**:
 ```
 Quality Analysis (5 skills):
 
@@ -193,7 +193,7 @@ Common issues across all skills: Missing version information (4/5 skills).
 ```bash
 # In your skill development workflow
 1. Create/modify skill
-2. Ask Claude: "Analyze quality of this skill"
+2. Ask Codex: "Analyze quality of this skill"
 3. Fix critical issues (score < 80)
 4. Commit when score ≥ 80
 ```
@@ -230,14 +230,14 @@ You can integrate quality checks into your workflow:
 
 ## Troubleshooting
 
-**Q: "Claude isn't using this skill when I ask about quality"**
+**Q: "Codex isn't using this skill when I ask about quality"**
 A: Try being more explicit: "Use the skill-quality-analyzer skill to analyze..."
 
 **Q: "The score seems too harsh"**
-A: Quality analyzer uses strict Anthropic standards. Score of 70+ is acceptable.
+A: Quality analyzer uses strict Codex standards. Score of 70+ is acceptable.
 
 **Q: "Can I customize the scoring weights?"**
-A: Not currently. Weights are based on Anthropic best practices (Clarity and Structure are most important at 20% each).
+A: Not currently. Weights are based on Codex best practices (Clarity and Structure are most important at 20% each).
 
 **Q: "How do I improve my Trigger Detection score?"**
 A: Add clear "When to Use" section and mention specific use cases in the description.

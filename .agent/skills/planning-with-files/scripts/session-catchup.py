@@ -19,12 +19,12 @@ PLANNING_FILES = ['task_plan.md', 'progress.md', 'findings.md']
 
 
 def get_project_dir(project_path: str) -> Path:
-    """Convert project path to Claude's storage path format."""
+    """Convert project path to Codex's storage path format."""
     sanitized = project_path.replace('/', '-')
     if not sanitized.startswith('-'):
         sanitized = '-' + sanitized
     sanitized = sanitized.replace('_', '-')
-    return Path.home() / '.claude' / 'projects' / sanitized
+    return Path.home() / '.codex' / 'projects' / sanitized
 
 
 def get_sessions_sorted(project_dir: Path) -> List[Path]:
@@ -193,7 +193,7 @@ def main():
             print(f"USER: {msg['content'][:300]}")
         else:
             if msg.get('content'):
-                print(f"CLAUDE: {msg['content'][:300]}")
+                print(f"CODEX: {msg['content'][:300]}")
             if msg.get('tools'):
                 print(f"  Tools: {', '.join(msg['tools'][:4])}")
 

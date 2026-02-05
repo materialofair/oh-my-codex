@@ -97,12 +97,12 @@ CRITICAL: You must validate the success of every tool call. If any tool call fai
 
 3.  **Detect Platform:**
     Determine which platform you are running on:
-    - **Claude/OpenCode:** You have access to the `Task` tool
+    - **Codex/OpenCode:** You have access to the `Task` tool
     - **Gemini CLI:** You have access to the `shell` tool and can invoke `gemini -i`
 
 4.  **Spawn Verification Agent (Platform-Specific):**
 
-    **FOR CLAUDE/OPENCODE:**
+    **FOR CODEX/OPENCODE:**
     Use the `Task` tool with the following prompt:
 
     ```
@@ -211,7 +211,7 @@ CRITICAL: You must validate the success of every tool call. If any tool call fai
     e. **Read Report:** Read the gap analysis from `conductor/tmp/.verify_report_<track_id>.md`
 
 5.  **Await Gap Analysis:**
-    - **Claude/OpenCode:** Use `TaskOutput` to block until verification completes
+    - **Codex/OpenCode:** Use `TaskOutput` to block until verification completes
     - **Gemini CLI:** The shell command blocks; read the report file after completion
     - Receive the gap analysis report from the agent
 

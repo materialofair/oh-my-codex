@@ -1,20 +1,20 @@
 # Skill Quality Analyzer
 
-6-dimension quality analysis system for Claude Code skills, inspired by CodeDNA.
+6-dimension quality analysis system for Codex skills, inspired by CodeDNA.
 
 ## Quick Install
 
 ```bash
 # User-level (all projects)
-cp -r skill-quality-analyzer ~/.claude/skills/
+cp -r skill-quality-analyzer ~/.codex/skills/
 
 # Project-level (current project only)
-cp -r skill-quality-analyzer .claude/skills/
+cp -r skill-quality-analyzer .codex/skills/
 ```
 
 ## Usage
 
-Once installed, Claude will automatically use this skill when you ask about skill quality:
+Once installed, Codex will automatically use this skill when you ask about skill quality:
 
 ```
 "Analyze the quality of my code-review skill"
@@ -30,7 +30,7 @@ Evaluates skills across **6 dimensions** (inspired by CodeDNA):
 2. **Structure** (20%) - Proper YAML, sections, formatting?
 3. **Examples** (15%) - Good usage examples and sample data?
 4. **Trigger Detection** (15%) - Clear when to invoke?
-5. **Best Practices** (15%) - Follows Anthropic guidelines?
+5. **Best Practices** (15%) - Follows Codex guidelines?
 6. **Maintainability** (15%) - Easy to update and maintain?
 
 ## Output
@@ -51,7 +51,7 @@ Evaluates skills across **6 dimensions** (inspired by CodeDNA):
 
 ## No Python Required
 
-This skill is **documentation-driven**. Claude uses the SKILL.md instructions to analyze skills without needing Python implementation. Python modules can be added later if needed for automation.
+This skill is **documentation-driven**. Codex uses the SKILL.md instructions to analyze skills without needing Python implementation. Python modules can be added later if needed for automation.
 
 ## Related Skills
 

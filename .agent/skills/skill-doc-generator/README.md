@@ -1,11 +1,11 @@
 # Skill Documentation Generator
 
-Auto-generates professional documentation for Claude Code skills.
+Auto-generates professional documentation for Codex skills.
 
 ## Quick Install
 
 ```bash
-cp -r skill-doc-generator ~/.claude/skills/
+cp -r skill-doc-generator ~/.codex/skills/
 ```
 
 ## Usage

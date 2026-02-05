@@ -1,11 +1,11 @@
 # Skill Debugger
 
-Debug why your Claude Code skills aren't triggering when they should.
+Debug why your Codex skills aren't triggering when they should.
 
 ## Quick Install
 
 ```bash
-cp -r skill-debugger ~/.claude/skills/
+cp -r skill-debugger ~/.codex/skills/
 ```
 
 ## Usage

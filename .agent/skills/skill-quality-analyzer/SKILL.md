@@ -29,7 +29,7 @@ To perform a high-quality analysis, follow this **Hybrid Workflow**:
 ## Input Requirements
 
 **Single Skill Analysis**:
-- Skill folder path (e.g., `~/.claude/skills/my-skill/`)
+- Skill folder path (e.g., `~/.codex/skills/my-skill/`)
 - Or SKILL.md file path directly
 
 **Batch Analysis**:
@@ -109,7 +109,7 @@ To perform a high-quality analysis, follow this **Hybrid Workflow**:
   - <50: No examples or sample data
 
 ### 4. Trigger Detection (15%)
-- **What it measures**: How easily Claude can determine when to invoke this skill
+- **What it measures**: How easily Codex can determine when to invoke this skill
 - **Key indicators**:
   - Clear "When to use" section
   - Specific trigger keywords identified
@@ -122,9 +122,9 @@ To perform a high-quality analysis, follow this **Hybrid Workflow**:
   - <50: No clear triggers
 
 ### 5. Best Practices (15%)
-- **What it measures**: Adherence to Claude Code skill development standards
+- **What it measures**: Adherence to Codex skill development standards
 - **Key indicators**:
-  - Follows Anthropic naming conventions
+  - Follows Codex naming conventions
   - Proper Python structure (if applicable)
   - README.md and HOW_TO_USE.md present
   - No backup files or __pycache__

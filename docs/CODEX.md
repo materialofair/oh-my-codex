@@ -21,7 +21,7 @@ Incremental (skip existing files):
 
 ### Option B: Repo-local
 ```bash
-cp -R .codex/skills /path/to/your/repo/.codex/
+cp -R .agent/skills /path/to/your/repo/.codex/
 ```
 
 Codex will automatically load skills from both locations.
@@ -85,7 +85,7 @@ Global:
 
 Repo:
 ```
-<repo>/.codex/skills/<skill-name>/SKILL.md
+<repo>/.agent/skills/<skill-name>/SKILL.md
 ```
 
 ## Alignment Status

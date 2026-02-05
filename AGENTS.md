@@ -20,7 +20,7 @@ oh-my-codex enhances Codex with:
 |------|-------------|
 | `README.md` | Entry point documentation |
 | `docs/CODEX.md` | Codex-specific install and usage guide |
-| `.codex/skills/` | All Codex skill definitions |
+| `.agent/skills/` | All Codex skill definitions |
 | `scripts/install-codex.sh` | Global skill installer |
 
 ## For AI Agents

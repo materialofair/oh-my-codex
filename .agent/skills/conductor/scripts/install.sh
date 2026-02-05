@@ -1,5 +1,5 @@
 #!/bin/bash
-# Install Conductor skill for Claude CLI / OpenCode
+# Install Conductor skill for Codex CLI / OpenCode
 # Usage: ./install.sh
 #
 # This script creates a skill directory with symlinks to the Conductor repository,
@@ -32,7 +32,7 @@ echo ""
 echo "Where do you want to install the skill?"
 echo ""
 echo "  1) OpenCode global    (~/.opencode/skill/conductor/)"
-echo "  2) Claude CLI global  (~/.claude/skills/conductor/)"
+echo "  2) Codex CLI global   (~/.codex/skills/conductor/)"
 echo "  3) Both"
 echo ""
 read -p "Choose [1/2/3]: " choice
@@ -42,10 +42,10 @@ case "$choice" in
         TARGETS=("$HOME/.opencode/skill/conductor")
         ;;
     2)
-        TARGETS=("$HOME/.claude/skills/conductor")
+        TARGETS=("$HOME/.codex/skills/conductor")
         ;;
     3)
-        TARGETS=("$HOME/.opencode/skill/conductor" "$HOME/.claude/skills/conductor")
+        TARGETS=("$HOME/.opencode/skill/conductor" "$HOME/.codex/skills/conductor")
         ;;
     *)
         echo "Invalid choice. Exiting."

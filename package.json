@@ -4,7 +4,6 @@
   "description": "Codex skill pack and workflow templates",
   "private": true,
   "files": [
-    ".codex",
     "scripts",
     "docs",
     "templates",
