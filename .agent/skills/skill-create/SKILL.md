@@ -9,7 +9,7 @@ description: Analyze local git history to extract coding patterns and generate S
 allowed_tools: ["Bash", "Read", "Write", "Grep", "Glob"]
 ---
 
-# /skill-create - Local Skill Generation
+# $skill-create - Local Skill Generation
 
 
 ## Pseudo Multi-Agent Protocol (Codex)
@@ -29,10 +29,10 @@ Analyze your repository's git history to extract coding patterns and generate SK
 ## Usage
 
 ```bash
-/skill-create                    # Analyze current repo
-/skill-create --commits 100      # Analyze last 100 commits
-/skill-create --output ./skills  # Custom output directory
-/skill-create --instincts        # Also generate instincts for continuous-learning-v2
+$skill-create                    # Analyze current repo
+$skill-create --commits 100      # Analyze last 100 commits
+$skill-create --output ./skills  # Custom output directory
+$skill-create --instincts        # Also generate instincts for continuous-learning-v2
 ```
 
 ## What It Does
@@ -122,7 +122,7 @@ Prefix commits with: feat:, fix:, chore:, docs:, test:, refactor:
 
 ## Example Output
 
-Running `/skill-create` on a TypeScript project might produce:
+Running `$skill-create` on a TypeScript project might produce:
 
 ```markdown
 ---
@@ -178,16 +178,15 @@ src/
 For advanced features (10k+ commits, team sharing, auto-PRs), use the [Skill Creator GitHub App](https://github.com/apps/skill-creator):
 
 - Install: [github.com/apps/skill-creator](https://github.com/apps/skill-creator)
-- Comment `/skill-creator analyze` on any issue
+- Comment `$skill-creator analyze` on any issue
 - Receives PR with generated skills
 
 ## Related Commands
 
-- `/instinct-import` - Import generated instincts
-- `/instinct-status` - View learned instincts
-- `/evolve` - Cluster instincts into skills/agents
+- `$instinct-import` - Import generated instincts
+- `$instinct-status` - View learned instincts
+- `$evolve` - Cluster instincts into skills/agents
 
 ---
 
 *Part of [Everything Codex](https://github.com/affaan-m/everything-codex)*
-

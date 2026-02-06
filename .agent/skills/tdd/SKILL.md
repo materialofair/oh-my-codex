@@ -132,7 +132,7 @@ This command invokes the **tdd-guide** agent to enforce test-driven development 
 
 ## When to Use
 
-Use `/tdd` when:
+Use `$tdd` when:
 - Implementing new features
 - Adding new functions/components
 - Fixing bugs (write test that reproduces bug first)
@@ -165,7 +165,7 @@ REPEAT:   Next feature/scenario
 ## Example Usage
 
 ```
-User: /tdd I need a function to calculate market liquidity score
+User: $tdd I need a function to calculate market liquidity score
 
 Agent (tdd-guide):
 # TDD Session: Market Liquidity Score Calculator
@@ -401,7 +401,7 @@ Coverage: 100% ✅ (Target: 80%)
 - External service calls
 - React components with hooks
 
-**E2E Tests** (use `/e2e` command):
+**E2E Tests** (use `$e2e` command):
 - Critical user flows
 - Multi-step processes
 - Full stack integration
@@ -427,11 +427,11 @@ Never skip the RED phase. Never write code before tests.
 
 ## Integration with Other Commands
 
-- Use `/plan` first to understand what to build
-- Use `/tdd` to implement with tests
-- Use `/build-and-fix` if build errors occur
-- Use `/code-review` to review implementation
-- Use `/test-coverage` to verify coverage
+- Use `$plan` first to understand what to build
+- Use `$tdd` to implement with tests
+- Use `$build-and-fix` if build errors occur
+- Use `$code-review` to review implementation
+- Use `$test-coverage` to verify coverage
 
 ## Related Agents
 
