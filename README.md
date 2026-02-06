@@ -88,6 +88,18 @@ Install rules automatically:
 
 ---
 
+## Skill Governance
+
+Run the governance gate before shipping skill changes:
+
+```bash
+npm run governance:skills
+```
+
+See `docs/SKILL_GOVERNANCE.md` for policy, blockers, and debt tracking.
+
+---
+
 
 ## Quick Start
 

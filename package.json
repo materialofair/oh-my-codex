@@ -13,7 +13,8 @@
   ],
   "scripts": {
     "install:codex": "./scripts/install-codex.sh",
-    "mcp:codex": "./scripts/generate-codex-mcp-config.sh"
+    "mcp:codex": "./scripts/generate-codex-mcp-config.sh",
+    "governance:skills": "./scripts/check-skill-governance.sh"
   },
   "license": "MIT"
 }
