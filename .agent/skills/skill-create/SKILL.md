@@ -39,8 +39,23 @@ $skill-create --instincts        # Also generate instincts for continuous-learni
 
 1. **Parses Git History** - Analyzes commits, file changes, and patterns
 2. **Detects Patterns** - Identifies recurring workflows and conventions
-3. **Generates SKILL.md** - Creates valid Codex skill files
-4. **Optionally Creates Instincts** - For the continuous-learning-v2 system
+3. **Generates SKILL.md Drafts** - Creates first-pass Codex skill files
+4. **Prepares Handoff** - Produces input for `$skill-development` refinement
+5. **Optionally Creates Instincts** - For the continuous-learning-v2 system
+
+## Recommended Combined Workflow
+
+Treat `$skill-create` as draft generation, then run quality refinement and validation:
+
+1. `$skill-create` - Generate skill drafts from repo history
+2. `$skill-development` - Refine structure, trigger quality, and progressive disclosure
+3. `$skill-quality-analyzer` - Score and identify documentation defects
+4. `$skill-tester` - Verify functional behavior with concrete test prompts
+
+Definition of done:
+- Trigger phrases are unambiguous
+- Guidance is executable in current Codex CLI
+- Governance checks pass in the repository
 
 ## Analysis Steps
 

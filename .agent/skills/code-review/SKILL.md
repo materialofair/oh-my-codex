@@ -57,6 +57,22 @@ Delegates to the `code-reviewer` agent (Opus model) for deep analysis:
    - Concrete fix suggestions
    - Code examples where applicable
 
+## Tiered Review Strategy (`code-review` + `aireview`)
+
+Use `code-review` as the default review entry. Escalate to `$aireview` when changes are high-risk or cross-cutting.
+
+Escalation triggers:
+- Diff is large (for example, more than 10 files or major refactor)
+- Security-sensitive surfaces changed (auth, payments, secrets, permissions)
+- Architecture-level changes across modules
+- Prior regressions in touched areas
+- User explicitly requests deep or multi-model review
+
+Escalation flow:
+1. Run `code-review` for fast baseline findings.
+2. If any trigger matches, run `$aireview --diff --deep`.
+3. Merge findings and prioritize by severity + confidence.
+
 ## Agent Delegation
 
 ```
@@ -79,7 +95,7 @@ Output: Code review report with:
 - Issues by severity (CRITICAL, HIGH, MEDIUM, LOW)
 - Specific file:line locations
 - Fix recommendations
-- Approval recommendation (APPROVE / REQUEST CHANGES / COMMENT)"
+- Approval recommendation (APPROVE / REQUEST CHANGES / COMMENT)
 ```
 
 ## Output Format

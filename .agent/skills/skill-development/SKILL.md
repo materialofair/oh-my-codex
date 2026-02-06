@@ -22,6 +22,17 @@ To create high-quality skills, follow this **Hybrid Workflow**:
     *   *Hard Rule*: Use correct YAML frontmatter and folder names.
     *   *Soft Rule*: write in the "Imperative/Infinitive" style (see Writing Style Requirements).
 
+## Integration with `skill-create`
+
+Use this skill as the refinement stage after `$skill-create` generates drafts.
+
+Pipeline:
+1. Generate draft skill(s) with `$skill-create`
+2. Refine each draft with `$skill-development`
+3. Run `$skill-quality-analyzer` for structure and trigger quality
+4. Run `$skill-tester` for behavioral validation
+5. Keep only skills that pass governance and quality gates
+
 ## About Skills
 
 Skills are modular, self-contained packages that extend Codex's capabilities by providing

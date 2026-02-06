@@ -21,6 +21,15 @@ Required sections (in order):
 
 Professional code review combining multi-agent parallel analysis with direct CLI invocations.
 
+## Positioning in Review Stack
+
+`aireview` is the advanced review layer, not a replacement for `code-review`.
+
+Recommended usage:
+1. Start with `$code-review` for baseline findings and fast signal.
+2. Escalate to `$aireview` when the diff is large, sensitive, or cross-cutting.
+3. Use `$aireview --deep` for merge gates on high-risk changes.
+
 ## Language Configuration
 
 **始终使用中文回复**: All AI review results will be presented in Chinese.

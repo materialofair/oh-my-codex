@@ -21,6 +21,16 @@ Supports two robust modes: **Launch** (Clean E2E Test) and **Attach** (Live Debu
 - **Inspect**: Smartly find the main window (ignoring DevTools).
 - **Interact**: Click, type, and verify using modern Playwright Locators.
 
+## Integration with `e2e` and `tdd`
+
+`electron-driver` is the Electron-specific execution backend in the testing stack:
+
+1. `$tdd` validates core logic and IPC units first.
+2. `$e2e` defines end-user journey scenarios.
+3. `$electron-driver` executes those scenarios against real Electron runtime windows/processes.
+
+Use this skill when `$e2e` detects Electron context or when desktop-runtime debugging is required.
+
 ## Prerequisites
 
 1.  **Playwright**: `npm install playwright-core` (locally preferred) or `npm install -g playwright-core`.

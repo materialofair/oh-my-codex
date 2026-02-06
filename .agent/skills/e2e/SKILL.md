@@ -41,6 +41,19 @@ Use `$e2e` when:
 - Validating integration between frontend and backend
 - Preparing for production deployment
 
+## Integration with `tdd` and `electron-driver`
+
+Use `$e2e` as the top-level E2E orchestrator:
+
+1. `$tdd` covers unit and integration tests first.
+2. `$e2e` covers cross-layer user journeys.
+3. If target is Electron desktop app, route execution to `$electron-driver` for runtime driving while keeping Playwright-style assertions and artifacts.
+
+Electron routing signals:
+- `electron` in package dependencies or scripts
+- desktop window flows, native menu, preload/IPC interactions
+- user explicitly asks for Electron app automation
+
 ## How It Works
 
 The e2e-runner agent will:
