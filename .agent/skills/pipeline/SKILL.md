@@ -66,7 +66,7 @@ parallel(explore, researcher) -> architect -> executor
 **Purpose:** Comprehensive code review and implementation
 
 ```
-/pipeline review <task>
+$pipeline review <task>
 ```
 
 **Stages:**
@@ -83,7 +83,7 @@ parallel(explore, researcher) -> architect -> executor
 **Purpose:** Planned implementation with testing
 
 ```
-/pipeline implement <task>
+$pipeline implement <task>
 ```
 
 **Stages:**
@@ -99,7 +99,7 @@ parallel(explore, researcher) -> architect -> executor
 **Purpose:** Systematic debugging workflow
 
 ```
-/pipeline debug <issue>
+$pipeline debug <issue>
 ```
 
 **Stages:**
@@ -115,7 +115,7 @@ parallel(explore, researcher) -> architect -> executor
 **Purpose:** External research + internal analysis
 
 ```
-/pipeline research <topic>
+$pipeline research <topic>
 ```
 
 **Stages:**
@@ -131,7 +131,7 @@ parallel(explore, researcher) -> architect -> executor
 **Purpose:** Safe, verified refactoring
 
 ```
-/pipeline refactor <target>
+$pipeline refactor <target>
 ```
 
 **Stages:**
@@ -148,7 +148,7 @@ parallel(explore, researcher) -> architect -> executor
 **Purpose:** Security audit and fixes
 
 ```
-/pipeline security <scope>
+$pipeline security <scope>
 ```
 
 **Stages:**
@@ -166,24 +166,24 @@ parallel(explore, researcher) -> architect -> executor
 ### Basic Sequential
 
 ```
-/pipeline agent1 -> agent2 -> agent3 "task description"
+$pipeline agent1 -> agent2 -> agent3 "task description"
 ```
 
 **Example:**
 ```
-/pipeline explore -> architect -> executor "add authentication"
+$pipeline explore -> architect -> executor "add authentication"
 ```
 
 ### With Model Specification
 
 ```
-/pipeline explore:haiku -> architect:opus -> executor:sonnet "optimize performance"
+$pipeline explore:haiku -> architect:opus -> executor:sonnet "optimize performance"
 ```
 
 ### With Branching
 
 ```
-/pipeline explore -> (
+$pipeline explore -> (
   complexity:high -> architect:opus -> executor-high:opus
   complexity:medium -> executor:sonnet
   complexity:low -> executor-low:haiku
@@ -193,7 +193,7 @@ parallel(explore, researcher) -> architect -> executor
 ### With Parallel Stages
 
 ```
-/pipeline [explore, researcher] -> architect -> executor "implement OAuth"
+$pipeline [explore, researcher] -> architect -> executor "implement OAuth"
 ```
 
 ## Data Passing Protocol
@@ -233,7 +233,7 @@ When an agent fails, the pipeline can:
 **Configuration:**
 
 ```
-/pipeline explore -> architect -> executor --retry=3 --on-error=abort
+$pipeline explore -> architect -> executor --retry=3 --on-error=abort
 ```
 
 ### Error Recovery Patterns
@@ -335,24 +335,24 @@ When parallel agents complete:
 
 ### Example 1: Feature Implementation
 ```
-/pipeline review "add rate limiting to API"
+$pipeline review "add rate limiting to API"
 ```
 → Triggers: explore → architect → critic → executor
 
 ### Example 2: Bug Fix
 ```
-/pipeline debug "login fails with OAuth"
+$pipeline debug "login fails with OAuth"
 ```
 → Triggers: explore → architect → build-fixer
 
 ### Example 3: Custom Chain
 ```
-/pipeline explore:haiku -> architect:opus -> executor:sonnet -> tdd-guide:sonnet "refactor auth module"
+$pipeline explore:haiku -> architect:opus -> executor:sonnet -> tdd-guide:sonnet "refactor auth module"
 ```
 
 ### Example 4: Research-Driven Implementation
 ```
-/pipeline research "implement GraphQL subscriptions"
+$pipeline research "implement GraphQL subscriptions"
 ```
 → Triggers: parallel(researcher, explore) → architect → writer
 
@@ -361,7 +361,7 @@ When parallel agents complete:
 Stop active pipeline:
 
 ```
-/pipeline cancel
+$pipeline cancel
 ```
 
 Or use the general cancel command which detects active pipeline.
@@ -388,7 +388,7 @@ Pipelines can be used within other skills:
 ### Pipeline Hangs
 
 **Check:** `.omc/pipeline-state.json` for current stage
-**Fix:** Resume with `/pipeline resume` or cancel and restart
+**Fix:** Resume with `$pipeline resume` or cancel and restart
 
 ### Agent Fails Repeatedly
 
@@ -430,7 +430,7 @@ This ensures clean state for future sessions. Stale state files with `active: fa
 
 This skill activates when:
 
-- User types `/pipeline` command
+- User types `$pipeline` command
 - User mentions "agent chain", "workflow", "pipe agents"
 - Pattern detected: "X then Y then Z" with agent names
 

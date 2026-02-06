@@ -34,7 +34,7 @@ This command invokes the **e2e-runner** agent to generate, maintain, and execute
 
 ## When to Use
 
-Use `/e2e` when:
+Use `$e2e` when:
 - Testing critical user journeys (login, trading, payments)
 - Verifying multi-step flows work end-to-end
 - Testing UI interactions and navigation
@@ -55,7 +55,7 @@ The e2e-runner agent will:
 ## Example Usage
 
 ```
-User: /e2e Test the market search and view flow
+User: $e2e Test the market search and view flow
 
 Agent (e2e-runner):
 # E2E Test Generation: Market Search and View Flow
@@ -348,10 +348,10 @@ For PMX, prioritize these E2E tests:
 
 ## Integration with Other Commands
 
-- Use `/plan` to identify critical journeys to test
-- Use `/tdd` for unit tests (faster, more granular)
-- Use `/e2e` for integration and user journey tests
-- Use `/code-review` to verify test quality
+- Use `$plan` to identify critical journeys to test
+- Use `$tdd` for unit tests (faster, more granular)
+- Use `$e2e` for integration and user journey tests
+- Use `$code-review` to verify test quality
 
 ## Related Agents
 
@@ -374,7 +374,7 @@ npx playwright test --headed
 npx playwright test --debug
 
 # Generate test code
-npx playwright codegen http://localhost:3000
+npx playwright codegen http:/$localhost:3000
 
 # View report
 npx playwright show-report

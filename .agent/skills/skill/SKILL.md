@@ -26,7 +26,7 @@ Meta-skill for managing oh-my-codex skills via CLI-like commands.
 
 ## Subcommands
 
-### /skill list
+### $skill list
 
 Show all local skills organized by scope.
 
@@ -53,7 +53,7 @@ PROJECT SKILLS (.omc/skills/):
 
 ---
 
-### /skill add [name]
+### $skill add [name]
 
 Interactive wizard for creating a new skill.
 
@@ -109,11 +109,11 @@ $<name> example-arg
 ```
 
 7. **Report success** with file path
-8. **Suggest:** "Edit `/skill edit <name>` to customize content"
+8. **Suggest:** "Edit `$skill edit <name>` to customize content"
 
 **Example:**
 ```
-User: /skill add custom-logger
+User: $skill add custom-logger
 Assistant: Creating new skill 'custom-logger'...
 
 Description: Enhanced logging with structured output
@@ -122,12 +122,12 @@ Argument hint (optional): <level> [message]
 Scope (user/project): user
 
 ✓ Created skill at ~/.codex/skills/omc-learned/custom-logger/SKILL.md
-→ Edit with: /skill edit custom-logger
+→ Edit with: $skill edit custom-logger
 ```
 
 ---
 
-### /skill remove <name>
+### $skill remove <name>
 
 Remove a skill by name.
 
@@ -148,7 +148,7 @@ Remove a skill by name.
 
 **Example:**
 ```
-User: /skill remove old-logger
+User: $skill remove old-logger
 Assistant: Found skill 'old-logger' in user scope:
   Description: Legacy logging utility
   Scope: user (~/.codex/skills/omc-learned/)
@@ -161,7 +161,7 @@ Assistant: ✓ Removed skill 'old-logger' from user scope
 
 ---
 
-### /skill edit <name>
+### $skill edit <name>
 
 Edit an existing skill interactively.
 
@@ -192,7 +192,7 @@ Edit an existing skill interactively.
 
 **Example:**
 ```
-User: /skill edit custom-logger
+User: $skill edit custom-logger
 Assistant: Current skill 'custom-logger':
   - Description: Enhanced logging with structured output
   - Triggers: log, logger, logging
@@ -209,7 +209,7 @@ New triggers (comma-separated): log, logger, logging, trace
 
 ---
 
-### /skill search <query>
+### $skill search <query>
 
 Search skills by content, triggers, name, or description.
 
@@ -242,7 +242,7 @@ Found 3 skills matching "typescript error":
 
 **Example:**
 ```
-User: /skill search api endpoint
+User: $skill search api endpoint
 Assistant: Found 2 skills matching "api endpoint":
 
 1. api-builder (user)
@@ -256,7 +256,7 @@ Assistant: Found 2 skills matching "api endpoint":
 
 ---
 
-### /skill info <name>
+### $skill info <name>
 
 Show detailed information about a skill.
 
@@ -279,11 +279,11 @@ File Path: /home/user/.codex/skills/omc-learned/custom-logger/SKILL.md
 [entire markdown content]
 ```
 
-**If not found:** Report error with suggestion to use `/skill search`
+**If not found:** Report error with suggestion to use `$skill search`
 
 **Example:**
 ```
-User: /skill info custom-logger
+User: $skill info custom-logger
 Assistant: Skill: custom-logger
 Scope: user
 Description: Enhanced logging with structured output
@@ -300,7 +300,7 @@ Enhanced logging with structured JSON output...
 
 ---
 
-### /skill sync
+### $skill sync
 
 Sync skills between user and project scopes.
 
@@ -350,7 +350,7 @@ Options:
 
 **Example:**
 ```
-User: /skill sync
+User: $skill sync
 Assistant: Found 5 user-only skills and 2 project-only skills.
 
 Copy 'error-handler' from user to project? (yes/no/skip)
@@ -383,25 +383,25 @@ User: skip
 
 ```bash
 # List all skills
-/skill list
+$skill list
 
 # Create a new skill
-/skill add my-custom-skill
+$skill add my-custom-skill
 
 # Remove a skill
-/skill remove old-skill
+$skill remove old-skill
 
 # Edit existing skill
-/skill edit error-handler
+$skill edit error-handler
 
 # Search for skills
-/skill search typescript error
+$skill search typescript error
 
 # Get detailed info
-/skill info my-custom-skill
+$skill info my-custom-skill
 
 # Sync between scopes
-/skill sync
+$skill sync
 ```
 
 ## Implementation Notes
@@ -415,8 +415,8 @@ User: skip
 
 ## Future Enhancements
 
-- `/skill export <name>` - Export skill as shareable file
-- `/skill import <file>` - Import skill from file
-- `/skill stats` - Show usage statistics across all skills
-- `/skill validate` - Check all skills for format errors
-- `/skill template <type>` - Create from predefined templates
+- `$skill export <name>` - Export skill as shareable file
+- `$skill import <file>` - Import skill from file
+- `$skill stats` - Show usage statistics across all skills
+- `$skill validate` - Check all skills for format errors
+- `$skill template <type>` - Create from predefined templates

@@ -46,10 +46,10 @@ Analyzes instincts and clusters related ones into higher-level structures:
 ## Usage
 
 ```
-/evolve                    # Analyze all instincts and suggest evolutions
-/evolve --domain testing   # Only evolve instincts in testing domain
-/evolve --dry-run          # Show what would be created without creating
-/evolve --threshold 5      # Require 5+ related instincts to cluster
+$evolve                    # Analyze all instincts and suggest evolutions
+$evolve --domain testing   # Only evolve instincts in testing domain
+$evolve --dry-run          # Show what would be created without creating
+$evolve --threshold 5      # Require 5+ related instincts to cluster
 ```
 
 ## Evolution Rules
@@ -65,7 +65,7 @@ Example:
 - `new-table-step2`: "when adding a database table, update schema"
 - `new-table-step3`: "when adding a database table, regenerate types"
 
-→ Creates: `/new-table` command
+→ Creates: `$new-table` command
 
 ### → Skill (Auto-Triggered)
 When instincts describe behaviors that should happen automatically:
@@ -120,7 +120,7 @@ Instincts: new-table-migration, update-schema, regenerate-types
 Type: Command
 Confidence: 85% (based on 12 observations)
 
-Would create: /new-table command
+Would create: $new-table command
 Files:
   - ~/.codex/homunculus/evolved/commands/new-table.md
 
@@ -143,7 +143,7 @@ Files:
   - ~/.codex/homunculus/evolved/agents/debugger.md
 
 ---
-Run `/evolve --execute` to create these files.
+Run `$evolve --execute` to create these files.
 ```
 
 ## Flags
@@ -161,7 +161,7 @@ Run `/evolve --execute` to create these files.
 ---
 name: new-table
 description: Create a new database table with migration, schema update, and type generation
-command: /new-table
+command: $new-table
 evolved_from:
   - new-table-migration
   - update-schema

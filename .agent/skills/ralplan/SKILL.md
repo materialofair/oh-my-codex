@@ -21,7 +21,7 @@ Required sections (in order):
 > Codex invocation: use `$ralplan ...` or `ralplan: ...`
 
 
-**This is an alias for `/plan --consensus`**
+**This is an alias for `$plan --consensus`**
 
 Ralplan orchestrates three specialized agents—Planner, Architect, and Critic—in an iterative loop until consensus is reached on a comprehensive work plan.
 
@@ -51,6 +51,6 @@ Pass all arguments to the plan skill. The plan skill handles all consensus logic
 
 ## See Also
 
-- `/plan` - Base planning skill with all modes
-- `/plan --consensus` - Direct invocation of consensus mode
-- `/cancel` - Cancel active planning session
+- `$plan` - Base planning skill with all modes
+- `$plan --consensus` - Direct invocation of consensus mode
+- `$cancel` - Cancel active planning session

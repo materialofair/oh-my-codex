@@ -28,14 +28,14 @@ Automate isolated development environments using git worktrees and tmux sessions
 
 | Command | Description | Example |
 |---------|-------------|---------|
-| `review <ref>` | PR review session | `/psm review omc#123` |
-| `fix <ref>` | Issue fix session | `/psm fix omc#42` |
-| `feature <proj> <name>` | Feature development | `/psm feature omc add-webhooks` |
-| `list [project]` | List active sessions | `/psm list` |
-| `attach <session>` | Attach to session | `/psm attach omc:pr-123` |
-| `kill <session>` | Kill session | `/psm kill omc:pr-123` |
-| `cleanup` | Clean merged/closed | `/psm cleanup` |
-| `status` | Current session info | `/psm status` |
+| `review <ref>` | PR review session | `$psm review omc#123` |
+| `fix <ref>` | Issue fix session | `$psm fix omc#42` |
+| `feature <proj> <name>` | Feature development | `$psm feature omc add-webhooks` |
+| `list [project]` | List active sessions | `$psm list` |
+| `attach <session>` | Attach to session | `$psm attach omc:pr-123` |
+| `kill <session>` | Kill session | `$psm kill omc:pr-123` |
+| `cleanup` | Clean merged/closed | `$psm cleanup` |
+| `status` | Current session info | `$psm status` |
 
 ## Project References
 

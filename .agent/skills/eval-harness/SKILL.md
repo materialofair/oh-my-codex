@@ -170,19 +170,19 @@ Status: READY FOR REVIEW
 
 ### Pre-Implementation
 ```
-/eval define feature-name
+$eval define feature-name
 ```
 Creates eval definition file at `.codex/evals/feature-name.md`
 
 ### During Implementation
 ```
-/eval check feature-name
+$eval check feature-name
 ```
 Runs current evals and reports status
 
 ### Post-Implementation
 ```
-/eval report feature-name
+$eval report feature-name
 ```
 Generates full eval report
 
@@ -229,7 +229,7 @@ Regression Evals:
 [Write code]
 
 ### Phase 3: Evaluate
-Run: /eval check add-authentication
+Run: $eval check add-authentication
 
 ### Phase 4: Report
 EVAL REPORT: add-authentication
