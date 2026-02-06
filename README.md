@@ -96,6 +96,11 @@ Run the governance gate before shipping skill changes:
 npm run governance:skills
 ```
 
+This command enforces the skill documentation baseline by blocking:
+- Legacy slash command patterns (for example `Run: /verify`)
+- Plugin-only runtime instructions (for example `cc --plugin-dir`)
+- Legacy task API syntax (`Task(...)`-style examples)
+
 See `docs/SKILL_GOVERNANCE.md` for policy, blockers, and debt tracking.
 
 ---

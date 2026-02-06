@@ -78,6 +78,23 @@
 
 ---
 
+## Skill 治理
+
+在发布或合并 skill 文档变更前，先运行治理门禁：
+
+```bash
+npm run governance:skills
+```
+
+这个命令会阻断以下高风险残留：
+- 旧的 slash 命令写法（例如 `Run: /verify`）
+- plugin 专用运行指令（例如 `cc --plugin-dir`）
+- 旧式任务 API 示例（`Task(...)` 语法）
+
+详细规则见 `docs/SKILL_GOVERNANCE.md`。
+
+---
+
 
 ## 快速开始
 
