@@ -22,13 +22,13 @@ Create or verify a checkpoint in your workflow.
 
 ## Usage
 
-`/checkpoint [create|verify|list] [name]`
+`$checkpoint [create|verify|list] [name]`
 
 ## Create Checkpoint
 
 When creating a checkpoint:
 
-1. Run `/verify quick` to ensure current state is clean
+1. Run `$verify` (quick mode if supported) to ensure current state is clean
 2. Create a git stash or commit with checkpoint name
 3. Log checkpoint to `.codex/checkpoints.log`:
 
@@ -72,15 +72,15 @@ Show all checkpoints with:
 Typical checkpoint flow:
 
 ```
-[Start] --> /checkpoint create "feature-start"
+[Start] --> $checkpoint create "feature-start"
    |
-[Implement] --> /checkpoint create "core-done"
+[Implement] --> $checkpoint create "core-done"
    |
-[Test] --> /checkpoint verify "core-done"
+[Test] --> $checkpoint verify "core-done"
    |
-[Refactor] --> /checkpoint create "refactor-done"
+[Refactor] --> $checkpoint create "refactor-done"
    |
-[PR] --> /checkpoint verify "feature-start"
+[PR] --> $checkpoint verify "feature-start"
 ```
 
 ## Arguments

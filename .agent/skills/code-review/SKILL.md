@@ -60,10 +60,8 @@ Delegates to the `code-reviewer` agent (Opus model) for deep analysis:
 ## Agent Delegation
 
 ```
-Task(
-  subagent_type="oh-my-codex:code-reviewer",
-  model="opus",
-  prompt="CODE REVIEW TASK
+[CODE-REVIEWER | opus]
+CODE REVIEW TASK
 
 Review code changes for quality, security, and maintainability.
 
@@ -82,7 +80,6 @@ Output: Code review report with:
 - Specific file:line locations
 - Fix recommendations
 - Approval recommendation (APPROVE / REQUEST CHANGES / COMMENT)"
-)
 ```
 
 ## Output Format
@@ -170,19 +167,19 @@ The code-reviewer agent checks:
 
 **With Pipeline:**
 ```
-/pipeline review "implement user authentication"
+$pipeline review "implement user authentication"
 ```
 Includes code review as part of implementation workflow.
 
 **With Ralph:**
 ```
-/ralph code-review then fix all issues
+$ralph code-review then fix all issues
 ```
 Review code, get feedback, fix until approved.
 
 **With Ultrawork:**
 ```
-/ultrawork review all files in src/
+$ultrawork review all files in src/
 ```
 Parallel code review across multiple files.
 

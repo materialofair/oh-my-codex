@@ -134,12 +134,9 @@ const prompt = generateDecompositionPrompt(task, codebaseContext, {
   preferredModel: 'sonnet'
 });
 
-// 2. Call Architect agent
-const response = await Task({
-  subagent_type: 'oh-my-codex:architect',
-  model: 'opus',
-  prompt
-});
+// 2. Run ARCHITECT phase with opus and capture structured output
+// [ARCHITECT | opus] <prompt>
+const response = "<architect_response>";
 
 // 3. Parse structured result
 const result = parseDecompositionResult(response);
@@ -247,8 +244,8 @@ const finalResult = extractSharedFiles(result);
 workers = [];
 for (subtask in decomposition.subtasks) {
   workers.push(
-    Task(
-      subagent_type: "oh-my-codex:executor",
+    runWorker({
+      role: "EXECUTOR",
       model: "sonnet",
       prompt: `ULTRAPILOT WORKER ${subtask.id}
 
@@ -263,8 +260,8 @@ CRITICAL RULES:
 4. Track all imports from boundary files
 
 Deliver: Code changes + list of boundary dependencies`,
-      run_in_background: true
-    )
+      runInBackground: true
+    })
   );
 }
 ```

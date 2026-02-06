@@ -4,9 +4,11 @@ description: Create effective Codex skills with specialized knowledge, workflows
 version: 0.1.0
 ---
 
-# Skill Development for Codex Plugins
+# Skill Development for Codex CLI
 
-This skill provides guidance for creating effective skills for Codex plugins.
+This skill provides guidance for creating effective skills for Codex CLI environments.
+
+> Compatibility note: Any plugin-oriented examples in this document are legacy references. Prefer the Codex skill locations described below.
 
 ## Agent Workflow
 
@@ -139,7 +141,7 @@ Example: When building a `big-query` skill to handle queries like "How many user
 1. Querying BigQuery requires re-discovering the table schemas and relationships each time
 2. A `references/schema.md` file documenting the table schemas would be helpful to store in the skill
 
-**For Codex plugins:** When building a hooks skill, the analysis shows:
+**For Codex CLI skills:** When building a hooks-related skill, the analysis shows:
 1. Developers repeatedly need to validate hooks.json and test hook scripts
 2. `scripts/validate-hook-schema.sh` and `scripts/test-hook.sh` utilities would be helpful
 3. `references/patterns.md` for detailed hook patterns to avoid bloating SKILL.md
@@ -148,14 +150,14 @@ To establish the skill's contents, analyze each concrete example to create a lis
 
 ### Step 3: Create Skill Structure
 
-For Codex plugins, create the skill directory structure:
+For Codex CLI, create the skill directory structure:
 
 ```bash
-mkdir -p plugin-name/skills/skill-name/{references,examples,scripts}
-touch plugin-name/skills/skill-name/SKILL.md
+mkdir -p skill-name/{references,examples,scripts}
+touch skill-name/SKILL.md
 ```
 
-**Note:** Unlike the generic skill-creator which uses `init_skill.py`, plugin skills are created directly in the plugin's `skills/` directory with a simpler manual structure.
+**Note:** Unlike the generic skill-creator which uses `init_skill.py`, Codex CLI skills are created directly in a skill directory and then placed under `~/.codex/skills/` or `<repo>/.agent/skills/`.
 
 ### Step 4: Edit the Skill
 
@@ -183,7 +185,7 @@ version: 0.1.0
 
 **Good description examples:**
 ```yaml
-description: This skill should be used when the user asks to "create a hook", "add a PreToolUse hook", "validate tool use", "implement prompt-based hooks", or mentions hook events (PreToolUse, PostToolUse, Stop).
+description: This skill should be used when the user asks to "create a validation rule", "define a skill trigger", "validate tool use instructions", or "design prompt guardrails".
 ```
 
 **Bad description examples:**
@@ -223,9 +225,9 @@ Working examples in `examples/`:
 
 ### Step 5: Validate and Test
 
-**For plugin skills, validation is different from generic skills:**
+**For Codex CLI skills, validation is different from generic skills:**
 
-1. **Check structure**: Skill directory in `plugin-name/skills/skill-name/`
+1. **Check structure**: Skill directory in `~/.codex/skills/skill-name/` or `<repo>/.agent/skills/skill-name/`
 2. **Validate SKILL.md**: Has frontmatter with name and description
 3. **Check trigger phrases**: Description includes specific user queries
 4. **Verify writing style**: Body uses imperative/infinitive form, not second person
@@ -258,24 +260,26 @@ After testing the skill, users may request improvements. Often this happens righ
 - Clarify ambiguous instructions
 - Add edge case handling
 
-## Plugin-Specific Considerations
+## Codex CLI Considerations
 
-### Skill Location in Plugins
+### Skill Locations
 
-Plugin skills live in the plugin's `skills/` directory:
+Skills for Codex CLI should live in one of these locations:
 
 ```
-my-plugin/
-├── .codex-plugin/
-│   └── plugin.json
-├── commands/
-├── agents/
-└── skills/
-    └── my-skill/
-        ├── SKILL.md
-        ├── references/
-        ├── examples/
-        └── scripts/
+~/.codex/skills/
+└── my-skill/
+    ├── SKILL.md
+    ├── references/
+    ├── examples/
+    └── scripts/
+
+<repo>/.agent/skills/
+└── my-skill/
+    ├── SKILL.md
+    ├── references/
+    ├── examples/
+    └── scripts/
 ```
 
 ### Auto-Discovery
@@ -289,26 +293,23 @@ Codex automatically discovers skills:
 
 ### No Packaging Needed
 
-Plugin skills are distributed as part of the plugin, not as separate ZIP files. Users get skills when they install the plugin.
+Skills are plain directories. Install globally via `~/.codex/skills/` or keep project-local under `.agent/skills/`.
 
-### Testing in Plugins
+### Testing in Codex CLI
 
-Test skills by installing plugin locally:
+Test skills by opening Codex in the target repo and invoking explicit triggers:
 
 ```bash
-# Test with --plugin-dir
-cc --plugin-dir /path/to/plugin
-
-# Ask questions that should trigger the skill
-# Verify skill loads correctly
+# Example explicit invocation
+$skill-name <task>
 ```
 
-## Examples from Plugin-Dev
+## Examples from Existing Skill Packs
 
-Study the skills in this plugin as examples of best practices:
+Study existing skill packs as examples of best practices:
 
 **hook-development skill:**
-- Excellent trigger phrases: "create a hook", "add a PreToolUse hook", etc.
+- Excellent trigger phrases: "create a validation rule", "define trigger phrases", etc.
 - Lean SKILL.md (1,651 words)
 - 3 references/ files for detailed content
 - 3 examples/ of working hooks
@@ -320,8 +321,8 @@ Study the skills in this plugin as examples of best practices:
 - References include the AI generation prompt from Codex
 - Complete agent examples
 
-**plugin-settings skill:**
-- Specific triggers: "plugin settings", ".local.md files", "YAML frontmatter"
+**settings-management skill:**
+- Specific triggers: "settings files", "local config", "YAML frontmatter"
 - References show real implementations (multi-agent-swarm, ralph-wiggum)
 - Working parsing scripts
 
@@ -473,7 +474,7 @@ description: Provides guidance for working with hooks.
 
 ✅ **Good:**
 ```yaml
-description: This skill should be used when the user asks to "create a hook", "add a PreToolUse hook", "validate tool use", or mentions hook events. Provides comprehensive hooks API guidance.
+description: This skill should be used when the user asks to "create a validation rule", "define trigger conditions", or "validate tool instructions". Provides comprehensive guidance with concrete trigger phrases.
 ```
 
 **Why good:** Third person, specific phrases, concrete scenarios
@@ -572,7 +573,7 @@ skill-name/
     └── working-example.sh
 ```
 
-Good for: Most plugin skills with detailed documentation
+Good for: Most Codex skills with detailed documentation
 
 ### Complete Skill
 
@@ -602,7 +603,7 @@ Good for: Complex domains with validation utilities
 - Reference supporting files clearly
 - Provide working examples
 - Create utility scripts for common operations
-- Study plugin-dev's skills as templates
+- Study high-quality local skills as templates
 
 ❌ **DON'T:**
 - Use second person anywhere
@@ -617,13 +618,13 @@ Good for: Complex domains with validation utilities
 
 ### Study These Skills
 
-Plugin-dev's skills demonstrate best practices:
+Reference skills that demonstrate best practices:
 - `../hook-development/` - Progressive disclosure, utilities
 - `../agent-development/` - AI-assisted creation, references
 - `../mcp-integration/` - Comprehensive references
-- `../plugin-settings/` - Real-world examples
+- `../skill-quality-analyzer/` - Real-world scoring examples
 - `../command-development/` - Clear critical concepts
-- `../plugin-structure/` - Good organization
+- `../skill-development/` - Good organization
 
 ### Reference Files
 
@@ -632,7 +633,7 @@ For complete skill-creator methodology:
 
 ## Implementation Workflow
 
-To create a skill for your plugin:
+To create a skill for Codex CLI:
 
 1. **Understand use cases**: Identify concrete examples of skill usage
 2. **Plan resources**: Determine what scripts/references/examples needed

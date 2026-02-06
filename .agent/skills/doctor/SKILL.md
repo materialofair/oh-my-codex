@@ -86,9 +86,9 @@ fi
 ### Step 5: Check Legacy Artifacts
 
 ```bash
-# Check for old plugin cache (waste of space)
+# Check for legacy plugin cache from older setups (usually safe to remove)
 if [ -d ~/.codex/plugins ]; then
-  echo "Legacy Plugin Cache: Found (Safe to remove ~/.codex/plugins)"
+  echo "Legacy plugin cache found at ~/.codex/plugins (optional cleanup)"
 fi
 ```
 
@@ -138,7 +138,7 @@ echo "Run: ./scripts/install-codex.sh --all"
 ### Fix: Legacy Plugin Cache
 ```bash
 rm -rf ~/.codex/plugins
-echo "Legacy plugin cache removed."
+echo "Legacy plugin cache removed (from older setups)."
 ```
 
 ### Fix: Missing CLAUDE.md

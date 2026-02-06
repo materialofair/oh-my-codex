@@ -26,7 +26,7 @@ Spawn N coordinated agents working on a shared task list with SQLite-based atomi
 ## Usage
 
 ```
-/swarm N:agent-type "task description"
+$swarm N:agent-type "task description"
 ```
 
 ### Parameters
@@ -38,16 +38,16 @@ Spawn N coordinated agents working on a shared task list with SQLite-based atomi
 ### Examples
 
 ```bash
-/swarm 5:executor "fix all TypeScript errors"
-/swarm 3:build-fixer "fix build errors in src/"
-/swarm 4:designer "implement responsive layouts for all components"
-/swarm 2:architect "analyze and document all API endpoints"
+$swarm 5:executor "fix all TypeScript errors"
+$swarm 3:build-fixer "fix build errors in src/"
+$swarm 4:designer "implement responsive layouts for all components"
+$swarm 2:architect "analyze and document all API endpoints"
 ```
 
 ## Architecture
 
 ```
-User: "/swarm 5:executor fix all TypeScript errors"
+User: "$swarm 5:executor fix all TypeScript errors"
               |
               v
       [SWARM ORCHESTRATOR]
@@ -119,10 +119,10 @@ Send heartbeat every 60 seconds
 Exit when hasPendingWork() returns false
 `);
 
-Task({
-  subagent_type: 'oh-my-codex:executor',
+runWorker({
+  role: 'EXECUTOR',
   prompt: agentPrompt,
-  run_in_background: true
+  runInBackground: true
 });
 ```
 
@@ -608,25 +608,25 @@ User can cancel via `$cancel`:
 
 ### 1. Fix All Type Errors
 ```
-/swarm 5:executor "fix all TypeScript type errors"
+$swarm 5:executor "fix all TypeScript type errors"
 ```
 Spawns 5 executors, each claiming and fixing individual files.
 
 ### 2. Implement UI Components
 ```
-/swarm 3:designer "implement Material-UI styling for all components in src/components/"
+$swarm 3:designer "implement Material-UI styling for all components in src/components/"
 ```
 Spawns 3 designers, each styling different component files.
 
 ### 3. Security Audit
 ```
-/swarm 4:security-reviewer "review all API endpoints for vulnerabilities"
+$swarm 4:security-reviewer "review all API endpoints for vulnerabilities"
 ```
 Spawns 4 security reviewers, each auditing different endpoints.
 
 ### 4. Documentation Sprint
 ```
-/swarm 2:writer "add JSDoc comments to all exported functions"
+$swarm 2:writer "add JSDoc comments to all exported functions"
 ```
 Spawns 2 writers, each documenting different modules.
 

@@ -61,10 +61,8 @@ Delegates to the `build-fixer` agent (Sonnet model) to:
 ## Agent Delegation
 
 ```
-Task(
-  subagent_type="oh-my-codex:build-fixer",
-  model="sonnet",
-  prompt="BUILD FIX TASK
+[BUILD-FIXER | sonnet]
+BUILD FIX TASK
 
 Fix all build and TypeScript errors with minimal changes.
 
@@ -79,7 +77,6 @@ Output: Build error resolution report with:
 - List of errors fixed
 - Lines changed per fix
 - Final build status"
-)
 ```
 
 ## Stop Conditions
@@ -122,19 +119,19 @@ Combine with other skills for comprehensive fixing:
 
 **With Ultrawork:**
 ```
-/ultrawork fix all build errors
+$ultrawork fix all build errors
 ```
 Spawns multiple build-fixer agents in parallel for different files.
 
 **With Ralph:**
 ```
-/ralph fix the build
+$ralph fix the build
 ```
 Keeps trying until build passes, even if it takes multiple iterations.
 
 **With Pipeline:**
 ```
-/pipeline debug "build is failing"
+$pipeline debug "build is failing"
 ```
 Uses: explore → architect → build-fixer workflow.
 
