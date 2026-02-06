@@ -100,8 +100,17 @@ This creates a navigable hierarchy:
 ### Step 1: Map Directory Structure
 
 ```
-Task(subagent_type="explore", model="haiku",
-  prompt="List all directories recursively. Exclude: node_modules, .git, dist, build, __pycache__, .venv, coverage, .next, .nuxt")
+# Use fast local search commands (can be run in parallel when useful)
+find . -type d \
+  -not -path "*/node_modules/*" \
+  -not -path "*/.git/*" \
+  -not -path "*/dist/*" \
+  -not -path "*/build/*" \
+  -not -path "*/__pycache__/*" \
+  -not -path "*/.venv/*" \
+  -not -path "*/coverage/*" \
+  -not -path "*/.next/*" \
+  -not -path "*/.nuxt/*"
 ```
 
 ### Step 2: Create Work Plan

@@ -81,20 +81,20 @@ This skill enhances Codex's capabilities by:
 **CRITICAL: Always pass `model` parameter explicitly - Codex does NOT auto-apply models from agent definitions!**
 
 ```
-// Simple question → LOW tier (DEFAULT)
-Task(subagent_type="oh-my-codex:architect-low", model="haiku", prompt="What does this function return?")
+// Simple question -> LOW tier (DEFAULT)
+[ARCHITECT-LOW | haiku] "What does this function return?"
 
-// Standard implementation → TRY LOW first
-Task(subagent_type="oh-my-codex:executor-low", model="haiku", prompt="Add validation to login form")
+// Standard implementation -> TRY LOW first
+[EXECUTOR-LOW | haiku] "Add validation to login form"
 
 // If LOW fails, escalate to MEDIUM
-Task(subagent_type="oh-my-codex:executor", model="sonnet", prompt="Add error handling to login")
+[EXECUTOR | sonnet] "Add error handling to login"
 
-// File lookup → ALWAYS LOW
-Task(subagent_type="oh-my-codex:explore", model="haiku", prompt="Find where UserService is defined")
+// File lookup -> ALWAYS LOW
+[EXPLORE-LOW | haiku] "Find where UserService is defined"
 
 // Only use MEDIUM for complex patterns
-Task(subagent_type="oh-my-codex:explore-medium", model="sonnet", prompt="Find all authentication patterns in the codebase")
+[EXPLORE | sonnet] "Find all authentication patterns in the codebase"
 ```
 
 ## DELEGATION ENFORCEMENT (CRITICAL)

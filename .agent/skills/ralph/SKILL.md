@@ -95,7 +95,7 @@ Ralph automatically activates Ultrawork for maximum parallel execution. You MUST
 
 ### Parallel Execution Rules
 - **PARALLEL**: Fire independent calls simultaneously - NEVER wait sequentially
-- **BACKGROUND FIRST**: Use Task(run_in_background=true) for long operations (10+ concurrent)
+- **BACKGROUND FIRST**: Use background worker execution for long operations (10+ concurrent)
 - **DELEGATE**: Route tasks to specialist agents immediately
 
 ### Smart Model Routing (SAVE TOKENS)
@@ -128,9 +128,9 @@ Ralph automatically activates Ultrawork for maximum parallel execution. You MUST
 
 **CRITICAL: Always pass `model` parameter explicitly!**
 ```
-Task(subagent_type="oh-my-codex:architect-low", model="haiku", prompt="...")
-Task(subagent_type="oh-my-codex:executor", model="sonnet", prompt="...")
-Task(subagent_type="oh-my-codex:architect", model="opus", prompt="...")
+[ARCHITECT-LOW | haiku] "..."
+[EXECUTOR | sonnet] "..."
+[ARCHITECT | opus] "..."
 ```
 
 ### Background Execution Rules
@@ -186,7 +186,7 @@ Before outputting the completion promise:
 When you believe the task is complete:
 1. **First**, spawn Architect to verify your work (ALWAYS pass model explicitly!):
    ```
-   Task(subagent_type="oh-my-codex:architect", model="opus", prompt="Verify this implementation is complete: [describe what you did]")
+   [ARCHITECT | opus] "Verify this implementation is complete: [describe what you did]"
    ```
 
 2. **Wait for Architect's assessment**

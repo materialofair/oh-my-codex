@@ -54,10 +54,10 @@ If no structured goal provided, interpret the argument as a custom goal.
    - `--custom`: Run appropriate command and check for pattern
    - `--interactive`: Use qa-tester for interactive CLI/service testing:
      ```
-     Task(subagent_type="oh-my-codex:qa-tester", model="sonnet", prompt="TEST:
+     [QA-TESTER | sonnet] TEST:
      Goal: [describe what to verify]
      Service: [how to start]
-     Test cases: [specific scenarios to verify]")
+     Test cases: [specific scenarios to verify]
      ```
 
 2. **CHECK RESULT**: Did the goal pass?
@@ -66,18 +66,18 @@ If no structured goal provided, interpret the argument as a custom goal.
 
 3. **ARCHITECT DIAGNOSIS**: Spawn architect to analyze failure
    ```
-   Task(subagent_type="oh-my-codex:architect", model="opus", prompt="DIAGNOSE FAILURE:
+   [ARCHITECT | opus] DIAGNOSE FAILURE:
    Goal: [goal type]
    Output: [test/build output]
-   Provide root cause and specific fix recommendations.")
+   Provide root cause and specific fix recommendations.
    ```
 
 4. **FIX ISSUES**: Apply architect's recommendations
    ```
-   Task(subagent_type="oh-my-codex:executor", model="sonnet", prompt="FIX:
+   [EXECUTOR | sonnet] FIX:
    Issue: [architect diagnosis]
    Files: [affected files]
-   Apply the fix precisely as recommended.")
+   Apply the fix precisely as recommended.
    ```
 
 5. **REPEAT**: Go back to step 1

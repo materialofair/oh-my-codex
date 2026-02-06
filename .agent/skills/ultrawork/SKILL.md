@@ -68,19 +68,19 @@ This skill enhances Codex's capabilities by:
 
 ```
 // Simple question → LOW tier (saves tokens!)
-Task(subagent_type="oh-my-codex:architect-low", model="haiku", prompt="What does this function return?")
+[ARCHITECT-LOW | haiku] "What does this function return?"
 
 // Standard implementation → MEDIUM tier
-Task(subagent_type="oh-my-codex:executor", model="sonnet", prompt="Add error handling to login")
+[EXECUTOR | sonnet] "Add error handling to login"
 
 // Complex refactoring → HIGH tier
-Task(subagent_type="oh-my-codex:executor-high", model="opus", prompt="Refactor auth module using JWT across 5 files")
+[EXECUTOR-HIGH | opus] "Refactor auth module using JWT across 5 files"
 
 // Quick file lookup → LOW tier
-Task(subagent_type="oh-my-codex:explore", model="haiku", prompt="Find where UserService is defined")
+[EXPLORE-LOW | haiku] "Find where UserService is defined"
 
 // Thorough search → MEDIUM tier
-Task(subagent_type="oh-my-codex:explore-medium", model="sonnet", prompt="Find all authentication patterns in the codebase")
+[EXPLORE | sonnet] "Find all authentication patterns in the codebase"
 ```
 
 ## Background Execution Rules

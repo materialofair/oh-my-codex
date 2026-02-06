@@ -79,12 +79,12 @@ Tracks individual character attributes essential for consistent portrayal:
 
 **Example:**
 ```
-/writer-memory char add 새랑
-/writer-memory char update 새랑 arc "체념 -> 욕망자각 -> 선택"
-/writer-memory char update 새랑 tone "담백, 현재충실, 감정억제"
-/writer-memory char update 새랑 speechLevel "해체"
-/writer-memory char update 새랑 keywords "그냥, 뭐, 괜찮아"
-/writer-memory char update 새랑 taboo "사랑해, 보고싶어"
+$writer-memory char add 새랑
+$writer-memory char update 새랑 arc "체념 -> 욕망자각 -> 선택"
+$writer-memory char update 새랑 tone "담백, 현재충실, 감정억제"
+$writer-memory char update 새랑 speechLevel "해체"
+$writer-memory char update 새랑 keywords "그냥, 뭐, 괜찮아"
+$writer-memory char update 새랑 taboo "사랑해, 보고싶어"
 ```
 
 ### 세계관 메모리 (World Memory)
@@ -114,10 +114,10 @@ Captures the dynamic between characters over time:
 
 **Example:**
 ```
-/writer-memory rel add 새랑 해랑 romantic
-/writer-memory rel update 새랑 해랑 "첫 키스 - 새랑 회피"
-/writer-memory rel update 새랑 해랑 "해랑 고백 거절당함"
-/writer-memory rel update 새랑 해랑 "새랑 먼저 손 잡음"
+$writer-memory rel add 새랑 해랑 romantic
+$writer-memory rel update 새랑 해랑 "첫 키스 - 새랑 회피"
+$writer-memory rel update 새랑 해랑 "해랑 고백 거절당함"
+$writer-memory rel update 새랑 해랑 "새랑 먼저 손 잡음"
 ```
 
 ### 장면 메모리 (Scene Memory)
@@ -149,7 +149,7 @@ Captures the deeper meaning woven through your story:
 
 ## Synopsis Generation (시놉시스)
 
-The `/synopsis` command generates an emotion-focused summary using 5 essential elements:
+The `$synopsis` command generates an emotion-focused summary using 5 essential elements:
 
 ### 5 Essential Elements (시놉시스 5요소)
 
@@ -178,7 +178,7 @@ The `/synopsis` command generates an emotion-focused summary using 5 essential e
 
 ## Character Validation (캐릭터 검증)
 
-The `/validate` command checks if dialogue matches a character's established voice.
+The `$validate` command checks if dialogue matches a character's established voice.
 
 ### What Gets Checked
 
@@ -199,7 +199,7 @@ The `/validate` command checks if dialogue matches a character's established voi
 
 **Example:**
 ```
-/writer-memory validate 새랑 "사랑해, 해랑아. 너무 보고싶었어."
+$writer-memory validate 새랑 "사랑해, 해랑아. 너무 보고싶었어."
 ```
 Output:
 ```
@@ -221,12 +221,12 @@ Natural language queries against memory, with full Korean support.
 ### Example Queries
 
 ```
-/writer-memory query "새랑은 이 상황에서 뭐라고 할까?"
-/writer-memory query "규리의 현재 감정 상태는?"
-/writer-memory query "해랑과 새랑의 관계는 어디까지 왔나?"
-/writer-memory query "이 장면의 정서적 분위기는?"
-/writer-memory query "새랑이 먼저 연락하는 게 맞아?"
-/writer-memory query "해랑이 화났을 때 말투는?"
+$writer-memory query "새랑은 이 상황에서 뭐라고 할까?"
+$writer-memory query "규리의 현재 감정 상태는?"
+$writer-memory query "해랑과 새랑의 관계는 어디까지 왔나?"
+$writer-memory query "이 장면의 정서적 분위기는?"
+$writer-memory query "새랑이 먼저 연락하는 게 맞아?"
+$writer-memory query "해랑이 화났을 때 말투는?"
 ```
 
 The system synthesizes answers from all relevant memory types.
@@ -250,9 +250,7 @@ Writer Memory integrates with `.omc/notepad.md`:
 ### With Architect Agent
 For complex character analysis:
 ```
-Task(subagent_type="oh-my-codex:architect",
-     model="opus",
-     prompt="Analyze 새랑's arc across all scenes...")
+[ARCHITECT | opus] "Analyze 새랑's arc across all scenes..."
 ```
 
 ### Character Validation Pipeline
@@ -275,53 +273,53 @@ Synopsis generation aggregates:
 
 ```
 # Initialize project
-/writer-memory init 봄의 끝자락
+$writer-memory init 봄의 끝자락
 
 # Add characters
-/writer-memory char add 새랑
-/writer-memory char update 새랑 arc "체념 -> 욕망자각 -> 선택"
-/writer-memory char update 새랑 tone "담백, 현재충실"
-/writer-memory char update 새랑 speechLevel "해체"
+$writer-memory char add 새랑
+$writer-memory char update 새랑 arc "체념 -> 욕망자각 -> 선택"
+$writer-memory char update 새랑 tone "담백, 현재충실"
+$writer-memory char update 새랑 speechLevel "해체"
 
-/writer-memory char add 해랑
-/writer-memory char update 해랑 arc "확신 -> 동요 -> 기다림"
-/writer-memory char update 해랑 tone "직진, 솔직"
-/writer-memory char update 해랑 speechLevel "반말"
+$writer-memory char add 해랑
+$writer-memory char update 해랑 arc "확신 -> 동요 -> 기다림"
+$writer-memory char update 해랑 tone "직진, 솔직"
+$writer-memory char update 해랑 speechLevel "반말"
 
 # Establish relationship
-/writer-memory rel add 새랑 해랑 romantic
-/writer-memory rel update 새랑 해랑 "첫 만남 - 해랑 일방적 호감"
-/writer-memory rel update 새랑 해랑 "새랑 거절"
-/writer-memory rel update 새랑 해랑 "재회 - 새랑 내적 동요"
+$writer-memory rel add 새랑 해랑 romantic
+$writer-memory rel update 새랑 해랑 "첫 만남 - 해랑 일방적 호감"
+$writer-memory rel update 새랑 해랑 "새랑 거절"
+$writer-memory rel update 새랑 해랑 "재회 - 새랑 내적 동요"
 
 # Set world
-/writer-memory world set setting "서울, 현대, 20대 후반 직장인"
-/writer-memory world set atmosphere "도시의 건조함 속 미묘한 온기"
+$writer-memory world set setting "서울, 현대, 20대 후반 직장인"
+$writer-memory world set atmosphere "도시의 건조함 속 미묘한 온기"
 
 # Add themes
-/writer-memory theme add "포기하지 않는 사랑"
-/writer-memory theme add "자기 보호의 벽"
+$writer-memory theme add "포기하지 않는 사랑"
+$writer-memory theme add "자기 보호의 벽"
 
 # Add scene
-/writer-memory scene add "옥상 재회"
+$writer-memory scene add "옥상 재회"
 
 # Query for writing
-/writer-memory query "새랑은 이별 장면에서 어떤 톤으로 말할까?"
+$writer-memory query "새랑은 이별 장면에서 어떤 톤으로 말할까?"
 
 # Validate dialogue
-/writer-memory validate 새랑 "해랑아, 그만하자."
+$writer-memory validate 새랑 "해랑아, 그만하자."
 
 # Generate synopsis
-/writer-memory synopsis
+$writer-memory synopsis
 
 # Export for reference
-/writer-memory export
+$writer-memory export
 ```
 
 ### Quick Character Check
 
 ```
-/writer-memory char 새랑
+$writer-memory char 새랑
 ```
 
 Output:
@@ -439,14 +437,14 @@ Output:
 3. **Use Validation While Writing**: Catch voice inconsistencies early
 4. **Query Before Difficult Scenes**: Let the system remind you of context
 5. **Regular Synopsis**: Generate periodically to check thematic coherence
-6. **Backup Before Major Changes**: Use `/backup` before significant story pivots
+6. **Backup Before Major Changes**: Use `$backup` before significant story pivots
 
 ## Troubleshooting
 
 **Memory not loading?**
 - Check `.writer-memory/memory.json` exists
 - Verify JSON syntax is valid
-- Run `/writer-memory status` to diagnose
+- Run `$writer-memory status` to diagnose
 
 **Validation too strict?**
 - Review taboo list for unintended entries

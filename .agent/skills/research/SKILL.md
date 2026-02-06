@@ -75,17 +75,17 @@ When given a research goal, decompose into 3-7 independent stages:
 
 ### Parallel Scientist Invocation
 
-Fire independent stages in parallel via Task tool:
+Run independent stages in parallel using role handoffs:
 
 ```
 // Stage 1 - Simple data gathering
-Task(subagent_type="oh-my-codex:scientist-low", model="haiku", prompt="[RESEARCH_STAGE:1] Investigate...")
+[SCIENTIST-LOW | haiku] "[RESEARCH_STAGE:1] Investigate..."
 
 // Stage 2 - Standard analysis
-Task(subagent_type="oh-my-codex:scientist", model="sonnet", prompt="[RESEARCH_STAGE:2] Analyze...")
+[SCIENTIST | sonnet] "[RESEARCH_STAGE:2] Analyze..."
 
 // Stage 3 - Complex reasoning
-Task(subagent_type="oh-my-codex:scientist-high", model="opus", prompt="[RESEARCH_STAGE:3] Deep analysis of...")
+[SCIENTIST-HIGH | opus] "[RESEARCH_STAGE:3] Deep analysis of..."
 ```
 
 ### Smart Model Routing
@@ -115,7 +115,7 @@ After parallel execution completes, verify findings:
 
 ```
 // Cross-validation stage
-Task(subagent_type="oh-my-codex:scientist", model="sonnet", prompt="
+[SCIENTIST | sonnet]
 [RESEARCH_VERIFICATION]
 Cross-validate these findings for consistency:
 
@@ -130,7 +130,6 @@ Check for:
 4. Evidence quality
 
 Output: [VERIFIED] or [CONFLICTS:<list>]
-")
 ```
 
 ## AUTO Mode
@@ -196,9 +195,9 @@ When stages analyze different data sources:
 
 ```
 // All fire simultaneously
-Task(subagent_type="oh-my-codex:scientist-low", model="haiku", prompt="[STAGE:1] Analyze src/api/...")
-Task(subagent_type="oh-my-codex:scientist-low", model="haiku", prompt="[STAGE:2] Analyze src/utils/...")
-Task(subagent_type="oh-my-codex:scientist-low", model="haiku", prompt="[STAGE:3] Analyze src/components/...")
+[SCIENTIST-LOW | haiku] "[STAGE:1] Analyze src/api/..."
+[SCIENTIST-LOW | haiku] "[STAGE:2] Analyze src/utils/..."
+[SCIENTIST-LOW | haiku] "[STAGE:3] Analyze src/components/..."
 ```
 
 ### Hypothesis Battery (Parallel)
@@ -207,9 +206,9 @@ When testing multiple hypotheses:
 
 ```
 // Test hypotheses simultaneously
-Task(subagent_type="oh-my-codex:scientist", model="sonnet", prompt="[HYPOTHESIS:A] Test if caching improves...")
-Task(subagent_type="oh-my-codex:scientist", model="sonnet", prompt="[HYPOTHESIS:B] Test if batching reduces...")
-Task(subagent_type="oh-my-codex:scientist", model="sonnet", prompt="[HYPOTHESIS:C] Test if lazy loading helps...")
+[SCIENTIST | sonnet] "[HYPOTHESIS:A] Test if caching improves..."
+[SCIENTIST | sonnet] "[HYPOTHESIS:B] Test if batching reduces..."
+[SCIENTIST | sonnet] "[HYPOTHESIS:C] Test if lazy loading helps..."
 ```
 
 ### Cross-Validation (Sequential)
@@ -221,13 +220,12 @@ When verification depends on all findings:
 [stages complete]
 
 // Then sequential verification
-Task(subagent_type="oh-my-codex:scientist-high", model="opus", prompt="
+[SCIENTIST-HIGH | opus]
 [CROSS_VALIDATION]
 Validate consistency across all findings:
 - Finding 1: ...
 - Finding 2: ...
 - Finding 3: ...
-")
 ```
 
 ### Concurrency Limit

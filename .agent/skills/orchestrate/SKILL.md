@@ -135,17 +135,16 @@ I will use omc_task with:
 **Explore/Researcher = Grep, not consultants.
 
 ```typescript
-// CORRECT: Always background, always parallel, ALWAYS pass model explicitly!
-// Contextual Grep (internal)
-Task(subagent_type="explore", model="haiku", prompt="Find auth implementations in our codebase...")
-Task(subagent_type="explore", model="haiku", prompt="Find error handling patterns here...")
-// Reference Grep (external)
-Task(subagent_type="researcher", model="sonnet", prompt="Find JWT best practices in official docs...")
-Task(subagent_type="researcher", model="sonnet", prompt="Find how production apps handle auth in Express...")
-// Continue working immediately. Collect with background_output when needed.
+// CORRECT: Run contextual searches in parallel and continue implementation work.
+// Internal contextual grep
+rg -n "auth|login|jwt" src
+rg -n "error handling|try\\s*\\{|catch\\s*\\(" src
 
-// WRONG: Sequential or blocking
-result = task(...)  // Never wait synchronously for explore/researcher
+// External reference research (official docs first)
+web.search_query([{ q: "JWT best practices official documentation" }])
+web.search_query([{ q: "Express authentication production patterns official docs" }])
+
+// WRONG: Sequential one-by-one search with blocking waits
 ```
 
 ---
@@ -274,7 +273,7 @@ Codex models are prone to premature completion claims. Before saying "done", you
 
 2. **Invoke Architect for verification** (ALWAYS pass model explicitly!):
 ```
-Task(subagent_type="architect", model="opus", prompt="VERIFY COMPLETION REQUEST:
+[ARCHITECT | opus] VERIFY COMPLETION REQUEST:
 Original task: [describe the original request]
 What I implemented: [list all changes made]
 Verification done: [list tests run, builds checked]
@@ -285,7 +284,7 @@ Please verify:
 3. Any missing edge cases?
 4. Code quality acceptable?
 
-Return: APPROVED or REJECTED with specific reasons.")
+Return: APPROVED or REJECTED with specific reasons.
 ```
 
 3. **Based on Architect Response**:
@@ -449,7 +448,7 @@ Sequential agent workflow for complex tasks.
 
 ## Usage
 
-`/orchestrate [workflow-type] [task-description]`
+`$orchestrate [workflow-type] [task-description]`
 
 ## Workflow Types
 
@@ -512,7 +511,7 @@ Between agents, create handoff document:
 ## Example: Feature Workflow
 
 ```
-/orchestrate feature "Add user authentication"
+$orchestrate feature "Add user authentication"
 ```
 
 Executes:
@@ -605,7 +604,7 @@ $ARGUMENTS:
 ## Custom Workflow Example
 
 ```
-/orchestrate custom "architect,tdd-guide,code-reviewer" "Redesign caching layer"
+$orchestrate custom "architect,tdd-guide,code-reviewer" "Redesign caching layer"
 ```
 
 ## Tips
