@@ -10,16 +10,18 @@ description: Generate and run end-to-end tests with Playwright. Creates test jou
 # E2E Command
 
 
-## Pseudo Multi-Agent Protocol (Codex)
+## Native Subagent Protocol (Codex)
 
-Codex does not support native subagents. Simulate role handoffs with explicit sections.
+Codex supports native subagents. Delegate with `spawn_agent`, coordinate with `send_input`, collect via `wait`, and clean up with `close_agent`.
 
-Required sections (in order):
-```
-[ANALYST] Summary + constraints
-[ARCHITECT] Approach + components
-[EXECUTOR] Actions + changes
-[REVIEWER] Verification + risks
+Execution preference:
+1. Use native subagents first for independent workstreams (parallel when possible).
+2. Merge results in main thread and run final verification.
+3. Fallback only when delegation is blocked: use the `[ANALYST]`/`[ARCHITECT]`/`[EXECUTOR]`/`[REVIEWER]` structure in a single response.
+
+Minimal orchestration pattern:
+```text
+spawn_agent -> send_input (optional) -> wait -> close_agent
 ```
 
 This command invokes the **e2e-runner** agent to generate, maintain, and execute end-to-end tests using Playwright.

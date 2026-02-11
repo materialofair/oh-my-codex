@@ -12,9 +12,9 @@ description: Self-referential loop until task completion with architect verifica
 
 Your previous attempt did not output the completion promise. Continue working on the task.
 
-## Pseudo Multi-Agent Protocol (Codex)
+## Native Subagent Protocol (Codex)
 
-Codex does not support native subagents. Simulate roles per iteration: Analyst → Architect → Executor → Reviewer.
+Codex supports native subagents. Delegate with `spawn_agent`, coordinate with `send_input`, collect via `wait`, and clean up with `close_agent`.
 
 Required per-iteration output:
 ```

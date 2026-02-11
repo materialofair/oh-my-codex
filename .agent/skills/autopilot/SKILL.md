@@ -10,9 +10,9 @@ description: Full autonomous execution from idea to working code
 
 Full autonomous execution from idea to working code.
 
-## Pseudo Multi-Agent Protocol (Codex)
+## Native Subagent Protocol (Codex)
 
-Codex does not support native subagents. Simulate them by strictly following this role order and output format.
+Codex supports native subagents. Delegate with `spawn_agent`, coordinate with `send_input`, collect via `wait`, and clean up with `close_agent`.
 
 ### Role Order
 1) Analyst → 2) Architect → 3) Planner → 4) Executor → 5) Reviewer
