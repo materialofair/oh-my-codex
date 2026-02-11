@@ -6,16 +6,18 @@ description: Chain agents together in sequential or branching workflows with dat
 # Pipeline Skill
 
 
-## Pseudo Multi-Agent Protocol (Codex)
+## Native Subagent Protocol (Codex)
 
-Codex does not support native subagents. Simulate role handoffs with explicit sections.
+Codex supports native subagents. Delegate with `spawn_agent`, coordinate with `send_input`, collect via `wait`, and clean up with `close_agent`.
 
-Required sections (in order):
-```
-[ANALYST] Summary + constraints
-[ARCHITECT] Approach + components
-[EXECUTOR] Actions + changes
-[REVIEWER] Verification + risks
+Execution preference:
+1. Use native subagents first for independent workstreams (parallel when possible).
+2. Merge results in main thread and run final verification.
+3. Fallback only when delegation is blocked: use the `[ANALYST]`/`[ARCHITECT]`/`[EXECUTOR]`/`[REVIEWER]` structure in a single response.
+
+Minimal orchestration pattern:
+```text
+spawn_agent -> send_input (optional) -> wait -> close_agent
 ```
 
 > Codex invocation: use `$pipeline ...` or `pipeline: ...`
@@ -406,7 +408,7 @@ The pipeline orchestrator:
 
 1. **Parses pipeline definition** - Validates syntax and agent names
 2. **Initializes state** - Creates pipeline-state.json
-3. **Executes stages sequentially** - Spawns agents with Task tool
+3. **Executes stages sequentially** - Spawns agents with `spawn_agent`
 4. **Passes context between stages** - Structures output for next agent
 5. **Handles branching logic** - Evaluates conditions and routes
 6. **Manages parallel execution** - Spawns concurrent agents and merges

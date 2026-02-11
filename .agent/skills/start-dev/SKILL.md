@@ -5,17 +5,24 @@ description: Intelligent adaptive workflow with automatic pattern library loadin
 
 # start-dev - Intelligent Workflow with Smart Pattern Loading
 
-## Pseudo Multi-Agent Protocol (Codex)
+## Native Subagent Protocol (Codex)
 
-Codex does not support native subagents. Simulate role handoffs with explicit sections.
+Codex supports native subagents. Delegate with `spawn_agent`, coordinate with `send_input`, collect via `wait`, and clean up with `close_agent`.
 
-Required sections (in order):
+Execution preference:
+1. Use native subagents first for independent workstreams (parallel when possible).
+2. Merge results in main thread and run final verification.
+3. Fallback only when delegation is blocked: use the `[ANALYST]`/`[ARCHITECT]`/`[EXECUTOR]`/`[REVIEWER]` structure in a single response.
+
+Minimal orchestration pattern:
+```text
+spawn_agent -> send_input (optional) -> wait -> close_agent
 ```
-[ANALYST] Summary + constraints
-[ARCHITECT] Approach + components
-[EXECUTOR] Actions + changes
-[REVIEWER] Verification + risks
-```
+
+Codex subagent profile mapping:
+- `code-explorer` intent -> `agent_type: explorer`
+- `code-architect` / `code-reviewer` / `code-executor` intents -> `agent_type: worker` with role-specific prompt
+- Parallel fan-out: spawn multiple agents, then `wait` and synthesize in main thread
 
 > Codex invocation: use `start-dev: ...` or `$start-dev ...`
 
@@ -134,6 +141,7 @@ Code Examples Available:
    - **Explorer 1**: Similar feature tracing
    - **Explorer 2**: Architecture pattern analysis
    - **Explorer 3** (deep mode only): Integration points mapping
+   - Codex execution: spawn 2-3 `explorer` subagents in parallel, then `wait` for completion
 3. Identify 5-10 key files to read
 4. Extract patterns, abstractions, and conventions
 5. **Cross-reference with loaded pattern library**
@@ -198,6 +206,7 @@ ResearchPack Created:
    - **Clean architecture**: Maintainability, elegant abstractions
    - **Pragmatic balance**: Speed + quality (default recommendation)
    - **NEW: Pattern-aligned**: Follow loaded pattern library closely
+   - Codex execution: spawn 2-3 `worker` subagents with distinct architecture prompts, then compare outputs
 
 2. **Pattern-guided architecture**:
    - Apply patterns from Phase 0A
@@ -309,6 +318,7 @@ Implementation Complete:
    - **Reviewer 2**: Bugs/Functional correctness focus
    - **Reviewer 3**: Project conventions/Abstractions focus
    - **NEW: Pattern Reviewer**: Pattern library compliance
+   - Codex execution: spawn 3-4 `worker` subagents with reviewer-specific prompts, then merge findings by severity/confidence
 
 2. **Pattern compliance check**:
    - Verify patterns were applied correctly

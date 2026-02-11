@@ -5,16 +5,18 @@ description: Professional multi-agent AI code review with confidence scoring
 
 # aireview - Enhanced AI Code Review
 
-## Pseudo Multi-Agent Protocol (Codex)
+## Native Subagent Protocol (Codex)
 
-Codex does not support native subagents. Simulate role handoffs with explicit sections.
+Codex supports native subagents. Delegate with `spawn_agent`, coordinate with `send_input`, collect via `wait`, and clean up with `close_agent`.
 
-Required sections (in order):
-```
-[ANALYST] Summary + constraints
-[ARCHITECT] Approach + components
-[EXECUTOR] Actions + changes
-[REVIEWER] Verification + risks
+Execution preference:
+1. Use native subagents first for independent workstreams (parallel when possible).
+2. Merge results in main thread and run final verification.
+3. Fallback only when delegation is blocked: use the `[ANALYST]`/`[ARCHITECT]`/`[EXECUTOR]`/`[REVIEWER]` structure in a single response.
+
+Minimal orchestration pattern:
+```text
+spawn_agent -> send_input (optional) -> wait -> close_agent
 ```
 
 > Codex invocation: use `aireview: ...` or `$aireview ...`
@@ -231,7 +233,7 @@ If MODE == "quick":
   Skip to Step 6 (Generate Report)
 
 Else:
-  Launch 5 parallel agents (use Task tool with model="haiku" for speed):
+  Launch 5 parallel agents (use `spawn_agent` in parallel; prefer lightweight agent profiles for speed):
 
 Agent #1 - CLAUDE.md Compliance (INTJ Persona):
   Prompt: |
