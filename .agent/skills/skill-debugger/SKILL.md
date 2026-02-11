@@ -49,7 +49,7 @@ description: Analyzes financial ratios from statement data for investment decisi
 ### Problem 3: Skill Not Discovered
 **Symptom**: Codex says skill doesn't exist
 **Root Cause**: Wrong installation location or invalid SKILL.md
-**Check**: `~/.codex/skills/[name]/SKILL.md` or `.codex/skills/[name]/SKILL.md`
+**Check**: `~/.codex/skills/[name]/SKILL.md`, `.codex/skills/[name]/SKILL.md`, or `.agents/skills/[name]/SKILL.md`
 
 ### Problem 4: Name Mismatch
 **Symptom**: Skill found but not loaded
@@ -175,7 +175,7 @@ Codex will:
 When a skill isn't triggering, Codex will ask:
 
 1. **Installation Check**
-   - "Is the skill at `~/.codex/skills/[name]/SKILL.md` or `.codex/skills/[name]/SKILL.md`?"
+   - "Is the skill at `~/.codex/skills/[name]/SKILL.md`, `.codex/skills/[name]/SKILL.md`, or `.agents/skills/[name]/SKILL.md`?"
    - "Does `ls ~/.codex/skills/` show your skill folder?"
 
 2. **YAML Validation**

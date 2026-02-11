@@ -33,6 +33,18 @@ Codex auto-loads skills from:
 
 When the user mentions a skill name or uses `$skill`, you should follow that skill.
 
+### Source-of-Truth Workflow (Mandatory)
+
+For this repository, **`oh-my-codex` is the single source of truth** for skills and docs.
+
+Required order:
+1. Edit and validate files in this repo first (for example `.agent/skills/**/SKILL.md`).
+2. Commit/push repository changes.
+3. Install/sync to runtime using installer scripts (for example `scripts/install-codex.sh` / `scripts/install-codex-force.sh`).
+
+Do **not** use `~/.codex/skills` as the primary editing location.
+Direct edits under `~/.codex/skills` are temporary at most, and must be immediately backported to repo before considering work complete.
+
 ### Compatibility Notes
 
 Codex does **not** support Claude Code plugins, hooks, or HUD. Any mention of:

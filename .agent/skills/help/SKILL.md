@@ -67,6 +67,12 @@ $omc-setup
 
 This is the **only command** you need to know. It downloads the configuration and you're done.
 
+## 0.9+ Quick Tips
+
+- Use `/apps` to browse available connectors and insert app prompts quickly.
+- If prompted for tool approvals, use "allow and remember" for trusted tools to reduce repeated confirmations.
+- Use `/debug-config` to inspect active config, skills paths, and runtime settings when behavior looks wrong.
+
 ## For 2.x Users
 
 Your old commands still work! `$ralph`, `$ultrawork`, `$plan`, etc. all function exactly as before.

@@ -168,7 +168,7 @@ mkdir -p skill-name/{references,examples,scripts}
 touch skill-name/SKILL.md
 ```
 
-**Note:** Unlike the generic skill-creator which uses `init_skill.py`, Codex CLI skills are created directly in a skill directory and then placed under `~/.codex/skills/` or `<repo>/.agent/skills/`.
+**Note:** Unlike the generic skill-creator which uses `init_skill.py`, Codex CLI skills are created directly in a skill directory and then placed under `~/.codex/skills/`, `<repo>/.codex/skills/`, or `<repo>/.agents/skills/`.
 
 ### Step 4: Edit the Skill
 
@@ -238,7 +238,7 @@ Working examples in `examples/`:
 
 **For Codex CLI skills, validation is different from generic skills:**
 
-1. **Check structure**: Skill directory in `~/.codex/skills/skill-name/` or `<repo>/.agent/skills/skill-name/`
+1. **Check structure**: Skill directory in `~/.codex/skills/skill-name/`, `<repo>/.codex/skills/skill-name/`, or `<repo>/.agents/skills/skill-name/`
 2. **Validate SKILL.md**: Has frontmatter with name and description
 3. **Check trigger phrases**: Description includes specific user queries
 4. **Verify writing style**: Body uses imperative/infinitive form, not second person
@@ -304,7 +304,7 @@ Codex automatically discovers skills:
 
 ### No Packaging Needed
 
-Skills are plain directories. Install globally via `~/.codex/skills/` or keep project-local under `.agent/skills/`.
+Skills are plain directories. Install globally via `~/.codex/skills/` or keep project-local under `.codex/skills/` / `.agents/skills/`.
 
 ### Testing in Codex CLI
 

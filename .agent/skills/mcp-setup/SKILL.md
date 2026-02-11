@@ -20,6 +20,14 @@ codex mcp add
 codex mcp list
 ```
 
+Related 0.9+ helpers:
+```
+/apps          # browse connected apps/connectors
+/debug-config  # inspect active Codex config and MCP wiring
+```
+
+Approval tip: for trusted MCP tools, use "allow and remember" to avoid repeated prompts in the same workflow.
+
 
 
 ## Native Subagent Protocol (Codex)

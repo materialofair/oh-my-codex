@@ -683,8 +683,8 @@ The orchestrator (main skill handler) is responsible for:
 6. Detecting completion via `isSwarmComplete()`
 7. Reporting final summary from database query
 
-Each agent is a standard Task invocation with:
-- `run_in_background: true`
+Each agent is a standard subagent invocation with:
+- Spawn with `spawn_agent`, then coordinate via `wait`/`send_input`
 - Agent-specific prompt with work loop instructions
 - API import: `import { claimTask, completeTask, ... } from './swarm'`
 - Connection: `await connectToSwarm(cwd)` to join existing swarm
