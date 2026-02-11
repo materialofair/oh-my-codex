@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-**面向 Codex CLI 的多代理工作流。**
+**面向 Codex CLI 的原生 subagent 工作流。**
 
 *少调 prompt，多交付。*
 
@@ -18,6 +18,16 @@
 **推荐（一键安装）**
 ```bash
 ./scripts/install-codex.sh --all
+```
+
+强制覆盖安装：
+```bash
+./scripts/install-codex-force.sh --all
+```
+
+增量安装（跳过已存在文件）：
+```bash
+./scripts/install-codex-incremental.sh --all
 ```
 
 安装内容包括：
@@ -37,6 +47,7 @@
 - **执行模式**：`autopilot`, `ralph`, `ultrawork`, `ultraqa`, `ultrapilot`, `swarm`, `pipeline`, `ecomode`
 - **规划与质量**：`plan`, `review`, `analyze`, `tdd`, `code-review`, `security-review`, `build-fix`, `verify`, `eval`
 - **学习与上下文**：`continuous-learning`, `strategic-compact`, `iterative-retrieval`, `verification-loop`
+- **原生 subagent 编排**：核心 skill 统一使用 `spawn_agent` + `send_input` + `wait` + `close_agent`
 - **规则与守护**：编码 / 安全 / 测试 / 性能 / Git 工作流
 - **Plan 模式已开启**（Codex 0.9+）
 
@@ -47,10 +58,9 @@
 | 能力 | Claude Code（oh‑my‑claudecode） | Codex（oh‑my‑codex） |
 |---|---|---|
 | Skills 工作流 | ✅ | ✅（主方式） |
+| 原生 subagent 执行 | ✅ | ✅ |
 | Plan 模式 | ⚠️ 插件驱动 | ✅ 原生（0.9+ 配置开启） |
 | MCP 支持 | ✅ | ✅（config.toml/CLI） |
-
-说明：部分 Claude Code 能力因 Codex 架构差异暂不可用。若未来 Codex 原生支持，我们会第一时间跟进。
 
 ---
 

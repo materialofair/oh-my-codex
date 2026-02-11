@@ -4,7 +4,7 @@ English | [简体中文](README.zh.md)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-**Role‑simulated workflows for Codex CLI.**
+**Native subagent workflows for Codex CLI.**
 
 *Less prompt‑tuning, more shipping.*
 
@@ -47,6 +47,7 @@ Installs:
 - **Execution modes**: `autopilot`, `ralph`, `ultrawork`, `ultraqa`, `ultrapilot`, `swarm`, `pipeline`, `ecomode`
 - **Planning & QA**: `plan`, `review`, `analyze`, `tdd`, `code-review`, `security-review`, `build-fix`, `verify`, `eval`
 - **Learning & context**: `continuous-learning`, `strategic-compact`, `iterative-retrieval`, `verification-loop`
+- **Native subagent orchestration**: `spawn_agent` + `send_input` + `wait` + `close_agent` patterns across core skills
 - **Rules & guardrails**: coding, security, testing, performance, git workflow
 - **Plan mode enabled** (Codex 0.9+)
 
@@ -57,10 +58,9 @@ Installs:
 | Capability | Claude Code (oh‑my‑claudecode) | Codex (oh‑my‑codex) |
 |---|---|---|
 | Skills‑based workflows | ✅ | ✅ (primary) |
+| Native subagent execution | ✅ | ✅ |
 | Plan Mode | ⚠️ plugin‑driven | ✅ native (0.9+ with config) |
 | MCP support | ✅ | ✅ (config.toml / CLI) |
-
-Note: Some Claude Code features are not available in Codex due to architectural differences. If Codex adds native support later, we will adopt it.
 
 ---
 
