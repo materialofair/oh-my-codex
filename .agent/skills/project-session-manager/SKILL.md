@@ -7,16 +7,18 @@ aliases: [psm]
 # Project Session Manager (PSM) Skill
 
 
-## Pseudo Multi-Agent Protocol (Codex)
+## Native Subagent Protocol (Codex)
 
-Codex does not support native subagents. Simulate role handoffs with explicit sections.
+Codex supports native subagents. Delegate with `spawn_agent`, coordinate with `send_input`, collect via `wait`, and clean up with `close_agent`.
 
-Required sections (in order):
-```
-[ANALYST] Summary + constraints
-[ARCHITECT] Approach + components
-[EXECUTOR] Actions + changes
-[REVIEWER] Verification + risks
+Execution preference:
+1. Use native subagents first for independent workstreams (parallel when possible).
+2. Merge results in main thread and run final verification.
+3. Fallback only when delegation is blocked: use the `[ANALYST]`/`[ARCHITECT]`/`[EXECUTOR]`/`[REVIEWER]` structure in a single response.
+
+Minimal orchestration pattern:
+```text
+spawn_agent -> send_input (optional) -> wait -> close_agent
 ```
 
 > Codex invocation: use `$project-session-manager ...` or `project-session-manager: ...`
@@ -95,7 +97,7 @@ When the user invokes a PSM command, follow this protocol:
 Parse `{{ARGUMENTS}}` to determine:
 1. **Subcommand**: review, fix, feature, list, attach, kill, cleanup, status
 2. **Reference**: project#number, URL, or session ID
-3. **Options**: --branch, --base, --no-claude, --no-tmux, etc.
+3. **Options**: --branch, --base, --no-codex, --no-tmux, etc.
 
 ### Subcommand: `review <ref>`
 
@@ -217,7 +219,7 @@ Parse `{{ARGUMENTS}}` to determine:
 
 5. **Create session metadata** (similar to review, type="fix")
 
-6. **Update registry, create tmux, launch claude** (same as review)
+6. **Update registry, create tmux, launch codex** (same as review)
 
 ### Subcommand: `feature <project> <name>`
 
@@ -241,7 +243,7 @@ Parse `{{ARGUMENTS}}` to determine:
    git worktree add "$worktree_path" "$branch_name"
    ```
 
-4. **Create session, tmux, launch claude** (same pattern)
+4. **Create session, tmux, launch codex** (same pattern)
 
 ### Subcommand: `list [project]`
 

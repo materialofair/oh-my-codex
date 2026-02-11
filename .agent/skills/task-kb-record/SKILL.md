@@ -94,12 +94,12 @@ description: Record task execution results, metrics, lessons learned to Agent-KB
 
 ### Step 3: 智能预填充
 
-Claude应基于任务上下文自动预填充大部分信息：
+Codex应基于任务上下文自动预填充大部分信息：
 
 ```python
 # 自动提取策略
 任务描述 → 从用户原始请求或TodoWrite任务名
-解决方案 → 总结Claude执行的主要步骤和代码修改
+解决方案 → 总结Codex执行的主要步骤和代码修改
 性能指标 → 提取测试输出、benchmark结果、文件统计
 核心经验 → 分析执行过程中的关键决策点
 技术标签 → 识别使用的框架、库、工具
@@ -312,7 +312,7 @@ python /Users/WangQiao/Agent-KB/claude_kb_store.py \
 
 ### 自动数据提取
 
-Claude应从以下来源自动提取信息：
+Codex应从以下来源自动提取信息：
 
 ```yaml
 任务描述:
@@ -321,7 +321,7 @@ Claude应从以下来源自动提取信息：
   - Git commit message
 
 解决方案:
-  - Claude执行的代码修改
+  - Codex执行的代码修改
   - 使用的工具和命令
   - 关键决策点
 
@@ -349,7 +349,7 @@ Claude应从以下来源自动提取信息：
   4. 用户确认执行计划
 
 阶段2 - 任务执行:
-  5. Claude执行任务
+  5. Codex执行任务
   6. [可选] 中途遇到问题查询agent-kb
   7. 完成功能实现和测试
 

@@ -9,9 +9,9 @@ tags: [planning, architecture, minimal-change, reversibility]
 
 This skill provides a systematic methodology for creating implementation plans that are surgical, reversible, and minimize risk while maximizing clarity.
 
-## When Claude Should Use This Skill
+## When Codex Should Use This Skill
 
-Claude will automatically invoke this skill when:
+Codex will automatically invoke this skill when:
 - ResearchPack is ready and implementation planning is needed
 - User asks "how should we implement...", "create a plan for..."
 - Complex feature requires structured approach
@@ -335,7 +335,7 @@ New Pattern Established:
 
 **Scenario**: ResearchPack ready for Redis caching, need implementation plan
 
-**Claude (using this skill)**:
+**Codex (using this skill)**:
 
 ```
 [Internal: Need to plan Redis integration systematically]

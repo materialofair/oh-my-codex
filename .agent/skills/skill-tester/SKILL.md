@@ -1,11 +1,11 @@
 ---
 name: skill-tester
-description: Tests Claude Code skill functionality with TDD approach, verifying skills work correctly through automated test scenarios and validation
+description: Tests Codex skill functionality with TDD approach, verifying skills work correctly through automated test scenarios and validation
 ---
 
 # Skill Tester
 
-Test-driven development tool for Claude Code skills. Verifies skill functionality, validates outputs, and ensures skills work correctly before distribution.
+Test-driven development tool for Codex skills. Verifies skill functionality, validates outputs, and ensures skills work correctly before distribution.
 
 ## Capabilities
 

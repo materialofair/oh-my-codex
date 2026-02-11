@@ -125,7 +125,7 @@ add-rectangle:
 
 ```bash
 # 检查MCP服务器状态
-claude mcp list
+codex mcp list
 
 # 预期输出：
 # drawio: npx -y drawio-mcp-server - ✓ Connected
@@ -135,7 +135,7 @@ claude mcp list
 - 确保浏览器扩展已安装
 - 打开 Draw.io 网页版（https://app.diagrams.net）
 - 确保扩展显示绿色连接状态
-- 重启Claude Code会话
+- 重启Codex会话
 
 ---
 
@@ -614,13 +614,13 @@ edge_dashed: "edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=
 
 ### 问题1: MCP连接失败
 
-**症状**: `claude mcp list` 显示 `✗ Failed to connect`
+**症状**: `codex mcp list` 显示 `✗ Failed to connect`
 
 **解决方案**:
 1. 确保已安装浏览器扩展
 2. 打开 https://app.diagrams.net
 3. 检查扩展图标是否为绿色
-4. 重启Claude Code会话
+4. 重启Codex会话
 5. 刷新Draw.io网页
 
 ### 问题2: 无法添加图形

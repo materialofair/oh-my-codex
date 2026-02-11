@@ -1,6 +1,6 @@
 ---
 name: research-methodology
-description: Systematic approach for gathering authoritative, version-accurate documentation. Claude invokes this skill when research is needed before implementation. Ensures truth over speed while achieving both.
+description: Systematic approach for gathering authoritative, version-accurate documentation. Codex invokes this skill when research is needed before implementation. Ensures truth over speed while achieving both.
 auto_invoke: true
 tags: [research, documentation, verification, truth]
 ---
@@ -9,9 +9,9 @@ tags: [research, documentation, verification, truth]
 
 This skill provides a systematic methodology for conducting rapid, accurate documentation research to ground implementations in truth rather than potentially stale LLM memory.
 
-## When Claude Should Use This Skill
+## When Codex Should Use This Skill
 
-Claude will automatically invoke this skill when:
+Codex will automatically invoke this skill when:
 - User mentions implementing/using a specific library or API
 - User asks about current documentation for a technology
 - User requests verification of API signatures or methods
@@ -231,7 +231,7 @@ Source: official-docs.com/api-reference/someFunction [version X.Y.Z]
 
 **Scenario**: User says "Add Redis caching to the product service"
 
-**Claude (using this skill)**:
+**Codex (using this skill)**:
 
 ```
 [Internal: This requires research on Redis client library]

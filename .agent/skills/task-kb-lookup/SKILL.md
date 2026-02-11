@@ -173,7 +173,7 @@ python /Users/WangQiao/Agent-KB/intelligent_summarizer.py "多租户 数据隔�
    ↓
 4. 用户确认/调整执行计划
    ↓
-5. Claude执行任务
+5. Codex执行任务
    ↓
 6. [自动] 触发 task-kb-record skill (记录结果)
 ```

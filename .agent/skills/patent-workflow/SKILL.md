@@ -476,7 +476,7 @@ def calculate_irr(document):
 
     return irr
 
-# Claude执行逻辑:
+# Codex执行逻辑:
 # 1. 读取撰写的专利文档
 # 2. 计算IRR指标
 # 3. 如果IRR < 0.85，标记重复段落
@@ -666,7 +666,7 @@ clink with codex codereviewer to review patent claims for authorization rate opt
 
 ---
 
-## 🤖 Claude执行流程总览
+## 🤖 Codex执行流程总览
 
 ### 完整Workflow执行
 
