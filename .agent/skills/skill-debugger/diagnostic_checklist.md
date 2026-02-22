@@ -4,10 +4,10 @@ Use this checklist to systematically debug why a skill isn't triggering.
 
 ## Phase 1: Installation & Discovery
 
-- [ ] **File exists**: Skill folder at `~/.codex/skills/[name]/` or `.codex/skills/[name]/`
+- [ ] **File exists**: Skill folder at `~/.claude/skills/[name]/` or `.claude/skills/[name]/`
 - [ ] **SKILL.md present**: File named exactly `SKILL.md` (case-sensitive)
 - [ ] **Folder name correct**: No spaces, special characters, or uppercase
-- [ ] **Location visible**: `ls ~/.codex/skills/` shows the folder
+- [ ] **Location visible**: `ls ~/.claude/skills/` shows the folder
 
 ## Phase 2: YAML Frontmatter
 
@@ -103,7 +103,7 @@ description: Helps analyze data
 - [ ] Improved description with keywords
 - [ ] Added/updated "When to Use" section
 - [ ] Added usage examples
-- [ ] Tested with Codex: "What would trigger [skill-name]?"
+- [ ] Tested with Claude Code: "What would trigger [skill-name]?"
 - [ ] Verified no conflicts: "Check skill conflicts"
 - [ ] Tested actual triggering with natural query
 
@@ -112,4 +112,4 @@ description: Helps analyze data
 - **Weekly**: Test triggering of your most-used skills
 - **Monthly**: Run full diagnostic on all skills
 - **After adding new skill**: Check for conflicts with existing skills
-- **After Codex updates**: Verify skills still trigger correctly
+- **After Claude Code updates**: Verify skills still trigger correctly

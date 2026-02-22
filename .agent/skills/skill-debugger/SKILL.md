@@ -1,17 +1,17 @@
 ---
 name: skill-debugger
-description: Debugs why Codex skills aren't triggering when expected, analyzing descriptions, trigger conditions, and skill discovery issues
+description: Debugs why Claude Code skills aren't triggering when expected, analyzing descriptions, trigger conditions, and skill discovery issues
 ---
 
 # Skill Debugger
 
-Systematic debugging tool for Codex skills that aren't triggering as expected. Identifies root causes like poor descriptions, missing trigger words, naming issues, or skill discovery problems.
+Systematic debugging tool for Claude Code skills that aren't triggering as expected. Identifies root causes like poor descriptions, missing trigger words, naming issues, or skill discovery problems.
 
 ## Agent Workflow
 
 To debug effectively, follow this **Hybrid Workflow**:
 
-1.  **Fact Check (Hard Metrics)**: Use `list_dir` and `view_file` to verify the **target skill's** implementation.
+1.  **Fact Check (Hard Metrics)**: Use `Glob` and `Read` tools to verify the **target skill's** implementation.
     *   Does the folder exist?
     *   Does `SKILL.md` exist?
     *   Is the YAML frontmatter valid?
@@ -24,16 +24,16 @@ To debug effectively, follow this **Hybrid Workflow**:
 - **Trigger Analysis**: Examines why a skill isn't being invoked when it should be
 - **Description Evaluation**: Checks if skill description clearly communicates when to use it
 - **Keyword Detection**: Identifies missing or weak trigger keywords in descriptions
-- **Discovery Debugging**: Verifies Codex can find and load the skill
+- **Discovery Debugging**: Verifies Claude Code can find and load the skill
 - **Conflict Detection**: Identifies skills with overlapping triggers or descriptions
 - **YAML Validation**: Checks frontmatter format and required fields
 - **Interactive Diagnosis**: Guides through systematic debugging steps
-- **Fix Suggestions**: Provides specific改进s to improve skill triggering
+- **Fix Suggestions**: Provides specific improvements to improve skill triggering
 
 ## Common Skill Triggering Problems
 
 ### Problem 1: Vague Description
-**Symptom**: Skill exists but Codex never uses it
+**Symptom**: Skill exists but Claude Code never uses it
 **Root Cause**: Description doesn't mention specific use cases or keywords
 **Example**:
 ```yaml
@@ -47,9 +47,9 @@ description: Analyzes financial ratios from statement data for investment decisi
 **Fix**: Add trigger keywords like "financial analysis", "investment", "ratios"
 
 ### Problem 3: Skill Not Discovered
-**Symptom**: Codex says skill doesn't exist
+**Symptom**: Claude Code says skill doesn't exist
 **Root Cause**: Wrong installation location or invalid SKILL.md
-**Check**: `~/.codex/skills/[name]/SKILL.md`, `.codex/skills/[name]/SKILL.md`, or `.agents/skills/[name]/SKILL.md`
+**Check**: `~/.claude/skills/[name]/SKILL.md`, `.claude/skills/[name]/SKILL.md`, or `.agent/skills/[name]/SKILL.md`
 
 ### Problem 4: Name Mismatch
 **Symptom**: Skill found but not loaded
@@ -69,7 +69,7 @@ description: Analyzes financial ratios from statement data for investment decisi
 
 **Deep Analysis**:
 - All installed skills paths (for conflict detection)
-- Recent conversation history (to see what Codex chose instead)
+- Recent conversation history (to see what Claude Code chose instead)
 
 ## Output Formats
 
@@ -86,7 +86,7 @@ Fix: Add specific keywords like "review", "code quality", "pull request"
 === Skill Debugging Report ===
 
 Skill: financial-analyzer
-Path: ~/.codex/skills/financial-analyzer/
+Path: ~/.claude/skills/financial-analyzer/
 Status: ⚠️ Rarely triggers
 
 Issues Found:
@@ -95,7 +95,7 @@ Issues Found:
    - Should mention: financial ratios, investment analysis, DCF, valuation
 
 2. [HIGH] No "When to Use" section in SKILL.md
-   - Codex can't determine clear triggering conditions
+   - Claude Code can't determine clear triggering conditions
 
 3. [MEDIUM] Overlaps with "data-analyzer" skill
    - Both mention "analyzes data"
@@ -129,7 +129,7 @@ data-analyzer  ←→  financial-analyzer  (both mention "analysis")
 "Is the financial-analyzer skill discoverable?"
 ```
 
-Codex will:
+Claude Code will:
 - Check file exists at expected location
 - Validate SKILL.md format
 - Verify YAML frontmatter
@@ -141,7 +141,7 @@ Codex will:
 "Debug the financial-analyzer skill - I asked about ratios but it didn't trigger"
 ```
 
-Codex will:
+Claude Code will:
 - Examine description for specificity
 - Check for relevant keywords
 - Compare against your query
@@ -153,7 +153,7 @@ Codex will:
 "Give me 5 phrases that should invoke financial-analyzer"
 ```
 
-Codex will:
+Claude Code will:
 - Generate test queries based on description
 - Identify gaps between description and intended use
 - Suggest description improvements
@@ -165,18 +165,18 @@ Codex will:
 "Why does data-analyzer trigger instead of financial-analyzer?"
 ```
 
-Codex will:
+Claude Code will:
 - Compare all skill descriptions
 - Identify overlapping keywords
 - Suggest differentiation strategies
 
 ## Systematic Debugging Questions
 
-When a skill isn't triggering, Codex will ask:
+When a skill isn't triggering, Claude Code will ask:
 
 1. **Installation Check**
-   - "Is the skill at `~/.codex/skills/[name]/SKILL.md`, `.codex/skills/[name]/SKILL.md`, or `.agents/skills/[name]/SKILL.md`?"
-   - "Does `ls ~/.codex/skills/` show your skill folder?"
+   - "Is the skill at `~/.claude/skills/[name]/SKILL.md`, `.claude/skills/[name]/SKILL.md`, or `.agent/skills/[name]/SKILL.md`?"
+   - "Does `ls ~/.claude/skills/` show your skill folder?"
 
 2. **YAML Validation**
    - "Is the YAML frontmatter properly formatted with `---` delimiters?"
@@ -203,7 +203,7 @@ When a skill isn't triggering, Codex will ask:
 **Quick Fix**:
 ```
 "My code-review skill isn't working"
-"Why doesn't Codex use my financial-analyzer?"
+"Why doesn't Claude Code use my financial-analyzer?"
 "Debug skill triggering for aws-solution-architect"
 ```
 
@@ -250,16 +250,16 @@ If you have `data-analyzer` and `financial-analyzer`:
 ### Fix 5: Fix Name Mismatch
 Ensure folder name matches YAML name:
 ```
-Folder: ~/.codex/skills/code-review/
+Folder: ~/.claude/skills/code-review/
 YAML: name: code-review  ✅
 
-Folder: ~/.codex/skills/code-review/
+Folder: ~/.claude/skills/code-review/
 YAML: name: code_review  ❌ Mismatch!
 ```
 
 ## Diagnostic Checklist
 
-When debugging, Codex will check:
+When debugging, Claude Code will check:
 
 - [ ] Skill file exists at correct location
 - [ ] SKILL.md has valid YAML frontmatter
@@ -293,7 +293,7 @@ When debugging, Codex will check:
 
 ## Limitations
 
-- **Cannot Read Codex's Internal Decision Process**: Can only infer based on descriptions
+- **Cannot Read Claude Code's Internal Decision Process**: Can only infer based on descriptions
 - **No Real-Time Monitoring**: Can't watch skill selection in action
 - **Heuristic-Based**: Uses patterns, not guaranteed 100% accurate
 - **No Auto-Fix**: Provides recommendations but you must apply them

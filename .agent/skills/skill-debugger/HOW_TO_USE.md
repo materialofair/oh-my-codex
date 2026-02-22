@@ -7,7 +7,7 @@
 **Symptom**:
 ```
 User: "Help me analyze this code"
-Codex: *Uses general capabilities, not your code-analyzer skill*
+Claude Code: *Uses general capabilities, not your code-analyzer skill*
 ```
 
 **Debug**:
@@ -15,7 +15,7 @@ Codex: *Uses general capabilities, not your code-analyzer skill*
 "Why doesn't my code-analyzer skill trigger?"
 ```
 
-**Codex's Response**:
+**Claude Code's Response**:
 ```
 Analyzing code-analyzer skill...
 
@@ -34,7 +34,7 @@ This adds keywords: quality, metrics, code smell, refactoring
 **Symptom**:
 ```
 User: "Calculate financial ratios for this company"
-Codex: *Doesn't use financial-analyzer skill*
+Claude Code: *Doesn't use financial-analyzer skill*
 ```
 
 **Debug**:
@@ -42,7 +42,7 @@ Codex: *Doesn't use financial-analyzer skill*
 "I asked 'calculate financial ratios' but financial-analyzer didn't trigger. Why?"
 ```
 
-**Codex's Response**:
+**Claude Code's Response**:
 ```
 Description Analysis:
 Current: "Analyzes financial data"
@@ -60,7 +60,7 @@ Fix: Add to description:
 **Symptom**:
 ```
 User: "Review this code for quality"
-Codex: *Uses general code-review, not your specialized quality-analyzer*
+Claude Code: *Uses general code-review, not your specialized quality-analyzer*
 ```
 
 **Debug**:
@@ -68,7 +68,7 @@ Codex: *Uses general code-review, not your specialized quality-analyzer*
 "Why does code-review trigger instead of quality-analyzer?"
 ```
 
-**Codex's Response**:
+**Claude Code's Response**:
 ```
 Conflict Detected:
 
@@ -92,8 +92,8 @@ Differentiation: code-review for PRs, quality-analyzer for metrics
 "Is my aws-solution-architect skill installed correctly?"
 ```
 
-**Codex checks**:
-- File location: `~/.codex/skills/aws-solution-architect/SKILL.md`
+**Claude Code checks**:
+- File location: `~/.claude/skills/aws-solution-architect/SKILL.md`
 - YAML validity
 - Name matching
 
@@ -103,7 +103,7 @@ Differentiation: code-review for PRs, quality-analyzer for metrics
 "What would trigger my financial-analyzer skill?"
 ```
 
-**Codex generates test queries**:
+**Claude Code generates test queries**:
 ```
 Based on description "Analyzes financial statements", these should trigger:
 ✓ "Analyze this company's financial statements"
@@ -120,7 +120,7 @@ Add missing keywords to description.
 "Do my skills have conflicting descriptions?"
 ```
 
-**Codex compares all skills**:
+**Claude Code compares all skills**:
 ```
 Potential Conflicts:
 1. data-analyzer ←→ financial-analyzer
@@ -138,7 +138,7 @@ Potential Conflicts:
 
 **Setup**:
 ```yaml
-# ~/.codex/skills/seo-optimizer/SKILL.md
+# ~/.claude/skills/seo-optimizer/SKILL.md
 ---
 name: seo-optimizer
 description: Helps with SEO
@@ -148,14 +148,14 @@ description: Helps with SEO
 **Problem**:
 ```
 User: "Optimize this article for search engines"
-Codex: *Doesn't use seo-optimizer*
+Claude Code: *Doesn't use seo-optimizer*
 ```
 
 **Debug Session**:
 ```
 User: "Debug why seo-optimizer didn't trigger for 'optimize for search engines'"
 
-Codex:
+Claude Code:
 Description Analysis:
 - Current: "Helps with SEO"
 - Your query: "optimize", "search engines"
@@ -190,20 +190,20 @@ description: Enhances photos
 **Problem**:
 ```
 User: "Enhance this photo's colors"
-Codex: *Uses image-editor instead of photo-enhancer*
+Claude Code: *Uses image-editor instead of photo-enhancer*
 ```
 
 **Debug**:
 ```
 User: "Why does image-editor trigger instead of photo-enhancer for photo enhancement?"
 
-Codex:
+Claude Code:
 Overlap Analysis:
 - Both mention image/photo processing
 - "image-editor" description is more general
 - "photo-enhancer" description doesn't mention "colors", "exposure", etc.
 
-Codex chooses more general skill when uncertain.
+Claude Code chooses more general skill when uncertain.
 
 Fix:
 - image-editor: "Edits images with cropping, resizing, rotation, and format conversion"
@@ -240,5 +240,5 @@ Now "enhance photo colors" clearly matches photo-enhancer keywords.
 2. **Be Specific**: Don't say "helps with" - say exactly what it does
 3. **Add Use Cases**: "for investment analysis" clarifies when to use
 4. **Avoid Generics**: "code analysis" → "code quality metrics"
-5. **Test Regularly**: Ask Codex to suggest trigger phrases
+5. **Test Regularly**: Ask Claude Code to suggest trigger phrases
 6. **Iterate**: Debug → Fix → Test → Repeat
