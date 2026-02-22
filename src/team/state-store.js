@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 function teamStatePath(cwd) {
-  return path.join(cwd, '.omx', 'state', 'team-state.json');
+  return path.join(cwd, '.omcodex', 'state', 'team-state.json');
 }
 
 function readTeamState(cwd) {

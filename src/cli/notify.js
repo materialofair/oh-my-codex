@@ -121,7 +121,7 @@ async function notify(args) {
     return;
   }
 
-  console.log('Usage: omx notify init|status|validate|test [event]');
+  console.log('Usage: omcodex notify init|status|validate|test [event]');
 }
 
 module.exports = { notify };

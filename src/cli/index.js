@@ -4,18 +4,18 @@ const { doctor } = require('./doctor');
 const { team } = require('./team');
 const { notify } = require('./notify');
 
-const HELP = `oh-my-codex CLI (omx)
+const HELP = `oh-my-codex CLI (omcodex)
 
 Usage:
-  omx setup [--scope user|project-local|project] [--force] [--dry-run] [--verbose] [--no-prompts]
-  omx doctor
-  omx team start \"<task>\"
-  omx team status
-  omx team advance <phase> [reason]
-  omx team cancel
-  omx team clear
-  omx notify init|status|validate|test [event]
-  omx help
+  omcodex setup [--scope user|project-local|project] [--force] [--dry-run] [--verbose] [--no-prompts]
+  omcodex doctor
+  omcodex team start \"<task>\"
+  omcodex team status
+  omcodex team advance <phase> [reason]
+  omcodex team cancel
+  omcodex team clear
+  omcodex notify init|status|validate|test [event]
+  omcodex help
 `;
 
 function parseScope(args) {

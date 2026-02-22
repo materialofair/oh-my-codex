@@ -50,7 +50,7 @@
 - **角色 Prompt 目录**：`architect`, `planner`, `executor`（安装到 `.codex/prompts/`）
 - **学习与上下文**：`continuous-learning`, `strategic-compact`, `iterative-retrieval`, `verification-loop`
 - **原生 subagent 编排**：核心 skill 统一使用 `spawn_agent` + `send_input` + `wait` + `close_agent`
-- **通知扩展**：`omx notify`（事件驱动通知扩展，不是拦截执行）
+- **通知扩展**：`omcodex notify`（事件驱动通知扩展，不是拦截执行）
 - **规则与守护**：编码 / 安全 / 测试 / 性能 / Git 工作流
 - **Plan 模式已开启**（Codex 0.9+）
 

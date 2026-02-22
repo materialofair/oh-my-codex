@@ -9,14 +9,14 @@ const path = require('path');
 const SUPPORTED_MODES = ['autopilot', 'ultrawork', 'ralph', 'ultraqa', 'plan', 'swarm', 'pipeline', 'ecomode'];
 
 function statePath(cwd, mode) {
-  return path.join(cwd, '.omx', 'state', `${mode}-state.json`);
+  return path.join(cwd, '.omcodex', 'state', `${mode}-state.json`);
 }
 
 function text(data) {
   return { content: [{ type: 'text', text: JSON.stringify(data, null, 2) }] };
 }
 
-const server = new Server({ name: 'omx-state', version: '0.1.0' }, { capabilities: { tools: {} } });
+const server = new Server({ name: 'omcodex-state', version: '0.1.0' }, { capabilities: { tools: {} } });
 
 server.setRequestHandler(ListToolsRequestSchema, async () => ({
   tools: [
@@ -85,7 +85,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   }
 
   if (name === 'state_list_active') {
-    const stateDir = path.join(wd, '.omx', 'state');
+    const stateDir = path.join(wd, '.omcodex', 'state');
     if (!fs.existsSync(stateDir)) return text({ active: [] });
     const files = (await fsp.readdir(stateDir)).filter((file) => file.endsWith('-state.json'));
     const active = [];

@@ -19,4 +19,4 @@ if [[ "$ENABLE_CONTEXT7" == "true" ]]; then
 fi
 
 cd "$ROOT_DIR"
-node ./bin/omx.js "${args[@]}"
+node ./bin/omcodex.js "${args[@]}"

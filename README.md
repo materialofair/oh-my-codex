@@ -17,7 +17,7 @@ Inspired by **oh‑my‑claudecode**, rebuilt for **Codex architecture**, and in
 
 **Recommended (runtime setup)**
 ```bash
-npm run setup:omx
+npm run setup:omcodex
 ```
 
 **Compatibility scripts**
@@ -55,9 +55,9 @@ Installs:
 - **Role prompt catalog**: `architect`, `planner`, `executor` (installed under `.codex/prompts/`)
 - **Learning & context**: `continuous-learning`, `strategic-compact`, `iterative-retrieval`, `verification-loop`
 - **Native subagent orchestration**: `spawn_agent` + `send_input` + `wait` + `close_agent` patterns across core skills
-- **Setup runtime**: `omx setup` scope-aware installer and `omx doctor` health checks
-- **Team state runtime**: `omx team start/status/advance/cancel` for staged execution state
-- **Local MCP runtime surfaces**: `omx_state`, `omx_memory`, `omx_trace` servers wired by setup
+- **Setup runtime**: `omcodex setup` scope-aware installer and `omcodex doctor` health checks
+- **Team state runtime**: `omcodex team start/status/advance/cancel` for staged execution state
+- **Local MCP runtime surfaces**: `omcodex_state`, `omcodex_memory`, `omcodex_trace` servers wired by setup
 - **Rules & guardrails**: coding, security, testing, performance, git workflow
 - **Plan mode enabled** (Codex 0.9+)
 
@@ -72,10 +72,10 @@ In this project, extensions are event-driven and built on top of Codex notificat
 Use the notify extension workflow:
 
 ```bash
-omx notify init
-omx notify status
-omx notify validate
-OMX_NOTIFY_PLUGINS=1 omx notify test
+omcodex notify init
+omcodex notify status
+omcodex notify validate
+OMX_NOTIFY_PLUGINS=1 omcodex notify test
 ```
 
 ---

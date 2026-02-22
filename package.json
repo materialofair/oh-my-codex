@@ -4,7 +4,7 @@
   "description": "Codex skill pack and workflow orchestration",
   "private": true,
   "bin": {
-    "omx": "bin/omx.js"
+    "omcodex": "bin/omcodex.js"
   },
   "files": [
     "bin",
@@ -17,13 +17,13 @@
     "LICENSE"
   ],
   "scripts": {
-    "setup:omx": "node bin/omx.js setup",
-    "doctor:omx": "node bin/omx.js doctor",
+    "setup:omcodex": "node bin/omcodex.js setup",
+    "doctor:omcodex": "node bin/omcodex.js doctor",
     "install:codex": "./scripts/install-codex.sh",
     "mcp:codex": "./scripts/generate-codex-mcp-config.sh",
     "catalog:generate": "node scripts/generate-catalog-docs.js",
     "governance:skills": "./scripts/check-skill-governance.sh",
-    "test": "npm run governance:skills && npm run catalog:generate && node bin/omx.js doctor"
+    "test": "npm run governance:skills && npm run catalog:generate && node bin/omcodex.js doctor"
   },
   "engines": {
     "node": ">=20"

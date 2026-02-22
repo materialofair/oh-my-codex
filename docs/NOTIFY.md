@@ -1,23 +1,23 @@
 # Notify Extension (Custom Plugins)
 
-`oh-my-codex` supports additive notify plugins under `.omx/notify/*.mjs`.
+`oh-my-codex` supports additive notify plugins under `.omcodex/notify/*.mjs`.
 
 ## Quick Start
 
 ```bash
-omx notify init
-omx notify status
-omx notify validate
-OMX_NOTIFY_PLUGINS=1 omx notify test
+omcodex notify init
+omcodex notify status
+omcodex notify validate
+OMX_NOTIFY_PLUGINS=1 omcodex notify test
 ```
 
 Primary plugin directory:
 
-- `.omx/notify/`
+- `.omcodex/notify/`
 
 Legacy compatibility directory:
 
-- `.omx/notify-plugins/`
+- `.omcodex/notify-plugins/`
 
 ## Enablement Model
 
@@ -64,4 +64,4 @@ SDK surface includes:
 
 Dispatch and plugin logs are written to:
 
-- `.omx/logs/notify-YYYY-MM-DD.jsonl`
+- `.omcodex/logs/notify-YYYY-MM-DD.jsonl`

@@ -16,7 +16,7 @@ const { getCatalogHeadlineCounts } = require('../catalog/reader');
 const SETUP_SCOPES = new Set(['user', 'project-local', 'project']);
 
 function readPersistedScope(cwd) {
-  const scopeFile = path.join(cwd, '.omx', 'setup-scope.json');
+  const scopeFile = path.join(cwd, '.omcodex', 'setup-scope.json');
   if (!fs.existsSync(scopeFile)) return null;
   try {
     const parsed = JSON.parse(fs.readFileSync(scopeFile, 'utf8'));
@@ -26,7 +26,7 @@ function readPersistedScope(cwd) {
 }
 
 async function persistScope(cwd, scope, dryRun) {
-  const scopeFile = path.join(cwd, '.omx', 'setup-scope.json');
+  const scopeFile = path.join(cwd, '.omcodex', 'setup-scope.json');
   if (dryRun) return;
   await fsp.mkdir(path.dirname(scopeFile), { recursive: true });
   await fsp.writeFile(scopeFile, `${JSON.stringify({ scope }, null, 2)}\n`, 'utf8');

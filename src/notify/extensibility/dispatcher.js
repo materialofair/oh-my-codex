@@ -9,7 +9,7 @@ const {
 
 function notifyLogPath(cwd) {
   const day = new Date().toISOString().slice(0, 10);
-  return path.join(cwd, '.omx', 'logs', `notify-${day}.jsonl`);
+  return path.join(cwd, '.omcodex', 'logs', `notify-${day}.jsonl`);
 }
 
 async function appendLog(cwd, payload) {
@@ -27,7 +27,7 @@ function withTimeout(promise, timeoutMs) {
 }
 
 function buildSdk(cwd, pluginId) {
-  const pluginStateDir = path.join(cwd, '.omx', 'state', 'notify-plugins', pluginId);
+  const pluginStateDir = path.join(cwd, '.omcodex', 'state', 'notify-plugins', pluginId);
 
   async function readState(key) {
     const file = path.join(pluginStateDir, `${key}.json`);

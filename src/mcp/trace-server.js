@@ -29,7 +29,7 @@ async function readJsonl(logDir, last) {
   return entries;
 }
 
-const server = new Server({ name: 'omx-trace', version: '0.1.0' }, { capabilities: { tools: {} } });
+const server = new Server({ name: 'omcodex-trace', version: '0.1.0' }, { capabilities: { tools: {} } });
 
 server.setRequestHandler(ListToolsRequestSchema, async () => ({
   tools: [
@@ -50,7 +50,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   const { name, arguments: args } = request.params;
   const a = args || {};
   const wd = typeof a.workingDirectory === 'string' ? a.workingDirectory : process.cwd();
-  const logsDir = path.join(wd, '.omx', 'logs');
+  const logsDir = path.join(wd, '.omcodex', 'logs');
 
   if (name === 'trace_timeline') {
     const entries = await readJsonl(logsDir, a.last);

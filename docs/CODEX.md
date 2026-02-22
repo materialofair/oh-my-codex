@@ -79,16 +79,16 @@ Codex does support event notifications via `notify`. In this project, all extens
 ## Notify Extension Workflow
 
 ```bash
-omx notify init
-omx notify status
-omx notify validate
-OMX_NOTIFY_PLUGINS=1 omx notify test
+omcodex notify init
+omcodex notify status
+omcodex notify validate
+OMX_NOTIFY_PLUGINS=1 omcodex notify test
 ```
 
 Plugins are discovered from:
 
-- `.omx/notify/*.mjs` (primary)
-- `.omx/notify-plugins/*.mjs` (legacy compatibility)
+- `.omcodex/notify/*.mjs` (primary)
+- `.omcodex/notify-plugins/*.mjs` (legacy compatibility)
 
 ## Skills Directory
 

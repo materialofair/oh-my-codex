@@ -3,7 +3,7 @@ const { createTeamState, transitionPhase } = require('../team/orchestrator');
 const { readTeamState, writeTeamState, clearTeamState } = require('../team/state-store');
 
 function usage() {
-  console.log('Usage: omx team start "<task>" | status | advance <phase> [reason] | cancel | clear');
+  console.log('Usage: omcodex team start "<task>" | status | advance <phase> [reason] | cancel | clear');
 }
 
 async function team(args) {
@@ -17,7 +17,7 @@ async function team(args) {
 
   if (sub === 'start') {
     const task = args.slice(1).join(' ').trim();
-    if (!task) throw new Error('Usage: omx team start "<task>"');
+    if (!task) throw new Error('Usage: omcodex team start "<task>"');
     const state = createTeamState(task, 3);
     writeTeamState(cwd, state);
     console.log(`team started: phase=${state.phase}`);
@@ -39,10 +39,10 @@ async function team(args) {
   if (sub === 'advance') {
     const nextPhase = args[1];
     const reason = args.slice(2).join(' ').trim() || undefined;
-    if (!nextPhase) throw new Error('Usage: omx team advance <phase> [reason]');
+    if (!nextPhase) throw new Error('Usage: omcodex team advance <phase> [reason]');
 
     const state = readTeamState(cwd);
-    if (!state) throw new Error('No team state found. Start first with `omx team start`');
+    if (!state) throw new Error('No team state found. Start first with `omcodex team start`');
     const next = transitionPhase(state, nextPhase, reason);
     writeTeamState(cwd, next);
     console.log(`phase advanced: ${state.phase} -> ${next.phase}`);

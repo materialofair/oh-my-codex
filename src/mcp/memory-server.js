@@ -11,14 +11,14 @@ function text(data) {
 }
 
 function memoryPath(cwd) {
-  return path.join(cwd, '.omx', 'project-memory.json');
+  return path.join(cwd, '.omcodex', 'project-memory.json');
 }
 
 function notepadPath(cwd) {
-  return path.join(cwd, '.omx', 'notepad.md');
+  return path.join(cwd, '.omcodex', 'notepad.md');
 }
 
-const server = new Server({ name: 'omx-memory', version: '0.1.0' }, { capabilities: { tools: {} } });
+const server = new Server({ name: 'omcodex-memory', version: '0.1.0' }, { capabilities: { tools: {} } });
 
 server.setRequestHandler(ListToolsRequestSchema, async () => ({
   tools: [

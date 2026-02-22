@@ -2,11 +2,11 @@ const fs = require('fs');
 const path = require('path');
 
 function notifyPluginsDir(cwd) {
-  return path.join(cwd, '.omx', 'notify');
+  return path.join(cwd, '.omcodex', 'notify');
 }
 
 function legacyNotifyPluginsDir(cwd) {
-  return path.join(cwd, '.omx', 'notify-plugins');
+  return path.join(cwd, '.omcodex', 'notify-plugins');
 }
 
 function discoverNotifyPlugins(cwd = process.cwd()) {

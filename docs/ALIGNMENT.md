@@ -6,10 +6,10 @@ This document tracks what is aligned, what is partially aligned, and what cannot
 
 - **Skills system**: All workflows are in `.codex/skills/` and ready for Codex.
 - **Native multi-agent orchestration**: Core skills use `spawn_agent`/`send_input`/`wait` patterns.
-- **MCP configuration**: `omx setup` writes Codex MCP config blocks (`omx_state`, `omx_memory`, `omx_trace`).
+- **MCP configuration**: `omcodex setup` writes Codex MCP config blocks (`omcodex_state`, `omcodex_memory`, `omcodex_trace`).
 - **Docs & entrypoints**: `README.md`, `docs/CODEX.md`, `AGENTS.md` are Codex-first.
-- **Event-driven notify extension**: `omx notify` provides additive plugin-style extensions.
-- **Role prompt install path**: `omx setup` installs prompt catalog into `.codex/prompts`.
+- **Event-driven notify extension**: `omcodex notify` provides additive plugin-style extensions.
+- **Role prompt install path**: `omcodex setup` installs prompt catalog into `.codex/prompts`.
 
 ## ⚠️ Partially Aligned (Codex-Compatible Workarounds)
 

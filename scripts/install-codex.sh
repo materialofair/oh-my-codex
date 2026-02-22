@@ -15,9 +15,9 @@ usage() {
 Usage: ./scripts/install-codex.sh [options]
 
 Options:
-  --all               Install skills + rules + config
-  --rules             Install skills + rules
-  --mcp               Install skills + config
+  --all               Install skills + prompts + rules + config
+  --rules             Install skills + prompts + rules
+  --mcp               Install skills + prompts + config
   --enable-collab     Alias of --mcp (kept for compatibility)
   --enable-context7   Add context7 MCP block when writing config
   --project           Use project-local scope (.codex/*)
@@ -76,4 +76,4 @@ if [[ "$ENABLE_CONTEXT7" == "true" ]]; then
 fi
 
 cd "$ROOT_DIR"
-node ./bin/omx.js "${cli_args[@]}"
+node ./bin/omcodex.js "${cli_args[@]}"
