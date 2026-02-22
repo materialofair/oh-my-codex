@@ -1,12 +1,18 @@
 /* eslint-disable no-console */
 const { setup } = require('./setup');
 const { doctor } = require('./doctor');
+const { team } = require('./team');
 
 const HELP = `oh-my-codex CLI (omx)
 
 Usage:
   omx setup [--scope user|project-local|project] [--force] [--dry-run] [--verbose]
   omx doctor
+  omx team start \"<task>\"
+  omx team status
+  omx team advance <phase> [reason]
+  omx team cancel
+  omx team clear
   omx help
 `;
 
@@ -50,6 +56,11 @@ async function main(args) {
 
   if (command === 'doctor') {
     await doctor();
+    return;
+  }
+
+  if (command === 'team') {
+    await team(args.slice(1));
     return;
   }
 

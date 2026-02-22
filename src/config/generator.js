@@ -62,6 +62,9 @@ function upsertFeatureFlags(config) {
 
 function buildManagedBlock(root, options = {}) {
   const notifyScript = path.join(root, 'scripts', 'notify-hook.js').replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+  const stateServer = path.join(root, 'src', 'mcp', 'state-server.js').replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+  const memoryServer = path.join(root, 'src', 'mcp', 'memory-server.js').replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+  const traceServer = path.join(root, 'src', 'mcp', 'trace-server.js').replace(/\\/g, '\\\\').replace(/"/g, '\\"');
   const includeContext7 = options.enableContext7 === true;
 
   const lines = [
@@ -72,6 +75,21 @@ function buildManagedBlock(root, options = {}) {
     'model_reasoning_effort = "high"',
     '[mcp_servers.openaiDeveloperDocs]',
     'url = "https://developers.openai.com/mcp"',
+    'enabled = true',
+    '',
+    '[mcp_servers.omx_state]',
+    'command = "node"',
+    `args = ["${stateServer}"]`,
+    'enabled = true',
+    '',
+    '[mcp_servers.omx_memory]',
+    'command = "node"',
+    `args = ["${memoryServer}"]`,
+    'enabled = true',
+    '',
+    '[mcp_servers.omx_trace]',
+    'command = "node"',
+    `args = ["${traceServer}"]`,
     'enabled = true',
   ];
 

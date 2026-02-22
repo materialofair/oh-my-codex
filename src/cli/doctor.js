@@ -31,6 +31,13 @@ async function doctor() {
     msg: manifest ? `ok (${manifest.skills.length} skills)` : 'missing or invalid',
   });
 
+  const teamStatePath = path.join(process.cwd(), '.omx', 'state', 'team-state.json');
+  checks.push({
+    name: 'Team state file',
+    pass: true,
+    msg: fs.existsSync(teamStatePath) ? teamStatePath : 'not initialized yet',
+  });
+
   let passCount = 0;
   for (const check of checks) {
     const icon = check.pass ? '[OK]' : '[XX]';

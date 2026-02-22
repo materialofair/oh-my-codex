@@ -54,6 +54,8 @@ Installs:
 - **Learning & context**: `continuous-learning`, `strategic-compact`, `iterative-retrieval`, `verification-loop`
 - **Native subagent orchestration**: `spawn_agent` + `send_input` + `wait` + `close_agent` patterns across core skills
 - **Setup runtime**: `omx setup` scope-aware installer and `omx doctor` health checks
+- **Team state runtime**: `omx team start/status/advance/cancel` for staged execution state
+- **Local MCP runtime surfaces**: `omx_state`, `omx_memory`, `omx_trace` servers wired by setup
 - **Rules & guardrails**: coding, security, testing, performance, git workflow
 - **Plan mode enabled** (Codex 0.9+)
 
