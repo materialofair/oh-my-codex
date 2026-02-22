@@ -4,7 +4,7 @@ English | [简体中文](README.zh.md)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-**Native subagent workflows for Codex CLI.**
+**Codex skill pack with runtime setup tooling.**
 
 *Less prompt‑tuning, more shipping.*
 
@@ -15,7 +15,12 @@ Inspired by **oh‑my‑claudecode**, rebuilt for **Codex architecture**, and in
 
 ## Install
 
-**Recommended (one command)**
+**Recommended (runtime setup)**
+```bash
+npm run setup:omx
+```
+
+**Compatibility scripts**
 ```bash
 ./scripts/install-codex.sh --all
 ```
@@ -48,8 +53,17 @@ Installs:
 - **Planning & QA**: `plan`, `review`, `analyze`, `tdd`, `code-review`, `security-review`, `build-fix`, `verify`, `eval`
 - **Learning & context**: `continuous-learning`, `strategic-compact`, `iterative-retrieval`, `verification-loop`
 - **Native subagent orchestration**: `spawn_agent` + `send_input` + `wait` + `close_agent` patterns across core skills
+- **Setup runtime**: `omx setup` scope-aware installer and `omx doctor` health checks
 - **Rules & guardrails**: coding, security, testing, performance, git workflow
 - **Plan mode enabled** (Codex 0.9+)
+
+---
+
+## Hooks Positioning
+
+Codex does not provide Claude Code style interception hooks (for example pre/post tool interception).
+
+In this project, any \"hooks\" capability refers to event-driven extensions on top of Codex notifications (`notify`) and should not be interpreted as execution interception.
 
 ---
 

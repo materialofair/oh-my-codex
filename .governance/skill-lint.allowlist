@@ -1,2 +1,4 @@
 # Governance debt allowlist.
 # Format: <rule_id>:<repo-relative-path>
+legacy_slash_command:.agent/skills/help/SKILL.md
+legacy_slash_command:.agent/skills/mcp-setup/SKILL.md

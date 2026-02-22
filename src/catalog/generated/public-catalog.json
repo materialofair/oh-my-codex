@@ -1,0 +1,527 @@
+{
+  "generatedAt": "2026-02-22T13:37:29.380Z",
+  "counts": {
+    "skillCount": 86,
+    "promptCount": 0,
+    "activeSkillCount": 86,
+    "activeAgentCount": 0
+  },
+  "skills": [
+    {
+      "name": "agent-kb",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "aireview",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "analyze",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "architect-planner",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "auto-mbti",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "autopilot",
+      "category": "execution",
+      "status": "active",
+      "core": true
+    },
+    {
+      "name": "backend-patterns",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "bdd-generator",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "brainstorming",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "build-fix",
+      "category": "shortcut",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "cancel",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "checkpoint",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "code-review",
+      "category": "shortcut",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "coding-standards",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "conductor",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "consensus",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "content-research-writer",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "debug-analysis",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "deepinit",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "deepsearch",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "doctor",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "drawio",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "e2e",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "ecomode",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "electron-driver",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "eval",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "eval-harness",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "evolve",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "frontend-design",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "frontend-patterns",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "frontend-ui-ux",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "git-master",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "help",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "iterative-retrieval",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "local-skills-setup",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "log-analyzer",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "mcp-setup",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "multi-model-research",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "note",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "omc-setup",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "orchestrate",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "patent-workflow",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "pattern-recognition",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "pipeline",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "plan",
+      "category": "planning",
+      "status": "active",
+      "core": true
+    },
+    {
+      "name": "planning-methodology",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "planning-with-files",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "project-analyze",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "project-session-manager",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "quality-check",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "quality-validation",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "ralph",
+      "category": "execution",
+      "status": "active",
+      "core": true
+    },
+    {
+      "name": "ralph-init",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "ralplan",
+      "category": "planning",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "refactor-clean",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "release",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "research",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "research-methodology",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "review",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "security-review",
+      "category": "shortcut",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "setup-pm",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "skill",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "skill-create",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "skill-debugger",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "skill-development",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "skill-doc-generator",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "skill-quality-analyzer",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "skill-tester",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "start-dev",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "swarm",
+      "category": "execution",
+      "status": "active",
+      "core": true
+    },
+    {
+      "name": "task-kb-lookup",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "task-kb-record",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "tdd",
+      "category": "shortcut",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "tdd-generator",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "tdd-workflow",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "test-coverage",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "thinkdeep",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "ui-ux-pro-max",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "ultrapilot",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "ultraqa",
+      "category": "execution",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "ultrawork",
+      "category": "execution",
+      "status": "active",
+      "core": true
+    },
+    {
+      "name": "update-codemaps",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "update-docs",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "verification-loop",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "verify",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "writer-memory",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    }
+  ]
+}

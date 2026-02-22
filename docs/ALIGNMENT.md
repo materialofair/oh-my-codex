@@ -18,9 +18,14 @@ This document tracks what is aligned, what is partially aligned, and what cannot
 ## ❌ Not Alignable (Codex Architectural Limits)
 
 - **Claude Code plugin system** (`/plugin`, plugin cache, plugin lifecycle)
-- **Hooks lifecycle** (PreToolUse/PostToolUse/SessionStart/Stop)
+- **Execution interception hooks lifecycle** (PreToolUse/PostToolUse style interception)
 - **HUD statusline** (Claude Code-specific terminal integration)
 - **Native subagent spawning** (`Task(subagent_type=...)`)
+
+## ✅ Clarification
+
+- Codex supports event notifications via `notify`.
+- This can be extended into a hook-like plugin system, but it remains event-driven and cannot intercept tool execution like Claude Code hooks.
 
 ## Legacy/Claude-Only Areas
 

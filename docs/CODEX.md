@@ -70,11 +70,11 @@ codex mcp list
 
 ### Not Supported (Codex limitations)
 - Claude Code marketplace plugin install
-- Claude Code hooks and HUD statusline
+- Claude Code-style execution interception hooks (pre/post tool interception)
 - Claude Code-specific CLI commands
 - Claude Code plugin cache locations
 
-These sections are kept in the skills for historical context but are marked as **Codex-incompatible**.
+Codex does support event notifications via `notify`. Any project \"hooks\" implementation should be treated as event-driven extension, not interception.
 
 ## Skills Directory
 

@@ -1,5 +1,4 @@
-# Source files (compiled to dist/)
-src/
+# Runtime source files are required by bin/omx.js
 
 # Examples
 examples/

@@ -1,9 +1,14 @@
 {
   "name": "oh-my-codex",
   "version": "0.1.0",
-  "description": "Codex skill pack and workflow templates",
+  "description": "Codex skill pack and workflow orchestration",
   "private": true,
+  "bin": {
+    "omx": "bin/omx.js"
+  },
   "files": [
+    "bin",
+    "src",
     "scripts",
     "docs",
     "templates",
@@ -12,9 +17,16 @@
     "LICENSE"
   ],
   "scripts": {
+    "setup:omx": "node bin/omx.js setup",
+    "doctor:omx": "node bin/omx.js doctor",
     "install:codex": "./scripts/install-codex.sh",
     "mcp:codex": "./scripts/generate-codex-mcp-config.sh",
-    "governance:skills": "./scripts/check-skill-governance.sh"
+    "catalog:generate": "node scripts/generate-catalog-docs.js",
+    "governance:skills": "./scripts/check-skill-governance.sh",
+    "test": "npm run governance:skills && npm run catalog:generate && node bin/omx.js doctor"
+  },
+  "engines": {
+    "node": ">=20"
   },
   "license": "MIT"
 }
