@@ -37,11 +37,30 @@ function validateCatalogManifest(input) {
     if (!found) throw new Error(`catalog_manifest_invalid:missing_core_skill:${coreSkill}`);
   }
 
+  const agentSeen = new Set();
+  const agents = input.agents.map((entry, index) => {
+    if (!entry || typeof entry !== 'object') throw new Error(`catalog_manifest_invalid:agents[${index}]`);
+    assertString(entry.name, `agents[${index}].name`);
+    const status = entry.status || 'active';
+    if (!STATUSES.has(status)) {
+      throw new Error(`catalog_manifest_invalid:agents[${index}].status`);
+    }
+    if (agentSeen.has(entry.name)) throw new Error(`catalog_manifest_invalid:duplicate_agent:${entry.name}`);
+    agentSeen.add(entry.name);
+    return {
+      name: entry.name,
+      category: entry.category || 'role',
+      status,
+      canonical: typeof entry.canonical === 'string' ? entry.canonical : undefined,
+      core: entry.core === true,
+    };
+  });
+
   return {
     schemaVersion: Number(input.schemaVersion || 1),
     catalogVersion: String(input.catalogVersion || '0.1.0'),
     skills,
-    agents: input.agents,
+    agents,
   };
 }
 

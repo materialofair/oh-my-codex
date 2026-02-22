@@ -7,7 +7,7 @@ const { notify } = require('./notify');
 const HELP = `oh-my-codex CLI (omx)
 
 Usage:
-  omx setup [--scope user|project-local|project] [--force] [--dry-run] [--verbose]
+  omx setup [--scope user|project-local|project] [--force] [--dry-run] [--verbose] [--no-prompts]
   omx doctor
   omx team start \"<task>\"
   omx team status
@@ -50,6 +50,7 @@ async function main(args) {
       verbose: flags.has('--verbose'),
       enableContext7: flags.has('--enable-context7'),
       installSkills: !flags.has('--no-skills'),
+      installPrompts: !flags.has('--no-prompts'),
       installRules: !flags.has('--no-rules'),
       installConfig: !flags.has('--no-config'),
     });

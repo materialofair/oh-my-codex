@@ -3,7 +3,13 @@ const fs = require('fs');
 const fsp = require('fs/promises');
 const path = require('path');
 const os = require('os');
-const { codexHome, codexConfigPath, skillsSource } = require('../utils/paths');
+const {
+  codexHome,
+  codexConfigPath,
+  codexPromptsPath,
+  skillsSource,
+  promptsSource,
+} = require('../utils/paths');
 const { mergeConfig } = require('../config/generator');
 const { getCatalogHeadlineCounts } = require('../catalog/reader');
 
@@ -75,6 +81,8 @@ async function setup(options = {}) {
   const rulesDest = scope === 'user'
     ? path.join(os.homedir(), '.codex', 'rules')
     : path.join(cwd, '.codex', 'rules');
+  const promptsSrc = promptsSource(root);
+  const promptsDest = codexPromptsPath(scope, cwd);
 
   const skillSrc = (() => {
     const src = skillsSource(root);
@@ -89,7 +97,7 @@ async function setup(options = {}) {
 
   await persistScope(cwd, scope, options.dryRun);
 
-  console.log('[1/4] Installing skills...');
+  console.log('[1/5] Installing skills...');
   const shouldInstallSkills = options.installSkills !== false && scope !== 'project';
   const skillCount = shouldInstallSkills
     ? await copyDirectory(skillSrc, skillsDest, options)
@@ -101,7 +109,19 @@ async function setup(options = {}) {
     console.log('  Skipped for project scope');
   }
 
-  console.log('[2/4] Installing rules...');
+  console.log('[2/5] Installing prompts...');
+  const shouldInstallPrompts = options.installPrompts !== false && scope !== 'project';
+  if (!shouldInstallPrompts) {
+    console.log('  Skipped (--no-prompts or project scope)');
+  } else if (!fs.existsSync(promptsSrc)) {
+    console.log(`  Skipped (missing prompts source: ${promptsSrc})`);
+  } else {
+    const promptCount = await copyDirectory(promptsSrc, promptsDest, options);
+    const label = options.dryRun ? 'Would install/update' : 'Installed/updated';
+    console.log(`  ${label} ${promptCount} files -> ${promptsDest}`);
+  }
+
+  console.log('[3/5] Installing rules...');
   if (options.installRules !== false) {
     const ruleCount = await copyDirectory(rulesSource, rulesDest, options);
     const label = options.dryRun ? 'Would install/update' : 'Installed/updated';
@@ -110,7 +130,7 @@ async function setup(options = {}) {
     console.log('  Skipped (--no-rules)');
   }
 
-  console.log('[3/4] Merging config.toml...');
+  console.log('[4/5] Merging config.toml...');
   if (options.installConfig !== false && !options.dryRun) {
     mergeConfig(configPath, root, { enableContext7: options.enableContext7 });
   }
@@ -121,7 +141,7 @@ async function setup(options = {}) {
     console.log('  Skipped (--no-config)');
   }
 
-  console.log('[4/4] Catalog check...');
+  console.log('[5/5] Catalog check...');
   const headline = getCatalogHeadlineCounts(root);
   if (headline) {
     console.log(`  Catalog baseline: ${headline.skills} skills, ${headline.prompts} prompts`);

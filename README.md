@@ -37,6 +37,7 @@ Incremental (skip existing files):
 
 Installs:
 - **Skills** → `~/.codex/skills/`
+- **Role prompts** → `~/.codex/prompts/`
 - **Rules** → `~/.codex/rules/`
 - **MCP config + Plan mode** → `~/.codex/config.toml`
 
@@ -51,6 +52,7 @@ Installs:
 
 - **Execution modes**: `autopilot`, `ralph`, `ultrawork`, `ultraqa`, `ultrapilot`, `swarm`, `pipeline`, `ecomode`
 - **Planning & QA**: `plan`, `review`, `analyze`, `tdd`, `code-review`, `security-review`, `build-fix`, `verify`, `eval`
+- **Role prompt catalog**: `architect`, `planner`, `executor` (installed under `.codex/prompts/`)
 - **Learning & context**: `continuous-learning`, `strategic-compact`, `iterative-retrieval`, `verification-loop`
 - **Native subagent orchestration**: `spawn_agent` + `send_input` + `wait` + `close_agent` patterns across core skills
 - **Setup runtime**: `omx setup` scope-aware installer and `omx doctor` health checks

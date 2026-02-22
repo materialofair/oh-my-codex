@@ -12,8 +12,9 @@ function checkCodexCli() {
 async function doctor() {
   const root = path.resolve(__dirname, '..', '..');
   const checks = [];
+  const codexCliInstalled = checkCodexCli();
 
-  checks.push({ name: 'Codex CLI', pass: checkCodexCli(), msg: checkCodexCli() ? 'installed' : 'not found' });
+  checks.push({ name: 'Codex CLI', pass: codexCliInstalled, msg: codexCliInstalled ? 'installed' : 'not found' });
 
   const skillsRoot = fs.existsSync(path.join(root, '.agent', 'skills'))
     ? path.join(root, '.agent', 'skills')
@@ -22,6 +23,13 @@ async function doctor() {
     name: 'Skills source',
     pass: fs.existsSync(skillsRoot),
     msg: skillsRoot,
+  });
+
+  const promptsRoot = path.join(root, 'prompts');
+  checks.push({
+    name: 'Prompts source',
+    pass: fs.existsSync(promptsRoot),
+    msg: fs.existsSync(promptsRoot) ? promptsRoot : 'missing (optional)',
   });
 
   const manifest = tryReadCatalogManifest(root);

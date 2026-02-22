@@ -13,7 +13,7 @@ for arg in "$@"; do
   esac
 done
 
-args=(setup --scope "$MODE" --no-skills --no-rules)
+args=(setup --scope "$MODE" --no-skills --no-prompts --no-rules)
 if [[ "$ENABLE_CONTEXT7" == "true" ]]; then
   args+=(--enable-context7)
 fi

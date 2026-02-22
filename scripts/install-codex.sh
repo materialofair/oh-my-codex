@@ -59,10 +59,10 @@ if [[ "${FORCE_OVERWRITE:-}" == "1" ]]; then
 fi
 
 # Preserve old script semantics:
-# - default: skills only
-# - --rules: skills + rules
-# - --mcp/--enable-collab: skills + config
-# - --all: skills + rules + config
+# - default: skills + prompts
+# - --rules: skills + prompts + rules
+# - --mcp/--enable-collab: skills + prompts + config
+# - --all: skills + prompts + rules + config
 if [[ "$RULES" != "true" ]]; then
   cli_args+=(--no-rules)
 fi

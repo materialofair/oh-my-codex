@@ -102,6 +102,18 @@ Repo:
 <repo>/.agent/skills/<skill-name>/SKILL.md
 ```
 
+## Prompts Directory
+
+Global:
+```
+~/.codex/prompts/<prompt-name>.md
+```
+
+Repo:
+```
+<repo>/.codex/prompts/<prompt-name>.md
+```
+
 ## Alignment Status
 
 See `docs/ALIGNMENT.md` for a full checklist of what matches oh-my-claudecode and what cannot be aligned in Codex.

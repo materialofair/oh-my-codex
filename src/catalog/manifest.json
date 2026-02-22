@@ -519,5 +519,24 @@
       "core": false
     }
   ],
-  "agents": []
+  "agents": [
+    {
+      "name": "architect",
+      "category": "role",
+      "status": "active",
+      "core": true
+    },
+    {
+      "name": "executor",
+      "category": "role",
+      "status": "active",
+      "core": true
+    },
+    {
+      "name": "planner",
+      "category": "role",
+      "status": "active",
+      "core": true
+    }
+  ]
 }

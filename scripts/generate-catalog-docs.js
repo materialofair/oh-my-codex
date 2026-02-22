@@ -8,6 +8,7 @@ const root = path.resolve(__dirname, '..');
 const skillsRoot = fs.existsSync(path.join(root, '.agent', 'skills'))
   ? path.join(root, '.agent', 'skills')
   : path.join(root, '.codex', 'skills');
+const promptsRoot = path.join(root, 'prompts');
 
 const CATEGORY_MAP = new Map([
   ['autopilot', 'execution'],
@@ -34,20 +35,37 @@ function detectSkills() {
     .sort();
 }
 
+function detectPrompts() {
+  if (!fs.existsSync(promptsRoot)) return [];
+  return fs.readdirSync(promptsRoot, { withFileTypes: true })
+    .filter((entry) => entry.isFile() && entry.name.endsWith('.md'))
+    .map((entry) => entry.name.replace(/\.md$/i, ''))
+    .sort();
+}
+
 function buildManifest() {
-  const names = detectSkills();
-  const skills = names.map((name) => ({
+  const skillNames = detectSkills();
+  const promptNames = detectPrompts();
+
+  const skills = skillNames.map((name) => ({
     name,
     category: CATEGORY_MAP.get(name) || 'utility',
     status: 'active',
     core: CORE.has(name),
   }));
 
+  const agents = promptNames.map((name) => ({
+    name,
+    category: 'role',
+    status: 'active',
+    core: ['architect', 'planner', 'executor'].includes(name),
+  }));
+
   return {
     schemaVersion: 1,
     catalogVersion: new Date().toISOString().slice(0, 10),
     skills,
-    agents: [],
+    agents,
   };
 }
 
@@ -65,9 +83,13 @@ function main() {
 
   fs.writeFileSync(templatePath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
   fs.writeFileSync(sourcePath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
-  fs.writeFileSync(generatedPath, `${JSON.stringify({ generatedAt: new Date().toISOString(), counts, skills: manifest.skills }, null, 2)}\n`, 'utf8');
+  fs.writeFileSync(
+    generatedPath,
+    `${JSON.stringify({ generatedAt: new Date().toISOString(), counts, skills: manifest.skills, agents: manifest.agents }, null, 2)}\n`,
+    'utf8',
+  );
 
-  console.log(`Catalog generated: ${counts.skillCount} skills`);
+  console.log(`Catalog generated: ${counts.skillCount} skills, ${counts.promptCount} prompts`);
 }
 
 main();

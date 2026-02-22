@@ -9,6 +9,7 @@ This document tracks what is aligned, what is partially aligned, and what cannot
 - **MCP configuration**: `omx setup` writes Codex MCP config blocks (`omx_state`, `omx_memory`, `omx_trace`).
 - **Docs & entrypoints**: `README.md`, `docs/CODEX.md`, `AGENTS.md` are Codex-first.
 - **Event-driven notify extension**: `omx notify` provides additive plugin-style extensions.
+- **Role prompt install path**: `omx setup` installs prompt catalog into `.codex/prompts`.
 
 ## ⚠️ Partially Aligned (Codex-Compatible Workarounds)
 

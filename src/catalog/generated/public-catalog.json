@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-02-22T14:03:07.658Z",
+  "generatedAt": "2026-02-22T14:08:25.376Z",
   "counts": {
     "skillCount": 86,
-    "promptCount": 0,
+    "promptCount": 3,
     "activeSkillCount": 86,
-    "activeAgentCount": 0
+    "activeAgentCount": 3
   },
   "skills": [
     {
@@ -522,6 +522,26 @@
       "category": "utility",
       "status": "active",
       "core": false
+    }
+  ],
+  "agents": [
+    {
+      "name": "architect",
+      "category": "role",
+      "status": "active",
+      "core": true
+    },
+    {
+      "name": "executor",
+      "category": "role",
+      "status": "active",
+      "core": true
+    },
+    {
+      "name": "planner",
+      "category": "role",
+      "status": "active",
+      "core": true
     }
   ]
 }
