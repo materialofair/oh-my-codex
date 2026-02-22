@@ -48,6 +48,7 @@
 - **规划与质量**：`plan`, `review`, `analyze`, `tdd`, `code-review`, `security-review`, `build-fix`, `verify`, `eval`
 - **学习与上下文**：`continuous-learning`, `strategic-compact`, `iterative-retrieval`, `verification-loop`
 - **原生 subagent 编排**：核心 skill 统一使用 `spawn_agent` + `send_input` + `wait` + `close_agent`
+- **通知扩展**：`omx notify`（事件驱动通知扩展，不是拦截执行）
 - **规则与守护**：编码 / 安全 / 测试 / 性能 / Git 工作流
 - **Plan 模式已开启**（Codex 0.9+）
 
@@ -77,7 +78,7 @@
 ## 规则模板（Rules）
 
 可选规则模板，复制到 `.codex/rules/` 使用：
-- `agents.md`, `coding-style.md`, `git-workflow.md`, `hooks.md`
+- `agents.md`, `coding-style.md`, `git-workflow.md`, `notify.md`
 - `patterns.md`, `performance.md`, `security.md`, `testing.md`
 - `dev.md`, `research.md`, `review.md`
 
@@ -118,6 +119,7 @@ autopilot: build a REST API for managing tasks
 
 - `docs/CODEX.md`
 - `docs/ALIGNMENT.md`
+- `docs/NOTIFY.md`
 
 ---
 

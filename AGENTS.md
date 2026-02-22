@@ -47,7 +47,7 @@ Direct edits under `~/.codex/skills` are temporary at most, and must be immediat
 
 ### Compatibility Notes
 
-Codex does **not** support Claude Code plugins, hooks, or HUD. Any mention of:
+Codex does **not** support Claude Code plugins, interception lifecycle APIs, or HUD. Any mention of:
 - Claude Code plugin commands
 - `.claude/` plugin cache paths
 - Claude Code-specific CLI commands

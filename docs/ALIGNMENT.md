@@ -5,33 +5,31 @@ This document tracks what is aligned, what is partially aligned, and what cannot
 ## ✅ Aligned (Implemented)
 
 - **Skills system**: All workflows are in `.codex/skills/` and ready for Codex.
-- **Pseudo multi-agent orchestration**: Every skill enforces role handoffs with `[ANALYST]/[ARCHITECT]/[EXECUTOR]/[REVIEWER]` sections.
-- **MCP configuration**: Script generates Codex MCP config and includes `omc-tools` to match oh-my-claudecode.
+- **Native multi-agent orchestration**: Core skills use `spawn_agent`/`send_input`/`wait` patterns.
+- **MCP configuration**: `omx setup` writes Codex MCP config blocks (`omx_state`, `omx_memory`, `omx_trace`).
 - **Docs & entrypoints**: `README.md`, `docs/CODEX.md`, `AGENTS.md` are Codex-first.
+- **Event-driven notify extension**: `omx notify` provides additive plugin-style extensions.
 
 ## ⚠️ Partially Aligned (Codex-Compatible Workarounds)
 
-- **Multi-agent execution engine**: Simulated via structured role prompts inside skills (no native subagents).
--- **Slash command UX**: Replaced by `$skill` or `skill:` invocation.
-- **MCP management**: Scripted config generation; no plugin auto-wiring.
+- **Slash command UX**: Replaced by `$skill` or `skill:` invocation.
+- **MCP management UX**: Scripted config generation + Codex CLI MCP commands.
 
 ## ❌ Not Alignable (Codex Architectural Limits)
 
 - **Claude Code plugin system** (`/plugin`, plugin cache, plugin lifecycle)
-- **Execution interception hooks lifecycle** (PreToolUse/PostToolUse style interception)
+- **Execution interception lifecycle** (PreToolUse/PostToolUse style interception)
 - **HUD statusline** (Claude Code-specific terminal integration)
 - **Native subagent spawning** (`Task(subagent_type=...)`)
 
 ## ✅ Clarification
 
 - Codex supports event notifications via `notify`.
-- This can be extended into a hook-like plugin system, but it remains event-driven and cannot intercept tool execution like Claude Code hooks.
+- This can be extended with notify plugins, but it remains event-driven and cannot intercept tool execution.
 
 ## Legacy/Claude-Only Areas
 
 These remain in the repo for reference but are not used by Codex:
-- `src/` (hook engine, HUD, installer, Claude analytics)
-- `hooks/` (Claude hooks)
 - `commands/` (Claude slash commands)
 - `docs/CLAUDE.md` and other Claude-oriented docs
 

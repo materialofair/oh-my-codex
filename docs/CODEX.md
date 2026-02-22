@@ -70,11 +70,25 @@ codex mcp list
 
 ### Not Supported (Codex limitations)
 - Claude Code marketplace plugin install
-- Claude Code-style execution interception hooks (pre/post tool interception)
+- Claude Code-style execution interception lifecycle (pre/post tool interception)
 - Claude Code-specific CLI commands
 - Claude Code plugin cache locations
 
-Codex does support event notifications via `notify`. Any project \"hooks\" implementation should be treated as event-driven extension, not interception.
+Codex does support event notifications via `notify`. In this project, all extensibility is event-driven notify dispatch, not execution interception.
+
+## Notify Extension Workflow
+
+```bash
+omx notify init
+omx notify status
+omx notify validate
+OMX_NOTIFY_PLUGINS=1 omx notify test
+```
+
+Plugins are discovered from:
+
+- `.omx/notify/*.mjs` (primary)
+- `.omx/notify-plugins/*.mjs` (legacy compatibility)
 
 ## Skills Directory
 

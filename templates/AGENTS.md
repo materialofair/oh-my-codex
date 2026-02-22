@@ -9,7 +9,7 @@ Skill pack and workflow orchestration for OpenAI Codex CLI.
 - Verify outcomes with concrete evidence before claiming completion.
 - Keep instructions concise and implementation-focused.
 
-## Hooks Compatibility
+## Notify Compatibility
 
-Codex does not expose Claude Code style pre/post tool interception hooks.
-When this project mentions hooks, it refers to event-driven extensions built on top of Codex notifications (`notify`), not execution interception.
+Codex does not expose Claude Code style pre/post tool interception lifecycle.
+This project uses event-driven extensions built on top of Codex notifications (`notify`), not execution interception.

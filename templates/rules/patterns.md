@@ -15,7 +15,7 @@ interface ApiResponse<T> {
 }
 ```
 
-## Custom Hooks Pattern
+## Debounce Utility Pattern
 
 ```typescript
 export function useDebounce<T>(value: T, delay: number): T {

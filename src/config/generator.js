@@ -61,7 +61,7 @@ function upsertFeatureFlags(config) {
 }
 
 function buildManagedBlock(root, options = {}) {
-  const notifyScript = path.join(root, 'scripts', 'notify-hook.js').replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+  const notifyScript = path.join(root, 'scripts', 'notify-dispatch.js').replace(/\\/g, '\\\\').replace(/"/g, '\\"');
   const stateServer = path.join(root, 'src', 'mcp', 'state-server.js').replace(/\\/g, '\\\\').replace(/"/g, '\\"');
   const memoryServer = path.join(root, 'src', 'mcp', 'memory-server.js').replace(/\\/g, '\\\\').replace(/"/g, '\\"');
   const traceServer = path.join(root, 'src', 'mcp', 'trace-server.js').replace(/\\/g, '\\\\').replace(/"/g, '\\"');

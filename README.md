@@ -61,11 +61,20 @@ Installs:
 
 ---
 
-## Hooks Positioning
+## Notify Positioning
 
-Codex does not provide Claude Code style interception hooks (for example pre/post tool interception).
+Codex does not provide Claude Code style interception lifecycle support (for example pre/post tool interception).
 
-In this project, any \"hooks\" capability refers to event-driven extensions on top of Codex notifications (`notify`) and should not be interpreted as execution interception.
+In this project, extensions are event-driven and built on top of Codex notifications (`notify`), not execution interception.
+
+Use the notify extension workflow:
+
+```bash
+omx notify init
+omx notify status
+omx notify validate
+OMX_NOTIFY_PLUGINS=1 omx notify test
+```
 
 ---
 
@@ -93,7 +102,7 @@ In this project, any \"hooks\" capability refers to event-driven extensions on t
 ## Rules (Templates)
 
 Rules are optional guardrails you can copy to `.codex/rules/`:
-- `agents.md`, `coding-style.md`, `git-workflow.md`, `hooks.md`
+- `agents.md`, `coding-style.md`, `git-workflow.md`, `notify.md`
 - `patterns.md`, `performance.md`, `security.md`, `testing.md`
 - `dev.md`, `research.md`, `review.md`
 
@@ -134,6 +143,7 @@ autopilot: build a REST API for managing tasks
 
 - `docs/CODEX.md`
 - `docs/ALIGNMENT.md`
+- `docs/NOTIFY.md`
 
 ---
 

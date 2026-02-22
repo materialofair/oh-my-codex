@@ -2,6 +2,7 @@
 const { setup } = require('./setup');
 const { doctor } = require('./doctor');
 const { team } = require('./team');
+const { notify } = require('./notify');
 
 const HELP = `oh-my-codex CLI (omx)
 
@@ -13,6 +14,7 @@ Usage:
   omx team advance <phase> [reason]
   omx team cancel
   omx team clear
+  omx notify init|status|validate|test [event]
   omx help
 `;
 
@@ -61,6 +63,11 @@ async function main(args) {
 
   if (command === 'team') {
     await team(args.slice(1));
+    return;
+  }
+
+  if (command === 'notify') {
+    await notify(args.slice(1));
     return;
   }
 
