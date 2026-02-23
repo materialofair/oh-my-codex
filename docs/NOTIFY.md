@@ -45,6 +45,20 @@ export OMX_NOTIFY_PLUGIN_TIMEOUT_MS=1500
 - `pre-tool-use`
 - `post-tool-use`
 
+## Team Auto-Advance Integration
+
+When team state is started with auto mode:
+
+```bash
+omcodex team start "your task" --auto
+```
+
+notify events can advance team phases automatically:
+
+- `turn-complete`: `team-plan -> team-prd -> team-exec`, and can complete `team-verify`
+- `post-tool-use`: can move `team-exec -> team-verify`
+- failure-like messages in notify context can trigger `team-fix`
+
 ## Plugin Contract
 
 Each plugin must export:

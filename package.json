@@ -1,18 +1,22 @@
 {
-  "name": "oh-my-codex",
+  "name": "oh-my-codex-cli",
   "version": "0.1.0",
   "description": "Codex skill pack and workflow orchestration",
-  "private": true,
   "bin": {
     "omcodex": "bin/omcodex.js"
   },
   "files": [
+    ".agent",
+    ".governance",
     "bin",
+    "commands",
     "src",
     "scripts",
     "docs",
+    "prompts",
     "templates",
     "README.md",
+    "README.zh.md",
     "AGENTS.md",
     "LICENSE"
   ],
@@ -23,11 +27,22 @@
     "mcp:codex": "./scripts/generate-codex-mcp-config.sh",
     "catalog:generate": "node scripts/generate-catalog-docs.js",
     "governance:skills": "./scripts/check-skill-governance.sh",
-    "test": "npm run governance:skills && npm run catalog:generate && node bin/omcodex.js doctor"
+    "governance:skills:llm": "node scripts/check-skill-llm-governance.js --mode=auto",
+    "eval:skills": "node scripts/eval-skills.js",
+    "test": "npm run governance:skills && npm run governance:skills:llm && npm run catalog:generate && npm run eval:skills && node bin/omcodex.js doctor",
+    "pack:dry-run": "npm pack --dry-run",
+    "prepublishOnly": "npm test"
   },
   "engines": {
     "node": ">=20"
   },
+  "keywords": [
+    "codex",
+    "openai",
+    "ai-agent",
+    "workflow",
+    "skills"
+  ],
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0"
   },

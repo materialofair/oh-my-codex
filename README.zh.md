@@ -15,6 +15,17 @@
 
 ## 安装
 
+**通过 npm 全局安装**
+```bash
+npm install -g oh-my-codex-cli
+omcodex setup
+```
+
+**通过 npm 一次性执行**
+```bash
+npx oh-my-codex-cli setup
+```
+
 **推荐（一键安装）**
 ```bash
 ./scripts/install-codex.sh --all
@@ -50,6 +61,8 @@
 - **角色 Prompt 目录**：`architect`, `planner`, `executor`（安装到 `.codex/prompts/`）
 - **学习与上下文**：`continuous-learning`, `strategic-compact`, `iterative-retrieval`, `verification-loop`
 - **原生 subagent 编排**：核心 skill 统一使用 `spawn_agent` + `send_input` + `wait` + `close_agent`
+- **自动技能路由**：`omcodex route "<task>"` 自动推荐最匹配的 skill（含置信度）
+- **事件驱动 team 自动推进**：`omcodex team start "<task>" --auto` 可按 notify 事件推进阶段
 - **通知扩展**：`omcodex notify`（事件驱动通知扩展，不是拦截执行）
 - **规则与守护**：编码 / 安全 / 测试 / 性能 / Git 工作流
 - **Plan 模式已开启**（Codex 0.9+）
@@ -97,6 +110,8 @@
 
 ```bash
 npm run governance:skills
+npm run governance:skills:llm
+npm run eval:skills
 ```
 
 这个命令会阻断以下高风险残留：

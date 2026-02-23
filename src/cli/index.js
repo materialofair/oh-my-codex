@@ -3,6 +3,7 @@ const { setup } = require('./setup');
 const { doctor } = require('./doctor');
 const { team } = require('./team');
 const { notify } = require('./notify');
+const { route } = require('./route');
 
 const HELP = `oh-my-codex CLI (omcodex)
 
@@ -14,6 +15,7 @@ Usage:
   omcodex team advance <phase> [reason]
   omcodex team cancel
   omcodex team clear
+  omcodex route "<task>" [--limit 5] [--json]
   omcodex notify init|status|validate|test [event]
   omcodex help
 `;
@@ -69,6 +71,11 @@ async function main(args) {
 
   if (command === 'notify') {
     await notify(args.slice(1));
+    return;
+  }
+
+  if (command === 'route') {
+    await route(args.slice(1));
     return;
   }
 

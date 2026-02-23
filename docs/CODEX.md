@@ -124,3 +124,10 @@ If a skill doesn’t seem to activate:
 1. Confirm `~/.codex/skills/<skill>/SKILL.md` exists.
 2. Try explicit invocation: `$skill-name ...`
 3. Make sure your Codex session is running in a repo with `.codex/skills` (if using repo-local install).
+
+## New Productivity Commands
+
+- Route task to best-fit skills:
+  - `omcodex route "fix auth lint + tests"`
+- Start team state with auto phase advancement:
+  - `omcodex team start "ship oauth login" --auto`

@@ -4,7 +4,7 @@ const TERMINAL_PHASES = ['complete', 'failed', 'cancelled'];
 const TRANSITIONS = {
   'team-plan': ['team-prd'],
   'team-prd': ['team-exec'],
-  'team-exec': ['team-verify'],
+  'team-exec': ['team-verify', 'team-fix'],
   'team-verify': ['team-fix', 'complete', 'failed'],
   'team-fix': ['team-exec', 'team-verify', 'complete', 'failed'],
 };
@@ -13,11 +13,12 @@ function isTerminal(phase) {
   return TERMINAL_PHASES.includes(phase);
 }
 
-function createTeamState(taskDescription, maxFixAttempts = 3) {
+function createTeamState(taskDescription, maxFixAttempts = 3, options = {}) {
   return {
     active: true,
     phase: 'team-plan',
     task_description: taskDescription,
+    auto_advance: options.autoAdvance === true,
     created_at: new Date().toISOString(),
     phase_transitions: [],
     tasks: [],

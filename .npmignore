@@ -1,4 +1,4 @@
-# Runtime source files are required by bin/omx.js
+# Runtime source files are required by bin/omcodex.js
 
 # Examples
 examples/
@@ -23,3 +23,9 @@ node_modules/
 
 # Plans and notes
 .claude/
+
+# Local backups
+**/.DS_Store
+.agent/**/SKILL.md.backup*
+.agent/**/*.backup
+.agent/**/*.backup_*

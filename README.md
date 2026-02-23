@@ -15,6 +15,17 @@ Inspired by **oh‑my‑claudecode**, rebuilt for **Codex architecture**, and in
 
 ## Install
 
+**From npm (global)**
+```bash
+npm install -g oh-my-codex-cli
+omcodex setup
+```
+
+**From npm (one-off)**
+```bash
+npx oh-my-codex-cli setup
+```
+
 **Recommended (runtime setup)**
 ```bash
 npm run setup:omcodex
@@ -57,6 +68,8 @@ Installs:
 - **Native subagent orchestration**: `spawn_agent` + `send_input` + `wait` + `close_agent` patterns across core skills
 - **Setup runtime**: `omcodex setup` scope-aware installer and `omcodex doctor` health checks
 - **Team state runtime**: `omcodex team start/status/advance/cancel` for staged execution state
+- **Auto skill routing**: `omcodex route "<task>"` recommends the best-fit skills with confidence
+- **Event-driven team auto-advance**: `omcodex team start "<task>" --auto` advances phases from notify events
 - **Local MCP runtime surfaces**: `omcodex_state`, `omcodex_memory`, `omcodex_trace` servers wired by setup
 - **Rules & guardrails**: coding, security, testing, performance, git workflow
 - **Plan mode enabled** (Codex 0.9+)
@@ -121,6 +134,8 @@ Run the governance gate before shipping skill changes:
 
 ```bash
 npm run governance:skills
+npm run governance:skills:llm
+npm run eval:skills
 ```
 
 This command enforces the skill documentation baseline by blocking:

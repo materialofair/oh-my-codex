@@ -1,0 +1,4 @@
+# LLM governance debt allowlist
+# Format: <rule_id>:<skill_name>
+non_codex_runtime:doctor
+legacy_task_api:start-dev

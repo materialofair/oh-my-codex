@@ -1,9 +1,41 @@
 /* eslint-disable no-console */
+const path = require('path');
 const { createTeamState, transitionPhase } = require('../team/orchestrator');
 const { readTeamState, writeTeamState, clearTeamState } = require('../team/state-store');
+const { routeTaskToSkills } = require('../router/skill-router');
 
 function usage() {
-  console.log('Usage: omcodex team start "<task>" | status | advance <phase> [reason] | cancel | clear');
+  console.log('Usage: omcodex team start "<task>" [--auto] [--max-fix=N] | status | advance <phase> [reason] | cancel | clear');
+}
+
+function parseStartArgs(args) {
+  const taskParts = [];
+  let autoAdvance = false;
+  let maxFixAttempts = 3;
+
+  for (let i = 1; i < args.length; i += 1) {
+    const arg = args[i];
+    if (arg === '--auto') {
+      autoAdvance = true;
+      continue;
+    }
+    if (arg === '--max-fix' && args[i + 1]) {
+      maxFixAttempts = Math.max(1, Number(args[i + 1]) || 3);
+      i += 1;
+      continue;
+    }
+    if (arg.startsWith('--max-fix=')) {
+      maxFixAttempts = Math.max(1, Number(arg.slice('--max-fix='.length)) || 3);
+      continue;
+    }
+    taskParts.push(arg);
+  }
+
+  return {
+    autoAdvance,
+    maxFixAttempts,
+    task: taskParts.join(' ').trim(),
+  };
 }
 
 async function team(args) {
@@ -16,11 +48,14 @@ async function team(args) {
   }
 
   if (sub === 'start') {
-    const task = args.slice(1).join(' ').trim();
+    const { autoAdvance, maxFixAttempts, task } = parseStartArgs(args);
     if (!task) throw new Error('Usage: omcodex team start "<task>"');
-    const state = createTeamState(task, 3);
+    const state = createTeamState(task, maxFixAttempts, { autoAdvance });
+    const routed = routeTaskToSkills(task, { limit: 3, root: path.resolve(__dirname, '..', '..') });
+    state.recommended_skills = routed.recommendations.map((item) => item.skill);
     writeTeamState(cwd, state);
-    console.log(`team started: phase=${state.phase}`);
+    console.log(`team started: phase=${state.phase} auto_advance=${state.auto_advance ? 'on' : 'off'}`);
+    console.log(`recommended_skills=${state.recommended_skills.join(',')}`);
     return;
   }
 
@@ -32,6 +67,10 @@ async function team(args) {
     }
     console.log(`phase=${state.phase} active=${state.active}`);
     console.log(`fix_attempt=${state.current_fix_attempt}/${state.max_fix_attempts}`);
+    console.log(`auto_advance=${state.auto_advance === true ? 'on' : 'off'}`);
+    if (Array.isArray(state.recommended_skills) && state.recommended_skills.length > 0) {
+      console.log(`recommended_skills=${state.recommended_skills.join(',')}`);
+    }
     console.log(`task=${state.task_description}`);
     return;
   }

@@ -1,5 +1,6 @@
 const { buildNotifyEvent } = require('./extensibility/events');
 const { dispatchNotifyEvent } = require('./extensibility/dispatcher');
+const { applyTeamAutoAdvance } = require('../team/auto-advance');
 
 function pickString(payload, keys) {
   for (const key of keys) {
@@ -60,7 +61,12 @@ function toNotifyEvent(payload) {
 async function dispatchFromNotifyPayload(payload, options = {}) {
   const event = toNotifyEvent(payload);
   if (!event) return { enabled: false, event: 'unsupported', plugin_count: 0, results: [] };
-  return dispatchNotifyEvent(event, options);
+  const dispatch = await dispatchNotifyEvent(event, options);
+  const teamAutoAdvance = await applyTeamAutoAdvance(event, { cwd: options.cwd || process.cwd() });
+  return {
+    ...dispatch,
+    team_auto_advance: teamAutoAdvance,
+  };
 }
 
 module.exports = {
