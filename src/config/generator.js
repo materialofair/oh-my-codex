@@ -61,22 +61,16 @@ function upsertFeatureFlags(config) {
 }
 
 function buildManagedBlock(root, options = {}) {
-  const notifyScript = path.join(root, 'scripts', 'notify-dispatch.js').replace(/\\/g, '\\\\').replace(/"/g, '\\"');
   const stateServer = path.join(root, 'src', 'mcp', 'state-server.js').replace(/\\/g, '\\\\').replace(/"/g, '\\"');
   const memoryServer = path.join(root, 'src', 'mcp', 'memory-server.js').replace(/\\/g, '\\\\').replace(/"/g, '\\"');
   const traceServer = path.join(root, 'src', 'mcp', 'trace-server.js').replace(/\\/g, '\\\\').replace(/"/g, '\\"');
   const includeContext7 = options.enableContext7 === true;
+  const includeOpenaiDocs = options.includeOpenaiDocs !== false;
 
   const lines = [
     '# ============================================================',
     '# oh-my-codex managed block',
     '# ============================================================',
-    `notify = ["node", "${notifyScript}"]`,
-    'model_reasoning_effort = "high"',
-    '[mcp_servers.openaiDeveloperDocs]',
-    'url = "https://developers.openai.com/mcp"',
-    'enabled = true',
-    '',
     '[mcp_servers.omcodex_state]',
     'command = "node"',
     `args = ["${stateServer}"]`,
@@ -93,12 +87,22 @@ function buildManagedBlock(root, options = {}) {
     'enabled = true',
   ];
 
-  if (includeContext7) {
+  if (includeOpenaiDocs) {
+    lines.push('', '[mcp_servers.openaiDeveloperDocs]', 'url = "https://developers.openai.com/mcp"', 'enabled = true');
+  }
+
+  if (includeContext7 && options.includeContext7Server !== false) {
     lines.push('', '[mcp_servers.context7]', 'command = "npx"', 'args = ["-y", "@upstash/context7-mcp"]', 'enabled = true');
   }
 
   lines.push('', '# ============================================================', '# end oh-my-codex managed block', '# ============================================================');
   return lines.join('\n');
+}
+
+function hasSection(config, sectionName) {
+  const escaped = sectionName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const pattern = new RegExp(`^\\s*\\[${escaped}\\]\\s*$`, 'm');
+  return pattern.test(config);
 }
 
 function mergeConfig(configFile, root, options = {}) {
@@ -111,7 +115,11 @@ function mergeConfig(configFile, root, options = {}) {
   let next = stripManagedBlock(existing, startMarker, endMarker).trim();
   next = upsertFeatureFlags(next);
 
-  const managed = buildManagedBlock(root, options);
+  const managed = buildManagedBlock(root, {
+    ...options,
+    includeOpenaiDocs: !hasSection(next, 'mcp_servers.openaiDeveloperDocs'),
+    includeContext7Server: !hasSection(next, 'mcp_servers.context7'),
+  });
   const output = `${next.trim()}\n\n${managed}\n`;
   fs.writeFileSync(configFile, output, 'utf8');
 }
