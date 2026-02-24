@@ -54,7 +54,7 @@ aireview --pr [PR_NUMBER]                 # Review specific PR
 aireview --pr --comment                   # Post review as PR comment
 
 # Deep review (Multi-AI collaboration)
-aireview --diff --deep                    # Gemini + Codex parallel analysis
+aireview --diff --deep                    # Gemini + Claude Code parallel analysis
 
 # Standard file/directory review
 aireview ./src/auth
@@ -107,7 +107,7 @@ Layer 2: Gemini Deep Analysis (via gemp)
     - Security analysis
     - Performance implications
     ↓
-Layer 3: Codex Quality Audit
+Layer 3: Claude Code Quality Audit
     - TypeScript/React best practices (ISTJ persona)
     - Code maintainability
     - Pattern adherence
@@ -389,8 +389,8 @@ If MODE == "deep":
 
     cat /tmp/gemini_prompt.txt | node ~/.gemini/long_task_runner.js 2>&1
 
-  Layer 3 - Codex Quality Audit:
-    cat > /tmp/codex_prompt.txt << 'PROMPT_EOF'
+  Layer 3 - Claude Code Quality Audit:
+    cat > /tmp/claude_prompt.txt << 'PROMPT_EOF'
     你是 ISTJ 工程师，进行代码质量审计。
 
     已发现的高置信度问题：
@@ -415,7 +415,7 @@ If MODE == "deep":
     - 总体质量评分 (1-10)
     PROMPT_EOF
 
-    cat /tmp/codex_prompt.txt | codex exec --dangerously-bypass-approvals-and-sandbox - 2>&1
+    cat /tmp/claude_prompt.txt | claude -p --output-format text --dangerously-skip-permissions 2>&1
 
   Layer 4 - Synthesis:
     Combine findings from all layers
@@ -481,8 +481,8 @@ Else:
     **Gemini 架构评分**: {gemini_score}/10
     {gemini_highlights}
 
-    **Codex 质量评分**: {codex_score}/10
-    {codex_highlights}
+    **Claude Code 质量评分**: {claude_score}/10
+    {claude_highlights}
     {end if}
 
     🤖 Generated with Codex
@@ -550,7 +550,7 @@ If --comment flag && pr_mode:
 - ✅ Git history 上下文分析
 - ✅ 相关 PR 分析
 - ✅ 代码注释合规性检查
-- ✅ 分层分析 (multi-agent → Gemini → Codex → synthesis)
+- ✅ 分层分析 (multi-agent → Gemini → Claude Code → synthesis)
 - ✅ 详���的置信度评分标准
 
 ## CLI Implementation Templates
@@ -568,18 +568,18 @@ cat /tmp/gemini_prompt.txt | node ~/.gemini/long_task_runner.js 2>&1
 cat /tmp/gemini_prompt.txt | gemini --yolo 2>&1 | grep -v "STARTUP|YOLO|Load"
 ```
 
-### Codex CLI
+### Claude Code CLI
 ```bash
-cat > /tmp/codex_prompt.txt << 'PROMPT_EOF'
+cat > /tmp/claude_prompt.txt << 'PROMPT_EOF'
 {persona} 你的审查任务...
 PROMPT_EOF
-cat /tmp/codex_prompt.txt | codex exec --dangerously-bypass-approvals-and-sandbox - 2>&1
+cat /tmp/claude_prompt.txt | claude -p --output-format text --dangerously-skip-permissions 2>&1
 ```
 
 ## Requirements
 
 - Gemini CLI (gemp/long_task_runner.js) configured
-- Codex CLI configured
+- Claude Code CLI configured
 - GitHub CLI (`gh`) for PR mode
 - CLAUDE.md files (optional but recommended)
 
@@ -663,7 +663,7 @@ $ aireview origin/feature-payment --deep
 
 ✅ Layer 1: 多 agent 并行审查 (5 agents)
 ✅ Layer 2: Gemini 架构分析 (INTJ)
-✅ Layer 3: Codex 质量审计 (ISTJ)
+✅ Layer 3: Claude Code 质量审计 (ISTJ)
 ✅ Layer 4: 综合分析
 
 ## 深度 AI 审查报告
@@ -678,7 +678,7 @@ $ aireview --diff --deep
 
 ✅ Layer 1: 多 agent 并行审查 (5 agents)
 ✅ Layer 2: Gemini 架构分析 (INTJ)
-✅ Layer 3: Codex 质量审计 (ISTJ)
+✅ Layer 3: Claude Code 质量审计 (ISTJ)
 ✅ Layer 4: 综合分析
 
 ## 深度 AI 审查报告
