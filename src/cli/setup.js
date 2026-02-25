@@ -62,6 +62,16 @@ async function copyDirectory(src, dest, options) {
   return count;
 }
 
+async function copyFile(src, dest, options) {
+  if (!fs.existsSync(src)) return false;
+  if (!options.force && fs.existsSync(dest)) return false;
+  if (!options.dryRun) {
+    await fsp.mkdir(path.dirname(dest), { recursive: true });
+    await fsp.copyFile(src, dest);
+  }
+  return true;
+}
+
 async function setup(options = {}) {
   const cwd = process.cwd();
   const root = path.resolve(__dirname, '..', '..');
@@ -81,6 +91,12 @@ async function setup(options = {}) {
   const rulesDest = scope === 'user'
     ? path.join(os.homedir(), '.codex', 'rules')
     : path.join(cwd, '.codex', 'rules');
+  const globalAgentsSources = [
+    path.join(root, 'templates', 'AGENTS.global.md'),
+    path.join(root, 'templates', 'AGENTS.md'),
+  ];
+  const globalAgentsSource = globalAgentsSources.find((candidate) => fs.existsSync(candidate)) || null;
+  const globalAgentsDest = path.join(os.homedir(), '.codex', 'AGENTS.md');
   const promptsSrc = promptsSource(root);
   const promptsDest = codexPromptsPath(scope, cwd);
 
@@ -97,7 +113,7 @@ async function setup(options = {}) {
 
   await persistScope(cwd, scope, options.dryRun);
 
-  console.log('[1/5] Installing skills...');
+  console.log('[1/6] Installing skills...');
   const shouldInstallSkills = options.installSkills !== false && scope !== 'project';
   const skillCount = shouldInstallSkills
     ? await copyDirectory(skillSrc, skillsDest, options)
@@ -109,7 +125,7 @@ async function setup(options = {}) {
     console.log('  Skipped for project scope');
   }
 
-  console.log('[2/5] Installing prompts...');
+  console.log('[2/6] Installing prompts...');
   const shouldInstallPrompts = options.installPrompts !== false && scope !== 'project';
   if (!shouldInstallPrompts) {
     console.log('  Skipped (--no-prompts or project scope)');
@@ -121,7 +137,7 @@ async function setup(options = {}) {
     console.log(`  ${label} ${promptCount} files -> ${promptsDest}`);
   }
 
-  console.log('[3/5] Installing rules...');
+  console.log('[3/6] Installing rules...');
   if (options.installRules !== false) {
     const ruleCount = await copyDirectory(rulesSource, rulesDest, options);
     const label = options.dryRun ? 'Would install/update' : 'Installed/updated';
@@ -130,7 +146,25 @@ async function setup(options = {}) {
     console.log('  Skipped (--no-rules)');
   }
 
-  console.log('[4/5] Merging config.toml...');
+  console.log('[4/6] Installing global AGENTS.md...');
+  if (options.installAgents === false) {
+    console.log('  Skipped (--no-agents)');
+  } else if (scope !== 'user') {
+    console.log('  Skipped (only applies to user scope)');
+  } else if (!globalAgentsSource) {
+    console.log('  Skipped (missing templates/AGENTS.global.md and templates/AGENTS.md)');
+  } else {
+    const installed = await copyFile(globalAgentsSource, globalAgentsDest, options);
+    const label = options.dryRun ? 'Would install/update' : 'Installed/updated';
+    if (installed || options.force || options.dryRun) {
+      console.log(`  ${label} ${globalAgentsDest}`);
+      console.log(`  Source: ${path.relative(root, globalAgentsSource)}`);
+    } else {
+      console.log(`  Skipped (already exists): ${globalAgentsDest}`);
+    }
+  }
+
+  console.log('[5/6] Merging config.toml...');
   if (options.installConfig !== false && !options.dryRun) {
     mergeConfig(configPath, root, { enableContext7: options.enableContext7 });
   }
@@ -141,7 +175,7 @@ async function setup(options = {}) {
     console.log('  Skipped (--no-config)');
   }
 
-  console.log('[5/5] Catalog check...');
+  console.log('[6/6] Catalog check...');
   const headline = getCatalogHeadlineCounts(root);
   if (headline) {
     console.log(`  Catalog baseline: ${headline.skills} skills, ${headline.prompts} prompts`);

@@ -52,6 +52,31 @@ npx oh-my-codex-cli setup
 ./scripts/install-codex.sh --all --project
 ```
 
+## AGENTS.md 模板（全局 + 项目）
+
+`omcodex setup`（user scope）现在会自动安装全局 guidance：
+
+- `templates/AGENTS.global.md` -> `~/.codex/AGENTS.md`
+
+模板仍可用于手动覆盖或项目级配置：
+
+- 全局模板：`templates/AGENTS.global.md` -> 复制到 `~/.codex/AGENTS.md`
+- 项目模板：`templates/AGENTS.project.md` -> 复制到 `<repo>/AGENTS.md`
+
+示例：
+
+```bash
+cp templates/AGENTS.global.md ~/.codex/AGENTS.md
+cp templates/AGENTS.project.md ./AGENTS.md
+```
+
+可选：在 `~/.codex/config.toml` 增加发现配置：
+
+```toml
+project_doc_fallback_filenames = ["TEAM_GUIDE.md", ".agents.md"]
+project_doc_max_bytes = 65536
+```
+
 ---
 
 ## 安装后你能获得什么

@@ -57,6 +57,31 @@ Installs:
 ./scripts/install-codex.sh --all --project
 ```
 
+## AGENTS.md Templates (Global + Project)
+
+`omcodex setup` (user scope) now installs global guidance automatically:
+
+- `templates/AGENTS.global.md` -> `~/.codex/AGENTS.md`
+
+Use templates for manual override or project setup:
+
+- Global template: `templates/AGENTS.global.md` -> `~/.codex/AGENTS.md`
+- Project template: `templates/AGENTS.project.md` -> `<repo>/AGENTS.md`
+
+Example:
+
+```bash
+cp templates/AGENTS.global.md ~/.codex/AGENTS.md
+cp templates/AGENTS.project.md ./AGENTS.md
+```
+
+Optional discovery compatibility in `~/.codex/config.toml`:
+
+```toml
+project_doc_fallback_filenames = ["TEAM_GUIDE.md", ".agents.md"]
+project_doc_max_bytes = 65536
+```
+
 ---
 
 ## What You Get

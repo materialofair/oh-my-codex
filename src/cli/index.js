@@ -8,7 +8,7 @@ const { route } = require('./route');
 const HELP = `oh-my-codex CLI (omcodex)
 
 Usage:
-  omcodex setup [--scope user|project-local|project] [--force] [--dry-run] [--verbose] [--no-prompts]
+  omcodex setup [--scope user|project-local|project] [--force] [--dry-run] [--verbose] [--no-prompts] [--no-agents]
   omcodex doctor
   omcodex team start \"<task>\"
   omcodex team status
@@ -54,6 +54,7 @@ async function main(args) {
       installSkills: !flags.has('--no-skills'),
       installPrompts: !flags.has('--no-prompts'),
       installRules: !flags.has('--no-rules'),
+      installAgents: !flags.has('--no-agents'),
       installConfig: !flags.has('--no-config'),
     });
     return;
