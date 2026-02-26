@@ -1,6 +1,6 @@
 {
   "name": "oh-my-codex-cli",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Codex skill pack and workflow orchestration",
   "bin": {
     "omcodex": "bin/omcodex.js"
