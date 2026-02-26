@@ -8,6 +8,20 @@ Agent-KB is an intelligent reasoning system that searches 300+ expert cases and 
 
 ## Basic Usage
 
+### Environment Setup (Recommended First Step)
+
+Run one-time health check before first use:
+
+```bash
+bash .codex/skills/agent-kb/scripts/health-check.sh
+```
+
+Optional custom location:
+
+```bash
+export AGENT_KB_HOME=/path/to/Agent-KB
+```
+
 ### Trigger Automatically
 
 Agent-KB auto-triggers when you ask:
@@ -45,7 +59,7 @@ Use agent-kb to answer: [your question]
 ```
 
 **What Happens**:
-1. Claude executes: `python ~/Agent-KB/intelligent_summarizer.py "React component re-renders optimization"`
+1. Claude executes: `python3 ${AGENT_KB_HOME:-$HOME/Agent-KB}/intelligent_summarizer.py "React component re-renders optimization"`
 2. Searches 300+ cases for React performance patterns
 3. LLM analyzes and synthesizes key insights
 4. Returns structured recommendations:
@@ -100,7 +114,7 @@ Use agent-kb to answer: [your question]
 ```
 
 **What Happens**:
-1. Executes: `python ~/Agent-KB/intelligent_summarizer.py "REST vs GraphQL API design"`
+1. Executes: `python3 ${AGENT_KB_HOME:-$HOME/Agent-KB}/intelligent_summarizer.py "REST vs GraphQL API design"`
 2. Retrieves historical cases comparing both approaches
 3. Analyzes trade-offs, use cases, team considerations
 4. Provides decision framework based on project constraints
@@ -124,7 +138,7 @@ Use agent-kb to answer: [your question]
 ```
 
 **What Happens**:
-1. Executes: `python ~/Agent-KB/intelligent_summarizer.py "TypeScript large codebase best practices"`
+1. Executes: `python3 ${AGENT_KB_HOME:-$HOME/Agent-KB}/intelligent_summarizer.py "TypeScript large codebase best practices"`
 2. Aggregates lessons from 300+ enterprise TypeScript projects
 3. Identifies common success patterns and anti-patterns
 4. Returns validated practices with confidence levels
@@ -162,7 +176,7 @@ If `intelligent_summarizer.py` times out or fails:
 
 **Automatic Fallback**:
 ```bash
-python ~/Agent-KB/claude_kb_query_optimized.py "query"
+python3 ${AGENT_KB_HOME:-$HOME/Agent-KB}/claude_kb_query_optimized.py "query"
 ```
 
 This provides:
@@ -270,15 +284,15 @@ This provides:
 **Solutions**:
 1. **Fallback to optimized query**:
    ```bash
-   python ~/Agent-KB/claude_kb_query_optimized.py "query"
+   python3 ${AGENT_KB_HOME:-$HOME/Agent-KB}/claude_kb_query_optimized.py "query"
    ```
 2. **Check script exists**:
    ```bash
-   ls ~/Agent-KB/intelligent_summarizer.py
+   ls ${AGENT_KB_HOME:-$HOME/Agent-KB}/intelligent_summarizer.py
    ```
 3. **Verify Python environment**:
    ```bash
-   python --version  # Should be 3.8+
+   python3 --version  # Should be 3.8+
    ```
 
 ### Issue 3: Results Too Generic
@@ -299,9 +313,9 @@ This provides:
 **Symptoms**: Same query takes 8s every time
 
 **Solutions**:
-1. Check cache file: `~/Agent-KB/.cache/`
+1. Check cache file: `${AGENT_KB_HOME:-$HOME/Agent-KB}/.cache/`
 2. Verify query exact match (case-sensitive)
-3. Clear cache if corrupted: `rm -rf ~/Agent-KB/.cache/`
+3. Clear cache if corrupted: `rm -rf ${AGENT_KB_HOME:-$HOME/Agent-KB}/.cache/`
 
 ---
 
@@ -414,11 +428,11 @@ This provides:
 
 - **Version**: 2.0 (Intelligent Analysis with LLM)
 - **Last Updated**: 2025-12-30
-- **Knowledge Base**: ~/Agent-KB/ (300+ cases)
+- **Knowledge Base**: ${AGENT_KB_HOME:-$HOME/Agent-KB}/ (300+ cases)
 - **Python Scripts**:
-  - ~/Agent-KB/intelligent_summarizer.py (primary)
-  - ~/Agent-KB/claude_kb_query_optimized.py (fallback)
-- **Cache**: ~/Agent-KB/.cache/
+  - ${AGENT_KB_HOME:-$HOME/Agent-KB}/intelligent_summarizer.py (primary)
+  - ${AGENT_KB_HOME:-$HOME/Agent-KB}/claude_kb_query_optimized.py (fallback)
+- **Cache**: ${AGENT_KB_HOME:-$HOME/Agent-KB}/.cache/
 
 ## Related Skills
 

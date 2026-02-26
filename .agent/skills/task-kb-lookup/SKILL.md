@@ -31,6 +31,22 @@ description: Query Agent-KB for reference examples and proven approaches before 
 
 ## Instructions
 
+### Environment Check (Run Once Per Environment)
+
+```bash
+# Project-local install
+bash .codex/skills/task-kb-lookup/scripts/health-check.sh
+
+# Global install
+bash ~/.codex/skills/task-kb-lookup/scripts/health-check.sh
+```
+
+If using a non-default Agent-KB directory, set:
+
+```bash
+export AGENT_KB_HOME=/path/to/Agent-KB
+```
+
 ### Step 1: 识别任务类型
 
 当检测到开发任务时，先分析任务类型：
@@ -49,7 +65,7 @@ description: Query Agent-KB for reference examples and proven approaches before 
 执行Agent-KB查询，获取参考样例：
 
 ```bash
-python /Users/WangQiao/Agent-KB/intelligent_summarizer.py "任务描述关键词"
+python3 ${AGENT_KB_HOME:-$HOME/Agent-KB}/intelligent_summarizer.py "任务描述关键词"
 ```
 
 **查询策略**:
@@ -119,7 +135,7 @@ python /Users/WangQiao/Agent-KB/intelligent_summarizer.py "任务描述关键词
 
 **You execute**:
 ```bash
-python /Users/WangQiao/Agent-KB/intelligent_summarizer.py "React虚拟滚动 列表优化 大数据渲染"
+python3 ${AGENT_KB_HOME:-$HOME/Agent-KB}/intelligent_summarizer.py "React虚拟滚动 列表优化 大数据渲染"
 ```
 
 **You present**:
@@ -135,7 +151,7 @@ python /Users/WangQiao/Agent-KB/intelligent_summarizer.py "React虚拟滚动 列
 
 **You execute**:
 ```bash
-python /Users/WangQiao/Agent-KB/intelligent_summarizer.py "Node.js API性能优化 响应时间 数据库查询"
+python3 ${AGENT_KB_HOME:-$HOME/Agent-KB}/intelligent_summarizer.py "Node.js API性能优化 响应时间 数据库查询"
 ```
 
 **You present**:
@@ -150,7 +166,7 @@ python /Users/WangQiao/Agent-KB/intelligent_summarizer.py "Node.js API性能优�
 
 **You execute**:
 ```bash
-python /Users/WangQiao/Agent-KB/intelligent_summarizer.py "多租户 数据隔离 SaaS架构"
+python3 ${AGENT_KB_HOME:-$HOME/Agent-KB}/intelligent_summarizer.py "多租户 数据隔离 SaaS架构"
 ```
 
 **You present**:

@@ -27,12 +27,28 @@ Automatically invoke this Skill when:
 
 When this Skill is invoked:
 
+### Prerequisites Check (Run Once Per Environment)
+
+```bash
+# Project-local install
+bash .codex/skills/agent-kb/scripts/health-check.sh
+
+# Global install
+bash ~/.codex/skills/agent-kb/scripts/health-check.sh
+```
+
+If using a non-default Agent-KB directory, set:
+
+```bash
+export AGENT_KB_HOME=/path/to/Agent-KB
+```
+
 ### Step 1: Execute the Query
 
 **IMPORTANT**: You MUST execute this Python command:
 
 ```bash
-python /Users/WangQiao/Agent-KB/intelligent_summarizer.py "user's technical question"
+python3 ${AGENT_KB_HOME:-$HOME/Agent-KB}/intelligent_summarizer.py "user's technical question"
 ```
 
 ### Step 2: Present Results
@@ -79,7 +95,7 @@ Ask if the user wants:
 
 **You execute**:
 ```bash
-python /Users/WangQiao/Agent-KB/intelligent_summarizer.py "React list rendering optimization"
+python3 ${AGENT_KB_HOME:-$HOME/Agent-KB}/intelligent_summarizer.py "React list rendering optimization"
 ```
 
 **You present**: Structured analysis with useMemo/useCallback recommendations, virtual scrolling suggestions, and performance metrics.
@@ -89,7 +105,7 @@ python /Users/WangQiao/Agent-KB/intelligent_summarizer.py "React list rendering 
 
 **You execute**:
 ```bash
-python /Users/WangQiao/Agent-KB/intelligent_summarizer.py "microservices communication patterns"
+python3 ${AGENT_KB_HOME:-$HOME/Agent-KB}/intelligent_summarizer.py "microservices communication patterns"
 ```
 
 **You present**: Analysis of message queues, service mesh, API gateways with pros/cons.
@@ -106,7 +122,7 @@ python /Users/WangQiao/Agent-KB/intelligent_summarizer.py "microservices communi
 If `intelligent_summarizer.py` fails, use the optimized query:
 
 ```bash
-python /Users/WangQiao/Agent-KB/claude_kb_query_optimized.py "query"
+python3 ${AGENT_KB_HOME:-$HOME/Agent-KB}/claude_kb_query_optimized.py "query"
 ```
 
 This provides raw cases without LLM analysis.

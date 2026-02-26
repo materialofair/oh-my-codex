@@ -31,6 +31,22 @@ description: Record task execution results, metrics, lessons learned to Agent-KB
 
 ## Instructions
 
+### Environment Check (Run Once Per Environment)
+
+```bash
+# Project-local install
+bash .codex/skills/task-kb-record/scripts/health-check.sh
+
+# Global install
+bash ~/.codex/skills/task-kb-record/scripts/health-check.sh
+```
+
+If using a non-default Agent-KB directory, set:
+
+```bash
+export AGENT_KB_HOME=/path/to/Agent-KB
+```
+
 ### Step 1: 任务完成检测
 
 当检测到以下信号时，主动提醒记录：
@@ -110,7 +126,7 @@ Codex应基于任务上下文自动预填充大部分信息：
 使用快速存储模式写入Agent-KB：
 
 ```bash
-python /Users/WangQiao/Agent-KB/claude_kb_store.py \
+python3 ${AGENT_KB_HOME:-$HOME/Agent-KB}/claude_kb_store.py \
   "任务描述" \
   "解决方案和实施步骤" \
   "核心经验和指标"
@@ -142,7 +158,7 @@ python /Users/WangQiao/Agent-KB/claude_kb_store.py \
 
 🔍 未来查询此经验:
 ```bash
-python /Users/WangQiao/Agent-KB/intelligent_summarizer.py "任务关键词"
+python3 ${AGENT_KB_HOME:-$HOME/Agent-KB}/intelligent_summarizer.py "任务关键词"
 ```
 
 💡 此经验将帮助未来相似任务:
@@ -201,7 +217,7 @@ React, TypeScript, Performance, Virtual Scrolling, react-window
 
 **User confirms**, then:
 ```bash
-python /Users/WangQiao/Agent-KB/claude_kb_store.py \
+python3 ${AGENT_KB_HOME:-$HOME/Agent-KB}/claude_kb_store.py \
   "实现React虚拟滚动列表，支持10000+条目流畅渲染" \
   "使用react-window库，实现FixedSizeList组件，优化re-render性能，实测10000条目渲染68ms，滚动60fps" \
   "react-window比react-virtualized轻量12KB，useMemo避免不必要re-render，scrollToItem需延迟到mount，快速滚动需loading placeholder"

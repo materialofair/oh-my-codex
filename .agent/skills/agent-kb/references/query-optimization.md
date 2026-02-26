@@ -75,13 +75,13 @@
 
 - **Exact match**: Same query text (case-sensitive)
 - **Cache duration**: Indefinite (until manual clear)
-- **Cache location**: `~/Agent-KB/.cache/`
+- **Cache location**: `${AGENT_KB_HOME:-$HOME/Agent-KB}/.cache/`
 - **Cache hit**: ~0.001s response time
 
 ### When to Clear Cache
 
 ```bash
-rm -rf ~/Agent-KB/.cache/
+rm -rf ${AGENT_KB_HOME:-$HOME/Agent-KB}/.cache/
 ```
 
 **Clear when**:

@@ -5,14 +5,14 @@
 ```
 User Query
     ↓
-├─→ Semantic Search (~/Agent-KB/claude_kb_query_optimized.py)
+├─→ Semantic Search (${AGENT_KB_HOME:-$HOME/Agent-KB}/claude_kb_query_optimized.py)
 │   ├─ Vector database query
 │   ├─ Keyword matching
 │   └─ Similarity ranking
 │   ↓
 ├─→ Retrieve Top Cases (Top 10-20 matches)
 │   ↓
-├─→ Local LLM Analysis (~/Agent-KB/intelligent_summarizer.py)
+├─→ Local LLM Analysis (${AGENT_KB_HOME:-$HOME/Agent-KB}/intelligent_summarizer.py)
 │   ├─ Context understanding
 │   ├─ Pattern extraction
 │   ├─ Insight synthesis
