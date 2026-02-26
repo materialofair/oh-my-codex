@@ -1,14 +1,20 @@
 {
-  "generatedAt": "2026-02-23T14:04:40.841Z",
+  "generatedAt": "2026-02-26T01:40:06.541Z",
   "counts": {
-    "skillCount": 86,
+    "skillCount": 87,
     "promptCount": 3,
-    "activeSkillCount": 86,
+    "activeSkillCount": 87,
     "activeAgentCount": 3
   },
   "skills": [
     {
       "name": "agent-kb",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "ai-commenting",
       "category": "utility",
       "status": "active",
       "core": false

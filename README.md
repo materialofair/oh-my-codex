@@ -88,6 +88,7 @@ project_doc_max_bytes = 65536
 
 - **Execution modes**: `autopilot`, `ralph`, `ultrawork`, `ultraqa`, `ultrapilot`, `swarm`, `pipeline`, `ecomode`
 - **Planning & QA**: `plan`, `review`, `analyze`, `tdd`, `code-review`, `security-review`, `build-fix`, `verify`, `eval`
+- **AI-native annotations**: `ai-commenting` builds machine-parseable context tags (`risk`, `deps`, `intent`, `test`) for safer model edits
 - **Role prompt catalog**: `architect`, `planner`, `executor` (installed under `.codex/prompts/`)
 - **Learning & context**: `continuous-learning`, `strategic-compact`, `iterative-retrieval`, `verification-loop`
 - **Native subagent orchestration**: `spawn_agent` + `send_input` + `wait` + `close_agent` patterns across core skills
