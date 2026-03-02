@@ -1,5 +1,6 @@
 /* eslint-disable no-useless-escape */
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 
 function stripManagedBlock(content, startMarker, endMarker) {
@@ -64,13 +65,26 @@ function buildManagedBlock(root, options = {}) {
   const stateServer = path.join(root, 'src', 'mcp', 'state-server.js').replace(/\\/g, '\\\\').replace(/"/g, '\\"');
   const memoryServer = path.join(root, 'src', 'mcp', 'memory-server.js').replace(/\\/g, '\\\\').replace(/"/g, '\\"');
   const traceServer = path.join(root, 'src', 'mcp', 'trace-server.js').replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+  const skillsDir = (options.skillsDir || path.join(os.homedir(), '.codex', 'skills'))
+    .replace(/\\/g, '\\\\')
+    .replace(/"/g, '\\"');
   const includeContext7 = options.enableContext7 === true;
   const includeOpenaiDocs = options.includeOpenaiDocs !== false;
+  const includeSkillsServer = options.includeSkillsServer !== false;
 
   const lines = [
     '# ============================================================',
     '# oh-my-codex managed block',
     '# ============================================================',
+    ...(includeSkillsServer
+      ? [
+        '[mcp_servers.skills]',
+        'command = "npx"',
+        `args = ["universal-skills", "mcp", "--skill-dir", "${skillsDir}"]`,
+        'enabled = true',
+        '',
+      ]
+      : []),
     '[mcp_servers.omcodex_state]',
     'command = "node"',
     `args = ["${stateServer}"]`,
@@ -105,6 +119,27 @@ function hasSection(config, sectionName) {
   return pattern.test(config);
 }
 
+function stripLegacySkillsSection(config) {
+  const lines = config.split(/\r?\n/);
+  const start = lines.findIndex((line) => /^\s*\[mcp_servers\.skills\]\s*$/.test(line));
+  if (start < 0) return config;
+
+  let end = lines.length;
+  for (let i = start + 1; i < lines.length; i += 1) {
+    if (/^\s*\[[^\]]+\]\s*$/.test(lines[i])) {
+      end = i;
+      break;
+    }
+  }
+
+  const section = lines.slice(start, end).join('\n');
+  const isLegacyUniversalSkills = section.includes('universal-skills') && !section.includes('--skill-dir');
+  if (!isLegacyUniversalSkills) return config;
+
+  lines.splice(start, end - start);
+  return lines.join('\n').trim();
+}
+
 function mergeConfig(configFile, root, options = {}) {
   const dir = path.dirname(configFile);
   fs.mkdirSync(dir, { recursive: true });
@@ -113,10 +148,12 @@ function mergeConfig(configFile, root, options = {}) {
   const endMarker = '# end oh-my-codex managed block';
   const existing = fs.existsSync(configFile) ? fs.readFileSync(configFile, 'utf8') : '';
   let next = stripManagedBlock(existing, startMarker, endMarker).trim();
+  next = stripLegacySkillsSection(next);
   next = upsertFeatureFlags(next);
 
   const managed = buildManagedBlock(root, {
     ...options,
+    includeSkillsServer: !hasSection(next, 'mcp_servers.skills'),
     includeOpenaiDocs: !hasSection(next, 'mcp_servers.openaiDeveloperDocs'),
     includeContext7Server: !hasSection(next, 'mcp_servers.context7'),
   });

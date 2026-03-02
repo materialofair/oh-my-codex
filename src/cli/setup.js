@@ -166,7 +166,10 @@ async function setup(options = {}) {
 
   console.log('[5/6] Merging config.toml...');
   if (options.installConfig !== false && !options.dryRun) {
-    mergeConfig(configPath, root, { enableContext7: options.enableContext7 });
+    mergeConfig(configPath, root, {
+      enableContext7: options.enableContext7,
+      skillsDir: skillsDest,
+    });
   }
   if (options.installConfig !== false) {
     const label = options.dryRun ? 'Would update' : 'Updated';
