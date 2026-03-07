@@ -149,6 +149,42 @@ npm run eval:skills
 
 ---
 
+## Codex AI 测试系统
+
+仓库现在提供了一个更贴近 Codex 实际使用方式的测试工作流。代码写完后，可以直接：
+
+```bash
+omcodex test detect-stack
+omcodex test changed
+omcodex test analyze src/router/skill-router.js
+omcodex test gen src/router/skill-router.js
+```
+
+这条路径的目标是让 Codex 像测试工程师一样工作：
+
+- 识别项目技术栈
+- 自动发现这次改动的代码文件
+- 分析改动文件风险
+- 生成测试计划
+- 生成验收清单和回归清单
+- 产出 Codex 可直接执行的测试 playbook
+
+生成物会写到 `.omcodex/testing/<target>/`。
+
+对于 `oh-my-codex` 仓库自身，内部 harness 仍然保留：
+
+```bash
+omcodex test llm all
+omcodex test llm skills --skill-path .codex/skills/skill-tester
+omcodex test llm router --cases tests/llm/router-cases.json
+omcodex test llm prompts --cases tests/llm/prompt-contract-cases.json
+omcodex test llm workflow
+```
+
+这套实现借鉴了 `oh-my-claudecode` 的分层思路，但不会照搬 Claude 的 plugin/HUD/拦截式运行时假设；在 `oh-my-codex` 里，重点是让 Codex 在实现后自动补测试，同时用内部 harness 保护 skill 治理、路由回归、role prompt 契约和 `team`/`notify` 工作流。详见 `docs/AI_TESTING.md` 和 `docs/LLM_TESTING.md`。
+
+---
+
 
 ## 快速开始
 

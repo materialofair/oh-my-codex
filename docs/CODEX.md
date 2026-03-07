@@ -131,3 +131,27 @@ If a skill doesn’t seem to activate:
   - `omcodex route "fix auth lint + tests"`
 - Start team state with auto phase advancement:
   - `omcodex team start "ship oauth login" --auto`
+- Run Codex-native smart testing after code changes:
+  - `omcodex test detect-stack`
+  - `omcodex test changed`
+  - `omcodex test analyze src/router/skill-router.js`
+  - `omcodex test gen src/router/skill-router.js`
+- Run the internal repository harness:
+  - `omcodex test llm all`
+  - `omcodex test llm router --cases tests/llm/router-cases.json`
+  - `omcodex test llm prompts --cases tests/llm/prompt-contract-cases.json`
+  - `omcodex test llm workflow`
+
+## LLM Testing
+
+The Codex adaptation does not clone the Claude-side testing runtime directly.
+
+Instead, it does two things:
+
+- it helps Codex generate stronger tests for newly written code
+- `SKILL.md` governance and quality
+- skill routing regression fixtures
+- role prompt contracts
+- workflow surfaces like `team` and `notify`
+
+Detailed usage and design notes live in `docs/AI_TESTING.md` and `docs/LLM_TESTING.md`.

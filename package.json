@@ -29,6 +29,13 @@
     "governance:skills": "./scripts/check-skill-governance.sh",
     "governance:skills:llm": "node scripts/check-skill-llm-governance.js --mode=auto",
     "eval:skills": "node scripts/eval-skills.js",
+    "test:llm": "node bin/omcodex.js test llm all --router-cases tests/llm/router-cases.json",
+    "test:llm:router": "node bin/omcodex.js test llm router --cases tests/llm/router-cases.json",
+    "test:llm:prompts": "node bin/omcodex.js test llm prompts --cases tests/llm/prompt-contract-cases.json",
+    "test:llm:workflow": "node bin/omcodex.js test llm workflow",
+    "test:ai:detect-stack": "node bin/omcodex.js test detect-stack",
+    "test:ai:changed": "node bin/omcodex.js test changed --limit 2",
+    "test:ai:sample": "node bin/omcodex.js test gen src/router/skill-router.js",
     "test": "npm run governance:skills && npm run governance:skills:llm && npm run catalog:generate && npm run eval:skills && node bin/omcodex.js doctor",
     "pack:dry-run": "npm pack --dry-run",
     "prepublishOnly": "npm test"

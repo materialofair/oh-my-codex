@@ -43,7 +43,7 @@ A task is complete only when all are true:
 - Do not add single-use abstractions unless necessary.
 - Do not claim completion without fresh verification output.
 - Do not stop at “partially done” unless hard-blocked by impossible constraints.
-- Plan files in `.omcodex/plans/` are read-only.
+- Plan files in `.omx/plans/` are read-only.
 
 ## Ambiguity Handling (Explore-First)
 

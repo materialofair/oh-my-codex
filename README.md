@@ -173,6 +173,42 @@ See `docs/SKILL_GOVERNANCE.md` for policy, blockers, and debt tracking.
 
 ---
 
+## Codex AI Testing
+
+`oh-my-codex` now ships a Codex-native testing workflow for code that Codex just wrote:
+
+```bash
+omcodex test detect-stack
+omcodex test changed
+omcodex test analyze src/router/skill-router.js
+omcodex test gen src/router/skill-router.js
+```
+
+This is the primary path when you want Codex to:
+
+- inspect the repo stack
+- auto-discover changed code files
+- analyze a changed file
+- generate a test plan
+- generate acceptance and regression checklists
+- produce a testing playbook before writing or updating tests
+
+Generated artifacts are written under `.omcodex/testing/<target>/`.
+
+For `oh-my-codex` itself, the internal harness is still available:
+
+```bash
+omcodex test llm all
+omcodex test llm skills --skill-path .codex/skills/skill-tester
+omcodex test llm router --cases tests/llm/router-cases.json
+omcodex test llm prompts --cases tests/llm/prompt-contract-cases.json
+omcodex test llm workflow
+```
+
+This is intentionally different from `oh-my-claudecode`: the center of gravity here is not external prompt evals, but letting Codex act like a test engineer after implementation. See `docs/AI_TESTING.md` and `docs/LLM_TESTING.md`.
+
+---
+
 
 ## Quick Start
 

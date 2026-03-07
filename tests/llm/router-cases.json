@@ -1,0 +1,29 @@
+[
+  {
+    "id": "plan_api",
+    "query": "Plan a scalable API architecture for a new billing service",
+    "expectedTopSkill": "plan",
+    "expectedAnySkills": ["backend-patterns"],
+    "forbiddenSkills": ["frontend-ui-ux"],
+    "minConfidence": 0.4
+  },
+  {
+    "id": "review_pr",
+    "query": "Please review this pull request for regressions and risky changes",
+    "expectedTopSkill": "code-review",
+    "minConfidence": 0.3
+  },
+  {
+    "id": "fix_build",
+    "query": "Fix the build error, lint failures, and type errors in auth flow",
+    "expectedTopSkill": "build-fix",
+    "minConfidence": 0.4
+  },
+  {
+    "id": "implement_secure_feature",
+    "query": "Implement OAuth login with tests and verify the auth flow is safe",
+    "expectedAnySkills": ["security-review", "autopilot"],
+    "forbiddenSkills": ["frontend-ui-ux"],
+    "minConfidence": 0.4
+  }
+]

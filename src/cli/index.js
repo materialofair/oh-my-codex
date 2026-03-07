@@ -4,6 +4,7 @@ const { doctor } = require('./doctor');
 const { team } = require('./team');
 const { notify } = require('./notify');
 const { route } = require('./route');
+const { test } = require('./test');
 
 const HELP = `oh-my-codex CLI (omcodex)
 
@@ -16,6 +17,11 @@ Usage:
   omcodex team cancel
   omcodex team clear
   omcodex route "<task>" [--limit 5] [--json]
+  omcodex test detect-stack [--json]
+  omcodex test analyze <file> [--json]
+  omcodex test changed [--limit <n>] [--out-dir <dir>] [--json]
+  omcodex test gen <file> [--out-dir <dir>] [--json]
+  omcodex test llm <all|skills|router|prompts|workflow> [options]
   omcodex notify init|status|validate|test [event]
   omcodex help
 `;
@@ -77,6 +83,11 @@ async function main(args) {
 
   if (command === 'route') {
     await route(args.slice(1));
+    return;
+  }
+
+  if (command === 'test') {
+    await test(args.slice(1));
     return;
   }
 
