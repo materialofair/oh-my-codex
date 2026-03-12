@@ -1,18 +1,12 @@
 {
-  "generatedAt": "2026-02-26T02:41:53.362Z",
+  "generatedAt": "2026-03-12T09:57:44.876Z",
   "counts": {
-    "skillCount": 87,
+    "skillCount": 86,
     "promptCount": 3,
-    "activeSkillCount": 87,
+    "activeSkillCount": 86,
     "activeAgentCount": 3
   },
   "skills": [
-    {
-      "name": "agent-kb",
-      "category": "utility",
-      "status": "active",
-      "core": false
-    },
     {
       "name": "ai-commenting",
       "category": "utility",
@@ -320,6 +314,12 @@
       "core": false
     },
     {
+      "name": "quick-init-project",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
       "name": "ralph",
       "category": "execution",
       "status": "active",
@@ -434,18 +434,6 @@
       "core": true
     },
     {
-      "name": "task-kb-lookup",
-      "category": "utility",
-      "status": "active",
-      "core": false
-    },
-    {
-      "name": "task-kb-record",
-      "category": "utility",
-      "status": "active",
-      "core": false
-    },
-    {
       "name": "tdd",
       "category": "shortcut",
       "status": "active",
@@ -465,6 +453,12 @@
     },
     {
       "name": "test-coverage",
+      "category": "utility",
+      "status": "active",
+      "core": false
+    },
+    {
+      "name": "test-gen",
       "category": "utility",
       "status": "active",
       "core": false

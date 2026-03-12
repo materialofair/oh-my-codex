@@ -1,0 +1,7 @@
+{
+  "goal": "Add refresh-token rotation for OAuth login",
+  "scope": ["src/auth", "tests/auth"],
+  "risk_level": "high",
+  "test_layers": ["unit", "integration"],
+  "done_definition": "All auth tests pass and no token reuse regression"
+}

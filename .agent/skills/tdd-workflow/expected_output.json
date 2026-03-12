@@ -1,0 +1,6 @@
+{
+  "status": "complete",
+  "promise": "[PROMISE:TDD_WORKFLOW_COMPLETE]",
+  "phases": ["scope", "red", "green", "refactor", "verify"],
+  "artifacts": ["tests added", "implementation diff", "verification results"]
+}

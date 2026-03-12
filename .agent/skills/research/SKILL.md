@@ -1,526 +1,256 @@
 ---
 name: research
-description: Orchestrate parallel scientist agents for comprehensive research with AUTO mode
+description: Use this skill for multi-stage, evidence-based research with parallel investigation, source ranking, verification, and synthesis.
 argument-hint: <research goal>
+version: 0.3.0
 ---
 
 # Research Skill
 
+> Codex invocation: use `$research ...` or `research: ...`
+
+Orchestrate parallel scientist agents for comprehensive, citation-backed research.
+
+## Capabilities
+
+- Decompose broad questions into independent research stages.
+- Run parallel investigations with bounded concurrency.
+- Rank and filter sources by authority and recency.
+- Cross-validate findings and resolve contradictions.
+- Generate reproducible report artifacts with evidence trails.
+
+## Input Requirements
+
+- `goal` (required): research question or decision to support.
+- `scope` (required): domain/system/time window.
+- `deliverable` (required): summary, comparison, recommendation, or deep report.
+- `constraints` (optional): budget, risk tolerance, compliance context.
+- `deadline` (optional): timebox and required depth.
+
+## How to Use
+
+```text
+$research Compare OAuth token rotation strategies for Node backends
+$research AUTO: Analyze auth failure patterns in this codebase
+$research status
+$research resume
+$research list
+$research report <session-id>
+```
 
 ## Native Subagent Protocol (Codex)
 
 Codex supports native subagents. Delegate with `spawn_agent`, coordinate with `send_input`, collect via `wait`, and clean up with `close_agent`.
 
-Execution preference:
-1. Use native subagents first for independent workstreams (parallel when possible).
-2. Merge results in main thread and run final verification.
-3. Fallback only when delegation is blocked: use the `[ANALYST]`/`[ARCHITECT]`/`[EXECUTOR]`/`[REVIEWER]` structure in a single response.
-
 Minimal orchestration pattern:
+
 ```text
 spawn_agent -> send_input (optional) -> wait -> close_agent
 ```
 
-> Codex invocation: use `$research ...` or `research: ...`
+Fallback: if delegation is unavailable, execute stages sequentially in one thread.
 
+## Research Operating Rules
 
-Orchestrate parallel scientist agents for comprehensive research workflows with optional AUTO mode for fully autonomous execution.
+1. Retrieval over memory: prefer repository facts and authoritative external sources.
+2. Primary sources first: official docs, standards, papers, vendor references.
+3. Date awareness: for unstable topics, verify publication/update dates.
+4. Evidence minimum: each finding must include at least one source and one artifact.
+5. Contradiction handling: unresolved conflicts must be surfaced, not hidden.
 
-## Overview
+## Source Quality Rubric
 
-Research is a multi-stage workflow that decomposes complex research goals into parallel investigations:
+Priority order:
 
-1. **Decomposition** - Break research goal into independent stages/hypotheses
-2. **Execution** - Run parallel scientist agents on each stage
-3. **Verification** - Cross-validate findings, check consistency
-4. **Synthesis** - Aggregate results into comprehensive report
+1. Official documentation/specifications
+2. Peer-reviewed papers / standards bodies
+3. Maintainer-authored technical references
+4. High-quality practitioner analysis (only when primary sources are insufficient)
 
-## Usage Examples
+For each citation, capture:
 
-```
-$research <goal>                    # Standard research with user checkpoints
-$research AUTO: <goal>              # Fully autonomous until complete
-$research status                    # Check current research session status
-$research resume                    # Resume interrupted research session
-$research list                      # List all research sessions
-$research report <session-id>       # Generate report for session
-```
+- URL
+- source type
+- publication/update date
+- relevance note
 
-### Quick Examples
+## Workflow
 
-```
-$research What are the performance characteristics of different sorting algorithms?
-$research AUTO: Analyze authentication patterns in this codebase
-$research How does the error handling work across the API layer?
-```
+### Stage 1: Decomposition
 
-## Research Protocol
-
-### Stage Decomposition Pattern
-
-When given a research goal, decompose into 3-7 independent stages:
+Break goal into 3-7 independent stages:
 
 ```markdown
 ## Research Decomposition
 
-**Goal:** <original research goal>
+Goal: <original goal>
 
-### Stage 1: <stage-name>
-- **Focus:** What this stage investigates
-- **Hypothesis:** Expected finding (if applicable)
-- **Scope:** Files/areas to examine
-- **Tier:** LOW | MEDIUM | HIGH
-
-### Stage 2: <stage-name>
-...
+### Stage N: <name>
+- Focus: <what this stage investigates>
+- Scope: <files/systems/sources>
+- Expected output: <artifact>
+- Tier: LOW | MEDIUM | HIGH
 ```
 
-### Parallel Scientist Invocation
+### Stage 2: Parallel Execution
 
-Run independent stages in parallel using role handoffs:
+Run independent stages in parallel (max 5 concurrent scientists).
 
-```
-// Stage 1 - Simple data gathering
-[SCIENTIST-LOW | haiku] "[RESEARCH_STAGE:1] Investigate..."
+Tier guidance:
 
-// Stage 2 - Standard analysis
-[SCIENTIST | sonnet] "[RESEARCH_STAGE:2] Analyze..."
+- `LOW`: enumeration/counting/simple extraction
+- `MEDIUM`: pattern analysis/comparison/synthesis
+- `HIGH`: tradeoff reasoning/architecture/security implications
 
-// Stage 3 - Complex reasoning
-[SCIENTIST-HIGH | opus] "[RESEARCH_STAGE:3] Deep analysis of..."
-```
+If stages > 5, execute in batches.
 
-### Smart Model Routing
+### Stage 3: Verification
 
-**CRITICAL: Always pass `model` parameter explicitly!**
+Cross-check for:
 
-| Task Complexity | Agent | Model | Use For |
-|-----------------|-------|-------|---------|
-| Data gathering | `scientist-low` | haiku | File enumeration, pattern counting, simple lookups |
-| Standard analysis | `scientist` | sonnet | Code analysis, pattern detection, documentation review |
-| Complex reasoning | `scientist-high` | opus | Architecture analysis, cross-cutting concerns, hypothesis validation |
+1. Contradictions between stage findings
+2. Missing dependencies or blind spots
+3. Weak evidence or outdated sources
+4. Overstated confidence
 
-### Routing Decision Guide
+Verification output must be one of:
 
-| Research Task | Tier | Example Prompt |
-|---------------|------|----------------|
-| "Count occurrences of X" | LOW | "Count all usages of useState hook" |
-| "Find all files matching Y" | LOW | "List all test files in the project" |
-| "Analyze pattern Z" | MEDIUM | "Analyze error handling patterns in API routes" |
-| "Document how W works" | MEDIUM | "Document the authentication flow" |
-| "Explain why X happens" | HIGH | "Explain why race conditions occur in the cache layer" |
-| "Compare approaches A vs B" | HIGH | "Compare Redux vs Context for state management here" |
+- `[VERIFIED]`
+- `[CONFLICTS:<list>]`
 
-### Verification Loop
+### Stage 4: Synthesis
 
-After parallel execution completes, verify findings:
+Produce final report with:
 
-```
-// Cross-validation stage
-[SCIENTIST | sonnet]
-[RESEARCH_VERIFICATION]
-Cross-validate these findings for consistency:
-
-Stage 1 findings: <summary>
-Stage 2 findings: <summary>
-Stage 3 findings: <summary>
-
-Check for:
-1. Contradictions between stages
-2. Missing connections
-3. Gaps in coverage
-4. Evidence quality
-
-Output: [VERIFIED] or [CONFLICTS:<list>]
-```
+- executive summary
+- key findings with confidence
+- options/tradeoffs
+- recommendations
+- limitations and open questions
 
 ## AUTO Mode
 
-AUTO mode runs the complete research workflow autonomously with loop control.
+AUTO runs decomposition -> execution -> verification -> synthesis continuously.
 
-### Loop Control Protocol
+Loop control:
 
-```
-[RESEARCH + AUTO - ITERATION {{ITERATION}}/{{MAX}}]
+- `maxIterations`: 10 (default)
+- stop on completion promise or blocking promise
+- persist state after each stage transition
 
-Your previous attempt did not output the completion promise. Continue working.
+Promise tags:
 
-Current state: {{STATE}}
-Completed stages: {{COMPLETED_STAGES}}
-Pending stages: {{PENDING_STAGES}}
-```
+- `[PROMISE:RESEARCH_COMPLETE]`
+- `[PROMISE:RESEARCH_BLOCKED]`
 
-### Promise Tags
+## Session State
 
-| Tag | Meaning | When to Use |
-|-----|---------|-------------|
-| `[PROMISE:RESEARCH_COMPLETE]` | Research finished successfully | All stages done, verified, report generated |
-| `[PROMISE:RESEARCH_BLOCKED]` | Cannot proceed | Missing data, access issues, circular dependency |
+Directory:
 
-### AUTO Mode Rules
-
-1. **Max Iterations:** 10 (configurable)
-2. **Continue until:** Promise tag emitted OR max iterations
-3. **State tracking:** Persist after each stage completion
-4. **Cancellation:** `$cancel` or "stop", "cancel"
-
-### AUTO Mode Example
-
-```
-$research AUTO: Comprehensive security analysis of the authentication system
-
-[Decomposition]
-- Stage 1 (LOW): Enumerate auth-related files
-- Stage 2 (MEDIUM): Analyze token handling
-- Stage 3 (MEDIUM): Review session management
-- Stage 4 (HIGH): Identify vulnerability patterns
-- Stage 5 (MEDIUM): Document security controls
-
-[Execution - Parallel]
-Firing stages 1-3 in parallel...
-Firing stages 4-5 after dependencies complete...
-
-[Verification]
-Cross-validating findings...
-
-[Synthesis]
-Generating report...
-
-[PROMISE:RESEARCH_COMPLETE]
-```
-
-## Parallel Execution Patterns
-
-### Independent Dataset Analysis (Parallel)
-
-When stages analyze different data sources:
-
-```
-// All fire simultaneously
-[SCIENTIST-LOW | haiku] "[STAGE:1] Analyze src/api/..."
-[SCIENTIST-LOW | haiku] "[STAGE:2] Analyze src/utils/..."
-[SCIENTIST-LOW | haiku] "[STAGE:3] Analyze src/components/..."
-```
-
-### Hypothesis Battery (Parallel)
-
-When testing multiple hypotheses:
-
-```
-// Test hypotheses simultaneously
-[SCIENTIST | sonnet] "[HYPOTHESIS:A] Test if caching improves..."
-[SCIENTIST | sonnet] "[HYPOTHESIS:B] Test if batching reduces..."
-[SCIENTIST | sonnet] "[HYPOTHESIS:C] Test if lazy loading helps..."
-```
-
-### Cross-Validation (Sequential)
-
-When verification depends on all findings:
-
-```
-// Wait for all parallel stages
-[stages complete]
-
-// Then sequential verification
-[SCIENTIST-HIGH | opus]
-[CROSS_VALIDATION]
-Validate consistency across all findings:
-- Finding 1: ...
-- Finding 2: ...
-- Finding 3: ...
-```
-
-### Concurrency Limit
-
-**Maximum 5 concurrent scientist agents** to prevent resource exhaustion.
-
-If more than 5 stages, batch them:
-```
-Batch 1: Stages 1-5 (parallel)
-[wait for completion]
-Batch 2: Stages 6-7 (parallel)
-```
-
-## Session Management
-
-### Directory Structure
-
-```
+```text
 .omc/research/{session-id}/
-  state.json              # Session state and progress
-  stages/
-    stage-1.md            # Stage 1 findings
-    stage-2.md            # Stage 2 findings
-    ...
-  findings/
-    raw/                  # Raw findings from scientists
-    verified/             # Post-verification findings
-  figures/
-    figure-1.png          # Generated visualizations
-    ...
-  report.md               # Final synthesized report
+  state.json
+  stages/stage-*.md
+  findings/raw/
+  findings/verified/
+  report.md
 ```
 
-### State File Format
+`state.json` minimum contract:
 
 ```json
 {
-  "id": "research-20240115-abc123",
-  "goal": "Original research goal",
-  "status": "in_progress | complete | blocked | cancelled",
-  "mode": "standard | auto",
-  "iteration": 3,
+  "id": "research-<timestamp>-<id>",
+  "goal": "",
+  "status": "pending|in_progress|complete|blocked|cancelled",
+  "mode": "standard|auto",
+  "iteration": 1,
   "maxIterations": 10,
-  "stages": [
-    {
-      "id": 1,
-      "name": "Stage name",
-      "tier": "LOW | MEDIUM | HIGH",
-      "status": "pending | running | complete | failed",
-      "startedAt": "ISO timestamp",
-      "completedAt": "ISO timestamp",
-      "findingsFile": "stages/stage-1.md"
-    }
-  ],
+  "stages": [],
   "verification": {
-    "status": "pending | passed | failed",
-    "conflicts": [],
-    "completedAt": "ISO timestamp"
+    "status": "pending|passed|failed",
+    "conflicts": []
   },
-  "createdAt": "ISO timestamp",
-  "updatedAt": "ISO timestamp"
+  "updatedAt": "ISO-8601"
 }
 ```
 
-### Session Commands
+## Structured Evidence Tags
 
-| Command | Action |
-|---------|--------|
-| `$research status` | Show current session progress |
-| `$research resume` | Resume most recent interrupted session |
-| `$research resume <session-id>` | Resume specific session |
-| `$research list` | List all sessions with status |
-| `$research report <session-id>` | Generate/regenerate report |
-| `$research cancel` | Cancel current session (preserves state) |
+Use structured tags in stage outputs:
 
-## Tag Extraction
-
-Scientists use structured tags for findings. Extract them with these patterns:
-
-### Finding Tags
-
-```
+```text
 [FINDING:<id>] <title>
-<evidence and analysis>
+<analysis>
 [/FINDING]
 
 [EVIDENCE:<finding-id>]
-- File: <path>
-- Lines: <range>
-- Content: <relevant code/text>
+- Source: <url>
+- File: <path or n/a>
+- Date: <YYYY-MM-DD>
+- Note: <why this evidence supports finding>
 [/EVIDENCE]
 
-[CONFIDENCE:<level>] # HIGH | MEDIUM | LOW
-<reasoning for confidence level>
+[CONFIDENCE:HIGH|MEDIUM|LOW]
+<confidence rationale>
 ```
 
-### Extraction Regex Patterns
+Quality gates:
 
-```javascript
-// Finding extraction
-const findingPattern = /\[FINDING:(\w+)\]\s*(.*?)\n([\s\S]*?)\[\/FINDING\]/g;
+- every `[FINDING]` must include `[EVIDENCE]`
+- every finding must include `[CONFIDENCE]`
+- unsupported claims must be downgraded or removed
 
-// Evidence extraction
-const evidencePattern = /\[EVIDENCE:(\w+)\]([\s\S]*?)\[\/EVIDENCE\]/g;
-
-// Confidence extraction
-const confidencePattern = /\[CONFIDENCE:(HIGH|MEDIUM|LOW)\]\s*(.*)/g;
-
-// Stage completion
-const stageCompletePattern = /\[STAGE_COMPLETE:(\d+)\]/;
-
-// Verification result
-const verificationPattern = /\[(VERIFIED|CONFLICTS):?(.*?)\]/;
-```
-
-### Evidence Window
-
-When extracting evidence, include context window:
-
-```
-[EVIDENCE:F1]
-- File: /src/auth/login.ts
-- Lines: 45-52 (context: 40-57)
-- Content:
-  ```typescript
-  // Lines 45-52 with 5 lines context above/below
-  ```
-[/EVIDENCE]
-```
-
-### Quality Validation
-
-Findings must meet quality threshold:
-
-| Quality Check | Requirement |
-|---------------|-------------|
-| Evidence present | At least 1 [EVIDENCE] per [FINDING] |
-| Confidence stated | Each finding has [CONFIDENCE] |
-| Source cited | File paths are absolute and valid |
-| Reproducible | Another agent could verify |
-
-## Report Generation
-
-### Report Template
+## Report Template
 
 ```markdown
-# Research Report: {{GOAL}}
-
-**Session ID:** {{SESSION_ID}}
-**Date:** {{DATE}}
-**Status:** {{STATUS}}
+# Research Report: <goal>
 
 ## Executive Summary
-
-{{2-3 paragraph summary of key findings}}
+<2-3 paragraphs>
 
 ## Methodology
+- decomposition strategy
+- source selection criteria
+- verification approach
 
-### Research Stages
+## Findings
+### Finding 1: <title>
+Confidence: <HIGH|MEDIUM|LOW>
+Evidence: <linked citations>
 
-| Stage | Focus | Tier | Status |
-|-------|-------|------|--------|
-{{STAGES_TABLE}}
-
-### Approach
-
-{{Description of decomposition rationale and execution strategy}}
-
-## Key Findings
-
-### Finding 1: {{TITLE}}
-
-**Confidence:** {{HIGH|MEDIUM|LOW}}
-
-{{Detailed finding with evidence}}
-
-#### Evidence
-
-{{Embedded evidence blocks}}
-
-### Finding 2: {{TITLE}}
-...
-
-## Visualizations
-
-{{FIGURES}}
-
-## Cross-Validation Results
-
-{{Verification summary, any conflicts resolved}}
-
-## Limitations
-
-- {{Limitation 1}}
-- {{Limitation 2}}
-- {{Areas not covered and why}}
+## Conflicts and Resolutions
+<resolved/unresolved contradictions>
 
 ## Recommendations
+1. <action>
+2. <action>
 
-1. {{Actionable recommendation}}
-2. {{Actionable recommendation}}
-
-## Appendix
-
-### Raw Data
-
-{{Links to raw findings files}}
-
-### Session State
-
-{{Link to state.json}}
+## Limitations
+- <gap>
+- <gap>
 ```
 
-### Figure Embedding Protocol
+## Session Commands
 
-Scientists generate visualizations using this marker:
+- `$research status`: show current session state.
+- `$research resume [session-id]`: continue interrupted research.
+- `$research list`: list saved sessions.
+- `$research report <session-id>`: regenerate report from saved stage files.
+- `$research cancel`: stop and persist current state.
 
-```
-[FIGURE:path/to/figure.png]
-Caption: Description of what the figure shows
-Alt: Accessibility description
-[/FIGURE]
-```
+## Cancellation and Resume
 
-Report generator embeds figures:
+Cancellation keeps `.omc/research/{session-id}/` intact.
 
-```markdown
-## Visualizations
+Resume loads `state.json` and continues pending stages only.
 
-![Figure 1: Description](figures/figure-1.png)
-*Caption: Description of what the figure shows*
+## Failure Handling
 
-![Figure 2: Description](figures/figure-2.png)
-*Caption: Description of what the figure shows*
-```
+Stop and emit `[PROMISE:RESEARCH_BLOCKED]` when:
 
-### Figure Types
+- required data is inaccessible
+- source quality is below minimum and cannot be improved
+- contradictions cannot be resolved within iteration budget
 
-| Type | Use For | Generated By |
-|------|---------|--------------|
-| Architecture diagram | System structure | scientist-high |
-| Flow chart | Process flows | scientist |
-| Dependency graph | Module relationships | scientist |
-| Timeline | Sequence of events | scientist |
-| Comparison table | A vs B analysis | scientist |
-
-## Configuration
-
-Optional settings in `.codex/settings.json`:
-
-```json
-{
-  "omc": {
-    "research": {
-      "maxIterations": 10,
-      "maxConcurrentScientists": 5,
-      "defaultTier": "MEDIUM",
-      "autoVerify": true,
-      "generateFigures": true,
-      "evidenceContextLines": 5
-    }
-  }
-}
-```
-
-## Cancellation
-
-```
-$cancel
-```
-
-Or say: "stop research", "cancel research", "abort"
-
-Progress is preserved in `.omc/research/{session-id}/` for resume.
-
-## Troubleshooting
-
-**Stuck in verification loop?**
-- Check for conflicting findings between stages
-- Review state.json for specific conflicts
-- May need to re-run specific stages with different approach
-
-**Scientists returning low-quality findings?**
-- Check tier assignment - complex analysis needs HIGH tier
-- Ensure prompts include clear scope and expected output format
-- Review if research goal is too broad
-
-**AUTO mode exhausted iterations?**
-- Review state to see where it's stuck
-- Check if goal is achievable with available data
-- Consider breaking into smaller research sessions
-
-**Missing figures in report?**
-- Verify figures/ directory exists
-- Check [FIGURE:] tags in findings
-- Ensure paths are relative to session directory
+Always include blocker details and recommended next action.

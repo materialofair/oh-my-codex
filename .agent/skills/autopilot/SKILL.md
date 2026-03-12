@@ -1,24 +1,181 @@
 ---
 name: autopilot
-description: Full autonomous execution from idea to working code
+description: Use this skill to run end-to-end delivery from requirement to verified code with gated phases, state tracking, and retry limits.
+version: 0.3.0
 ---
 
 # Autopilot Skill
 
 > Codex invocation: use `$autopilot ...` or `autopilot: ...`
 
+Run full autonomous execution from idea to verified code while keeping checkpoints, evidence, and rollback-safe behavior.
 
-Full autonomous execution from idea to working code.
+## Capabilities
+
+- Turn vague requests into a concrete implementation spec.
+- Produce a minimal, reversible plan before code edits.
+- Implement with parallel workers when tasks are independent.
+- Run verification loops (build/lint/type/test/security checks).
+- Emit machine-readable completion/blocking status for resume.
+
+## Input Requirements
+
+Provide as many fields as possible:
+
+- `goal` (required): what must be built/fixed.
+- `scope` (required): files/modules allowed to change.
+- `constraints` (optional): stack, performance, security, deadlines.
+- `done_definition` (required): objective pass criteria.
+- `non_goals` (optional): explicitly out-of-scope items.
+
+If `done_definition` is missing, infer a conservative default:
+
+1. Relevant tests pass.
+2. Build/type/lint pass.
+3. No regression in changed areas.
+
+## How to Use
+
+```text
+$autopilot Add OAuth login with refresh token rotation and tests
+$autopilot Refactor router matching logic with no behavior change
+$autopilot Build a CLI for daily habit tracking (TypeScript + SQLite)
+```
+
+## Operating Principles
+
+1. Start simple: prefer one coordinated agent flow first; parallelize only independent tasks.
+2. Use explicit gates: no phase advances without pass criteria.
+3. Use small diffs: avoid broad refactors unless required by the goal.
+4. Be eval-driven: convert requirements into executable checks early.
+5. Keep evidence: every claim must map to commands/files.
 
 ## Native Subagent Protocol (Codex)
 
 Codex supports native subagents. Delegate with `spawn_agent`, coordinate with `send_input`, collect via `wait`, and clean up with `close_agent`.
 
-### Role Order
-1) Analyst → 2) Architect → 3) Planner → 4) Executor → 5) Reviewer
+Minimal orchestration pattern:
 
-### Required Output Format (every autopilot run)
+```text
+spawn_agent -> send_input (optional) -> wait -> close_agent
 ```
+
+Fallback: if delegation is unavailable, run the same phases in a single-thread execution loop.
+
+## Phase State Machine
+
+State file: `.omc/state/autopilot-state.json`
+
+```json
+{
+  "status": "idle|running|blocked|complete",
+  "phase": "intake|plan|implement|qa|review",
+  "attempt": 1,
+  "maxAttempts": 10,
+  "lastError": "",
+  "artifacts": {
+    "spec": ".omc/autopilot/spec.md",
+    "plan": ".omc/plans/autopilot-impl.md"
+  },
+  "updatedAt": "ISO-8601"
+}
+```
+
+### Phase 0: Intake
+
+Goal: produce a concrete spec from user intent.
+
+Exit criteria:
+
+- Must/Should/Could requirements are explicit.
+- Constraints and assumptions are listed.
+- Done definition is testable.
+
+Output: `.omc/autopilot/spec.md`
+
+### Phase 1: Plan
+
+Goal: create minimal implementation plan with rollback-safe ordering.
+
+Exit criteria:
+
+- Numbered steps with file ownership.
+- Risks + mitigations listed.
+- Verification commands attached per step.
+
+Output: `.omc/plans/autopilot-impl.md`
+
+### Phase 2: Implement
+
+Goal: apply planned changes with smallest correct diff.
+
+Rules:
+
+- Independent tasks may run in parallel (max 3 workers).
+- Shared-file edits stay serialized.
+- Any plan deviation must be logged.
+
+Exit criteria:
+
+- Planned steps done or explicitly deferred with reason.
+- Changed files mapped to requirement IDs.
+
+### Phase 3: QA
+
+Goal: objective validation against done definition.
+
+Recommended sequence:
+
+```bash
+omcodex test changed
+npm run build
+npm run lint
+npm run test
+```
+
+If project uses different scripts, detect and use project-native equivalents.
+
+Exit criteria:
+
+- Required checks pass.
+- Failures either fixed or escalated as blocker.
+
+### Phase 4: Review
+
+Goal: final quality/security/completeness pass.
+
+Checks:
+
+- Functional completeness
+- Security-sensitive changes review
+- Code quality and maintainability
+
+Exit criteria:
+
+- All required checks approved.
+- Remaining risks documented.
+
+## Retry, Stop, and Resume
+
+- `maxAttempts`: 10 full-loop attempts.
+- `maxQaCycles`: 5 QA fix cycles per run.
+- Early stop if same failure repeats 3 times.
+- On stop, emit blocking promise with exact blocker.
+
+Promise tags:
+
+- `[PROMISE:AUTOPILOT_COMPLETE]`
+- `[PROMISE:AUTOPILOT_BLOCKED]`
+
+Resume behavior:
+
+- Reload `.omc/state/autopilot-state.json`.
+- Continue from recorded `phase`.
+- Do not re-run completed phases unless inputs changed.
+
+## Required Output Contract
+
+```text
 [ANALYST]
 - Problem summary
 - Requirements (must/should/could)
@@ -35,188 +192,38 @@ Codex supports native subagents. Delegate with `spawn_agent`, coordinate with `s
 - Risks
 
 [EXECUTOR]
-- Implement according to plan
-- Note any deviations
+- Applied changes
+- Deviations from plan
 
 [REVIEWER]
-- Verify requirements met
-- List tests run / not run
+- Verification result
+- Tests run / not run
 - Remaining risks
-```
 
-## Overview
-
-Autopilot is the ultimate hands-off mode. Give it a brief product idea (2-3 lines) and it handles everything:
-
-1. **Understands** your requirements (Analyst)
-2. **Designs** the technical approach (Architect)
-3. **Plans** the implementation (Critic-validated)
-4. **Builds** with parallel agents (Ralph + Ultrawork)
-5. **Tests** until everything passes (UltraQA)
-6. **Validates** quality and security (Multi-architect review)
-
-## Usage
-
-```
-$autopilot <your idea>
-$ap "A CLI tool that tracks daily habits"
-$autopilot Add dark mode to the app
-```
-
-## Magic Keywords
-
-These phrases auto-activate autopilot:
-- "autopilot", "auto pilot", "autonomous"
-- "build me", "create me", "make me"
-- "full auto", "handle it all"
-- "I want a/an..."
-
-## Phases
-
-### Phase 0: Expansion
-
-**Goal:** Turn vague idea into detailed spec
-
-**Agents:**
-- Analyst (Opus) - Extract requirements
-- Architect (Opus) - Technical specification
-
-**Output:** `.omc/autopilot/spec.md`
-
-### Phase 1: Planning
-
-**Goal:** Create implementation plan from spec
-
-**Agents:**
-- Architect (Opus) - Create plan (direct mode, no interview)
-- Critic (Opus) - Validate plan
-
-**Output:** `.omc/plans/autopilot-impl.md`
-
-### Phase 2: Execution
-
-**Goal:** Implement the plan
-
-**Mode:** Ralph + Ultrawork (persistence + parallelism)
-
-**Agents:**
-- Executor-low (Haiku) - Simple tasks
-- Executor (Sonnet) - Standard tasks
-- Executor-high (Opus) - Complex tasks
-
-### Phase 3: QA
-
-**Goal:** All tests pass
-
-**Mode:** UltraQA
-
-**Cycle:**
-1. Build
-2. Lint
-3. Test
-4. Fix failures
-5. Repeat (max 5 cycles)
-
-### Phase 4: Validation
-
-**Goal:** Multi-perspective approval
-
-**Agents (parallel):**
-- Architect - Functional completeness
-- Security-reviewer - Vulnerability check
-- Code-reviewer - Quality review
-
-**Rule:** All must APPROVE or issues get fixed and re-validated.
-
-## Configuration
-
-Optional settings in `.codex/settings.json`:
-
-```json
-{
-  "omc": {
-    "autopilot": {
-      "maxIterations": 10,
-      "maxQaCycles": 5,
-      "maxValidationRounds": 3,
-      "pauseAfterExpansion": false,
-      "pauseAfterPlanning": false,
-      "skipQa": false,
-      "skipValidation": false
-    }
-  }
-}
+[STATUS]
+- phase: <intake|plan|implement|qa|review>
+- result: <complete|blocked|in_progress>
+- promise: <PROMISE tag>
 ```
 
 ## Cancellation
 
-```
-$cancel
-```
+Cancel with `$cancel` or "stop/cancel/abort".
 
-Or say: "stop", "cancel", "abort"
+On cancellation:
 
-Progress is preserved for resume.
+- Persist current state file.
+- Emit summary of completed phases and next action.
 
-## Resume
+## Completion Cleanup
 
-If autopilot was cancelled or failed, just run `$autopilot` again to resume from where it stopped.
-
-## Examples
-
-**New Project:**
-```
-$autopilot A REST API for a bookstore inventory with CRUD operations
-```
-
-**Feature Addition:**
-```
-$autopilot Add user authentication with JWT tokens
-```
-
-**Enhancement:**
-```
-$ap Add dark mode support with system preference detection
-```
-
-## Best Practices
-
-1. **Be specific about the domain** - "bookstore" not "store"
-2. **Mention key features** - "with CRUD", "with authentication"
-3. **Specify constraints** - "using TypeScript", "with PostgreSQL"
-4. **Let it run** - Don't interrupt unless truly needed
-
-## STATE CLEANUP ON COMPLETION
-
-**IMPORTANT: Delete ALL state files on successful completion**
-
-When autopilot reaches the `complete` phase (all validation passed):
+On successful completion, delete state files:
 
 ```bash
-# Delete autopilot and all sub-mode state files
 rm -f .omc/state/autopilot-state.json
 rm -f .omc/state/ralph-state.json
 rm -f .omc/state/ultrawork-state.json
 rm -f .omc/state/ultraqa-state.json
-rm -f ~/.codex/ralph-state.json
-rm -f ~/.codex/ultrawork-state.json
 ```
 
-This ensures clean state for future sessions.
-
-## Troubleshooting
-
-**Stuck in a phase?**
-- Check TODO list for blocked tasks
-- Review `.omc/autopilot-state.json` for state
-- Cancel and resume if needed
-
-**Validation keeps failing?**
-- Review the specific issues
-- Consider if requirements were too vague
-- Cancel and provide more detail
-
-**QA cycles exhausted?**
-- Same error 3 times = fundamental issue
-- Review the error pattern
-- May need manual intervention
+Keep generated artifacts (`spec.md`, `plan.md`, reports) unless user asks to remove them.

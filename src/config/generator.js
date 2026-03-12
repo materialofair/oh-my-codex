@@ -140,6 +140,33 @@ function stripLegacySkillsSection(config) {
   return lines.join('\n').trim();
 }
 
+function stripSections(config, sectionNames = []) {
+  if (!config || sectionNames.length === 0) return config;
+
+  const escapedNames = sectionNames.map((name) => name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  const sectionPatterns = escapedNames.map((escaped) => new RegExp(`^\\s*\\[${escaped}\\]\\s*$`));
+  const isSectionHeader = (line) => /^\s*\[[^\]]+\]\s*$/.test(line);
+
+  const lines = config.split(/\r?\n/);
+  const nextLines = [];
+
+  for (let i = 0; i < lines.length; i += 1) {
+    const line = lines[i];
+    const shouldStripSection = sectionPatterns.some((pattern) => pattern.test(line));
+    if (!shouldStripSection) {
+      nextLines.push(line);
+      continue;
+    }
+
+    // Skip current section until next TOML section header.
+    while (i + 1 < lines.length && !isSectionHeader(lines[i + 1])) {
+      i += 1;
+    }
+  }
+
+  return nextLines.join('\n').replace(/\n{3,}/g, '\n\n').trim();
+}
+
 function mergeConfig(configFile, root, options = {}) {
   const dir = path.dirname(configFile);
   fs.mkdirSync(dir, { recursive: true });
@@ -149,6 +176,11 @@ function mergeConfig(configFile, root, options = {}) {
   const existing = fs.existsSync(configFile) ? fs.readFileSync(configFile, 'utf8') : '';
   let next = stripManagedBlock(existing, startMarker, endMarker).trim();
   next = stripLegacySkillsSection(next);
+  next = stripSections(next, [
+    'mcp_servers.omcodex_state',
+    'mcp_servers.omcodex_memory',
+    'mcp_servers.omcodex_trace',
+  ]);
   next = upsertFeatureFlags(next);
 
   const managed = buildManagedBlock(root, {

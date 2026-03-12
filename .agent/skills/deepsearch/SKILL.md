@@ -1,56 +1,111 @@
 ---
 name: deepsearch
-description: Thorough codebase search
+description: Use this skill for exhaustive codebase search with query expansion, dependency tracing, and evidence-backed synthesis.
+version: 0.3.0
 ---
 
-# Deep Search Mode
+# Deep Search Skill
 
+> Codex invocation: use `$deepsearch ...` or `deepsearch: ...`
+
+Perform thorough codebase search for a concept, bug surface, API usage, or architectural pattern.
+
+## Capabilities
+
+- Exact and fuzzy term search across large repositories.
+- Query expansion with aliases/synonyms.
+- Import/export and call-path tracing.
+- Grouping results by implementation vs consumers.
+- Structured findings with file+line evidence.
+
+## Input Requirements
+
+- `query` (required): concept/pattern/question.
+- `scope` (optional): directory/module/file globs.
+- `depth` (optional): shallow | standard | exhaustive.
+- `exclude` (optional): vendor/build/generated directories.
+
+## How to Use
+
+```text
+$deepsearch auth token refresh flow
+$deepsearch where retry logic is implemented
+$deepsearch usage of feature flag "enableFastPath" in src/
+```
 
 ## Native Subagent Protocol (Codex)
 
 Codex supports native subagents. Delegate with `spawn_agent`, coordinate with `send_input`, collect via `wait`, and clean up with `close_agent`.
 
-Execution preference:
-1. Use native subagents first for independent workstreams (parallel when possible).
-2. Merge results in main thread and run final verification.
-3. Fallback only when delegation is blocked: use the `[ANALYST]`/`[ARCHITECT]`/`[EXECUTOR]`/`[REVIEWER]` structure in a single response.
-
 Minimal orchestration pattern:
+
 ```text
 spawn_agent -> send_input (optional) -> wait -> close_agent
 ```
 
-> Codex invocation: use `$deepsearch ...` or `deepsearch: ...`
+Fallback: run sequentially if delegation is unavailable.
 
+## Search Workflow
 
-[DEEPSEARCH MODE ACTIVATED]
+### 1) Broad Pass
 
-## Objective
+- Search exact term.
+- Search token variants and synonyms.
+- Search common symbol forms (camelCase/snake_case/kebab-case).
 
-Perform thorough search of the codebase for the specified query, pattern, or concept.
+Recommended commands:
 
-## Search Strategy
+```bash
+rg -n --hidden --glob '!node_modules' --glob '!.git' "<query>" .
+rg -n "<alt_term_1>|<alt_term_2>" src tests
+```
 
-1. **Broad Search**
-   - Search for exact matches
-   - Search for related terms and variations
-   - Check common locations (components, utils, services, hooks)
+### 2) Structural Pass
 
-2. **Deep Dive**
-   - Read files with matches
-   - Check imports/exports to find connections
-   - Follow the trail (what imports this? what does this import?)
+- Find definitions first, then call sites.
+- Track imports/exports and transitive consumers.
 
-3. **Synthesize**
-   - Map out where the concept is used
-   - Identify the main implementation
-   - Note related functionality
+Recommended commands:
 
-## Output Format
+```bash
+rg -n "export (function|class|const)|module\.exports" src
+rg -n "import .*<symbol>|require\(.*<symbol>" src tests
+```
 
-- **Primary Locations** (main implementations)
-- **Related Files** (dependencies, consumers)
-- **Usage Patterns** (how it's used across the codebase)
-- **Key Insights** (patterns, conventions, gotchas)
+### 3) Deep Dive
 
-Focus on being comprehensive but concise. Cite file paths and line numbers.
+- Read matched files.
+- Capture neighboring context and intent.
+- Identify entrypoints, side effects, and edge cases.
+
+### 4) Synthesis
+
+Return grouped evidence and confidence.
+
+## Output Contract
+
+- **Primary Locations**: core implementation files (with lines).
+- **Related Files**: dependencies, wrappers, consumers.
+- **Usage Patterns**: consistent/anti patterns in usage.
+- **Key Insights**: design conventions and gotchas.
+- **Confidence**: HIGH/MEDIUM/LOW with rationale.
+
+Include file paths and line numbers for every key claim.
+
+## Completion and Blocking Tags
+
+- `[PROMISE:DEEPSEARCH_COMPLETE]`
+- `[PROMISE:DEEPSEARCH_BLOCKED]`
+
+Blocked reasons include:
+
+- query too vague
+- scope too broad for available budget
+- missing repository access
+
+## Quality Rules
+
+- Prefer `rg` for speed and coverage.
+- Avoid searching generated/build directories unless explicitly requested.
+- Do not claim call flow without reading implementation and consumers.
+- If evidence is weak, lower confidence instead of guessing.

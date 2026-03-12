@@ -1,80 +1,95 @@
 ---
 name: verify
-description: Imported from everything-codex command verify
+description: Use this skill to run deterministic project verification (build, types, lint, tests, security, git status) with mode-based command sets.
+version: 0.3.0
 ---
 
-# Verification Command
+# Verify Skill
 
-
-## Native Subagent Protocol (Codex)
-
-Codex supports native subagents. Delegate with `spawn_agent`, coordinate with `send_input`, collect via `wait`, and clean up with `close_agent`.
-
-Execution preference:
-1. Use native subagents first for independent workstreams (parallel when possible).
-2. Merge results in main thread and run final verification.
-3. Fallback only when delegation is blocked: use the `[ANALYST]`/`[ARCHITECT]`/`[EXECUTOR]`/`[REVIEWER]` structure in a single response.
-
-Minimal orchestration pattern:
-```text
-spawn_agent -> send_input (optional) -> wait -> close_agent
-```
+> Codex invocation: use `$verify [mode]` or `verify: [mode]`
 
 Run comprehensive verification on current codebase state.
 
-## Instructions
+## Capabilities
 
-Execute verification in this exact order:
+- Standardized verification order.
+- Mode-specific command subsets (`quick`, `full`, `pre-commit`, `pre-pr`).
+- Security and debug-log audits.
+- Clear pass/fail report with blockers.
+
+## Input Requirements
+
+- `mode` (optional): `quick` | `full` | `pre-commit` | `pre-pr`.
+- default mode: `full`.
+
+## How to Use
+
+```text
+$verify
+$verify quick
+$verify pre-commit
+$verify pre-pr
+```
+
+## Mode Matrix
+
+1. `quick`: build + typecheck
+2. `full`: build + typecheck + lint + tests + logs + git status
+3. `pre-commit`: typecheck + lint + targeted tests + git status
+4. `pre-pr`: full + security scan
+
+## Verification Order
 
 1. **Build Check**
-   - Run the build command for this project
-   - If it fails, report errors and STOP
+- Run project build command.
+- If it fails, report and stop.
 
 2. **Type Check**
-   - Run TypeScript/type checker
-   - Report all errors with file:line
+- Run type checker (`tsc --noEmit` / equivalent).
 
 3. **Lint Check**
-   - Run linter
-   - Report warnings and errors
+- Run lint command.
 
 4. **Test Suite**
-   - Run all tests
-   - Report pass/fail count
-   - Report coverage percentage
+- If implementation files changed, run `omcodex test changed` first.
+- Run tests (targeted first, then broader if needed).
+- Report pass/fail counts and coverage if available.
 
-5. **Console.log Audit**
-   - Search for console.log in source files
-   - Report locations
+5. **Security Scan** (`pre-pr` + `full` recommended)
 
-6. **Git Status**
-   - Show uncommitted changes
-   - Show files modified since last commit
-
-## Output
-
-Produce a concise verification report:
-
+```bash
+rg -n "sk-[A-Za-z0-9_-]{20,}" --glob '!node_modules' .
+rg -n "api[_-]?key|secret|token\s*=\s*['\"]" --glob '!node_modules' .
 ```
+
+6. **Console Log Audit**
+
+```bash
+rg -n "console\.log|print\(" src tests
+```
+
+7. **Git Status**
+
+```bash
+git status --short
+git diff --name-only
+```
+
+## Output Format
+
+```text
 VERIFICATION: [PASS/FAIL]
 
+Mode:     [quick/full/pre-commit/pre-pr]
 Build:    [OK/FAIL]
 Types:    [OK/X errors]
 Lint:     [OK/X issues]
-Tests:    [X/Y passed, Z% coverage]
-Secrets:  [OK/X found]
-Logs:     [OK/X console.logs]
+Tests:    [X/Y passed, Z% coverage or N/A]
+Security: [OK/X findings]
+Logs:     [OK/X console logs]
+Git:      [clean/dirty]
 
 Ready for PR: [YES/NO]
 ```
 
-If any critical issues, list them with fix suggestions.
-
-## Arguments
-
-$ARGUMENTS can be:
-- `quick` - Only build + types
-- `full` - All checks (default)
-- `pre-commit` - Checks relevant for commits
-- `pre-pr` - Full checks plus security scan
-
+If failed, include blocker list ordered by severity and recommended next commands.

@@ -1,140 +1,139 @@
 ---
 name: verification-loop
-description: Verification workflow with build/type/lint/test/security checks
+description: Use this skill for iterative verify-fix cycles across build, type, lint, test, and security gates until completion or explicit stop conditions.
+version: 0.3.0
 ---
 
 # Verification Loop Skill
 
+> Codex invocation: use `$verification-loop ...` or `verification-loop: ...`
+
+Run repeated verification cycles with bounded retries and clear blocker escalation.
+
+## Capabilities
+
+- Execute ordered quality gates with deterministic stop rules.
+- Detect failure class and route to minimal fix scope.
+- Repeat verify -> diagnose -> fix until pass or budget exhaustion.
+- Produce machine-readable cycle status and blocker details.
+- Support pre-PR hardening with security checks.
+
+## Input Requirements
+
+- `goal` (required): full-quality | tests | build | lint | typecheck | pre-pr.
+- `scope` (optional): changed files/modules only.
+- `max_cycles` (optional): default 5.
+- `max_same_failure` (optional): default 3.
+- `strict_security` (optional): true | false.
+
+## How to Use
+
+```text
+$verification-loop full-quality
+$verification-loop pre-pr
+$verification-loop tests for src/auth/
+```
+
+## Routing Boundary
+
+- Use `$verification-loop` when a single verification pass is not enough and automatic retry/fix cycling is needed.
+- Use `$verify` for one-pass verification snapshot.
+- Use `$test-gen` for adding missing tests after code changes.
 
 ## Native Subagent Protocol (Codex)
 
 Codex supports native subagents. Delegate with `spawn_agent`, coordinate with `send_input`, collect via `wait`, and clean up with `close_agent`.
 
-Execution preference:
-1. Use native subagents first for independent workstreams (parallel when possible).
-2. Merge results in main thread and run final verification.
-3. Fallback only when delegation is blocked: use the `[ANALYST]`/`[ARCHITECT]`/`[EXECUTOR]`/`[REVIEWER]` structure in a single response.
-
 Minimal orchestration pattern:
+
 ```text
 spawn_agent -> send_input (optional) -> wait -> close_agent
 ```
 
-A comprehensive verification system for Codex sessions.
+Fallback: execute the loop sequentially when delegation is unavailable.
 
-## When to Use
+## Command Resolution
 
-Invoke this skill:
-- After completing a feature or significant code change
-- Before creating a PR
-- When you want to ensure quality gates pass
-- After refactoring
+Prefer project-native commands by package manager lockfile detection.
 
-## Verification Phases
+Node defaults:
 
-### Phase 1: Build Verification
+- build: `npm run build`
+- typecheck: `npx tsc --noEmit` (or `npm run typecheck` if defined)
+- lint: `npm run lint`
+- tests: `npm run test`
+
+Security checks:
+
 ```bash
-# Check if project builds
-npm run build 2>&1 | tail -20
-# OR
-pnpm build 2>&1 | tail -20
+rg -n "sk-[A-Za-z0-9_-]{20,}" --glob '!node_modules' .
+rg -n "api[_-]?key|secret|token\s*=\s*['\"]" --glob '!node_modules' .
 ```
 
-If build fails, STOP and fix before continuing.
+Debug log audit:
 
-### Phase 2: Type Check
 ```bash
-# TypeScript projects
-npx tsc --noEmit 2>&1 | head -30
-
-# Python projects
-pyright . 2>&1 | head -30
+rg -n "console\.log|print\(" src tests
 ```
 
-Report all type errors. Fix critical ones before continuing.
+## Cycle Algorithm
 
-### Phase 3: Lint Check
-```bash
-# JavaScript/TypeScript
-npm run lint 2>&1 | head -30
+State file: `.omc/state/verification-loop-state.json`
 
-# Python
-ruff check . 2>&1 | head -30
+Per cycle:
+
+1. run selected quality gates in fixed order
+2. if all pass -> complete
+3. if any fail -> classify failure (build/type/lint/test/security)
+4. apply minimal scoped fix
+5. re-run failed gate first, then dependent gates
+6. record cycle result and repeat
+
+## Stop Conditions
+
+- success: all selected gates pass
+- max cycles reached (`max_cycles`)
+- same failure repeats `max_same_failure` times
+- environment blocker (missing deps/service unavailable)
+
+## Output Contract
+
+```text
+[VERIFICATION-LOOP]
+- goal
+- cycle: <n>/<max_cycles>
+- active gate
+
+[RESULT]
+- build/type/lint/test/security: pass|fail
+- failure class
+- fix applied
+
+[NEXT]
+- recheck command
+- escalation decision
+
+[STATUS]
+- result: <complete|blocked|in_progress>
+- promise: <PROMISE tag>
+- stop_reason: <if blocked>
 ```
 
-### Phase 4: Test Suite
-```bash
-# Run tests with coverage
-npm run test -- --coverage 2>&1 | tail -50
+## Completion and Blocking Tags
 
-# Check coverage threshold
-# Target: 80% minimum
-```
+- `[PROMISE:VERIFICATION_LOOP_COMPLETE]`
+- `[PROMISE:VERIFICATION_LOOP_BLOCKED]`
 
-Report:
-- Total tests: X
-- Passed: X
-- Failed: X
-- Coverage: X%
+## Continuous Mode Guidance
 
-### Phase 5: Security Scan
-```bash
-# Check for secrets
-grep -rn "sk-" --include="*.ts" --include="*.js" . 2>/dev/null | head -10
-grep -rn "api_key" --include="*.ts" --include="*.js" . 2>/dev/null | head -10
+For long tasks, run this loop at checkpoints:
 
-# Check for console.log
-grep -rn "console.log" --include="*.ts" --include="*.tsx" src/ 2>/dev/null | head -10
-```
+- before opening PR
+- after major refactor
+- after dependency upgrades
 
-### Phase 6: Diff Review
-```bash
-# Show what changed
-git diff --stat
-git diff HEAD~1 --name-only
-```
+If loop blocks, handoff to focused skills:
 
-Review each changed file for:
-- Unintended changes
-- Missing error handling
-- Potential edge cases
-
-## Output Format
-
-After running all phases, produce a verification report:
-
-```
-VERIFICATION REPORT
-==================
-
-Build:     [PASS/FAIL]
-Types:     [PASS/FAIL] (X errors)
-Lint:      [PASS/FAIL] (X warnings)
-Tests:     [PASS/FAIL] (X/Y passed, Z% coverage)
-Security:  [PASS/FAIL] (X issues)
-Diff:      [X files changed]
-
-Overall:   [READY/NOT READY] for PR
-
-Issues to Fix:
-1. ...
-2. ...
-```
-
-## Continuous Mode
-
-For long sessions, run verification every 15 minutes or after major changes:
-
-```markdown
-Set a mental checkpoint:
-- After completing each function
-- After finishing a component
-- Before moving to next task
-
-Run: `$verify`
-```
-
-## Integration with Hooks
-
-This skill complements any available tool hooks but provides deeper verification.
-Hooks catch issues immediately; this skill provides comprehensive review.
+- build/type errors -> `$build-fix`
+- test coverage gaps -> `$test-gen`
+- security-sensitive failures -> `$security-review`

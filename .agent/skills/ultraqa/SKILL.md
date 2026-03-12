@@ -48,7 +48,9 @@ If no structured goal provided, interpret the argument as a custom goal.
 
 ### Cycle N (Max 5)
 
-1. **RUN QA**: Execute verification based on goal type
+1. **PREP TEST GAPS**: If implementation files changed, run `omcodex test changed` and inspect the generated acceptance/regression checklists before cycling.
+
+2. **RUN QA**: Execute verification based on goal type
    - `--tests`: Run `npm test` or equivalent
    - `--build`: Run `npm run build` or equivalent
    - `--lint`: Run `npm run lint` or equivalent
@@ -62,11 +64,11 @@ If no structured goal provided, interpret the argument as a custom goal.
      Test cases: [specific scenarios to verify]
      ```
 
-2. **CHECK RESULT**: Did the goal pass?
+3. **CHECK RESULT**: Did the goal pass?
    - **YES** → Exit with success message
-   - **NO** → Continue to step 3
+   - **NO** → Continue to step 4
 
-3. **ARCHITECT DIAGNOSIS**: Spawn architect to analyze failure
+4. **ARCHITECT DIAGNOSIS**: Spawn architect to analyze failure
    ```
    [ARCHITECT | opus] DIAGNOSE FAILURE:
    Goal: [goal type]
@@ -74,7 +76,7 @@ If no structured goal provided, interpret the argument as a custom goal.
    Provide root cause and specific fix recommendations.
    ```
 
-4. **FIX ISSUES**: Apply architect's recommendations
+5. **FIX ISSUES**: Apply architect's recommendations
    ```
    [EXECUTOR | sonnet] FIX:
    Issue: [architect diagnosis]
@@ -82,7 +84,7 @@ If no structured goal provided, interpret the argument as a custom goal.
    Apply the fix precisely as recommended.
    ```
 
-5. **REPEAT**: Go back to step 1
+6. **REPEAT**: Go back to step 1
 
 ## Exit Conditions
 
@@ -108,7 +110,7 @@ Output progress each cycle:
 
 ## State Tracking
 
-Track state in `.omc/ultraqa-state.json`:
+Track state in `.omc/state/ultraqa-state.json`:
 ```json
 {
   "active": true,

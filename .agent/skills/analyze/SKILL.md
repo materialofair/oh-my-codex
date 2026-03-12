@@ -1,81 +1,75 @@
 ---
 name: analyze
-description: Deep analysis and investigation
+description: Use this skill for root-cause oriented technical analysis with hypothesis testing, evidence capture, and actionable recommendations.
+version: 0.3.0
 ---
 
-# Deep Analysis Mode
-
-
-## Native Subagent Protocol (Codex)
-
-Codex supports native subagents. Delegate with `spawn_agent`, coordinate with `send_input`, collect via `wait`, and clean up with `close_agent`.
-
-Execution preference:
-1. Use native subagents first for independent workstreams (parallel when possible).
-2. Merge results in main thread and run final verification.
-3. Fallback only when delegation is blocked: use the `[ANALYST]`/`[ARCHITECT]`/`[EXECUTOR]`/`[REVIEWER]` structure in a single response.
-
-Minimal orchestration pattern:
-```text
-spawn_agent -> send_input (optional) -> wait -> close_agent
-```
+# Analyze Skill
 
 > Codex invocation: use `$analyze ...` or `analyze: ...`
 
+Conduct deep analysis of code, architecture, bugs, performance bottlenecks, or security risks.
 
-[ANALYSIS MODE ACTIVATED]
+## Capabilities
 
-## Objective
+- Root-cause analysis with explicit hypotheses.
+- Dependency and execution-flow mapping.
+- Pattern/anti-pattern identification.
+- Risk assessment with prioritized recommendations.
+- Evidence-backed conclusions with confidence levels.
 
-Conduct thorough analysis of the specified target (code, architecture, issue, bug, performance bottleneck, security concern).
+## Input Requirements
 
-## Approach
+- `target` (required): bug, subsystem, file set, or architecture concern.
+- `question` (required): what decision/explanation is needed.
+- `scope` (optional): explicit paths or modules.
+- `constraints` (optional): timebox, risk level, performance/security priorities.
+
+## How to Use
+
+```text
+$analyze why retries sometimes duplicate writes
+$analyze performance bottlenecks in search endpoint
+$analyze auth architecture and security gaps
+```
+
+## Workflow
 
 1. **Gather Context**
-   - Read relevant files
-   - Check git history if relevant
-   - Review related issues/PRs if applicable
+- Read relevant files and runtime errors.
+- Capture facts before proposing fixes.
 
-2. **Analyze Systematically**
-   - Identify patterns and antipatterns
-   - Trace execution flows
-   - Map dependencies and relationships
-   - Check for edge cases
+2. **Form Hypotheses**
+- Define 1-3 plausible root causes.
+- List evidence needed to validate each one.
 
-   **For Debugging/Bug Analysis (4-Phase Protocol)**
+3. **Test and Eliminate**
+- Validate hypotheses against code/log evidence.
+- Reject hypotheses that conflict with observed facts.
 
-   When analyzing bugs or issues, follow systematic debugging:
+4. **Synthesize**
+- Provide root cause (or competing explanations).
+- Document tradeoffs and practical next steps.
 
-   - **Root Cause First** - Never skip to fixes
-     - Read ALL error messages
-     - Reproduce consistently
-     - Document hypothesis before looking at code
+## Debugging Guardrails
 
-   - **Pattern Analysis** - Find working vs broken
-     - Compare with working similar code
-     - Identify the specific delta
-
-   - **3-Failure Circuit Breaker** - If stuck:
-     - After 3 failed hypotheses, question the architecture
-     - The bug may be elsewhere entirely
-
-3. **Synthesize Findings**
-   - Root cause (for bugs)
-   - Design decisions and tradeoffs (for architecture)
-   - Bottlenecks and hotspots (for performance)
-   - Vulnerabilities and risks (for security)
-
-4. **Provide Recommendations**
-   - Concrete, actionable next steps
-   - Prioritized by impact
-   - Consider maintainability and technical debt
+- Root cause first, fix second.
+- Compare broken path vs working path.
+- If 3 hypotheses fail, re-scope the system boundary.
 
 ## Output Format
 
-Present findings clearly:
-- **Summary** (2-3 sentences)
-- **Key Findings** (bulleted list)
-- **Analysis** (detailed explanation)
-- **Recommendations** (prioritized)
+- **Summary**: concise answer to the main question.
+- **Key Findings**: evidence-backed bullets.
+- **Analysis**: reasoning chain and eliminated hypotheses.
+- **Recommendations**: prioritized next actions.
+- **Confidence**: HIGH/MEDIUM/LOW with uncertainty note.
 
-Stay objective. Cite file paths and line numbers. No speculation without evidence.
+Every key finding must include file paths and line numbers.
+
+## Completion Tags
+
+- `[PROMISE:ANALYZE_COMPLETE]`
+- `[PROMISE:ANALYZE_BLOCKED]`
+
+Use `BLOCKED` when required evidence cannot be accessed or reproduced.
