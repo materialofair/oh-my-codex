@@ -2,7 +2,11 @@
 name: deepsearch
 description: Use this skill for exhaustive codebase search with query expansion, dependency tracing, and evidence-backed synthesis.
 version: 0.3.0
+source: fork
+checksum: f92b002d1f2e4fecfd905ea57d3a5b1eb6cdaf328e0dc83d12cb9a21972c04e4
+updated_at: 2026-03-12T18:57:03+08:00
 ---
+
 
 # Deep Search Skill
 

@@ -23,6 +23,10 @@ Usage:
   omcodex test gen <file> [--out-dir <dir>] [--json]
   omcodex test llm <all|skills|router|prompts|workflow> [options]
   omcodex notify init|status|validate|test [event]
+  omcodex source [list|active|set <fork|upstream>|sync|status]
+  omcodex skill list [--verbose]
+  omcodex skill prefer <name> <source>
+  omcodex skill conflicts
   omcodex help
 `;
 
@@ -89,6 +93,42 @@ async function main(args) {
   if (command === 'test') {
     await test(args.slice(1));
     return;
+  }
+
+  if (command === 'source') {
+    const { source } = require('./source');
+    await source(args.slice(1));
+    return;
+  }
+
+  if (command === 'skill') {
+    const { listSkills, setPreference, showConflicts } = require('./skill');
+    const subcommand = args[1];
+
+    if (subcommand === 'list') {
+      await listSkills({ verbose: flags.has('--verbose') || flags.has('-v') });
+      return;
+    }
+
+    if (subcommand === 'prefer') {
+      const skillName = args[2];
+      const source = args[3];
+      if (!skillName || !source) {
+        console.error('Usage: omcodex skill prefer <name> <source>');
+        process.exit(1);
+      }
+      await setPreference(skillName, source);
+      return;
+    }
+
+    if (subcommand === 'conflicts') {
+      await showConflicts();
+      return;
+    }
+
+    console.error(`Unknown skill subcommand: ${subcommand}`);
+    console.error('Available: list, prefer, conflicts');
+    process.exit(1);
   }
 
   throw new Error(`Unknown command: ${command}`);

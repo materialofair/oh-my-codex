@@ -1,7 +1,12 @@
 ---
 name: evolve
 description: Imported from everything-codex command evolve
+version: 0.1.0
+source: fork
+checksum: 565903ab1ee7fdd78bdaf8d3364b7a48e9bf9be3804ab24cc37fa0ec2b3164f0
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 ---
 name: evolve

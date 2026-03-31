@@ -2,7 +2,11 @@
 name: tdd-workflow
 description: Use this skill for test-first implementation of new features, bug fixes, and refactors with RED-GREEN-REFACTOR discipline and explicit verification gates.
 version: 0.3.0
+source: fork
+checksum: 6bbe1e3304afa4d77a91260f7fd161c6364431379c6b4d16bdbc9fb4a0312ba2
+updated_at: 2026-03-12T18:57:03+08:00
 ---
+
 
 # TDD Workflow Skill
 

@@ -1,7 +1,12 @@
 ---
 name: ultrawork
 description: Activate maximum performance mode with parallel agent orchestration for high-throughput task completion
+version: 0.1.0
+source: fork
+checksum: 1bb7274d464b92870432f7b5c9e3d977c56cd4fdb1d023537a22e710230ea94b
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # Ultrawork Skill
 

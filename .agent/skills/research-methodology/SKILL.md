@@ -3,7 +3,12 @@ name: research-methodology
 description: Systematic approach for gathering authoritative, version-accurate documentation. Codex invokes this skill when research is needed before implementation. Ensures truth over speed while achieving both.
 auto_invoke: true
 tags: [research, documentation, verification, truth]
+version: 0.1.0
+source: fork
+checksum: 0465ac9932b12a1b974278202bcb63dd25cd1e8e7c299da4515d751e4f09af71
+updated_at: 2026-02-11T09:29:29+08:00
 ---
+
 
 # Research Methodology Skill
 

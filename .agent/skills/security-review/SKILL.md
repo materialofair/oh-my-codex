@@ -1,7 +1,12 @@
 ---
 name: security-review
 description: Use this skill when adding authentication, handling user input, working with secrets, creating API endpoints, or implementing payment/sensitive features. Provides comprehensive security checklist and patterns.
+version: 0.1.0
+source: fork
+checksum: f9751e3d54f4bc69159109fbf990d8a538df54a13994884782108fed872ef98e
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # Security Review Skill
 

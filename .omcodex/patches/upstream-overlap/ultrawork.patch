@@ -1,0 +1,247 @@
+--- a/skills/ultrawork/SKILL.md
++++ b/skills/ultrawork/SKILL.md
+@@ -1,143 +1,128 @@
+ ---
+ name: ultrawork
+-description: Parallel execution engine for high-throughput task completion
++description: Activate maximum performance mode with parallel agent orchestration for high-throughput task completion
++version: 0.1.0
++source: fork
++checksum: 1bb7274d464b92870432f7b5c9e3d977c56cd4fdb1d023537a22e710230ea94b
++updated_at: 2026-02-11T09:29:16+08:00
+ ---
+ 
+-<Purpose>
+-Ultrawork is a parallel execution engine that runs multiple agents simultaneously for independent tasks. It is a component, not a standalone persistence mode -- it provides parallelism and smart model routing but not persistence, verification loops, or state management.
+-</Purpose>
+ 
+-<Use_When>
+-- Multiple independent tasks can run simultaneously
+-- User says "ulw", "ultrawork", or wants parallel execution
+-- You need to delegate work to multiple agents at once
+-- Task benefits from concurrent execution but the user will manage completion themselves
+-</Use_When>
++# Ultrawork Skill
+ 
+-<Do_Not_Use_When>
+-- Task requires guaranteed completion with verification -- use `ralph` instead (ralph includes ultrawork)
+-- Task requires a full autonomous pipeline -- use `autopilot` instead (autopilot includes ralph which includes ultrawork)
+-- There is only one sequential task with no parallelism opportunity -- delegate directly to an executor agent
+-- User needs session persistence for resume -- use `ralph` which adds persistence on top of ultrawork
+-</Do_Not_Use_When>
++## Native Subagent Protocol (Codex)
+ 
+-<Why_This_Exists>
+-Sequential task execution wastes time when tasks are independent. Ultrawork enables firing multiple agents simultaneously and routing each to the right model tier, reducing total execution time while controlling token costs. It is designed as a composable component that ralph and autopilot layer on top of.
+-</Why_This_Exists>
++Codex supports native subagents. Delegate with `spawn_agent`, coordinate with `send_input`, collect via `wait`, and clean up with `close_agent`.
+ 
+-<Execution_Policy>
+-- Fire all independent agent calls simultaneously -- never serialize independent work
+-- Always pass the `model` parameter explicitly when delegating
+-- Read `docs/shared/agent-tiers.md` before first delegation for agent selection guidance
+-- Use `run_in_background: true` for operations over ~30 seconds (installs, builds, tests)
+-- Run quick commands (git status, file reads, simple checks) in the foreground
+-</Execution_Policy>
++Execution preference:
++1. Use native subagents first for independent workstreams (parallel when possible).
++2. Merge results in main thread and run final verification.
++3. Fallback only when delegation is blocked: use the `[ANALYST]`/`[ARCHITECT]`/`[EXECUTOR]`/`[REVIEWER]` structure in a single response.
+ 
+-<Steps>
+-1. **Read agent reference**: Load `docs/shared/agent-tiers.md` for tier selection
+-2. **Classify tasks by independence**: Identify which tasks can run in parallel vs which have dependencies
+-3. **Route to correct tiers**:
+-   - Simple lookups/definitions: LOW tier
+-   - Standard implementation: STANDARD tier
+-   - Complex analysis/refactoring: THOROUGH tier
+-4. **Fire independent tasks simultaneously**: Launch all parallel-safe tasks at once
+-5. **Run dependent tasks sequentially**: Wait for prerequisites before launching dependent work
+-6. **Background long operations**: Builds, installs, and test suites use `run_in_background: true`
+-7. **Verify when all tasks complete** (lightweight):
+-   - Build/typecheck passes
+-   - Affected tests pass
+-   - No new errors introduced
+-</Steps>
++Minimal orchestration pattern:
++```text
++spawn_agent -> send_input (optional) -> wait -> close_agent
++```
+ 
+-<Tool_Usage>
+-- Use LOW-tier delegation for simple changes
+-- Use STANDARD-tier delegation for standard work
+-- Use THOROUGH-tier delegation for complex work
+-- Use `run_in_background: true` for package installs, builds, and test suites
+-- Use foreground execution for quick status checks and file operations
+-</Tool_Usage>
++> Codex invocation: use `$ultrawork ...` or `ultrawork: ...`
+ 
+-## State Management
+ 
+-Use `omx_state` MCP tools for ultrawork lifecycle state.
++Activates maximum performance mode with parallel agent orchestration.
+ 
+-- **On start**:
+-  `state_write({mode: "ultrawork", active: true, reinforcement_count: 1, started_at: "<now>"})`
+-- **On each reinforcement/loop step**:
+-  `state_write({mode: "ultrawork", reinforcement_count: <current>})`
+-- **On completion**:
+-  `state_write({mode: "ultrawork", active: false})`
+-- **On cancellation/cleanup**:
+-  run `$cancel` (which should call `state_clear(mode="ultrawork")`)
++## When Activated
+ 
+-<Examples>
+-<Good>
+-Three independent tasks fired simultaneously:
+-```
+-delegate(role="executor", tier="LOW", task="Add missing type export for Config interface")
+-delegate(role="executor", tier="STANDARD", task="Implement the /api/users endpoint with validation")
+-delegate(role="test-engineer", tier="STANDARD", task="Add integration tests for the auth middleware")
+-```
+-Why good: Independent tasks at appropriate tiers, all fired at once.
+-</Good>
++This skill enhances Codex's capabilities by:
+ 
+-<Good>
+-Correct use of background execution:
+-```
+-delegate(role="executor", tier="STANDARD", task="npm install && npm run build", run_in_background=true)
+-delegate(role="writer", tier="LOW", task="Update the README with new API endpoints")
+-```
+-Why good: Long build runs in background while short task runs in foreground.
+-</Good>
++1. **Parallel Execution**: Running multiple agents simultaneously for independent tasks
++2. **Aggressive Delegation**: Routing tasks to specialist agents immediately
++3. **Background Operations**: Using `run_in_background: true` for long operations
++4. **Persistence Enforcement**: Never stopping until all tasks are verified complete
++5. **Smart Model Routing**: Using tiered agents to save tokens
+ 
+-<Bad>
+-Sequential execution of independent work:
+-```
+-result1 = delegate(executor, LOW, "Add type export")  # wait...
+-result2 = delegate(executor, STANDARD, "Implement endpoint")     # wait...
+-result3 = delegate(test-engineer, STANDARD, "Add tests")              # wait...
+-```
+-Why bad: These tasks are independent. Running them sequentially wastes time.
+-</Bad>
++## Smart Model Routing (CRITICAL - SAVE TOKENS)
+ 
+-<Bad>
+-Wrong tier selection:
++**Choose tier based on task complexity: LOW (haiku) → MEDIUM (sonnet) → HIGH (opus)**
++
++### Available Agents by Tier
++
++| Domain | LOW (Haiku) | MEDIUM (Sonnet) | HIGH (Opus) |
++|--------|-------------|-----------------|-------------|
++| **Analysis** | `architect-low` | `architect-medium` | `architect` |
++| **Execution** | `executor-low` | `executor` | `executor-high` |
++| **Search** | `explore` | `explore-medium` | - |
++| **Research** | `researcher-low` | `researcher` | - |
++| **Frontend** | `designer-low` | `designer` | `designer-high` |
++| **Docs** | `writer` | - | - |
++| **Visual** | - | `vision` | - |
++| **Planning** | - | - | `planner`, `critic`, `analyst` |
++| **Testing** | - | `qa-tester` | - |
++| **Security** | `security-reviewer-low` | - | `security-reviewer` |
++| **Build** | `build-fixer-low` | `build-fixer` | - |
++| **TDD** | `tdd-guide-low` | `tdd-guide` | - |
++| **Code Review** | `code-reviewer-low` | - | `code-reviewer` |
++
++### Tier Selection Guide
++
++| Task Complexity | Tier | Examples |
++|-----------------|------|----------|
++| Simple lookups | LOW | "What does this function return?", "Find where X is defined" |
++| Standard work | MEDIUM | "Add error handling", "Implement this feature" |
++| Complex analysis | HIGH | "Debug this race condition", "Refactor auth module across 5 files" |
++
++### Routing Examples
++
++**CRITICAL: Always pass `model` parameter explicitly - Codex does NOT auto-apply models from agent definitions!**
++
+ ```
+-delegate(role="executor", tier="THOROUGH", task="Add a missing semicolon")
+-```
+-Why bad: THOROUGH tier is expensive overkill for a trivial fix. Use LOW-tier execution instead.
+-</Bad>
+-</Examples>
++// Simple question → LOW tier (saves tokens!)
++[ARCHITECT-LOW | haiku] "What does this function return?"
+ 
+-<Escalation_And_Stop_Conditions>
+-- When ultrawork is invoked directly (not via ralph), apply lightweight verification only -- build passes, tests pass, no new errors
+-- For full persistence and comprehensive architect verification, recommend switching to `ralph` mode
+-- If a task fails repeatedly across retries, report the issue rather than retrying indefinitely
+-- Escalate to the user when tasks have unclear dependencies or conflicting requirements
+-</Escalation_And_Stop_Conditions>
++// Standard implementation → MEDIUM tier
++[EXECUTOR | sonnet] "Add error handling to login"
+ 
+-<Final_Checklist>
+-- [ ] All parallel tasks completed
+-- [ ] Build/typecheck passes
+-- [ ] Affected tests pass
+-- [ ] No new errors introduced
+-</Final_Checklist>
++// Complex refactoring → HIGH tier
++[EXECUTOR-HIGH | opus] "Refactor auth module using JWT across 5 files"
+ 
+-<Advanced>
+-## Relationship to Other Modes
++// Quick file lookup → LOW tier
++[EXPLORE-LOW | haiku] "Find where UserService is defined"
+ 
++// Thorough search → MEDIUM tier
++[EXPLORE | sonnet] "Find all authentication patterns in the codebase"
+ ```
+-ralph (persistence wrapper)
+- \-- includes: ultrawork (this skill)
+-     \-- provides: parallel execution only
+ 
+-autopilot (autonomous execution)
+- \-- includes: ralph
+-     \-- includes: ultrawork (this skill)
++## Background Execution Rules
+ 
+-ecomode (token efficiency)
+- \-- modifies: ultrawork's model selection
++**Run in Background** (set `run_in_background: true`):
++- Package installation: npm install, pip install, cargo build
++- Build processes: npm run build, make, tsc
++- Test suites: npm test, pytest, cargo test
++- Docker operations: docker build, docker pull
++
++**Run Blocking** (foreground):
++- Quick status checks: git status, ls, pwd
++- File reads, edits
++- Simple commands
++
++## Verification Checklist
++
++Before stopping, verify:
++- [ ] TODO LIST: Zero pending/in_progress tasks
++- [ ] FUNCTIONALITY: All requested features work
++- [ ] TESTS: All tests pass (if applicable)
++- [ ] ERRORS: Zero unaddressed errors
++
++**If ANY checkbox is unchecked, CONTINUE WORKING.**
++
++## STATE CLEANUP ON COMPLETION
++
++**IMPORTANT: Delete state files on completion - do NOT just set `active: false`**
++
++When all verification passes and work is complete:
++
++```bash
++# Delete ultrawork state files
++rm -f .omc/state/ultrawork-state.json
++rm -f ~/.codex/ultrawork-state.json
+ ```
+ 
+-Ultrawork is the parallelism layer. Ralph adds persistence and verification. Autopilot adds the full lifecycle pipeline. Ecomode adjusts ultrawork's model routing to favor cheaper models.
+-</Advanced>
++This ensures clean state for future sessions. Stale state files with `active: false` should not be left behind.

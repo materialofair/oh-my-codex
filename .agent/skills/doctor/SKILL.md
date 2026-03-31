@@ -1,7 +1,12 @@
 ---
 name: doctor
 description: Diagnose and fix oh-my-codex installation issues
+version: 0.1.0
+source: fork
+checksum: 8f16a47082b0a35dd6c409590c192873c2e9a0b6a9b71a4d0f82a5f13c556522
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # Doctor Skill
 

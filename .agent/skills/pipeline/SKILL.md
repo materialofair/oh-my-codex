@@ -1,7 +1,12 @@
 ---
 name: pipeline
 description: Chain agents together in sequential or branching workflows with data passing
+version: 0.1.0
+source: fork
+checksum: a781522a0d8a7456cb5f0fbf844fc38eb83ad2d97a64c96e647fdf58a7781d53
+updated_at: 2026-02-11T09:29:22+08:00
 ---
+
 
 # Pipeline Skill
 

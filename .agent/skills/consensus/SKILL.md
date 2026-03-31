@@ -3,7 +3,12 @@ name: consensus
 description: 多模型共识决策 - 直接调用 Gemini/Codex CLI 获取不同视角，综合决策。支持会话延续，绕过 MCP 避免超时。
 auto_invoke: true
 tags: [consensus, multi-model, decision, direct-cli]
+version: 0.1.0
+source: fork
+checksum: beb3360bd3f1c20aeee0223225d871ce34949e58c4a47a64befde0da1fcd7239
+updated_at: 2026-02-06T15:19:11+08:00
 ---
+
 
 # Consensus - 多模型共识决策 Skill
 

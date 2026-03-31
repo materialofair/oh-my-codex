@@ -1,0 +1,353 @@
+{
+  "generatedAt": "2026-03-31T12:28:27.294Z",
+  "mode": "heuristic",
+  "model": null,
+  "skillsDir": "/Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/.omcodex/tmp/source-skills/upstream/skills",
+  "allowlist": [],
+  "summary": {
+    "totalSkills": 36,
+    "severity": {
+      "high": 4,
+      "medium": 3,
+      "low": 0
+    },
+    "blockerSkills": [
+      "doctor",
+      "hud",
+      "pipeline",
+      "team"
+    ],
+    "blockerCount": 4
+  },
+  "results": [
+    {
+      "skill": "ai-slop-cleaner",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "analyze",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "ask-claude",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "ask-gemini",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "autopilot",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "build-fix",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "cancel",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "code-review",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "configure-notifications",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "deep-interview",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "deepsearch",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "doctor",
+      "mode": "heuristic",
+      "issues": [
+        {
+          "severity": "high",
+          "rule": "non_codex_runtime",
+          "message": "Contains runtime guidance not supported by Codex."
+        }
+      ],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "ecomode",
+      "mode": "heuristic",
+      "issues": [
+        {
+          "severity": "medium",
+          "rule": "missing_structure",
+          "message": "Missing clear workflow/instruction sections."
+        }
+      ],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "frontend-ui-ux",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "git-master",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "help",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "hud",
+      "mode": "heuristic",
+      "issues": [
+        {
+          "severity": "high",
+          "rule": "non_codex_runtime",
+          "message": "Contains runtime guidance not supported by Codex."
+        }
+      ],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "note",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "omx-setup",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "pipeline",
+      "mode": "heuristic",
+      "issues": [
+        {
+          "severity": "high",
+          "rule": "non_codex_runtime",
+          "message": "Contains runtime guidance not supported by Codex."
+        },
+        {
+          "severity": "medium",
+          "rule": "missing_structure",
+          "message": "Missing clear workflow/instruction sections."
+        }
+      ],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "plan",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "ralph",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "ralph-init",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "ralplan",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "review",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "security-review",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "skill",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "swarm",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "tdd",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "team",
+      "mode": "heuristic",
+      "issues": [
+        {
+          "severity": "high",
+          "rule": "non_codex_runtime",
+          "message": "Contains runtime guidance not supported by Codex."
+        }
+      ],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "trace",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "ultraqa",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "ultrawork",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "visual-verdict",
+      "mode": "heuristic",
+      "issues": [
+        {
+          "severity": "medium",
+          "rule": "missing_structure",
+          "message": "Missing clear workflow/instruction sections."
+        }
+      ],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "web-clone",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "worker",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    }
+  ]
+}

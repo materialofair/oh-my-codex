@@ -2,7 +2,12 @@
 name: project-session-manager
 description: Manage isolated dev environments with git worktrees and tmux sessions
 aliases: [psm]
+version: 0.1.0
+source: fork
+checksum: 0333be966a7288d445ae4ae43a88ea0c5787f5da9fa2579264ebcd61b4513e3d
+updated_at: 2026-02-11T09:29:29+08:00
 ---
+
 
 # Project Session Manager (PSM) Skill
 

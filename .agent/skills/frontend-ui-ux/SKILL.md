@@ -1,7 +1,12 @@
 ---
 name: frontend-ui-ux
 description: Designer-turned-developer who crafts stunning UI/UX even without design mockups
+version: 0.1.0
+source: fork
+checksum: 0db63f90ee9baa6c07e1ec1e2bbc02915eb5829308cef56ffb43df5072cdd6fa
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # Frontend UI/UX Skill
 

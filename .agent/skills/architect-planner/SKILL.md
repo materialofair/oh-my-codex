@@ -3,7 +3,12 @@ name: architect-planner
 description: 架构规划专家 - 使用 Gemini CLI (1M 上下文) 进行大型系统架构设计和规划，支持会话延续。
 auto_invoke: true
 tags: [architecture, planning, gemini, system-design]
+version: 0.1.0
+source: fork
+checksum: fc7539e1bce1ab16f4b2c4e096d078bd89ef36213507b5ab05fc5fe3760e2a41
+updated_at: 2026-02-06T15:19:11+08:00
 ---
+
 
 # Architect Planner - 架构规划专家 Skill
 

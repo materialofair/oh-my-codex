@@ -27,13 +27,47 @@ const CATEGORY_MAP = new Map([
 
 const CORE = new Set(['autopilot', 'ralph', 'ultrawork', 'swarm', 'plan']);
 
+function parseSkillMetadata(skillPath) {
+  const skillFile = path.join(skillPath, 'SKILL.md');
+  if (!fs.existsSync(skillFile)) return null;
+
+  try {
+    const content = fs.readFileSync(skillFile, 'utf8');
+    const match = content.match(/^---\n([\s\S]*?)\n---/);
+    if (!match) return null;
+
+    const frontmatterText = match[1];
+    const metadata = {};
+
+    frontmatterText.split('\n').forEach((line) => {
+      const colonIndex = line.indexOf(':');
+      if (colonIndex === -1) return;
+
+      const key = line.slice(0, colonIndex).trim();
+      const value = line.slice(colonIndex + 1).trim();
+      metadata[key] = value;
+    });
+
+    return metadata;
+  } catch (err) {
+    return null;
+  }
+}
+
 function detectSkills() {
   if (!fs.existsSync(skillsRoot)) return [];
   return fs.readdirSync(skillsRoot, { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name)
-    .sort();
+    .map((entry) => {
+      const metadata = parseSkillMetadata(path.join(skillsRoot, entry.name));
+      return {
+        name: entry.name,
+        metadata,
+      };
+    })
+    .sort((a, b) => a.name.localeCompare(b.name));
 }
+
 
 function detectPrompts() {
   if (!fs.existsSync(promptsRoot)) return [];
@@ -44,15 +78,20 @@ function detectPrompts() {
 }
 
 function buildManifest() {
-  const skillNames = detectSkills();
+  const skillsData = detectSkills();
   const promptNames = detectPrompts();
 
-  const skills = skillNames.map((name) => ({
-    name,
-    category: CATEGORY_MAP.get(name) || 'utility',
-    status: 'active',
-    core: CORE.has(name),
-  }));
+  const skills = skillsData.map((skillData) => {
+    const { name, metadata } = skillData;
+    return {
+      name,
+      category: CATEGORY_MAP.get(name) || 'utility',
+      status: 'active',
+      core: CORE.has(name),
+      source: metadata?.source || 'unknown',
+      version: metadata?.version || '0.1.0',
+    };
+  });
 
   const agents = promptNames.map((name) => ({
     name,
@@ -68,6 +107,7 @@ function buildManifest() {
     agents,
   };
 }
+
 
 function main() {
   const manifest = validateCatalogManifest(buildManifest());

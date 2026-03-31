@@ -26,6 +26,28 @@ npm run governance:skills:llm
 npm run eval:skills
 ```
 
+For fork + upstream dual-source governance:
+
+```bash
+npm run governance:skills:sources
+```
+
+This command audits both:
+- fork skills: local `.agent/skills`
+- upstream skills: snapshot from `upstream/main`
+
+Reports are written to `.omcodex/reports/skill-governance-sources/{fork,upstream}`.
+
+For overlap governance (same skill names in fork and upstream):
+
+```bash
+npm run governance:skills:overlap
+```
+
+Reports are written to:
+- `.omcodex/reports/skill-overlap-governance-latest.json`
+- `.omcodex/reports/skill-overlap-governance-latest.md`
+
 The checker currently enforces:
 
 - Blockers:

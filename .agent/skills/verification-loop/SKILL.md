@@ -2,7 +2,11 @@
 name: verification-loop
 description: Use this skill for iterative verify-fix cycles across build, type, lint, test, and security gates until completion or explicit stop conditions.
 version: 0.3.0
+source: fork
+checksum: 83394e913ddfc44ef7b5ac75c97c60550d1ad774c7bf6a75f494eb92c6b91b14
+updated_at: 2026-03-12T18:57:03+08:00
 ---
+
 
 # Verification Loop Skill
 

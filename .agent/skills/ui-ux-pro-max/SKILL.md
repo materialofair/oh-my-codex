@@ -1,7 +1,12 @@
 ---
 name: ui-ux-pro-max
 description: UI/UX design with 50+ styles, palettes, fonts for React/Vue/Next.js/SwiftUI. Builds responsive components, handles accessibility, animations, and design systems.
+version: 0.1.0
+source: fork
+checksum: 64fd8ab38634a3683ebc90c92dbe7e8f375b37d9c9d3683e647b4a6b41e479e1
+updated_at: 2026-02-11T15:02:15+08:00
 ---
+
 
 # UI/UX Pro Max - Design Intelligence
 

@@ -1,0 +1,66 @@
+<mxfile host="app.diagrams.net" modified="2026-03-25T10:40:00.000Z" agent="Codex" version="24.7.17" type="device" compressed="false">
+  <diagram id="loop" name="03 主循环与分层">
+    <mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="bg3" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=none;fillColor=#F4F7FB;gradientColor=#EAF1FF;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="1600" height="900" as="geometry" />
+        </mxCell>
+        <mxCell id="title3" value="刷新 → 规格 → 计划 → 实现 → 审查 → 对齐&lt;br&gt;&lt;font style=&quot;font-size:20px;&quot;&gt;动态需求下，关键不是消灭漂移，而是让漂移可见、可控、可对齐&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=20;strokeColor=none;fillColor=#102A43;fontColor=#FFFFFF;fontSize=30;fontStyle=1;align=center;verticalAlign=middle;spacing=18;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="100" y="50" width="1400" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="step1" value="刷新&lt;br&gt;&lt;font style=&quot;font-size:16px;&quot;&gt;从代码 / 配置 / Git&lt;br&gt;提取事实&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=24;strokeColor=#0F8C9D;strokeWidth=3;fillColor=#E9FCFF;fontColor=#102A43;fontSize=22;fontStyle=1;align=center;verticalAlign=middle;spacing=14;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="250" width="215" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="step2" value="规格&lt;br&gt;&lt;font style=&quot;font-size:16px;&quot;&gt;明确当前工作单元&lt;br&gt;边界&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=24;strokeColor=#11A36A;strokeWidth=3;fillColor=#ECFFF6;fontColor=#102A43;fontSize=22;fontStyle=1;align=center;verticalAlign=middle;spacing=14;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="335" y="250" width="215" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="step3" value="计划&lt;br&gt;&lt;font style=&quot;font-size:16px;&quot;&gt;拆解阶段与任务&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=24;strokeColor=#11A36A;strokeWidth=3;fillColor=#ECFFF6;fontColor=#102A43;fontSize=22;fontStyle=1;align=center;verticalAlign=middle;spacing=14;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="590" y="250" width="215" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="step4" value="实现&lt;br&gt;&lt;font style=&quot;font-size:16px;&quot;&gt;按计划推进代码实现&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=24;strokeColor=#2F6BFF;strokeWidth=3;fillColor=#EEF4FF;fontColor=#102A43;fontSize=22;fontStyle=1;align=center;verticalAlign=middle;spacing=14;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="845" y="250" width="215" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="step5" value="审查&lt;br&gt;&lt;font style=&quot;font-size:16px;&quot;&gt;对照规格 / 计划 / 工作流&lt;br&gt;进行审查&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=24;strokeColor=#7C5CFA;strokeWidth=3;fillColor=#F4F0FF;fontColor=#102A43;fontSize=22;fontStyle=1;align=center;verticalAlign=middle;spacing=14;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="250" width="215" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="step6" value="对齐&lt;br&gt;&lt;font style=&quot;font-size:16px;&quot;&gt;显式处理意图与事实&lt;br&gt;的分叉&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=24;strokeColor=#D96C2F;strokeWidth=3;fillColor=#FFF6EF;fontColor=#102A43;fontSize=22;fontStyle=1;align=center;verticalAlign=middle;spacing=14;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1355" y="250" width="185" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#7B8794;strokeWidth=3;endArrow=block;endFill=1;" edge="1" parent="1" source="step1" target="step2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow23" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#7B8794;strokeWidth=3;endArrow=block;endFill=1;" edge="1" parent="1" source="step2" target="step3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow34" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#7B8794;strokeWidth=3;endArrow=block;endFill=1;" edge="1" parent="1" source="step3" target="step4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow45" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#7B8794;strokeWidth=3;endArrow=block;endFill=1;" edge="1" parent="1" source="step4" target="step5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow56" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#7B8794;strokeWidth=3;endArrow=block;endFill=1;" edge="1" parent="1" source="step5" target="step6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow61" value="持续循环" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#D96C2F;strokeWidth=3;fontColor=#D96C2F;fontSize=15;endArrow=block;endFill=1;" edge="1" parent="1" source="step6" target="step1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1445" y="430" />
+              <mxPoint x="190" y="430" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="intentLayer" value="意图层&lt;br&gt;&lt;font style=&quot;font-size:17px;&quot;&gt;由人确认、相对稳定、不可被机器静默改写&lt;br&gt;&lt;br&gt;product.md&lt;br&gt;product-guidelines.md&lt;br&gt;tech-stack.md&lt;br&gt;workflow.md&lt;br&gt;tracks.md&lt;br&gt;spec.md / plan.md&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=18;strokeColor=#11A36A;strokeWidth=4;fillColor=#ECFFF6;fontColor=#102A43;fontSize=23;fontStyle=1;align=left;verticalAlign=top;spacing=18;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="515" width="630" height="255" as="geometry" />
+        </mxCell>
+        <mxCell id="factsLayer" value="事实层&lt;br&gt;&lt;font style=&quot;font-size:17px;&quot;&gt;由机器高频刷新，用来暴露现实&lt;br&gt;不要求与意图实时完全一致&lt;br&gt;&lt;br&gt;current.md&lt;br&gt;freshness.json&lt;br&gt;drift.md&lt;br&gt;代码 / 配置 / Git 观察结果&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=18;strokeColor=#0F8C9D;strokeWidth=4;fillColor=#E9FCFF;fontColor=#102A43;fontSize=23;fontStyle=1;align=left;verticalAlign=top;spacing=18;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="850" y="515" width="630" height="255" as="geometry" />
+        </mxCell>
+        <mxCell id="callout3" value="关键观念&lt;br&gt;&lt;font style=&quot;font-size:22px;&quot;&gt;漂移是正常的。真正危险的是静默漂移。&lt;br&gt;Conductor 的价值，在于把偏差从隐患变成可治理对象。&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=18;strokeColor=none;fillColor=#102A43;fontColor=#FFFFFF;fontSize=26;fontStyle=1;align=center;verticalAlign=middle;spacing=18;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="790" width="960" height="85" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

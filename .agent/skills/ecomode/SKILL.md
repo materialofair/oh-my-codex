@@ -1,7 +1,12 @@
 ---
 name: ecomode
 description: Token-efficient parallel execution mode using Haiku and Sonnet agents
+version: 0.1.0
+source: fork
+checksum: 69ffff94c1ed3422e9493ac7c6012fb18b32d6c48dee7710e4ac6bda05c52867
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # Ecomode Skill
 

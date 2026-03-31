@@ -1,0 +1,63 @@
+{
+  "generatedAt": "2026-03-07T16:36:18.822Z",
+  "suite": "skills",
+  "pass": true,
+  "failedSteps": [],
+  "steps": [
+    {
+      "name": "skill-governance",
+      "commandLine": "bash scripts/check-skill-governance.sh",
+      "command": "bash",
+      "args": [
+        "scripts/check-skill-governance.sh"
+      ],
+      "cwd": "/Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex",
+      "pass": true,
+      "exitCode": 0,
+      "output": "Skill governance check passed.\n",
+      "error": ""
+    },
+    {
+      "name": "skill-llm-governance",
+      "commandLine": "node scripts/check-skill-llm-governance.js --mode=auto",
+      "command": "node",
+      "args": [
+        "scripts/check-skill-llm-governance.js",
+        "--mode=auto"
+      ],
+      "cwd": "/Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex",
+      "pass": true,
+      "exitCode": 0,
+      "output": "Skill governance (LLM gate) completed: 88 skills\nHigh=0 Medium=11 Low=2\nReport: /Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/.omcodex/reports/skill-llm-governance-latest.json\n",
+      "error": ""
+    },
+    {
+      "name": "skill-eval",
+      "commandLine": "node scripts/eval-skills.js",
+      "command": "node",
+      "args": [
+        "scripts/eval-skills.js"
+      ],
+      "cwd": "/Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex",
+      "pass": true,
+      "exitCode": 0,
+      "output": "Skill eval completed: 88 skills, avg=97.95, fail=0\nReports: /Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/.omcodex/reports/skill-eval-latest.json\nReports: /Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/.omcodex/reports/skill-eval-latest.md\n",
+      "error": ""
+    },
+    {
+      "name": "skill-trigger-regression",
+      "commandLine": "node .codex/skills/skill-tester/scripts/run-skill-tests.js --skill-path .codex/skills/skill-tester",
+      "command": "node",
+      "args": [
+        ".codex/skills/skill-tester/scripts/run-skill-tests.js",
+        "--skill-path",
+        ".codex/skills/skill-tester"
+      ],
+      "cwd": "/Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex",
+      "pass": true,
+      "exitCode": 0,
+      "output": "Skill tester completed: pass=true\nReport: /Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/.omcodex/reports/skill-tester-latest.json\nReport: /Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/.omcodex/reports/skill-tester-latest.md\n",
+      "error": ""
+    }
+  ]
+}

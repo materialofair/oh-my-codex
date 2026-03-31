@@ -1,7 +1,12 @@
 ---
 name: quality-check
 description: CodeDNA 6-dimension intelligent scoring for code quality. Provides ROI-optimized refactoring recommendations when analyzing code.
+version: 0.1.0
+source: fork
+checksum: 4b2221e0f0438590e74624ffb0a5c3dcbd5bab033531095ea2999440c1e0431b
+updated_at: 2026-02-05T16:22:10+08:00
 ---
+
 
 > Codex CLI: Manual invocation only (`$quality-check`). No hooks or auto-run.
 

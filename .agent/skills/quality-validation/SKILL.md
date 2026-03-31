@@ -3,7 +3,12 @@ name: quality-validation
 description: Validate ResearchPacks and Implementation Plans with scoring rubrics and quality gates. Prevents garbage-in-garbage-out scenarios.
 auto_invoke: false
 tags: [validation, quality, verification, gates]
+version: 0.1.0
+source: fork
+checksum: 6cbfe4688bb798b914d2e8da10700298e5cb9ad4a84d49feb2faa419f0c0cc79
+updated_at: 2026-02-05T16:22:10+08:00
 ---
+
 
 # Quality Validation Skill
 

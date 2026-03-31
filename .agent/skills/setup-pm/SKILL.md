@@ -1,7 +1,12 @@
 ---
 name: setup-pm
 description: Imported from everything-codex command setup-pm
+version: 0.1.0
+source: fork
+checksum: fe93794b90f7e0bd0e8b0d9a49c4d2d4b083b7fbd00df27ad7b4baff1d264112
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 ---
 description: Configure your preferred package manager (npm/pnpm/yarn/bun)

@@ -1,0 +1,31 @@
+<mxfile host="app.diagrams.net" modified="2026-03-25T10:40:00.000Z" agent="Codex" version="24.7.17" type="device" compressed="false">
+  <diagram id="comparison" name="01 对比定位">
+    <mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="bg1" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=none;fillColor=#F4F7FB;gradientColor=#EAF1FF;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="1600" height="900" as="geometry" />
+        </mxCell>
+        <mxCell id="title1" value="从 Spec Kit、BMAD 到 Conductor&lt;br&gt;&lt;font style=&quot;font-size:21px;&quot;&gt;三者不是同层竞争，而是分别解决不同层级的问题&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=20;strokeColor=none;fillColor=#102A43;fontColor=#FFFFFF;fontSize=30;fontStyle=1;align=center;verticalAlign=middle;spacing=18;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="110" y="60" width="1380" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="ribbon1" value="功能开发流水线  →  角色化研发流程  →  项目上下文操作系统" style="rounded=1;whiteSpace=wrap;html=1;arcSize=18;strokeColor=none;fillColor=#DCE8FF;fontColor=#102A43;fontSize=22;fontStyle=1;align=center;verticalAlign=middle;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="210" width="1100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="spec" value="&lt;b&gt;Spec Kit&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:17px;&quot;&gt;规格驱动开发&lt;/font&gt;&lt;br&gt;&lt;br&gt;中心对象: 单个功能&lt;br&gt;核心产物: 规格 / 计划 / 任务&lt;br&gt;最强能力: 先把需求讲清楚，再进入实现&lt;br&gt;适用场景: 绿地项目、边界清晰功能&lt;br&gt;潜在代价: 过于以功能为中心" style="rounded=1;whiteSpace=wrap;html=1;arcSize=16;strokeColor=#D96C2F;strokeWidth=3;fillColor=#FFF6EF;fontColor=#102A43;fontSize=18;spacing=18;align=left;verticalAlign=top;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="105" y="315" width="420" height="390" as="geometry" />
+        </mxCell>
+        <mxCell id="bmad" value="&lt;b&gt;BMAD&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:17px;&quot;&gt;AI 驱动敏捷框架&lt;/font&gt;&lt;br&gt;&lt;br&gt;中心对象: 项目流程与角色协作&lt;br&gt;核心产物: PRD / 架构 / 史诗 / 用户故事&lt;br&gt;最强能力: 把 AI 放进完整研发流程&lt;br&gt;适用场景: 中大型项目、角色清晰团队&lt;br&gt;潜在代价: 文档链路与角色链路较长" style="rounded=1;whiteSpace=wrap;html=1;arcSize=16;strokeColor=#2F6BFF;strokeWidth=3;fillColor=#EEF4FF;fontColor=#102A43;fontSize=18;spacing=18;align=left;verticalAlign=top;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="590" y="315" width="420" height="390" as="geometry" />
+        </mxCell>
+        <mxCell id="conductor" value="&lt;b&gt;Conductor&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:17px;&quot;&gt;上下文驱动开发&lt;/font&gt;&lt;br&gt;&lt;br&gt;中心对象: 项目长期上下文&lt;br&gt;核心产物: 工作轨道 / 规格 / 计划 / 工作流 / 事实&lt;br&gt;最强能力: 跨会话、跨成员、跨智能体恢复上下文&lt;br&gt;适用场景: 棕地项目、动态需求、多智能体协作&lt;br&gt;关键前提: 做分层，避免重新变成流程负担" style="rounded=1;whiteSpace=wrap;html=1;arcSize=16;strokeColor=#11A36A;strokeWidth=4;fillColor=#ECFFF6;fontColor=#102A43;fontSize=18;spacing=18;align=left;verticalAlign=top;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="1075" y="295" width="420" height="425" as="geometry" />
+        </mxCell>
+        <mxCell id="callout1" value="结论&lt;br&gt;&lt;font style=&quot;font-size:22px;&quot;&gt;Conductor 的核心价值，不是再造一套更重的规格流程，&lt;br&gt;而是把长期有效的上下文沉淀成仓库中的持久上下文。&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=18;strokeColor=none;fillColor=#102A43;fontColor=#FFFFFF;fontSize=26;fontStyle=1;align=center;verticalAlign=middle;spacing=18;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="210" y="750" width="1180" height="105" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

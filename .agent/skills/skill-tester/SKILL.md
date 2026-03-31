@@ -1,7 +1,12 @@
 ---
 name: skill-tester
 description: Tests Codex skill functionality with TDD approach, verifying skills work correctly through automated test scenarios and validation
+version: 0.1.0
+source: fork
+checksum: 5273eb27ff7391e391467d43b094151fed1286564c6c7065a57c035c3d7c17b4
+updated_at: 2026-02-11T09:29:29+08:00
 ---
+
 
 # Skill Tester
 

@@ -1,7 +1,12 @@
 ---
 name: help
 description: Guide on using oh-my-codex skills
+version: 0.1.0
+source: fork
+checksum: b65aef635ad7003dea8bc73a00bf4f36786a298050a83d70b716555e8772e5de
+updated_at: 2026-02-11T15:02:15+08:00
 ---
+
 
 # How OMC Works
 

@@ -3,7 +3,12 @@ name: multi-model-research
 description: 直接调用 Gemini/Codex CLI 进行多模型技术调研，绕过 MCP 避免超时。使用 OAuth 认证，零维护成本，完全控制输入输出。
 auto_invoke: true
 tags: [research, multi-model, direct-cli, no-timeout, gemini, codex]
+version: 0.1.0
+source: fork
+checksum: a8b8ea3478f5dfe392ee7dfffde1adeee3a3c83343b3dd406311a482d9661ea8
+updated_at: 2026-02-06T15:19:11+08:00
 ---
+
 
 # Multi-Model Research Skill (Direct CLI - No MCP)
 

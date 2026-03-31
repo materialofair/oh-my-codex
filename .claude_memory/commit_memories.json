@@ -1649,5 +1649,831 @@
       "language": "python",
       "total_files": 0
     }
+  },
+  {
+    "timestamp": "2026-02-22T21:30:41.684038",
+    "type": "claude_commit",
+    "commit_message": "Claude git commit",
+    "analysis": {
+      "changed_files": [
+        ".agent/skills/skill-debugger/HOW_TO_USE.md",
+        ".agent/skills/skill-debugger/README.md",
+        ".agent/skills/skill-debugger/SKILL.md",
+        ".agent/skills/skill-debugger/diagnostic_checklist.md",
+        ".claude_memory/commit_memories.json",
+        ".claude_memory/project_memory.db/cache/4e811be7e38e258ad70367ab17ca3c88.pkl",
+        ".claude_memory/project_memory.db/project_memory.db",
+        "docs/SKILL_GOVERNANCE_FRAMEWORK.md",
+        "docs/SKILL_GOVERNANCE_FRAMEWORK.zh.md"
+      ],
+      "change_types": {
+        "feature": 3,
+        "bugfix": 0,
+        "refactor": 0,
+        "docs": 6,
+        "test": 0,
+        "config": 0
+      },
+      "commit_intent": "general",
+      "potential_impact": "medium",
+      "risk_assessment": {
+        "risk_score": 0.0,
+        "risk_level": "low",
+        "risk_factors": []
+      }
+    },
+    "project_state": {
+      "framework": "node",
+      "language": "python",
+      "total_files": 0
+    }
+  },
+  {
+    "timestamp": "2026-02-22T21:38:41.927316",
+    "type": "claude_commit",
+    "commit_message": "Claude git commit",
+    "analysis": {
+      "changed_files": [
+        ".governance/skill-lint.allowlist",
+        ".npmignore",
+        "README.md",
+        "bin/omx.js",
+        "docs/ALIGNMENT.md",
+        "docs/CODEX.md",
+        "package.json",
+        "scripts/generate-catalog-docs.js",
+        "scripts/generate-codex-mcp-config.sh",
+        "scripts/install-codex.sh",
+        "scripts/notify-hook.js",
+        "src/catalog/generated/public-catalog.json",
+        "src/catalog/manifest.json",
+        "src/catalog/reader.js",
+        "src/catalog/schema.js",
+        "src/cli/doctor.js",
+        "src/cli/index.js",
+        "src/cli/setup.js",
+        "src/config/generator.js",
+        "src/utils/paths.js",
+        "templates/AGENTS.md",
+        "templates/catalog-manifest.json"
+      ],
+      "change_types": {
+        "feature": 13,
+        "bugfix": 0,
+        "refactor": 0,
+        "docs": 6,
+        "test": 0,
+        "config": 3
+      },
+      "commit_intent": "general",
+      "potential_impact": "high",
+      "risk_assessment": {
+        "risk_score": 0.7,
+        "risk_level": "medium",
+        "risk_factors": [
+          "large_changeset",
+          "critical_files"
+        ]
+      }
+    },
+    "project_state": {
+      "framework": "node",
+      "language": "javascript",
+      "total_files": 10
+    }
+  },
+  {
+    "timestamp": "2026-02-22T21:49:25.390166",
+    "type": "claude_commit",
+    "commit_message": "Claude git commit",
+    "analysis": {
+      "changed_files": [
+        "README.md",
+        "package-lock.json",
+        "package.json",
+        "src/catalog/generated/public-catalog.json",
+        "src/cli/doctor.js",
+        "src/cli/index.js",
+        "src/cli/team.js",
+        "src/config/generator.js",
+        "src/mcp/memory-server.js",
+        "src/mcp/state-server.js",
+        "src/mcp/trace-server.js",
+        "src/team/orchestrator.js",
+        "src/team/state-store.js"
+      ],
+      "change_types": {
+        "feature": 9,
+        "bugfix": 0,
+        "refactor": 0,
+        "docs": 2,
+        "test": 0,
+        "config": 2
+      },
+      "commit_intent": "general",
+      "potential_impact": "high",
+      "risk_assessment": {
+        "risk_score": 0.7,
+        "risk_level": "medium",
+        "risk_factors": [
+          "large_changeset",
+          "critical_files"
+        ]
+      }
+    },
+    "project_state": {
+      "framework": "node",
+      "language": "javascript",
+      "total_files": 9
+    }
+  },
+  {
+    "timestamp": "2026-02-22T22:03:57.945450",
+    "type": "claude_commit",
+    "commit_message": "Claude git commit",
+    "analysis": {
+      "changed_files": [
+        "AGENTS.md",
+        "README.md",
+        "README.zh.md",
+        "docs/ALIGNMENT.md",
+        "docs/CODEX.md",
+        "docs/NOTIFY.md",
+        "scripts/notify-dispatch.js",
+        "scripts/notify-hook.js",
+        "src/catalog/generated/public-catalog.json",
+        "src/cli/index.js",
+        "src/cli/notify.js",
+        "src/config/generator.js",
+        "src/notify/dispatch.js",
+        "src/notify/extensibility/dispatcher.js",
+        "src/notify/extensibility/events.js",
+        "src/notify/extensibility/loader.js",
+        "templates/AGENTS.md",
+        "templates/rules/hooks.md",
+        "templates/rules/notify.md",
+        "templates/rules/patterns.md"
+      ],
+      "change_types": {
+        "feature": 9,
+        "bugfix": 0,
+        "refactor": 0,
+        "docs": 10,
+        "test": 0,
+        "config": 1
+      },
+      "commit_intent": "general",
+      "potential_impact": "medium",
+      "risk_assessment": {
+        "risk_score": 0.3,
+        "risk_level": "low",
+        "risk_factors": [
+          "large_changeset"
+        ]
+      }
+    },
+    "project_state": {
+      "framework": "node",
+      "language": "javascript",
+      "total_files": 8
+    }
+  },
+  {
+    "timestamp": "2026-02-22T22:09:24.489808",
+    "type": "claude_commit",
+    "commit_message": "Claude git commit",
+    "analysis": {
+      "changed_files": [
+        "README.md",
+        "README.zh.md",
+        "docs/ALIGNMENT.md",
+        "docs/CODEX.md",
+        "prompts/architect.md",
+        "prompts/executor.md",
+        "prompts/planner.md",
+        "scripts/generate-catalog-docs.js",
+        "scripts/generate-codex-mcp-config.sh",
+        "scripts/install-codex.sh",
+        "src/catalog/generated/public-catalog.json",
+        "src/catalog/manifest.json",
+        "src/catalog/schema.js",
+        "src/cli/doctor.js",
+        "src/cli/index.js",
+        "src/cli/setup.js",
+        "src/utils/paths.js",
+        "templates/catalog-manifest.json"
+      ],
+      "change_types": {
+        "feature": 8,
+        "bugfix": 0,
+        "refactor": 0,
+        "docs": 9,
+        "test": 0,
+        "config": 1
+      },
+      "commit_intent": "general",
+      "potential_impact": "medium",
+      "risk_assessment": {
+        "risk_score": 0.3,
+        "risk_level": "low",
+        "risk_factors": [
+          "large_changeset"
+        ]
+      }
+    },
+    "project_state": {
+      "framework": "node",
+      "language": "javascript",
+      "total_files": 6
+    }
+  },
+  {
+    "timestamp": "2026-02-22T22:30:11.006907",
+    "type": "claude_commit",
+    "commit_message": "Claude git commit",
+    "analysis": {
+      "changed_files": [
+        "README.md",
+        "README.zh.md",
+        "bin/omcodex.js",
+        "docs/ALIGNMENT.md",
+        "docs/CODEX.md",
+        "docs/NOTIFY.md",
+        "package-lock.json",
+        "package.json",
+        "prompts/executor.md",
+        "prompts/planner.md",
+        "scripts/generate-codex-mcp-config.sh",
+        "scripts/install-codex.sh",
+        "src/catalog/generated/public-catalog.json",
+        "src/cli/doctor.js",
+        "src/cli/index.js",
+        "src/cli/notify.js",
+        "src/cli/setup.js",
+        "src/cli/team.js",
+        "src/config/generator.js",
+        "src/mcp/memory-server.js",
+        "src/mcp/state-server.js",
+        "src/mcp/trace-server.js",
+        "src/notify/extensibility/dispatcher.js",
+        "src/notify/extensibility/loader.js",
+        "src/team/state-store.js"
+      ],
+      "change_types": {
+        "feature": 14,
+        "bugfix": 0,
+        "refactor": 0,
+        "docs": 8,
+        "test": 0,
+        "config": 3
+      },
+      "commit_intent": "general",
+      "potential_impact": "high",
+      "risk_assessment": {
+        "risk_score": 0.7,
+        "risk_level": "medium",
+        "risk_factors": [
+          "large_changeset",
+          "critical_files"
+        ]
+      }
+    },
+    "project_state": {
+      "framework": "node",
+      "language": "javascript",
+      "total_files": 13
+    }
+  },
+  {
+    "timestamp": "2026-02-23T21:48:08.385627",
+    "type": "claude_commit",
+    "commit_message": "Claude git commit",
+    "analysis": {
+      "changed_files": [
+        ".governance/skill-llm.allowlist",
+        ".npmignore",
+        "README.md",
+        "README.zh.md",
+        "docs/CODEX.md",
+        "docs/NOTIFY.md",
+        "docs/SKILL_GOVERNANCE.md",
+        "package.json",
+        "scripts/check-skill-llm-governance.js",
+        "scripts/eval-skills.js",
+        "src/catalog/generated/public-catalog.json",
+        "src/catalog/manifest.json",
+        "src/cli/index.js",
+        "src/cli/route.js",
+        "src/cli/team.js",
+        "src/mcp/memory-server.js",
+        "src/mcp/state-server.js",
+        "src/mcp/trace-server.js",
+        "src/notify/dispatch.js",
+        "src/router/skill-router.js",
+        "src/team/auto-advance.js",
+        "src/team/orchestrator.js",
+        "templates/catalog-manifest.json"
+      ],
+      "change_types": {
+        "feature": 17,
+        "bugfix": 0,
+        "refactor": 0,
+        "docs": 5,
+        "test": 0,
+        "config": 1
+      },
+      "commit_intent": "general",
+      "potential_impact": "high",
+      "risk_assessment": {
+        "risk_score": 0.7,
+        "risk_level": "medium",
+        "risk_factors": [
+          "large_changeset",
+          "critical_files"
+        ]
+      }
+    },
+    "project_state": {
+      "framework": "node",
+      "language": "javascript",
+      "total_files": 12
+    }
+  },
+  {
+    "timestamp": "2026-02-23T22:05:01.934427",
+    "type": "claude_commit",
+    "commit_message": "Claude git commit",
+    "analysis": {
+      "changed_files": [
+        "package-lock.json",
+        "package.json",
+        "src/catalog/generated/public-catalog.json",
+        "src/config/generator.js"
+      ],
+      "change_types": {
+        "feature": 2,
+        "bugfix": 0,
+        "refactor": 0,
+        "docs": 0,
+        "test": 0,
+        "config": 2
+      },
+      "commit_intent": "general",
+      "potential_impact": "high",
+      "risk_assessment": {
+        "risk_score": 0.4,
+        "risk_level": "medium",
+        "risk_factors": [
+          "critical_files"
+        ]
+      }
+    },
+    "project_state": {
+      "framework": "node",
+      "language": "javascript",
+      "total_files": 1
+    }
+  },
+  {
+    "timestamp": "2026-02-24T17:51:53.800249",
+    "type": "claude_commit",
+    "commit_message": "Claude git commit",
+    "analysis": {
+      "changed_files": [
+        ".agent/skills/aireview/SKILL.md"
+      ],
+      "change_types": {
+        "feature": 0,
+        "bugfix": 0,
+        "refactor": 0,
+        "docs": 1,
+        "test": 0,
+        "config": 0
+      },
+      "commit_intent": "general",
+      "potential_impact": "low",
+      "risk_assessment": {
+        "risk_score": 0.0,
+        "risk_level": "low",
+        "risk_factors": []
+      }
+    },
+    "project_state": {
+      "framework": "node",
+      "language": "javascript",
+      "total_files": 0
+    }
+  },
+  {
+    "timestamp": "2026-02-24T17:52:35.972999",
+    "type": "claude_commit",
+    "commit_message": "Claude git commit",
+    "analysis": {
+      "changed_files": [
+        "package-lock.json",
+        "package.json"
+      ],
+      "change_types": {
+        "feature": 1,
+        "bugfix": 0,
+        "refactor": 0,
+        "docs": 0,
+        "test": 0,
+        "config": 1
+      },
+      "commit_intent": "general",
+      "potential_impact": "high",
+      "risk_assessment": {
+        "risk_score": 0.4,
+        "risk_level": "medium",
+        "risk_factors": [
+          "critical_files"
+        ]
+      }
+    },
+    "project_state": {
+      "framework": "node",
+      "language": "javascript",
+      "total_files": 0
+    }
+  },
+  {
+    "timestamp": "2026-02-25T11:16:10.408311",
+    "type": "claude_commit",
+    "commit_message": "Claude git commit",
+    "analysis": {
+      "changed_files": [
+        "README.md",
+        "README.zh.md",
+        "package-lock.json",
+        "package.json",
+        "src/cli/index.js",
+        "src/cli/setup.js",
+        "templates/AGENTS.global.md",
+        "templates/AGENTS.project.md"
+      ],
+      "change_types": {
+        "feature": 3,
+        "bugfix": 0,
+        "refactor": 0,
+        "docs": 4,
+        "test": 0,
+        "config": 1
+      },
+      "commit_intent": "general",
+      "potential_impact": "high",
+      "risk_assessment": {
+        "risk_score": 0.4,
+        "risk_level": "medium",
+        "risk_factors": [
+          "critical_files"
+        ]
+      }
+    },
+    "project_state": {
+      "framework": "node",
+      "language": "javascript",
+      "total_files": 2
+    }
+  },
+  {
+    "timestamp": "2026-02-26T09:42:10.342273",
+    "type": "claude_commit",
+    "commit_message": "Claude git commit",
+    "analysis": {
+      "changed_files": [
+        ".agent/skills/ai-commenting/SKILL.md",
+        "README.md",
+        "README.zh.md",
+        "src/catalog/generated/public-catalog.json",
+        "src/catalog/manifest.json",
+        "templates/catalog-manifest.json"
+      ],
+      "change_types": {
+        "feature": 3,
+        "bugfix": 0,
+        "refactor": 0,
+        "docs": 3,
+        "test": 0,
+        "config": 0
+      },
+      "commit_intent": "general",
+      "potential_impact": "medium",
+      "risk_assessment": {
+        "risk_score": 0.0,
+        "risk_level": "low",
+        "risk_factors": []
+      }
+    },
+    "project_state": {
+      "framework": "node",
+      "language": "javascript",
+      "total_files": 0
+    }
+  },
+  {
+    "timestamp": "2026-02-26T10:42:48.872109",
+    "type": "claude_commit",
+    "commit_message": "Claude git commit",
+    "analysis": {
+      "changed_files": [
+        ".agent/skills/agent-kb/HOW_TO_USE.md",
+        ".agent/skills/agent-kb/README.md",
+        ".agent/skills/agent-kb/SKILL.md",
+        ".agent/skills/agent-kb/references/intelligent-analysis-explained.md",
+        ".agent/skills/agent-kb/references/query-optimization.md",
+        ".agent/skills/agent-kb/scripts/health-check.sh",
+        ".agent/skills/task-kb-lookup/SKILL.md",
+        ".agent/skills/task-kb-lookup/scripts/health-check.sh",
+        ".agent/skills/task-kb-record/SKILL.md",
+        ".agent/skills/task-kb-record/scripts/health-check.sh",
+        "package-lock.json",
+        "package.json",
+        "src/catalog/generated/public-catalog.json"
+      ],
+      "change_types": {
+        "feature": 5,
+        "bugfix": 0,
+        "refactor": 0,
+        "docs": 7,
+        "test": 0,
+        "config": 1
+      },
+      "commit_intent": "general",
+      "potential_impact": "high",
+      "risk_assessment": {
+        "risk_score": 0.7,
+        "risk_level": "medium",
+        "risk_factors": [
+          "large_changeset",
+          "critical_files"
+        ]
+      }
+    },
+    "project_state": {
+      "framework": "node",
+      "language": "javascript",
+      "total_files": 0
+    }
+  },
+  {
+    "timestamp": "2026-02-26T10:53:07.251600",
+    "type": "claude_commit",
+    "commit_message": "Claude git commit",
+    "analysis": {
+      "changed_files": [
+        "AGENTS.md",
+        "templates/AGENTS.md"
+      ],
+      "change_types": {
+        "feature": 0,
+        "bugfix": 0,
+        "refactor": 0,
+        "docs": 2,
+        "test": 0,
+        "config": 0
+      },
+      "commit_intent": "general",
+      "potential_impact": "low",
+      "risk_assessment": {
+        "risk_score": 0.0,
+        "risk_level": "low",
+        "risk_factors": []
+      }
+    },
+    "project_state": {
+      "framework": "node",
+      "language": "javascript",
+      "total_files": 0
+    }
+  },
+  {
+    "timestamp": "2026-02-26T10:53:32.314709",
+    "type": "claude_commit",
+    "commit_message": "Claude git commit",
+    "analysis": {
+      "changed_files": [
+        "package-lock.json",
+        "package.json"
+      ],
+      "change_types": {
+        "feature": 1,
+        "bugfix": 0,
+        "refactor": 0,
+        "docs": 0,
+        "test": 0,
+        "config": 1
+      },
+      "commit_intent": "general",
+      "potential_impact": "high",
+      "risk_assessment": {
+        "risk_score": 0.4,
+        "risk_level": "medium",
+        "risk_factors": [
+          "critical_files"
+        ]
+      }
+    },
+    "project_state": {
+      "framework": "node",
+      "language": "javascript",
+      "total_files": 0
+    }
+  },
+  {
+    "timestamp": "2026-03-02T13:48:13.475442",
+    "type": "claude_commit",
+    "commit_message": "Claude git commit",
+    "analysis": {
+      "changed_files": [
+        "package-lock.json",
+        "package.json",
+        "src/cli/setup.js",
+        "src/config/generator.js"
+      ],
+      "change_types": {
+        "feature": 2,
+        "bugfix": 0,
+        "refactor": 0,
+        "docs": 0,
+        "test": 0,
+        "config": 2
+      },
+      "commit_intent": "general",
+      "potential_impact": "high",
+      "risk_assessment": {
+        "risk_score": 0.4,
+        "risk_level": "medium",
+        "risk_factors": [
+          "critical_files"
+        ]
+      }
+    },
+    "project_state": {
+      "framework": "node",
+      "language": "javascript",
+      "total_files": 2
+    }
+  },
+  {
+    "timestamp": "2026-03-08T00:38:17.464711",
+    "type": "claude_commit",
+    "commit_message": "Claude git commit",
+    "analysis": {
+      "changed_files": [
+        ".codex/prompts/executor.md",
+        ".codex/skills/autopilot/SKILL.md",
+        ".codex/skills/test-gen/SKILL.md",
+        ".codex/skills/ultraqa/SKILL.md",
+        ".codex/skills/verify/SKILL.md",
+        "README.md",
+        "README.zh.md",
+        "docs/AI_TESTING.md",
+        "docs/CODEX.md",
+        "docs/LLM_TESTING.md",
+        "package.json",
+        "prompts/executor.md",
+        "src/cli/index.js",
+        "src/cli/test.js",
+        "src/testing/ai-testing.js",
+        "src/testing/index.js",
+        "src/testing/prompts.js",
+        "src/testing/router-eval.js",
+        "src/testing/shared.js",
+        "src/testing/suites.js",
+        "src/testing/workflow.js",
+        "tests/llm/prompt-contract-cases.json",
+        "tests/llm/router-cases.json"
+      ],
+      "change_types": {
+        "feature": 1,
+        "bugfix": 0,
+        "refactor": 0,
+        "docs": 8,
+        "test": 13,
+        "config": 1
+      },
+      "commit_intent": "general",
+      "potential_impact": "high",
+      "risk_assessment": {
+        "risk_score": 0.7,
+        "risk_level": "medium",
+        "risk_factors": [
+          "large_changeset",
+          "critical_files"
+        ]
+      }
+    },
+    "project_state": {
+      "framework": "node",
+      "language": "javascript",
+      "total_files": 9
+    }
+  },
+  {
+    "timestamp": "2026-03-12T18:57:04.265298",
+    "type": "claude_commit",
+    "commit_message": "Claude git commit",
+    "analysis": {
+      "changed_files": [
+        ".agent/skills/agent-kb/HOW_TO_USE.md",
+        ".agent/skills/agent-kb/README.md",
+        ".agent/skills/agent-kb/SKILL.md",
+        ".agent/skills/agent-kb/references/intelligent-analysis-explained.md",
+        ".agent/skills/agent-kb/references/query-optimization.md",
+        ".agent/skills/agent-kb/scripts/health-check.sh",
+        ".agent/skills/analyze/SKILL.md",
+        ".agent/skills/autopilot/SKILL.md",
+        ".agent/skills/build-fix/SKILL.md",
+        ".agent/skills/deepsearch/SKILL.md",
+        ".agent/skills/research/SKILL.md",
+        ".agent/skills/task-kb-lookup/SKILL.md",
+        ".agent/skills/task-kb-lookup/scripts/health-check.sh",
+        ".agent/skills/task-kb-record/SKILL.md",
+        ".agent/skills/task-kb-record/scripts/health-check.sh",
+        ".agent/skills/tdd-workflow/HOW_TO_USE.md",
+        ".agent/skills/tdd-workflow/README.md",
+        ".agent/skills/tdd-workflow/SKILL.md",
+        ".agent/skills/tdd-workflow/expected_output.json",
+        ".agent/skills/tdd-workflow/sample_input.json",
+        ".agent/skills/tdd/SKILL.md",
+        ".agent/skills/test-gen/HOW_TO_USE.md",
+        ".agent/skills/test-gen/README.md",
+        ".agent/skills/test-gen/SKILL.md",
+        ".agent/skills/test-gen/expected_output.json",
+        ".agent/skills/test-gen/sample_input.json",
+        ".agent/skills/ultraqa/SKILL.md",
+        ".agent/skills/verification-loop/HOW_TO_USE.md",
+        ".agent/skills/verification-loop/README.md",
+        ".agent/skills/verification-loop/SKILL.md",
+        ".agent/skills/verification-loop/expected_output.json",
+        ".agent/skills/verification-loop/sample_input.json",
+        ".agent/skills/verify/SKILL.md",
+        "package-lock.json",
+        "package.json",
+        "src/catalog/generated/public-catalog.json",
+        "src/catalog/manifest.json",
+        "src/config/generator.js",
+        "templates/catalog-manifest.json"
+      ],
+      "change_types": {
+        "feature": 11,
+        "bugfix": 0,
+        "refactor": 0,
+        "docs": 21,
+        "test": 5,
+        "config": 2
+      },
+      "commit_intent": "general",
+      "potential_impact": "high",
+      "risk_assessment": {
+        "risk_score": 0.7,
+        "risk_level": "medium",
+        "risk_factors": [
+          "large_changeset",
+          "critical_files"
+        ]
+      }
+    },
+    "project_state": {
+      "framework": "node",
+      "language": "javascript",
+      "total_files": 1
+    }
+  },
+  {
+    "timestamp": "2026-03-12T20:51:41.348696",
+    "type": "claude_commit",
+    "commit_message": "Claude git commit",
+    "analysis": {
+      "changed_files": [
+        "AGENTS.md",
+        "package-lock.json",
+        "package.json",
+        "src/catalog/generated/public-catalog.json"
+      ],
+      "change_types": {
+        "feature": 2,
+        "bugfix": 0,
+        "refactor": 0,
+        "docs": 1,
+        "test": 0,
+        "config": 1
+      },
+      "commit_intent": "general",
+      "potential_impact": "high",
+      "risk_assessment": {
+        "risk_score": 0.4,
+        "risk_level": "medium",
+        "risk_factors": [
+          "critical_files"
+        ]
+      }
+    },
+    "project_state": {
+      "framework": "node",
+      "language": "javascript",
+      "total_files": 0
+    }
   }
 ]

@@ -1,0 +1,43 @@
+{
+  "generatedAt": "2026-03-07T16:36:19.227Z",
+  "suite": "all",
+  "pass": true,
+  "suites": [
+    {
+      "name": "skills",
+      "pass": true,
+      "note": "governance + eval passed",
+      "reportPaths": {
+        "jsonPath": "/Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/.omcodex/reports/llm-test-skills-latest.json",
+        "mdPath": "/Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/.omcodex/reports/llm-test-skills-latest.md"
+      }
+    },
+    {
+      "name": "router",
+      "pass": true,
+      "note": "4 case(s) passed",
+      "reportPaths": {
+        "jsonPath": "/Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/.omcodex/reports/llm-test-router-latest.json",
+        "mdPath": "/Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/.omcodex/reports/llm-test-router-latest.md"
+      }
+    },
+    {
+      "name": "prompts",
+      "pass": true,
+      "note": "3 prompt case(s) passed",
+      "reportPaths": {
+        "jsonPath": "/Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/.omcodex/reports/llm-test-prompts-latest.json",
+        "mdPath": "/Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/.omcodex/reports/llm-test-prompts-latest.md"
+      }
+    },
+    {
+      "name": "workflow",
+      "pass": true,
+      "note": "team/notify smoke checks passed",
+      "reportPaths": {
+        "jsonPath": "/Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/.omcodex/reports/llm-test-workflow-latest.json",
+        "mdPath": "/Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/.omcodex/reports/llm-test-workflow-latest.md"
+      }
+    }
+  ]
+}

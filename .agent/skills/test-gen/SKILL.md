@@ -2,7 +2,11 @@
 name: test-gen
 description: Use this skill after code changes to generate or update targeted tests, acceptance coverage, and regression checks with stack-aware verification.
 version: 0.3.0
+source: fork
+checksum: 62e08c9ff5a626227a56da4080725b3442c6e6717a9b764256bb0a1925854c98
+updated_at: 2026-03-12T18:57:03+08:00
 ---
+
 
 # Test Gen Skill
 

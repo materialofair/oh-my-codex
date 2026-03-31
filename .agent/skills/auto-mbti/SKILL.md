@@ -3,7 +3,11 @@ name: auto-mbti
 description: 根据开发任务自动选择最适合的MBTI人格，让AI以专业人格状态处理对应任务
 author: SuperClaude System
 version: 1.0.0
+source: fork
+checksum: c38122c84c21c0b0a64ef2e326e9bc06cf0d41f0e80eac7e9d48de213058effa
+updated_at: 2026-02-06T15:19:11+08:00
 ---
+
 
 # 自动MBTI人格渲染器
 

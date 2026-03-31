@@ -3,11 +3,17 @@
 const fs = require('fs');
 const fsp = require('fs/promises');
 const path = require('path');
+const {
+  detectSkillsDir,
+  listSkillArtifacts,
+  readArtifactBundle,
+} = require('./lib/skill-artifacts');
 
 function parseArgs(argv) {
   const result = {
     mode: 'auto',
     skillsDir: '',
+    allowlistPath: '',
     outDir: '',
     maxFiles: 20,
   };
@@ -37,8 +43,17 @@ function parseArgs(argv) {
       i += 1;
       continue;
     }
+    if (arg === '--allowlist' && argv[i + 1]) {
+      result.allowlistPath = argv[i + 1];
+      i += 1;
+      continue;
+    }
     if (arg.startsWith('--out-dir=')) {
       result.outDir = arg.slice('--out-dir='.length);
+      continue;
+    }
+    if (arg.startsWith('--allowlist=')) {
+      result.allowlistPath = arg.slice('--allowlist='.length);
       continue;
     }
     if (arg === '--max-files' && argv[i + 1]) {
@@ -54,40 +69,18 @@ function parseArgs(argv) {
   return result;
 }
 
-function detectSkillsDir(root, explicit) {
-  if (explicit) return path.resolve(explicit);
-  const candidates = [
-    path.join(root, '.agent', 'skills'),
-    path.join(root, '.codex', 'skills'),
-  ];
-  return candidates.find((dir) => fs.existsSync(dir)) || candidates[0];
-}
-
 function detectOutDir(root, explicit) {
   return explicit ? path.resolve(explicit) : path.join(root, '.omcodex', 'reports');
 }
 
-function readAllowlist(root) {
-  const file = path.join(root, '.governance', 'skill-llm.allowlist');
+function readAllowlist(root, explicitPath) {
+  const file = explicitPath ? path.resolve(explicitPath) : path.join(root, '.governance', 'skill-llm.allowlist');
   if (!fs.existsSync(file)) return new Set();
   const lines = fs.readFileSync(file, 'utf8')
     .split('\n')
     .map((line) => line.trim())
     .filter((line) => line && !line.startsWith('#'));
   return new Set(lines);
-}
-
-async function listSkillFiles(skillsDir) {
-  if (!fs.existsSync(skillsDir)) return [];
-  const entries = await fsp.readdir(skillsDir, { withFileTypes: true });
-  const files = [];
-  for (const entry of entries) {
-    if (!entry.isDirectory()) continue;
-    const file = path.join(skillsDir, entry.name, 'SKILL.md');
-    if (fs.existsSync(file)) files.push({ name: entry.name, file });
-  }
-  files.sort((a, b) => a.name.localeCompare(b.name));
-  return files;
 }
 
 function heuristicAudit(skillName, content) {
@@ -228,18 +221,18 @@ async function main() {
   const args = parseArgs(process.argv.slice(2));
   const skillsDir = detectSkillsDir(root, args.skillsDir);
   const outDir = detectOutDir(root, args.outDir);
-  const allowlist = readAllowlist(root);
+  const allowlist = readAllowlist(root, args.allowlistPath);
 
-  const files = await listSkillFiles(skillsDir);
+  const skills = await listSkillArtifacts(skillsDir);
   const mode = ['auto', 'heuristic', 'llm'].includes(args.mode) ? args.mode : 'auto';
   const apiKey = process.env.OPENAI_API_KEY;
   const llmEnabled = mode === 'llm' || (mode === 'auto' && !!apiKey);
   const model = process.env.OMX_GOVERNANCE_MODEL || 'gpt-4o-mini';
 
   const results = [];
-  for (let i = 0; i < files.length; i += 1) {
-    const item = files[i];
-    const content = await fsp.readFile(item.file, 'utf8');
+  for (let i = 0; i < skills.length; i += 1) {
+    const item = skills[i];
+    const content = await readArtifactBundle(item, { maxCharsPerFile: 5000 });
     const heuristic = heuristicAudit(item.name, content);
     let llm = null;
 
@@ -257,6 +250,7 @@ async function main() {
     }
 
     const merged = mergeAudits(heuristic, llm);
+    merged.auditedFiles = item.files.map((file) => path.relative(item.dir, file));
     merged.issues = merged.issues.map((issue) => {
       const key = `${issue.rule}:${merged.skill}`;
       if (allowlist.has(key)) {

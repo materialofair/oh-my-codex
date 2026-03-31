@@ -2,7 +2,11 @@
 name: Skill Development
 description: Create effective Codex skills with specialized knowledge, workflows, and tool integrations. Covers structure and documentation.
 version: 0.1.0
+source: fork
+checksum: 5d7c7dbe73c4bdd9355877bd033e412b3bc4de6350fd93c918b57fb5dcac07ef
+updated_at: 2026-02-11T15:02:15+08:00
 ---
+
 
 # Skill Development for Codex CLI
 

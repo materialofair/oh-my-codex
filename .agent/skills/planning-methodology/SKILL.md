@@ -3,7 +3,12 @@ name: planning-methodology
 description: Create minimal-change, reversible implementation plans. Transform requirements into executable blueprints emphasizing simplicity and safety.
 auto_invoke: true
 tags: [planning, architecture, minimal-change, reversibility]
+version: 0.1.0
+source: fork
+checksum: 79c5b626d9a7c520d02089aef93ccd6ebcbb3b8698415290e5c4c99b71d2ab05
+updated_at: 2026-02-11T09:29:29+08:00
 ---
+
 
 # Planning Methodology Skill
 

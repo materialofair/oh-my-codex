@@ -1,7 +1,12 @@
 ---
 name: orchestrate
 description: Activate multi-agent orchestration mode
+version: 0.1.0
+source: fork
+checksum: f411dc93d1fc0e6dffb5c109449542fb3a49ad6367c441379a77505cbdc38eb8
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # Orchestrate Skill
 

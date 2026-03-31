@@ -1,7 +1,12 @@
 ---
 name: git-master
 description: Git expert for atomic commits, rebasing, and history management with style detection
+version: 0.1.0
+source: fork
+checksum: 9fb788389cb611afa8e6dda7156e9e9b50a0dc673c9ae89f809a4d3b2692e36f
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # Git Master Skill
 

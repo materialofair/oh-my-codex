@@ -1,7 +1,12 @@
 ---
 name: TDD Test Generator
 description: AI-powered test-driven development assistant. Generates unit tests (Vitest), component tests (React Testing Library), and E2E tests with Playwright Test Agents integration.
+version: 0.1.0
+source: fork
+checksum: 9417907eaef9233abd13d20e2c02e3b6aa2831d46053bb07d56290c7ee9772fd
+updated_at: 2026-02-06T15:19:11+08:00
 ---
+
 
 # TDD Test Generator Skill
 

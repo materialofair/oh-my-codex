@@ -1,7 +1,12 @@
 ---
 name: skill-debugger
 description: Debugs why Claude Code skills aren't triggering when expected, analyzing descriptions, trigger conditions, and skill discovery issues
+version: 0.1.0
+source: fork
+checksum: ee282f42adfa1f44165fee923caad3de3fc356f8161ee29eaf52e7a55dd658fb
+updated_at: 2026-02-22T21:30:40+08:00
 ---
+
 
 # Skill Debugger
 

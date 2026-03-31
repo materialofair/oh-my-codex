@@ -2,7 +2,11 @@
 name: analyze
 description: Use this skill for root-cause oriented technical analysis with hypothesis testing, evidence capture, and actionable recommendations.
 version: 0.3.0
+source: fork
+checksum: 8f5a9344168d450f6e02c82b3ca653fd9da60206bdb96d7d9157cd6045035914
+updated_at: 2026-03-12T18:57:03+08:00
 ---
+
 
 # Analyze Skill
 

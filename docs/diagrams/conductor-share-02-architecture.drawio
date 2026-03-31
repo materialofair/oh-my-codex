@@ -1,0 +1,70 @@
+<mxfile host="Electron" modified="2026-03-25T01:56:38.197Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/15.8.7 Chrome/91.0.4472.164 Electron/13.6.2 Safari/537.36" compressed="false" version="15.8.7" etag="hDw0eNQowb5u3Vmi7bf9" type="device">
+  <diagram id="architecture" name="02 Conductor 架构">
+    <mxGraphModel dx="1018" dy="745" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="bg2" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=none;fillColor=#F6F8FC;gradientColor=#EDF3FF;" parent="1" vertex="1">
+          <mxGeometry width="1600" height="900" as="geometry" />
+        </mxCell>
+        <mxCell id="title2" value="Conductor 不是唯一工作流，而是持久上下文层&lt;br&gt;&lt;font style=&quot;font-size:20px;&quot;&gt;原生仓库理解优先，Conductor 负责承载长期上下文、恢复焦点、暴露漂移&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=20;strokeColor=none;fillColor=#102A43;fontColor=#FFFFFF;fontSize=30;fontStyle=1;align=center;verticalAlign=middle;spacing=18;shadow=1;" parent="1" vertex="1">
+          <mxGeometry x="90" y="50" width="1420" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="human" value="人类协作者&lt;br&gt;&lt;font style=&quot;font-size:16px;&quot;&gt;确认目标&lt;br&gt;决策取舍&lt;br&gt;审核关键意图&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=16;strokeColor=#7C5CFA;strokeWidth=3;fillColor=#F4F0FF;fontColor=#102A43;fontSize=22;fontStyle=1;align=center;verticalAlign=middle;spacing=14;shadow=1;" parent="1" vertex="1">
+          <mxGeometry x="90" y="255" width="250" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="agents" value="Codex 技能 / 子智能体&lt;br&gt;&lt;font style=&quot;font-size:16px;&quot;&gt;实现&lt;br&gt;审查&lt;br&gt;研究&lt;br&gt;验证&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=16;strokeColor=#2F6BFF;strokeWidth=3;fillColor=#EEF4FF;fontColor=#102A43;fontSize=22;fontStyle=1;align=center;verticalAlign=middle;spacing=14;shadow=1;" parent="1" vertex="1">
+          <mxGeometry x="90" y="500" width="250" height="195" as="geometry" />
+        </mxCell>
+        <mxCell id="conductorBox" value="Conductor 持久上下文层" style="rounded=1;whiteSpace=wrap;html=1;arcSize=18;strokeColor=#11A36A;strokeWidth=4;fillColor=#FFFFFF;fontColor=#102A43;fontSize=26;fontStyle=1;align=left;verticalAlign=top;spacingTop=18;spacingLeft=24;shadow=1;" parent="1" vertex="1">
+          <mxGeometry x="400" y="220" width="780" height="500" as="geometry" />
+        </mxCell>
+        <mxCell id="intent" value="意图层&lt;br&gt;&lt;font style=&quot;font-size:16px;&quot;&gt;product.md&lt;br&gt;product-guidelines.md&lt;br&gt;tech-stack.md&lt;br&gt;workflow.md&lt;br&gt;tracks.md&lt;br&gt;spec.md / plan.md&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;strokeColor=#11A36A;strokeWidth=3;fillColor=#ECFFF6;fontColor=#102A43;fontSize=21;fontStyle=1;align=left;verticalAlign=top;spacing=16;shadow=1;" parent="1" vertex="1">
+          <mxGeometry x="440" y="290" width="330" height="205" as="geometry" />
+        </mxCell>
+        <mxCell id="facts" value="事实层&lt;br&gt;&lt;font style=&quot;font-size:16px;&quot;&gt;current.md&lt;br&gt;freshness.json&lt;br&gt;drift.md&lt;br&gt;高频刷新&lt;br&gt;显式暴露现实状态&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;strokeColor=#0F8C9D;strokeWidth=3;fillColor=#E9FCFF;fontColor=#102A43;fontSize=21;fontStyle=1;align=left;verticalAlign=top;spacing=16;shadow=1;" parent="1" vertex="1">
+          <mxGeometry x="810" y="290" width="330" height="205" as="geometry" />
+        </mxCell>
+        <mxCell id="tracks" value="工作轨道单元&lt;br&gt;&lt;font style=&quot;font-size:16px;&quot;&gt;每个重要工作单元独立成轨&lt;br&gt;自带规格 / 计划 / 状态&lt;br&gt;需求变化局部化&lt;br&gt;不反向拖垮全局文档&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;strokeColor=#D96C2F;strokeWidth=3;fillColor=#FFF6EF;fontColor=#102A43;fontSize=20;fontStyle=1;align=left;verticalAlign=top;spacing=16;shadow=1;" parent="1" vertex="1">
+          <mxGeometry x="440" y="530" width="330" height="155" as="geometry" />
+        </mxCell>
+        <mxCell id="governance" value="上下文治理&lt;br&gt;&lt;font style=&quot;font-size:16px;&quot;&gt;刷新事实&lt;br&gt;恢复焦点&lt;br&gt;按意图审查&lt;br&gt;在必要时对齐漂移&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=14;strokeColor=#7C5CFA;strokeWidth=3;fillColor=#F4F0FF;fontColor=#102A43;fontSize=20;fontStyle=1;align=left;verticalAlign=top;spacing=16;shadow=1;" parent="1" vertex="1">
+          <mxGeometry x="810" y="530" width="330" height="155" as="geometry" />
+        </mxCell>
+        <mxCell id="repo" value="原生仓库现实&lt;br&gt;&lt;font style=&quot;font-size:16px;&quot;&gt;代码&lt;br&gt;配置&lt;br&gt;测试&lt;br&gt;Git 状态&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=16;strokeColor=#102A43;strokeWidth=3;fillColor=#FFFFFF;fontColor=#102A43;fontSize=21;fontStyle=1;align=center;verticalAlign=middle;spacing=14;shadow=1;" parent="1" vertex="1">
+          <mxGeometry x="1240" y="265" width="270" height="165" as="geometry" />
+        </mxCell>
+        <mxCell id="runtime" value="运行时真相&lt;br&gt;&lt;font style=&quot;font-size:16px;&quot;&gt;代码和运行行为才是现实&lt;br&gt;事实层负责刷新&lt;br&gt;不让意图静默漂移&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=16;strokeColor=#0F8C9D;strokeWidth=3;fillColor=#E9FCFF;fontColor=#102A43;fontSize=20;fontStyle=1;align=center;verticalAlign=middle;spacing=14;shadow=1;" parent="1" vertex="1">
+          <mxGeometry x="1240" y="500" width="270" height="175" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" value="确认意图" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#7C5CFA;strokeWidth=3;fontColor=#7C5CFA;fontSize=15;" parent="1" source="human" target="intent" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" value="使用上下文" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2F6BFF;strokeWidth=3;fontColor=#2F6BFF;fontSize=15;" parent="1" source="agents" target="tracks" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" value="实现 / 验证" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#2F6BFF;strokeWidth=3;fontColor=#2F6BFF;fontSize=15;" parent="1" source="agents" target="repo" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" value="刷新" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F8C9D;strokeWidth=3;fontColor=#0F8C9D;fontSize=15;" parent="1" source="repo" target="facts" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" value="暴露漂移" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F8C9D;strokeWidth=3;fontColor=#0F8C9D;fontSize=15;" parent="1" source="facts" target="governance" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" value="恢复焦点" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#11A36A;strokeWidth=3;fontColor=#11A36A;fontSize=15;" parent="1" source="intent" target="tracks" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" value="审查 / 对齐" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#11A36A;strokeWidth=3;fontColor=#11A36A;fontSize=15;" parent="1" source="governance" target="intent" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" value="现实校验" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#102A43;strokeWidth=3;fontColor=#102A43;fontSize=15;" parent="1" source="governance" target="runtime" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="footer2" value="演讲重点: 先理解真实代码库，再读取 Conductor 上下文，再调用原生技能和子智能体，最后在有意义的变化后做对齐。" style="rounded=1;whiteSpace=wrap;html=1;arcSize=18;strokeColor=none;fillColor=#102A43;fontColor=#FFFFFF;fontSize=21;fontStyle=1;align=center;verticalAlign=middle;spacing=14;shadow=1;" parent="1" vertex="1">
+          <mxGeometry x="140" y="785" width="1320" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,36 @@
+# ============================================================
+
+# ============================================================
+
+[features]
+multi_agent = true
+child_agents_md = true
+collaboration_modes = true
+
+# ============================================================
+# oh-my-codex managed block
+# ============================================================
+notify = ["node", "/opt/homebrew/lib/node_modules/oh-my-codex-cli/scripts/notify-dispatch.js"]
+model_reasoning_effort = "high"
+[mcp_servers.openaiDeveloperDocs]
+url = "https://developers.openai.com/mcp"
+enabled = true
+
+[mcp_servers.omcodex_state]
+command = "node"
+args = ["/opt/homebrew/lib/node_modules/oh-my-codex-cli/src/mcp/state-server.js"]
+enabled = true
+
+[mcp_servers.omcodex_memory]
+command = "node"
+args = ["/opt/homebrew/lib/node_modules/oh-my-codex-cli/src/mcp/memory-server.js"]
+enabled = true
+
+[mcp_servers.omcodex_trace]
+command = "node"
+args = ["/opt/homebrew/lib/node_modules/oh-my-codex-cli/src/mcp/trace-server.js"]
+enabled = true
+
+# ============================================================
+# end oh-my-codex managed block
+# ============================================================

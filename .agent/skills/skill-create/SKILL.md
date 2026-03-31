@@ -1,7 +1,12 @@
 ---
 name: skill-create
 description: Imported from everything-codex command skill-create
+version: 0.1.0
+source: fork
+checksum: 755b882daa4031914cb691489150da5839e422b697424347392920488f9f4f16
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 ---
 name: skill-create

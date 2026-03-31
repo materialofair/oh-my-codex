@@ -1,7 +1,12 @@
 ---
 name: swarm
 description: N coordinated agents on shared task list with SQLite-based atomic claiming
+version: 0.1.0
+source: fork
+checksum: f1791570f148a6040dbf358752039ad37dcd848ae2529770e79edc0ab17967ee
+updated_at: 2026-02-11T15:02:15+08:00
 ---
+
 
 # Swarm Skill
 

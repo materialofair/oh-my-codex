@@ -1,7 +1,12 @@
 ---
 name: ralplan
 description: Iterative planning with Planner, Architect, and Critic until consensus
+version: 0.1.0
+source: fork
+checksum: 933b81533944e38069a618330095aac3e4ee6acc8d34cb48e9cd080b139d836a
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # Ralplan Command
 

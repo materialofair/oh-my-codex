@@ -1,7 +1,12 @@
 ---
 name: ralph
 description: Self-referential loop until task completion with architect verification
+version: 0.1.0
+source: fork
+checksum: d5bac1444082788d5baeb73cfbc5da707c9ed6bd843ccd1950e8f1d4542c867e
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # Ralph Skill
 

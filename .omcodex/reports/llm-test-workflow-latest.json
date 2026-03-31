@@ -1,0 +1,59 @@
+{
+  "generatedAt": "2026-03-07T16:36:19.227Z",
+  "suite": "workflow",
+  "sandbox": "[cleaned]",
+  "host": "MacBook-Pro-3.local",
+  "pass": true,
+  "steps": [
+    {
+      "name": "route-json",
+      "pass": true,
+      "notes": [
+        "top=build-fix"
+      ]
+    },
+    {
+      "name": "team-start",
+      "pass": true,
+      "notes": [
+        "phase=team-plan",
+        "skills=security-review"
+      ]
+    },
+    {
+      "name": "team-advance",
+      "pass": true,
+      "notes": [
+        "phase=team-prd"
+      ]
+    },
+    {
+      "name": "notify-init",
+      "pass": true,
+      "notes": [
+        "sample plugin created"
+      ]
+    },
+    {
+      "name": "notify-validate",
+      "pass": true,
+      "notes": [
+        "OK sample-notify-plugin.mjs\n"
+      ]
+    },
+    {
+      "name": "notify-test",
+      "pass": true,
+      "notes": [
+        "seen-count=1"
+      ]
+    },
+    {
+      "name": "team-cancel",
+      "pass": true,
+      "notes": [
+        "phase=cancelled"
+      ]
+    }
+  ]
+}

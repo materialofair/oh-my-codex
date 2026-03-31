@@ -199,7 +199,7 @@ For `oh-my-codex` itself, the internal harness is still available:
 
 ```bash
 omcodex test llm all
-omcodex test llm skills --skill-path .codex/skills/skill-tester
+omcodex test llm skills --skill-path .agent/skills/skill-tester
 omcodex test llm router --cases tests/llm/router-cases.json
 omcodex test llm prompts --cases tests/llm/prompt-contract-cases.json
 omcodex test llm workflow

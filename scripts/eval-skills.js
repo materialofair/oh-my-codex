@@ -3,6 +3,11 @@
 const fs = require('fs');
 const fsp = require('fs/promises');
 const path = require('path');
+const {
+  detectSkillsDir,
+  listSkillArtifacts,
+  readArtifactBundle,
+} = require('./lib/skill-artifacts');
 
 function parseArgs(argv) {
   const result = {
@@ -42,15 +47,6 @@ function parseArgs(argv) {
   }
 
   return result;
-}
-
-function detectSkillsDir(root, explicit) {
-  if (explicit) return path.resolve(explicit);
-  const candidates = [
-    path.join(root, '.agent', 'skills'),
-    path.join(root, '.codex', 'skills'),
-  ];
-  return candidates.find((dir) => fs.existsSync(dir)) || candidates[0];
 }
 
 function detectOutDir(root, explicit) {
@@ -134,19 +130,6 @@ function evaluateSkill(name, content) {
   };
 }
 
-async function listSkillFiles(skillsDir) {
-  if (!fs.existsSync(skillsDir)) return [];
-  const entries = await fsp.readdir(skillsDir, { withFileTypes: true });
-  const files = [];
-  for (const entry of entries) {
-    if (!entry.isDirectory()) continue;
-    const file = path.join(skillsDir, entry.name, 'SKILL.md');
-    if (fs.existsSync(file)) files.push({ name: entry.name, file });
-  }
-  files.sort((a, b) => a.name.localeCompare(b.name));
-  return files;
-}
-
 function renderMarkdownReport(summary) {
   const lines = [];
   lines.push('# Skill Eval Report');
@@ -174,11 +157,12 @@ async function main() {
   const outDir = detectOutDir(root, args.outDir);
   const minScore = Math.max(1, Number(args.minScore) || 70);
 
-  const files = await listSkillFiles(skillsDir);
+  const skills = await listSkillArtifacts(skillsDir);
   const results = [];
-  for (const item of files) {
-    const content = await fsp.readFile(item.file, 'utf8');
+  for (const item of skills) {
+    const content = await readArtifactBundle(item);
     const score = evaluateSkill(item.name, content);
+    score.auditedFiles = item.files.map((file) => path.relative(item.dir, file));
     results.push(score);
   }
 

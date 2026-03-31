@@ -1,0 +1,78 @@
+--- a/skills/note/SKILL.md
++++ b/skills/note/SKILL.md
+@@ -1,22 +1,45 @@
+ ---
+ name: note
+ description: Save notes to notepad.md for compaction resilience
++version: 0.1.0
++source: fork
++checksum: 685193d1c4da2747a76cd36cbc985d6f3b1f0ccc2634ff60c69c3a76d4332950
++updated_at: 2026-02-11T09:29:16+08:00
+ ---
+ 
++
+ # Note Skill
+ 
+-Save important context to `.omx/notepad.md` that survives conversation compaction.
+ 
++## Native Subagent Protocol (Codex)
++
++Codex supports native subagents. Delegate with `spawn_agent`, coordinate with `send_input`, collect via `wait`, and clean up with `close_agent`.
++
++Execution preference:
++1. Use native subagents first for independent workstreams (parallel when possible).
++2. Merge results in main thread and run final verification.
++3. Fallback only when delegation is blocked: use the `[ANALYST]`/`[ARCHITECT]`/`[EXECUTOR]`/`[REVIEWER]` structure in a single response.
++
++Minimal orchestration pattern:
++```text
++spawn_agent -> send_input (optional) -> wait -> close_agent
++```
++
++> Codex invocation: use `$note ...` or `note: ...`
++
++
++Save important context to `.omc/notepad.md` that survives conversation compaction.
++
+ ## Usage
+ 
+ | Command | Action |
+ |---------|--------|
+-| `/note <content>` | Add to Working Memory with timestamp |
+-| `/note --priority <content>` | Add to Priority Context (always loaded) |
+-| `/note --manual <content>` | Add to MANUAL section (never pruned) |
+-| `/note --show` | Display current notepad contents |
+-| `/note --prune` | Remove entries older than 7 days |
+-| `/note --clear` | Clear Working Memory (keep Priority + MANUAL) |
++| `$note <content>` | Add to Working Memory with timestamp |
++| `$note --priority <content>` | Add to Priority Context (always loaded) |
++| `$note --manual <content>` | Add to MANUAL section (never pruned) |
++| `$note --show` | Display current notepad contents |
++| `$note --prune` | Remove entries older than 7 days |
++| `$note --clear` | Clear Working Memory (keep Priority + MANUAL) |
+ 
+ ## Sections
+ 
+@@ -38,16 +61,16 @@
+ ## Examples
+ 
+ ```
+-/note Found auth bug in UserContext - missing useEffect dependency
+-/note --priority Project uses TypeScript strict mode, all files in src/
+-/note --manual Contact: api-team@company.com for backend questions
+-/note --show
+-/note --prune
++$note Found auth bug in UserContext - missing useEffect dependency
++$note --priority Project uses TypeScript strict mode, all files in src/
++$note --manual Contact: api-team@company.com for backend questions
++$note --show
++$note --prune
+ ```
+ 
+ ## Behavior
+ 
+-1. Creates `.omx/notepad.md` if it doesn't exist
++1. Creates `.omc/notepad.md` if it doesn't exist
+ 2. Parses the argument to determine section
+ 3. Appends content with timestamp (for Working Memory)
+ 4. Warns if Priority Context exceeds 500 chars

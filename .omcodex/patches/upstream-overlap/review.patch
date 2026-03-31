@@ -1,0 +1,84 @@
+--- a/skills/review/SKILL.md
++++ b/skills/review/SKILL.md
+@@ -1,38 +1,58 @@
+ ---
+ name: review
+-description: Reviewer-only pass for /plan --review and cleanup artifact review
++description: Review a plan with Critic
++version: 0.1.0
++source: fork
++checksum: 4e6df46179eceab92675226aeda77952bd3a5c4748501dd09c640c17710585ce
++updated_at: 2026-02-11T09:29:16+08:00
+ ---
+ 
+-# Review (Reviewer-Only Pass)
+ 
+-Review is a shorthand alias for `/plan --review`. It triggers Critic evaluation of an existing plan and is intended to preserve writer/reviewer separation.
++# Review Skill
+ 
+-## Usage
++## Native Subagent Protocol (Codex)
+ 
++Codex supports native subagents. Delegate with `spawn_agent`, coordinate with `send_input`, collect via `wait`, and clean up with `close_agent`.
++
++Execution preference:
++1. Use native subagents first for independent workstreams (parallel when possible).
++2. Merge results in main thread and run final verification.
++3. Fallback only when delegation is blocked: use the `[ANALYST]`/`[ARCHITECT]`/`[EXECUTOR]`/`[REVIEWER]` structure in a single response.
++
++Minimal orchestration pattern:
++```text
++spawn_agent -> send_input (optional) -> wait -> close_agent
+ ```
+-/review
+-/review "path/to/plan.md"
+-```
+ 
+-## Behavior
++> Codex invocation: use `$review ...` or `review: ...`
+ 
+-This skill invokes the Plan skill in review mode:
+ 
+-```
+-/plan --review <arguments>
+-```
++[PLAN REVIEW MODE ACTIVATED]
+ 
+-The review workflow:
+-1. Treat review as a reviewer-only pass. The authoring context may write the plan or cleanup proposal, but a separate reviewer context must issue the verdict.
+-2. Read plan file from `.omx/plans/` (or specified path)
+-3. Evaluate via Critic agent
+-4. For cleanup/refactor/anti-slop work, confirm the artifact includes a cleanup plan, regression-test coverage or an explicit test gap, bounded smell-by-smell passes, and quality gates.
+-5. Return verdict: APPROVED, REVISE (with specific feedback), or REJECT (replanning required)
++## Role
+ 
+-## Guardrails
++Critically evaluate plans using Critic. No plan passes without meeting rigorous standards.
+ 
+-- Never write and approve in the same context.
+-- If the current context authored the artifact, hand review to Critic or another reviewer role.
+-- Approval must cite concrete evidence, not author claims.
++## Review Criteria
+ 
+-Follow the Plan skill's full documentation for review mode details.
++| Criterion | Standard |
++|-----------|----------|
++| Clarity | 80%+ claims cite file/line |
++| Testability | 90%+ criteria are concrete |
++| Verification | All file refs exist |
++| Specificity | No vague terms |
++
++## Verdicts
++
++**APPROVED** - Plan meets all criteria, ready for execution
++**REVISE** - Plan has issues needing fixes (with specific feedback)
++**REJECT** - Fundamental problems require replanning
++
++## What Gets Checked
++
++1. Are requirements clear and unambiguous?
++2. Are acceptance criteria concrete and testable?
++3. Do file references actually exist?
++4. Are implementation steps specific?
++5. Are risks identified with mitigations?
++6. Are verification steps defined?

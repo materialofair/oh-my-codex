@@ -4,7 +4,7 @@
 
 Skill pack and workflow orchestration for **OpenAI Codex CLI**.
 
-**Version:** 0.2.8
+**Version:** 0.5.0
 **Purpose:** Make Codex behave like a multi-agent conductor using structured skills
 
 ## Purpose
@@ -20,7 +20,7 @@ oh-my-codex enhances Codex with:
 |------|-------------|
 | `README.md` | Entry point documentation |
 | `docs/CODEX.md` | Codex-specific install and usage guide |
-| `.codex/skills/` | All Codex skill definitions |
+| `.agent/skills/` | Source-of-truth Codex skill definitions |
 | `scripts/install-codex.sh` | Global skill installer |
 
 ## For AI Agents
@@ -75,12 +75,17 @@ Commenting rules:
 For this repository, **`oh-my-codex` is the single source of truth** for skills and docs.
 
 Required order:
-1. Edit and validate files in this repo first (for example `.codex/skills/**/SKILL.md`).
+1. Edit and validate files in this repo first (for example `.agent/skills/**/SKILL.md`).
 2. Commit/push repository changes.
 3. Install/sync to runtime using installer scripts (for example `scripts/install-codex.sh` / `scripts/install-codex-force.sh`).
 
 Do **not** use `~/.codex/skills` as the primary editing location.
 Direct edits under `~/.codex/skills` are temporary at most, and must be immediately backported to repo before considering work complete.
+
+Repository convention:
+- `.agent/skills/` is the authoring source.
+- `~/.codex/skills/` and `<repo>/.codex/skills/` are runtime/install targets.
+- Do not add or maintain a second source copy under `.codex/skills/` in this repository unless a script explicitly requires it.
 
 ### Compatibility Notes
 

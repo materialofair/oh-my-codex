@@ -2,7 +2,11 @@
 name: autopilot
 description: Use this skill to run end-to-end delivery from requirement to verified code with gated phases, state tracking, and retry limits.
 version: 0.3.0
+source: fork
+checksum: dd1f612f84be2a4e182a77aa6593194fdcd2b4b2c4f66232fcc110c6087c7a82
+updated_at: 2026-03-12T18:57:03+08:00
 ---
+
 
 # Autopilot Skill
 

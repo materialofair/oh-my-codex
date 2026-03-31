@@ -2,7 +2,12 @@
 name: ai-commenting
 description: AI-native code annotation protocol that encodes intent, risk, dependencies, constraints, and test expectations in machine-parseable comments.
 argument-hint: <goal or target files>
+version: 0.1.0
+source: fork
+checksum: fbfdea46822fee8551977378505ccbab45184f1078d90455145c5da13efd67ba
+updated_at: 2026-02-26T09:42:09+08:00
 ---
+
 
 # AI Commenting Skill
 

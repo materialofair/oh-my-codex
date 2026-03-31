@@ -1,0 +1,4 @@
+{"timestamp":"2026-02-23T12:50:43.960Z","type":"team_auto_advance","applied":true,"from":"team-plan","to":"team-prd","event":"turn-complete","failed_signal":false}
+{"timestamp":"2026-02-23T12:50:44.046Z","type":"team_auto_advance","applied":true,"from":"team-prd","to":"team-exec","event":"turn-complete","failed_signal":false}
+{"timestamp":"2026-02-23T12:50:44.140Z","type":"team_auto_advance","applied":true,"from":"team-exec","to":"team-verify","event":"post-tool-use","failed_signal":false}
+{"timestamp":"2026-02-23T12:50:47.853Z","type":"team_auto_advance","applied":true,"from":"team-verify","to":"team-fix","event":"turn-complete","failed_signal":true}

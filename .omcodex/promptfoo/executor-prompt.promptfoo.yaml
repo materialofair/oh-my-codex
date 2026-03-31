@@ -1,0 +1,27 @@
+description: "Codex LLM prompt regression suite"
+prompts:
+  - "file:///Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/prompts/executor.md"
+providers:
+  -
+    id: "openai:codex-sdk"
+    config:
+      model: "gpt-5.1-codex-mini"
+      working_dir: "/Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex"
+      sandbox_mode: "read-only"
+      approval_policy: "never"
+      model_reasoning_effort: "medium"
+tests:
+  -
+    description: "Executor responses should preserve the small-diff bias."
+    vars: {}
+    assert:
+      -
+        type: "contains"
+        value: "smallest viable diff"
+  -
+    description: "Executor responses should keep verification evidence explicit."
+    vars: {}
+    assert:
+      -
+        type: "contains"
+        value: "verification"

@@ -1,7 +1,12 @@
 ---
 name: ultraqa
 description: QA cycling workflow - test, verify, fix, repeat until goal met
+version: 0.1.0
+source: fork
+checksum: 01b009e7ec8927e1e27ac5c83f1679ed96f9e02f83da43f9807255e34b03385f
+updated_at: 2026-03-12T18:57:03+08:00
 ---
+
 
 # UltraQA Skill
 

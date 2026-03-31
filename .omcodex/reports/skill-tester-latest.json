@@ -1,0 +1,66 @@
+{
+  "generatedAt": "2026-03-07T16:36:18.818Z",
+  "skillPath": "/Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/.codex/skills/skill-tester",
+  "casesPath": "/Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/.codex/skills/skill-tester/sample_test_cases.json",
+  "mode": "static",
+  "pass": true,
+  "staticChecks": {
+    "pass": true,
+    "checks": [
+      {
+        "id": "frontmatter_exists",
+        "pass": true,
+        "detail": "Frontmatter found"
+      },
+      {
+        "id": "name_exists",
+        "pass": true,
+        "detail": "skill-tester"
+      },
+      {
+        "id": "description_exists",
+        "pass": true,
+        "detail": "description present"
+      },
+      {
+        "id": "description_specificity",
+        "pass": true,
+        "detail": "Description should include triggering language (when/asks/trigger/use)"
+      },
+      {
+        "id": "has_workflow_section",
+        "pass": true,
+        "detail": "Need workflow or usage section"
+      },
+      {
+        "id": "has_examples",
+        "pass": true,
+        "detail": "Need runnable examples with code fence"
+      }
+    ],
+    "frontmatter": {
+      "name": "skill-tester",
+      "description": "Tests Codex skill functionality with executable checks. Use this skill when the user asks to \"test a skill\", \"run skill regression\", \"validate skill triggers\", or \"check if skill changes broke behavior\"."
+    },
+    "content": "---\nname: skill-tester\ndescription: Tests Codex skill functionality with executable checks. Use this skill when the user asks to \"test a skill\", \"run skill regression\", \"validate skill triggers\", or \"check if skill changes broke behavior\".\n---\n\n# Skill Tester\n\nExecutable validation workflow for Codex skills.\n\n## Capabilities\n\n- Static contract checks for `SKILL.md` (frontmatter, trigger wording, workflow sections)\n- Trigger regression checks from test cases (`query -> expected skill/keywords`)\n- Optional semantic audit (LLM mode)\n- Machine-readable reports (`json` + `markdown`)\n\n## Input Requirements\n\n- Target skill path\n- Test case file (`sample_test_cases.json` style)\n- Optional runner command for end-to-end trigger replay\n\n## Test Case Schema\n\n```json\n[\n  {\n    \"id\": \"trigger_code_review\",\n    \"query\": \"Please review this pull request\",\n    \"expectedSkill\": \"code-review\",\n    \"expectedKeywords\": [\"review\"],\n    \"forbiddenKeywords\": [\"financial\"]\n  }\n]\n```\n\n## How to Use\n\n### 1) Static checks only\n\n```bash\nnode .codex/skills/skill-tester/scripts/run-skill-tests.js \\\n  --skill-path .codex/skills/skill-debugger\n```\n\n### 2) Trigger regression with command replay\n\nUse a runner command template with placeholders:\n\n- `{query}`: raw query text\n- `{query_escaped}`: shell-escaped query text\n\n```bash\nnode .codex/skills/skill-tester/scripts/run-skill-tests.js \\\n  --skill-path .codex/skills/skill-debugger \\\n  --cases .codex/skills/skill-tester/sample_test_cases.json \\\n  --runner-cmd \"printf 'skill-debugger\\\\ntrigger description\\\\nquery=%s\\\\n' {query_escaped}\"\n```\n\n### 3) Built-in Claude runner\n\n```bash\nnode .codex/skills/skill-tester/scripts/run-skill-tests.js \\\n  --skill-path .codex/skills/skill-tester \\\n  --cases .codex/skills/skill-tester/sample_test_cases.json \\\n  --runner claude\n```\n\n### 3) Hybrid mode (static + semantic)\n\n```bash\nOPENAI_API_KEY=... node .codex/skills/skill-tester/scripts/run-skill-tests.js \\\n  --skill-path .codex/skills/skill-debugger \\\n  --cases .codex/skills/skill-tester/sample_test_cases.json \\\n  --mode hybrid\n```\n\n## Output\n\n- `.omcodex/reports/skill-tester-latest.json`\n- `.omcodex/reports/skill-tester-latest.md`\n\nExit code behavior:\n\n- `0`: all checks pass\n- `1`: any static/trigger/semantic gate fails\n\n## Trigger Replay Guidance\n\nUse `--runner` for built-in integrations or `--runner-cmd` for custom integrations.\n\nExamples:\n\n```bash\n# Placeholder for Codex CLI integration\n--runner-cmd \"codex exec --json {query_escaped}\"\n\n# Built-in Claude CLI integration\n--runner claude\n```\n\nTune assertions in `sample_test_cases.json` using `expectedSkill`, `expectedKeywords`, and `forbiddenKeywords`.\n\n## Recommended Workflow\n\n1. Run static checks on every skill edit.\n2. Run trigger regression before merging.\n3. Run hybrid mode on release candidates.\n4. Store reports as regression evidence.\n\n## Related Skills\n\n- `skill-quality-analyzer`: broader quality scoring\n- `skill-debugger`: root-cause analysis when trigger tests fail\n- `skill-development`: authoring and refinement workflow\n"
+  },
+  "triggerChecks": {
+    "enabled": false,
+    "pass": true,
+    "total": 0,
+    "passed": 0,
+    "failed": 0,
+    "results": [],
+    "notes": [
+      "No --runner-cmd provided, trigger checks skipped"
+    ]
+  },
+  "semanticChecks": {
+    "enabled": false,
+    "pass": true,
+    "issues": [],
+    "notes": [
+      "Semantic check skipped (mode is not hybrid)"
+    ]
+  }
+}

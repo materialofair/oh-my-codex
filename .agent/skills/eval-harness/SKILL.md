@@ -2,7 +2,12 @@
 name: eval-harness
 description: Formal evaluation framework for Codex sessions implementing eval-driven development (EDD) principles
 tools: Read, Write, Edit, Bash, Grep, Glob
+version: 0.1.0
+source: fork
+checksum: a4053f80cd5d69f0bb2693a42af1b109fb06da84f6d717066a02a7f63ec1eb4a
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # Eval Harness Skill
 

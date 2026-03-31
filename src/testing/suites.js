@@ -55,7 +55,7 @@ async function runSkillsSuite(options = {}) {
 
   if (options.skillPath) {
     const testerArgs = [
-      '.codex/skills/skill-tester/scripts/run-skill-tests.js',
+      '.agent/skills/skill-tester/scripts/run-skill-tests.js',
       '--skill-path',
       options.skillPath,
     ];

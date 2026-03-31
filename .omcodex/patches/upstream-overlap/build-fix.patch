@@ -1,0 +1,158 @@
+--- a/skills/build-fix/SKILL.md
++++ b/skills/build-fix/SKILL.md
+@@ -1,34 +1,50 @@
+ ---
+ name: build-fix
+ description: Fix build and TypeScript errors with minimal changes
++version: 0.1.0
++source: fork
++checksum: 1a33bb9e13bbe05df657e37849f7aee8450df533c6566a767ebd0184d33c5a9a
++updated_at: 2026-03-12T18:57:03+08:00
+ ---
+ 
++
+ # Build Fix Skill
+ 
+-Fix build and compilation errors quickly with minimal code changes. Get the build green without refactoring.
+ 
++## Native Subagent Protocol (Codex)
++
++Codex supports native subagents. Delegate with `spawn_agent`, coordinate with `send_input`, collect via `wait`, and clean up with `close_agent`.
++
++Execution preference:
++1. Use native subagents first for independent workstreams (parallel when possible).
++2. Merge results in main thread and run final verification.
++3. Fallback only when delegation is blocked: use the `[ANALYST]`/`[ARCHITECT]`/`[EXECUTOR]`/`[REVIEWER]` structure in a single response.
++
++Minimal orchestration pattern:
++```text
++spawn_agent -> send_input (optional) -> wait -> close_agent
++```
++
++> Codex invocation: use `$build-fix ...` or `build-fix: ...`
++
++
++Fix build and TypeScript errors quickly with minimal code changes. Get the build green without refactoring.
++
+ ## When to Use
+ 
+ This skill activates when:
+ - User says "fix the build", "build is broken"
+ - TypeScript compilation fails
+-- the build command or type checker reports errors
++- `npm run build` or `tsc` reports errors
+ - User requests "minimal fixes" for errors
+ 
+ ## What It Does
+ 
+-## GPT-5.4 Guidance Alignment
++Delegates to the `build-fixer` agent (Sonnet model) to:
+ 
+-- Default to concise, evidence-dense progress and completion reporting unless the user or risk level requires more detail.
+-- Treat newer user task updates as local overrides for the active workflow branch while preserving earlier non-conflicting constraints.
+-- If correctness depends on additional inspection, retrieval, execution, or verification, keep using the relevant tools until the build-fix workflow is grounded.
+-- Continue through clear, low-risk, reversible next steps automatically; ask only when the next step is materially branching, destructive, or preference-dependent.
+-
+-Delegates to the `build-fixer` agent (STANDARD tier) to:
+-
+ 1. **Collect Errors**
+-   - Run the project's type check command (e.g., `tsc --noEmit`, `mypy`, `cargo check`, `go vet`)
+-   - Or run the project's build command to get build failures
++   - Run `npx tsc --noEmit` to get all TypeScript errors
++   - Or run `npm run build` to get build failures
+    - Categorize errors by type and severity
+ 
+ 2. **Fix Strategically**
+@@ -45,23 +61,15 @@
+    - ONLY what's needed to make build pass
+ 
+ 4. **Verify**
+-   - Run the project's type check command after each fix
++   - Run `npx tsc --noEmit` after each fix
+    - Ensure no new errors introduced
+    - Stop when build passes
+ 
+-## Command Guidance
+-
+-- Prefer `omx sparkshell` for noisy build/typecheck runs, repository search/listing, and bounded read-only inspection when summary output is enough.
+-- Use raw shell when exact stdout/stderr, shell composition, dependency installation, or low-level debugging fidelity is required.
+-- If `omx sparkshell` returns incomplete, ambiguous, or `summary unavailable` output, retry with a more precise command or the raw shell immediately.
+-
+ ## Agent Delegation
+ 
+ ```
+-delegate(
+-  role="build-fixer",
+-  tier="STANDARD",
+-  prompt="BUILD FIX TASK
++[BUILD-FIXER | sonnet]
++BUILD FIX TASK
+ 
+ Fix all build and TypeScript errors with minimal changes.
+ 
+@@ -76,14 +84,13 @@
+ - List of errors fixed
+ - Lines changed per fix
+ - Final build status"
+-)
+ ```
+ 
+ ## Stop Conditions
+ 
+ The build-fixer agent stops when:
+-- Type check command exits with code 0
+-- Build command completes successfully
++- `npx tsc --noEmit` exits with code 0
++- `npm run build` completes successfully
+ - No new errors introduced
+ 
+ ## Output Format
+@@ -103,7 +110,7 @@
+ ...
+ 
+ Final Build Status: ✓ PASSING
+-Verification: [type check command] (exit code 0)
++Verification: npx tsc --noEmit (exit code 0)
+ ```
+ 
+ ## Best Practices
+@@ -113,33 +120,25 @@
+ - **Document why** - Comment non-obvious fixes
+ - **Test after** - Ensure tests still pass
+ 
+-
+-## Scenario Examples
+-
+-**Good:** The user says `continue` after the workflow already has a clear next step. Continue the current branch of work instead of restarting or re-asking the same question.
+-
+-**Good:** The user changes only the output shape or downstream delivery step (for example `make a PR`). Preserve earlier non-conflicting workflow constraints and apply the update locally.
+-
+-**Bad:** The user says `continue`, and the workflow restarts discovery or stops before the missing verification/evidence is gathered.
+-
+ ## Use with Other Skills
+ 
+ Combine with other skills for comprehensive fixing:
+ 
+ **With Ultrawork:**
+ ```
+-/ultrawork fix all build errors
++$ultrawork fix all build errors
+ ```
+ Spawns multiple build-fixer agents in parallel for different files.
+ 
+ **With Ralph:**
+ ```
+-/ralph fix the build
++$ralph fix the build
+ ```
+ Keeps trying until build passes, even if it takes multiple iterations.
+ 
+-**With Team:**
++**With Pipeline:**
+ ```
+-/team "debug build failures and fix type errors"
++$pipeline debug "build is failing"
+ ```
+-Uses: explore → build-fixer → verifier workflow.
++Uses: explore → architect → build-fixer workflow.
++

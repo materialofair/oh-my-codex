@@ -13,6 +13,7 @@ The internal harness covers four layers:
    - runs LLM governance checks
    - runs skill evaluation
    - can optionally replay trigger regression through `skill-tester`
+   - audits `SKILL.md`, bundled command protocol files such as `commands/**/*.toml`, and critical execution templates such as `templates/workflow.md`, `templates/current.md`, and `templates/rules/*.md`
 
 2. `router`
    - validates `omcodex route` against JSON fixtures
@@ -30,7 +31,7 @@ The internal harness covers four layers:
 
 ```bash
 omcodex test llm all
-omcodex test llm skills --skill-path .codex/skills/skill-tester
+omcodex test llm skills --skill-path .agent/skills/skill-tester
 omcodex test llm router --cases tests/llm/router-cases.json
 omcodex test llm prompts --cases tests/llm/prompt-contract-cases.json
 omcodex test llm workflow

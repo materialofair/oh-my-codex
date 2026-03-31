@@ -2,7 +2,11 @@
 name: verify
 description: Use this skill to run deterministic project verification (build, types, lint, tests, security, git status) with mode-based command sets.
 version: 0.3.0
+source: fork
+checksum: be32ea429008778092ad797aeaaecbd922001f2fa16b9805a4f9a429bfa9fc45
+updated_at: 2026-03-12T18:57:03+08:00
 ---
+
 
 # Verify Skill
 

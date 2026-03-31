@@ -1,7 +1,12 @@
 ---
 name: update-docs
 description: Imported from everything-codex command update-docs
+version: 0.1.0
+source: fork
+checksum: 901616a8d97e5f21bedac5b7593bcd21f25719e87003c198bab76fb3dbfd1966
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # Update Documentation
 

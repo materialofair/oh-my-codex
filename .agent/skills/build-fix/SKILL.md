@@ -1,7 +1,12 @@
 ---
 name: build-fix
 description: Fix build and TypeScript errors with minimal changes
+version: 0.1.0
+source: fork
+checksum: 1a33bb9e13bbe05df657e37849f7aee8450df533c6566a767ebd0184d33c5a9a
+updated_at: 2026-03-12T18:57:03+08:00
 ---
+
 
 # Build Fix Skill
 

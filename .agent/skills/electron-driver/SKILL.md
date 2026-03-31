@@ -2,7 +2,12 @@
 name: electron-driver
 description: E2E Testing & Automation for Electron Apps (Playwright)
 model: sonnet
+version: 0.1.0
+source: fork
+checksum: 5075d5b6ce36bf003b19b0bdc8868fc0e848c19bef574c5167792a792fc4d33e
+updated_at: 2026-02-06T15:19:11+08:00
 ---
+
 
 # Electron Driver Skill
 

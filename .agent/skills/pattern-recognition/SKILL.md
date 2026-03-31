@@ -3,7 +3,12 @@ name: pattern-recognition
 description: Identify, capture, document reusable patterns from implementations. Enables automatic learning and knowledge-core.md updates.
 auto_invoke: true
 tags: [patterns, learning, knowledge, documentation]
+version: 0.1.0
+source: fork
+checksum: 12bc073b464b989e99ba635d43413b8643d01d01b38c5d8f97fe111c6eb125e6
+updated_at: 2026-02-11T15:02:15+08:00
 ---
+
 
 # Pattern Recognition Skill
 

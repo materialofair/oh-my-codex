@@ -1,7 +1,12 @@
 ---
 name: note
 description: Save notes to notepad.md for compaction resilience
+version: 0.1.0
+source: fork
+checksum: 685193d1c4da2747a76cd36cbc985d6f3b1f0ccc2634ff60c69c3a76d4332950
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # Note Skill
 

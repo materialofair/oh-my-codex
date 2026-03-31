@@ -1,7 +1,12 @@
 ---
 name: skill-quality-analyzer
 description: Analyzes Codex skill quality with 6-dimension scoring system similar to CodeDNA, providing actionable improvement recommendations
+version: 0.1.0
+source: fork
+checksum: 18b9a50eec9aa9b5fe790349f92c3a9440dfe0793f00e3bdc93e1e1396ac958c
+updated_at: 2026-02-05T17:51:16+08:00
 ---
+
 
 # Skill Quality Analyzer
 

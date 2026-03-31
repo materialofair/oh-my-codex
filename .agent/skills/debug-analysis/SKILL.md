@@ -3,7 +3,12 @@ name: debug-analysis
 description: 深度调试分析 - 直接调用 Gemini/Codex CLI 进行系统性问题诊断，支持会话延续。
 auto_invoke: true
 tags: [debug, analysis, troubleshooting, direct-cli]
+version: 0.1.0
+source: fork
+checksum: be1ca1610cf6977290ba3b8ed32495c7a0ea27e995f0bb406102daf7258b5e22
+updated_at: 2026-02-06T15:19:11+08:00
 ---
+
 
 # Debug Analysis - 深度调试分析 Skill
 

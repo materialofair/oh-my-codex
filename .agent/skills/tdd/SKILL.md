@@ -1,7 +1,12 @@
 ---
 name: tdd
 description: Test-Driven Development enforcement skill - write tests first, always
+version: 0.1.0
+source: fork
+checksum: 69efeb2f447f65e6c8988017cbbf8949b2d4f505ccc59540343f81754a21fed5
+updated_at: 2026-03-12T18:57:03+08:00
 ---
+
 
 # TDD Mode
 

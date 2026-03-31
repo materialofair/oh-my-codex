@@ -2,7 +2,12 @@
 name: writer-memory
 description: Agentic memory system for writers - track characters, relationships, scenes, and themes
 argument-hint: "init|char|rel|scene|query|validate|synopsis|status|export [args]"
+version: 0.1.0
+source: fork
+checksum: d04745258d1777ef150627ee7685e42b5ab2a94ae811eae341d8740d8e110299
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # Writer Memory - Agentic Memory System for Writers
 

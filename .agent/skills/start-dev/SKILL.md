@@ -1,7 +1,12 @@
 ---
 name: start-dev
 description: Intelligent adaptive workflow with automatic pattern library loading, codebase exploration, and multi-approach architecture. Auto-detects frontend/backend tasks and loads relevant patterns.
+version: 0.1.0
+source: fork
+checksum: ea2494b966fd7f8808d8c16114141306728f2bcc9056eba4d0d149514fd5a578
+updated_at: 2026-02-11T09:29:22+08:00
 ---
+
 
 # start-dev - Intelligent Workflow with Smart Pattern Loading
 

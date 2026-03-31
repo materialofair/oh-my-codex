@@ -1,7 +1,12 @@
 ---
 name: ralph-init
 description: Initialize a PRD (Product Requirements Document) for structured ralph-loop execution
+version: 0.1.0
+source: fork
+checksum: a2182a979115d582967a4065134a14f9b54d627a92f1117609ba6acf06d3d40c
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # Ralph Init Skill
 

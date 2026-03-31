@@ -1,7 +1,12 @@
 ---
 name: coding-standards
 description: Universal coding standards, best practices, and patterns for TypeScript, JavaScript, React, and Node.js development.
+version: 0.1.0
+source: fork
+checksum: 650bf61e5d3ffde642972615c25fc6a39a8da89355ae94f83d02da69dfbfc45e
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # Coding Standards & Best Practices
 

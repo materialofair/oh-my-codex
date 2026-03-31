@@ -1,0 +1,58 @@
+{
+  "stack": {
+    "packageManager": "npm",
+    "languages": [
+      "javascript"
+    ],
+    "frontend": null,
+    "backend": null,
+    "testFrameworks": [],
+    "e2eFrameworks": [],
+    "commands": {
+      "test": "npm test",
+      "coverage": null
+    }
+  },
+  "analysis": {
+    "targetFile": "/Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/src/router/skill-router.js",
+    "relativePath": "src/router/skill-router.js",
+    "language": "javascript",
+    "kind": "module",
+    "lineCount": 91,
+    "functionCount": 4,
+    "classCount": 0,
+    "asyncCount": 0,
+    "branchCount": 12,
+    "importCount": 1,
+    "symbols": {
+      "functions": [
+        "normalizeText",
+        "countHits",
+        "catalogSkills",
+        "routeTaskToSkills"
+      ],
+      "classes": []
+    },
+    "riskSignals": [
+      "auth"
+    ],
+    "suggestedTestFile": "src/router/skill-router.test.js",
+    "suggestedLayers": [
+      "unit",
+      "regression"
+    ],
+    "acceptanceChecklist": [
+      "AC-001 | P0 | The target module `src/router/skill-router.js` loads without runtime errors.",
+      "AC-002 | P0 | Primary behavior of `normalizeText` is verified against expected input/output.",
+      "AC-003 | P0 | Primary behavior of `countHits` is verified against expected input/output.",
+      "AC-004 | P0 | Primary behavior of `catalogSkills` is verified against expected input/output.",
+      "AC-005 | P0 | Primary behavior of `routeTaskToSkills` is verified against expected input/output."
+    ],
+    "regressionChecklist": [
+      "RG-001 | P0 | Existing public behavior remains unchanged for current callers.",
+      "RG-002 | P0 | Conditional branches and fallback paths have regression assertions.",
+      "RG-003 | P0 | Auth/token handling does not regress on invalid or missing credentials."
+    ],
+    "complexity": "high"
+  }
+}

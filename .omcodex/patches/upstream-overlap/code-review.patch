@@ -1,0 +1,231 @@
+--- a/skills/code-review/SKILL.md
++++ b/skills/code-review/SKILL.md
+@@ -1,10 +1,33 @@
+ ---
+ name: code-review
+ description: Run a comprehensive code review
++version: 0.1.0
++source: fork
++checksum: 8d6819264d1ebcd4f6741feb014f92805ea541c10825195d34fccc5c1b75b232
++updated_at: 2026-02-11T09:29:16+08:00
+ ---
+ 
++
+ # Code Review Skill
+ 
++
++## Native Subagent Protocol (Codex)
++
++Codex supports native subagents. Delegate with `spawn_agent`, coordinate with `send_input`, collect via `wait`, and clean up with `close_agent`.
++
++Execution preference:
++1. Use native subagents first for independent workstreams (parallel when possible).
++2. Merge results in main thread and run final verification.
++3. Fallback only when delegation is blocked: use the `[ANALYST]`/`[ARCHITECT]`/`[EXECUTOR]`/`[REVIEWER]` structure in a single response.
++
++Minimal orchestration pattern:
++```text
++spawn_agent -> send_input (optional) -> wait -> close_agent
++```
++
++> Codex invocation: use `$code-review ...` or `code-review: ...`
++
++
+ Conduct a thorough code review for quality, security, and maintainability with severity-rated feedback.
+ 
+ ## When to Use
+@@ -17,15 +40,8 @@
+ 
+ ## What It Does
+ 
+-## GPT-5.4 Guidance Alignment
++Delegates to the `code-reviewer` agent (Opus model) for deep analysis:
+ 
+-- Default to concise, evidence-dense progress and completion reporting unless the user or risk level requires more detail.
+-- Treat newer user task updates as local overrides for the active workflow branch while preserving earlier non-conflicting constraints.
+-- If correctness depends on additional inspection, retrieval, execution, or verification, keep using the relevant tools until the review is grounded.
+-- Continue through clear, low-risk, reversible next steps automatically; ask only when the next step is materially branching, destructive, or preference-dependent.
+-
+-Delegates to the `code-reviewer` agent (THOROUGH tier) for deep analysis:
+-
+ 1. **Identify Changes**
+    - Run `git diff` to find changed files
+    - Determine scope of review (specific files or entire PR)
+@@ -48,13 +64,27 @@
+    - Concrete fix suggestions
+    - Code examples where applicable
+ 
++## Tiered Review Strategy (`code-review` + `aireview`)
++
++Use `code-review` as the default review entry. Escalate to `$aireview` when changes are high-risk or cross-cutting.
++
++Escalation triggers:
++- Diff is large (for example, more than 10 files or major refactor)
++- Security-sensitive surfaces changed (auth, payments, secrets, permissions)
++- Architecture-level changes across modules
++- Prior regressions in touched areas
++- User explicitly requests deep or multi-model review
++
++Escalation flow:
++1. Run `code-review` for fast baseline findings.
++2. If any trigger matches, run `$aireview --diff --deep`.
++3. Merge findings and prioritize by severity + confidence.
++
+ ## Agent Delegation
+ 
+ ```
+-delegate(
+-  role="code-reviewer",
+-  tier="THOROUGH",
+-  prompt="CODE REVIEW TASK
++[CODE-REVIEWER | opus]
++CODE REVIEW TASK
+ 
+ Review code changes for quality, security, and maintainability.
+ 
+@@ -72,39 +102,9 @@
+ - Issues by severity (CRITICAL, HIGH, MEDIUM, LOW)
+ - Specific file:line locations
+ - Fix recommendations
+-- Approval recommendation (APPROVE / REQUEST CHANGES / COMMENT)"
+-)
++- Approval recommendation (APPROVE / REQUEST CHANGES / COMMENT)
+ ```
+ 
+-## External Model Consultation (Preferred)
+-
+-The code-reviewer agent SHOULD consult Codex for cross-validation.
+-
+-### Protocol
+-1. **Form your OWN review FIRST** - Complete the review independently
+-2. **Consult for validation** - Cross-check findings with Codex
+-3. **Critically evaluate** - Never blindly adopt external findings
+-4. **Graceful fallback** - Never block if tools unavailable
+-
+-### When to Consult
+-- Security-sensitive code changes
+-- Complex architectural patterns
+-- Unfamiliar codebases or languages
+-- High-stakes production code
+-
+-### When to Skip
+-- Simple refactoring
+-- Well-understood patterns
+-- Time-critical reviews
+-- Small, isolated changes
+-
+-### Tool Usage
+-Before first MCP tool use, call `ToolSearch("mcp")` to discover deferred MCP tools.
+-Use `mcp__x__ask_codex` with `agent_role: "code-reviewer"`.
+-If ToolSearch finds no MCP tools, fall back to the `code-reviewer` agent.
+-
+-**Note:** Codex calls can take up to 1 hour. Consider the review timeline before consulting.
+-
+ ## Output Format
+ 
+ ```
+@@ -186,32 +186,23 @@
+ **REQUEST CHANGES** - CRITICAL or HIGH issues present
+ **COMMENT** - Only LOW/MEDIUM issues, no blocking concerns
+ 
+-
+-## Scenario Examples
+-
+-**Good:** The user says `continue` after the workflow already has a clear next step. Continue the current branch of work instead of restarting or re-asking the same question.
+-
+-**Good:** The user changes only the output shape or downstream delivery step (for example `make a PR`). Preserve earlier non-conflicting workflow constraints and apply the update locally.
+-
+-**Bad:** The user says `continue`, and the workflow restarts discovery or stops before the missing verification/evidence is gathered.
+-
+ ## Use with Other Skills
+ 
+-**With Team:**
++**With Pipeline:**
+ ```
+-/team "review recent auth changes and report findings"
++$pipeline review "implement user authentication"
+ ```
+-Includes coordinated review execution across specialized agents.
++Includes code review as part of implementation workflow.
+ 
+ **With Ralph:**
+ ```
+-/ralph code-review then fix all issues
++$ralph code-review then fix all issues
+ ```
+ Review code, get feedback, fix until approved.
+ 
+ **With Ultrawork:**
+ ```
+-/ultrawork review all files in src/
++$ultrawork review all files in src/
+ ```
+ Parallel code review across multiple files.
+ 
+@@ -222,3 +213,66 @@
+ - **Address CRITICAL/HIGH first** - Fix security and bugs immediately
+ - **Consider context** - Some "issues" may be intentional trade-offs
+ - **Learn from reviews** - Use feedback to improve coding practices
++
++## Imported from everything-codex
++
++---
++name: ecc-code-review
++description: Imported from everything-codex command code-review
++---
++
++# Code Review
++
++
++## Native Subagent Protocol (Codex)
++
++Codex supports native subagents. Delegate with `spawn_agent`, coordinate with `send_input`, collect via `wait`, and clean up with `close_agent`.
++
++Execution preference:
++1. Use native subagents first for independent workstreams (parallel when possible).
++2. Merge results in main thread and run final verification.
++3. Fallback only when delegation is blocked: use the `[ANALYST]`/`[ARCHITECT]`/`[EXECUTOR]`/`[REVIEWER]` structure in a single response.
++
++Minimal orchestration pattern:
++```text
++spawn_agent -> send_input (optional) -> wait -> close_agent
++```
++
++Comprehensive security and quality review of uncommitted changes:
++
++1. Get changed files: git diff --name-only HEAD
++
++2. For each changed file, check for:
++
++**Security Issues (CRITICAL):**
++- Hardcoded credentials, API keys, tokens
++- SQL injection vulnerabilities
++- XSS vulnerabilities  
++- Missing input validation
++- Insecure dependencies
++- Path traversal risks
++
++**Code Quality (HIGH):**
++- Functions > 50 lines
++- Files > 800 lines
++- Nesting depth > 4 levels
++- Missing error handling
++- console.log statements
++- TODO/FIXME comments
++- Missing JSDoc for public APIs
++
++**Best Practices (MEDIUM):**
++- Mutation patterns (use immutable instead)
++- Emoji usage in code/comments
++- Missing tests for new code
++- Accessibility issues (a11y)
++
++3. Generate report with:
++   - Severity: CRITICAL, HIGH, MEDIUM, LOW
++   - File location and line numbers
++   - Issue description
++   - Suggested fix
++
++4. Block commit if CRITICAL or HIGH issues found
++
++Never approve code with security vulnerabilities!

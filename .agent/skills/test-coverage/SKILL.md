@@ -1,7 +1,12 @@
 ---
 name: test-coverage
 description: Imported from everything-codex command test-coverage
+version: 0.1.0
+source: fork
+checksum: 96bb6bd4c35aec83d53bc7fa7cd375d08d49990923ecfffe8174f6260d8eaa9d
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # Test Coverage
 

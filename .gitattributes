@@ -1,4 +1,7 @@
-# Default to auto (Git decides based on content)
+# oh-my-codex fork merge strategy
+# ============================================================
+
+# Default: auto (Git decides based on content)
 * text=auto eol=lf
 
 # Force LF for scripts and source files
@@ -11,8 +14,9 @@
 *.md text eol=lf
 *.yml text eol=lf
 *.yaml text eol=lf
+*.toml text eol=lf
 
-# Force CRLF for Windows-specific files (if any exist)
+# Force CRLF for Windows-specific files
 *.bat text eol=crlf
 *.cmd text eol=crlf
 *.ps1 text eol=crlf
@@ -20,5 +24,69 @@
 # Binary files (no conversion)
 *.png binary
 *.jpg binary
+*.jpeg binary
 *.gif binary
 *.ico binary
+*.pdf binary
+
+# ============================================================
+# Fork-specific merge strategies
+# ============================================================
+
+# ALWAYS KEEP LOCAL (never merge from upstream)
+# 永远保持本地版本,不接受上游更新
+
+# Custom governance rules - 自定义治理规则
+.governance/** merge=ours
+
+# Local runtime state - 本地运行时状态
+.omcodex/** merge=ours
+.omc/** merge=ours
+.claude/** merge=ours
+.claude_memory/** merge=ours
+
+# Package metadata - 本地版本跟踪
+package.json merge=ours
+package-lock.json merge=ours
+
+# Build artifacts - 构建产物
+*.tgz merge=ours
+
+# README - 本地文档定制
+README.md merge=ours
+README.zh.md merge=ours
+
+# AGENTS.md - 本地 agent 配置
+AGENTS.md merge=ours
+templates/AGENTS.md merge=ours
+
+# ============================================================
+# MERGE FROM UPSTREAM (standard merge)
+# ============================================================
+
+# Core CLI and runtime - 接受上游更新
+bin/** text
+src/** text
+scripts/** text
+
+# Skills - 合并,但需要审查冲突
+.agent/skills/** text
+
+# Prompts - 合并,但需要审查冲突
+prompts/** text
+
+# Templates and rules - 合并
+templates/rules/** text
+templates/code_styleguides/** text
+templates/workflow.md text
+
+# Catalog - 合并
+templates/catalog-manifest.json text
+src/catalog/manifest.json text
+
+# Documentation - 合并
+docs/** text
+
+# Configuration templates - 合并
+templates/AGENTS.global.md text
+templates/AGENTS.project.md text

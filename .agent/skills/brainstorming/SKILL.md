@@ -1,7 +1,12 @@
 ---
 name: brainstorming
 description: Refine rough ideas into designs through Socratic questioning, alternative exploration, incremental validation. Use before implementation.
+version: 0.1.0
+source: fork
+checksum: e9d3b00e85e4bda8556510131b7ebf180c7436a8c398e784a19d7619a9f85bc8
+updated_at: 2026-02-06T15:19:11+08:00
 ---
+
 
 # Brainstorming Ideas Into Designs
 

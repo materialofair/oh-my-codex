@@ -1,0 +1,27 @@
+description: "Codex LLM prompt regression suite"
+prompts:
+  - "file:///Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/prompts/architect.md"
+providers:
+  -
+    id: "openai:codex-sdk"
+    config:
+      model: "gpt-5.1-codex-mini"
+      working_dir: "/Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex"
+      sandbox_mode: "read-only"
+      approval_policy: "never"
+      model_reasoning_effort: "medium"
+tests:
+  -
+    description: "Architect prompt should preserve read-only boundaries."
+    vars: {}
+    assert:
+      -
+        type: "contains"
+        value: "READ-ONLY"
+  -
+    description: "Architect prompt should require file:line evidence."
+    vars: {}
+    assert:
+      -
+        type: "contains"
+        value: "file:line"

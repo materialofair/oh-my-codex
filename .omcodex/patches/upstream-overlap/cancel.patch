@@ -1,0 +1,837 @@
+--- a/skills/cancel/SKILL.md
++++ b/skills/cancel/SKILL.md
+@@ -1,18 +1,35 @@
+ ---
+ name: cancel
+-description: Cancel any active OMX mode (autopilot, ralph, ultrawork, ecomode, ultraqa, swarm, ultrapilot, pipeline, team)
++description: Cancel any active OMC mode (autopilot, ralph, ultrawork, ecomode, ultraqa, swarm, ultrapilot, pipeline)
++version: 0.1.0
++source: fork
++checksum: abe0c32273e7f90f6254e71a0cbb81615ef83d3cf39441d9e625a22d2118638f
++updated_at: 2026-02-11T09:29:16+08:00
+ ---
+ 
++
+ # Cancel Skill
+ 
+-Intelligent cancellation that detects and cancels the active OMX mode.
+ 
+-**The cancel skill is the standard way to complete and exit any OMX mode.**
+-When the stop hook detects work is complete, it instructs the LLM to invoke
+-this skill for proper state cleanup. If cancel fails or is interrupted,
+-retry with `--force` flag, or wait for the 2-hour staleness timeout as
+-a last resort.
++## Native Subagent Protocol (Codex)
+ 
++Codex supports native subagents. Delegate with `spawn_agent`, coordinate with `send_input`, collect via `wait`, and clean up with `close_agent`.
++
++Execution preference:
++1. Use native subagents first for independent workstreams (parallel when possible).
++2. Merge results in main thread and run final verification.
++3. Fallback only when delegation is blocked: use the `[ANALYST]`/`[ARCHITECT]`/`[EXECUTOR]`/`[REVIEWER]` structure in a single response.
++
++Minimal orchestration pattern:
++```text
++spawn_agent -> send_input (optional) -> wait -> close_agent
++```
++
++> Codex invocation: use `$cancel ...` or `cancel: ...`
++
++
++Intelligent cancellation that detects and cancels the active OMC mode.
++
+ ## What It Does
+ 
+ Automatically detects which mode is active and cancels it:
+@@ -24,104 +41,72 @@
+ - **Swarm**: Stops coordinated agent swarm, releases claimed tasks
+ - **Ultrapilot**: Stops parallel autopilot workers
+ - **Pipeline**: Stops sequential agent pipeline
+-- **Team**: Sends shutdown inbox to all workers, waits for exit, kills tmux session, and clears team state
+ 
+ ## Usage
+ 
+ ```
+-/cancel
++$cancel
+ ```
+ 
+ Or say: "cancelomc", "stopomc"
+ 
+ ## Auto-Detection
+ 
+-`/cancel` follows the session-aware state contract:
+-- By default the command inspects the current session via `state_list_active` and `state_get_status`, navigating `.omx/state/sessions/{sessionId}/…` to discover which mode is active.
+-- When a session id is provided or already known, that session-scoped path is authoritative. Legacy files in `.omx/state/*.json` are consulted only as a compatibility fallback if the session id is missing or empty.
+-- Swarm is a shared SQLite/marker mode (`.omx/state/swarm.db` / `.omx/state/swarm-active.marker`) and is not session-scoped.
+-- The default cleanup flow calls `state_clear` with the session id to remove only the matching session files; modes stay bound to their originating session.
++The skill checks state files to determine what's active:
++- `.omc/state/autopilot-state.json` → Autopilot detected
++- `.omc/state/ralph-state.json` → Ralph detected
++- `.omc/state/ultrawork-state.json` → Ultrawork detected
++- `.omc/state/ecomode-state.json` → Ecomode detected
++- `.omc/state/ultraqa-state.json` → UltraQA detected
++- `.omc/state/swarm.db` → Swarm detected (SQLite database)
++- `.omc/state/ultrapilot-state.json` → Ultrapilot detected
++- `.omc/state/pipeline-state.json` → Pipeline detected
++- `.omc/state/plan-consensus.json` → Plan Consensus detected
++- `.omc/state/ralplan-state.json` → Plan Consensus detected (legacy)
+ 
+-## Normative Ralph cancellation post-conditions (MUST)
+-
+-For Ralph-targeted cancellation (standalone or linked), completion is defined by post-conditions:
+-
+-1. Target Ralph state is terminalized, not silently removed:
+-   - `active=false`
+-   - `current_phase='cancelled'`
+-   - `completed_at` is set (ISO timestamp)
+-2. If Ralph is linked to Ultrawork or Ecomode in the same scope, that linked mode is also terminalized/non-active.
+-4. Cancellation MUST remain scope-safe: no mutation of unrelated sessions.
+-
+-See: `docs/contracts/ralph-cancel-contract.md`.
+-
+-Active modes are still cancelled in dependency order:
+-1. Autopilot (includes linked ralph/ultraqa/ecomode cleanup)
+-2. Ralph (cleans its linked ultrawork or ecomode)
++If multiple modes are active, they're cancelled in order of dependency:
++1. Autopilot (includes ralph/ultraqa/ecomode cleanup)
++2. Ralph (includes linked ultrawork OR ecomode cleanup)
+ 3. Ultrawork (standalone)
+ 4. Ecomode (standalone)
+ 5. UltraQA (standalone)
+ 6. Swarm (standalone)
+ 7. Ultrapilot (standalone)
+ 8. Pipeline (standalone)
+-9. Team (tmux-based)
+-10. Plan Consensus (standalone)
++9. Plan Consensus (standalone)
+ 
+-## Normative Ralph post-conditions (MUST)
+-
+-When cancellation targets Ralph state in a scope, completion requires all of the following:
+-
+-1. Ralph state is terminal in that same scope: `active=false`, `current_phase='cancelled'` (or linked terminal phase), and `completed_at` is set.
+-2. Linked Ultrawork/Ecomode in the same scope is also terminal/non-active.
+-4. Unrelated sessions are untouched.
+-
+ ## Force Clear All
+ 
+-Use `--force` or `--all` when you need to erase every session plus legacy artifacts, e.g., to reset the workspace entirely.
++To clear ALL state files regardless of what's active:
+ 
+ ```
+-/cancel --force
++$cancel --force
+ ```
+ 
++Or use the `--all` alias:
++
+ ```
+-/cancel --all
++$cancel --all
+ ```
+ 
+-Steps under the hood:
+-1. `state_list_active` enumerates `.omx/state/sessions/{sessionId}/…` to find every known session.
+-2. `state_clear` runs once per session to drop that session’s files.
+-3. A global `state_clear` without `session_id` removes legacy files under `.omx/state/*.json`, `.omx/state/swarm*.db`, and compatibility artifacts (see list).
+-4. Team artifacts (`.omx/state/team/*/`, tmux sessions matching `omx-team-*`) are best-effort cleared as part of the legacy fallback.
++This removes all state files:
++- `.omc/state/autopilot-state.json`
++- `.omc/state/ralph-state.json`
++- `.omc/state/ultrawork-state.json`
++- `.omc/state/ecomode-state.json`
++- `.omc/state/ultraqa-state.json`
++- `.omc/state/swarm.db`
++- `.omc/state/swarm.db-wal`
++- `.omc/state/swarm.db-shm`
++- `.omc/state/swarm-active.marker`
++- `.omc/state/ultrapilot-state.json`
++- `.omc/state/pipeline-state.json`
++- `.omc/state/plan-consensus.json`
++- `.omc/state/ralplan-state.json`
++- `~/.codex/ralph-state.json`
++- `~/.codex/ultrawork-state.json`
++- `~/.codex/ecomode-state.json`
+ 
+-Every `state_clear` command honors the `session_id` argument, so even force mode still uses the session-aware paths first before deleting legacy files.
+-
+-Legacy compatibility list (removed only under `--force`/`--all`):
+-- `.omx/state/autopilot-state.json`
+-- `.omx/state/ralph-state.json`
+-- `.omx/state/ralph-plan-state.json`
+-- `.omx/state/ralph-verification.json`
+-- `.omx/state/ultrawork-state.json`
+-- `.omx/state/ecomode-state.json`
+-- `.omx/state/ultraqa-state.json`
+-- `.omx/state/swarm.db`
+-- `.omx/state/swarm.db-wal`
+-- `.omx/state/swarm.db-shm`
+-- `.omx/state/swarm-active.marker`
+-- `.omx/state/swarm-tasks.db`
+-- `.omx/state/ultrapilot-state.json`
+-- `.omx/state/ultrapilot-ownership.json`
+-- `.omx/state/pipeline-state.json`
+-- `.omx/state/plan-consensus.json`
+-- `.omx/state/ralplan-state.json`
+-- `.omx/state/boulder.json`
+-- `.omx/state/hud-state.json`
+-- `.omx/state/subagent-tracking.json`
+-- `.omx/state/subagent-tracker.lock`
+-- `.omx/state/rate-limit-daemon.pid`
+-- `.omx/state/rate-limit-daemon.log`
+-- `.omx/state/checkpoints/` (directory)
+-- `.omx/state/sessions/` (empty directory cleanup after clearing sessions)
+-
+ ## Implementation Steps
+ 
+ When you invoke this skill:
+@@ -138,78 +123,78 @@
+ 
+ ### 2. Detect Active Modes
+ 
+-The skill now relies on the session-aware state contract rather than hard-coded file paths:
+-1. Call `state_list_active` to enumerate `.omx/state/sessions/{sessionId}/…` and discover every active session.
+-2. For each session id, call `state_get_status` to learn which mode is running (`autopilot`, `ralph`, `ultrawork`, etc.) and whether dependent modes exist.
+-3. If a `session_id` was supplied to `/cancel`, skip legacy fallback entirely and operate solely within that session path; otherwise, consult legacy files in `.omx/state/*.json` only if the state tools report no active session. Swarm remains a shared SQLite/marker mode outside session scoping.
+-4. Any cancellation logic in this doc mirrors the dependency order discovered via state tools (autopilot → ralph → …).
++```bash
++# Check which modes are active
++AUTOPILOT_ACTIVE=false
++RALPH_ACTIVE=false
++ULTRAWORK_ACTIVE=false
++ECOMODE_ACTIVE=false
++ULTRAQA_ACTIVE=false
+ 
+-### 3A. Force Mode (if --force or --all)
++if [[ -f .omc/state/autopilot-state.json ]]; then
++  AUTOPILOT_ACTIVE=$(cat .omc/state/autopilot-state.json | jq -r '.active // false')
++fi
+ 
+-Use force mode to clear every session plus legacy artifacts via `state_clear`. Direct file removal is reserved for legacy cleanup when the state tools report no active sessions.
++if [[ -f .omc/state/ralph-state.json ]]; then
++  RALPH_ACTIVE=$(cat .omc/state/ralph-state.json | jq -r '.active // false')
++fi
+ 
+-### 3B. Smart Cancellation (default)
++if [[ -f .omc/state/ultrawork-state.json ]]; then
++  ULTRAWORK_ACTIVE=$(cat .omc/state/ultrawork-state.json | jq -r '.active // false')
++fi
+ 
+-#### If Team Active (tmux-based)
++if [[ -f .omc/state/ecomode-state.json ]]; then
++  ECOMODE_ACTIVE=$(cat .omc/state/ecomode-state.json | jq -r '.active // false')
++fi
+ 
+-Teams are detected by checking for config files in `.omx/state/team/`:
+-
+-```bash
+-# Check for active teams
+-ls .omx/state/team/*/config.json 2>/dev/null
+-```
+-
+-**Two-pass cancellation protocol:**
++if [[ -f .omc/state/ultraqa-state.json ]]; then
++  ULTRAQA_ACTIVE=$(cat .omc/state/ultraqa-state.json | jq -r '.active // false')
++fi
+ 
+-**Pass 1: Graceful Shutdown**
+-```
+-For each team found in .omx/state/team/:
+-  1. Read config.json to get team_name and workers list
+-  2. For each worker:
+-     a. Write shutdown inbox to .omx/state/team/{name}/workers/{worker}/inbox.md
+-     b. Send short trigger via tmux send-keys
+-     c. Wait up to 15 seconds for worker tmux pane to exit
+-     d. If still alive: mark as unresponsive
+-```
++PLAN_CONSENSUS_ACTIVE=false
+ 
+-**Pass 2: Force Kill**
++# Check both new and legacy locations
++if [[ -f .omc/state/plan-consensus.json ]]; then
++  PLAN_CONSENSUS_ACTIVE=$(cat .omc/state/plan-consensus.json | jq -r '.active // false')
++elif [[ -f .omc/state/ralplan-state.json ]]; then
++  PLAN_CONSENSUS_ACTIVE=$(cat .omc/state/ralplan-state.json | jq -r '.active // false')
++fi
+ ```
+-After graceful pass:
+-  1. For each remaining alive worker:
+-     a. Send C-c via tmux send-keys
+-     b. Wait 2 seconds
+-     c. Kill the tmux window if still alive
+-  2. Destroy the tmux session: tmux kill-session -t omx-team-{name}
+-```
+ 
+-**Cleanup:**
+-```
+-  1. Strip AGENTS.md team worker overlay (<!-- OMX:TEAM:WORKER:START/END -->)
+-  2. Remove team state directory: rm -rf .omx/state/team/{name}/
+-  3. Clear team mode state: state_clear(mode="team")
+-  4. Emit structured cancel report
+-```
++### 3A. Force Mode (if --force or --all)
+ 
+-**Structured Cancel Report:**
++```bash
++if [[ "$FORCE_MODE" == "true" ]]; then
++  echo "FORCE CLEAR: Removing all OMC state files..."
++
++  # Remove local state files
++  rm -f .omc/state/autopilot-state.json
++  rm -f .omc/state/ralph-state.json
++  rm -f .omc/state/ultrawork-state.json
++  rm -f .omc/state/ecomode-state.json
++  rm -f .omc/state/ultraqa-state.json
++  rm -f .omc/state/ralph-plan-state.json
++  rm -f .omc/state/ralph-verification.json
++  rm -f .omc/state/swarm.db
++  rm -f .omc/state/swarm.db-wal
++  rm -f .omc/state/swarm.db-shm
++  rm -f .omc/state/swarm-active.marker
++  rm -f .omc/state/ultrapilot-state.json
++  rm -f .omc/state/pipeline-state.json
++  rm -f .omc/state/plan-consensus.json
++  rm -f .omc/state/ralplan-state.json
++
++  # Remove global state files
++  rm -f ~/.codex/ralph-state.json
++  rm -f ~/.codex/ultrawork-state.json
++  rm -f ~/.codex/ecomode-state.json
++
++  echo "All OMC modes cleared. You are free to start fresh."
++  exit 0
++fi
+ ```
+-Team "{team_name}" cancelled:
+-  - Workers signaled: N
+-  - Graceful exits: M
+-  - Force killed: K
+-  - tmux session destroyed: yes/no
+-  - State cleaned up: yes/no
+-```
+ 
+-**Implementation note:** The cancel skill is executed by the LLM, not as a bash script. When you detect an active team:
+-1. Check `.omx/state/team/*/config.json` for active teams
+-2. For each worker in config.workers, write shutdown inbox and send trigger
+-3. Wait briefly for workers to exit (15s timeout)
+-4. Force kill remaining workers via tmux
+-5. Destroy tmux session: `tmux kill-session -t omx-team-{name}`
+-6. Strip AGENTS.md overlay
+-7. Remove state: `rm -rf .omx/state/team/{name}/`
+-8. `state_clear(mode="team")`
+-9. Report structured summary to user
++### 3B. Smart Cancellation (default)
+ 
+ #### If Autopilot Active
+ 
+@@ -218,37 +203,39 @@
+ ```bash
+ # Autopilot handles its own cleanup + ralph + ultraqa
+ # Just mark autopilot as inactive (preserves state for resume)
+-if [[ -f .omx/state/autopilot-state.json ]]; then
++if [[ -f .omc/state/autopilot-state.json ]]; then
+   # Clean up ralph if active
+-  if [[ -f .omx/state/ralph-state.json ]]; then
+-    RALPH_STATE=$(cat .omx/state/ralph-state.json)
++  if [[ -f .omc/state/ralph-state.json ]]; then
++    RALPH_STATE=$(cat .omc/state/ralph-state.json)
+     LINKED_UW=$(echo "$RALPH_STATE" | jq -r '.linked_ultrawork // false')
+ 
+     # Clean linked ultrawork first
+-    if [[ "$LINKED_UW" == "true" ]] && [[ -f .omx/state/ultrawork-state.json ]]; then
+-      rm -f .omx/state/ultrawork-state.json
++    if [[ "$LINKED_UW" == "true" ]] && [[ -f .omc/state/ultrawork-state.json ]]; then
++      rm -f .omc/state/ultrawork-state.json
++      rm -f ~/.codex/ultrawork-state.json
+       echo "Cleaned up: ultrawork (linked to ralph)"
+     fi
+ 
+     # Clean ralph
+-    rm -f .omx/state/ralph-state.json
+-    rm -f .omx/state/ralph-verification.json
++    rm -f .omc/state/ralph-state.json
++    rm -f ~/.codex/ralph-state.json
++    rm -f .omc/state/ralph-verification.json
+     echo "Cleaned up: ralph"
+   fi
+ 
+   # Clean up ultraqa if active
+-  if [[ -f .omx/state/ultraqa-state.json ]]; then
+-    rm -f .omx/state/ultraqa-state.json
++  if [[ -f .omc/state/ultraqa-state.json ]]; then
++    rm -f .omc/state/ultraqa-state.json
+     echo "Cleaned up: ultraqa"
+   fi
+ 
+   # Mark autopilot inactive but preserve state
+-  CURRENT_STATE=$(cat .omx/state/autopilot-state.json)
++  CURRENT_STATE=$(cat .omc/state/autopilot-state.json)
+   CURRENT_PHASE=$(echo "$CURRENT_STATE" | jq -r '.phase // "unknown"')
+-  echo "$CURRENT_STATE" | jq '.active = false' > .omx/state/autopilot-state.json
++  echo "$CURRENT_STATE" | jq '.active = false' > .omc/state/autopilot-state.json
+ 
+   echo "Autopilot cancelled at phase: $CURRENT_PHASE. Progress preserved for resume."
+-  echo "Run /autopilot to resume."
++  echo "Run $autopilot to resume."
+ fi
+ ```
+ 
+@@ -257,27 +244,29 @@
+ Call `clearRalphState()` + `clearLinkedUltraworkState()` from `src/hooks/ralph-loop/index.ts:147-182`:
+ 
+ ```bash
+-if [[ -f .omx/state/ralph-state.json ]]; then
++if [[ -f .omc/state/ralph-state.json ]]; then
+   # Check if ultrawork is linked
+-  RALPH_STATE=$(cat .omx/state/ralph-state.json)
++  RALPH_STATE=$(cat .omc/state/ralph-state.json)
+   LINKED_UW=$(echo "$RALPH_STATE" | jq -r '.linked_ultrawork // false')
+ 
+   # Clean linked ultrawork first
+-  if [[ "$LINKED_UW" == "true" ]] && [[ -f .omx/state/ultrawork-state.json ]]; then
+-    UW_STATE=$(cat .omx/state/ultrawork-state.json)
++  if [[ "$LINKED_UW" == "true" ]] && [[ -f .omc/state/ultrawork-state.json ]]; then
++    UW_STATE=$(cat .omc/state/ultrawork-state.json)
+     UW_LINKED=$(echo "$UW_STATE" | jq -r '.linked_to_ralph // false')
+ 
+     # Only clear if it was linked to ralph
+     if [[ "$UW_LINKED" == "true" ]]; then
+-      rm -f .omx/state/ultrawork-state.json
++      rm -f .omc/state/ultrawork-state.json
++      rm -f ~/.codex/ultrawork-state.json
+       echo "Cleaned up: ultrawork (linked to ralph)"
+     fi
+   fi
+ 
+-  # Clean ralph state
+-  rm -f .omx/state/ralph-state.json
+-  rm -f .omx/state/ralph-plan-state.json
+-  rm -f .omx/state/ralph-verification.json
++  # Clean ralph state (both local and global)
++  rm -f .omc/state/ralph-state.json
++  rm -f ~/.codex/ralph-state.json
++  rm -f .omc/state/ralph-plan-state.json
++  rm -f .omc/state/ralph-verification.json
+ 
+   echo "Ralph cancelled. Persistent mode deactivated."
+ fi
+@@ -288,18 +277,19 @@
+ Call `deactivateUltrawork()` from `src/hooks/ultrawork/index.ts:150-173`:
+ 
+ ```bash
+-if [[ -f .omx/state/ultrawork-state.json ]]; then
++if [[ -f .omc/state/ultrawork-state.json ]]; then
+   # Check if linked to ralph
+-  UW_STATE=$(cat .omx/state/ultrawork-state.json)
++  UW_STATE=$(cat .omc/state/ultrawork-state.json)
+   LINKED=$(echo "$UW_STATE" | jq -r '.linked_to_ralph // false')
+ 
+   if [[ "$LINKED" == "true" ]]; then
+-    echo "Ultrawork is linked to Ralph. Use /cancel to cancel both."
++    echo "Ultrawork is linked to Ralph. Use $cancel to cancel both."
+     exit 1
+   fi
+ 
+-  # Remove local state
+-  rm -f .omx/state/ultrawork-state.json
++  # Remove both local and global state
++  rm -f .omc/state/ultrawork-state.json
++  rm -f ~/.codex/ultrawork-state.json
+ 
+   echo "Ultrawork cancelled. Parallel execution mode deactivated."
+ fi
+@@ -310,8 +300,8 @@
+ Call `clearUltraQAState()` from `src/hooks/ultraqa/index.ts:107-120`:
+ 
+ ```bash
+-if [[ -f .omx/state/ultraqa-state.json ]]; then
+-  rm -f .omx/state/ultraqa-state.json
++if [[ -f .omc/state/ultraqa-state.json ]]; then
++  rm -f .omc/state/ultraqa-state.json
+   echo "UltraQA cancelled. QA cycling workflow stopped."
+ fi
+ ```
+@@ -319,29 +309,322 @@
+ #### No Active Modes
+ 
+ ```bash
+-echo "No active OMX modes detected."
++echo "No active OMC modes detected."
+ echo ""
+ echo "Checked for:"
+-echo "  - Autopilot (.omx/state/autopilot-state.json)"
+-echo "  - Ralph (.omx/state/ralph-state.json)"
+-echo "  - Ultrawork (.omx/state/ultrawork-state.json)"
+-echo "  - UltraQA (.omx/state/ultraqa-state.json)"
++echo "  - Autopilot (.omc/state/autopilot-state.json)"
++echo "  - Ralph (.omc/state/ralph-state.json)"
++echo "  - Ultrawork (.omc/state/ultrawork-state.json)"
++echo "  - UltraQA (.omc/state/ultraqa-state.json)"
+ echo ""
+ echo "Use --force to clear all state files anyway."
+ ```
+ 
+-## Implementation Notes
+-
+-The cancel skill runs as follows:
+-1. Parse the `--force` / `--all` flags, tracking whether cleanup should span every session or stay scoped to the current session id.
+-2. Use `state_list_active` to enumerate known session ids and `state_get_status` to learn the active mode (`autopilot`, `ralph`, `ultrawork`, etc.) for each session.
+-3. When operating in default mode, call `state_clear` with that session_id to remove only the session’s files, then run mode-specific cleanup (autopilot → ralph → …) based on the state tool signals.
+-4. In force mode, iterate every active session, call `state_clear` per session, then run a global `state_clear` without `session_id` to drop legacy files (`.omx/state/*.json`, compatibility artifacts) and report success. Swarm remains a shared SQLite/marker mode outside session scoping.
+-5. Team artifacts (`.omx/state/team/*/`, tmux sessions matching `omx-team-*`) remain best-effort cleanup items invoked during the legacy/global pass.
++## Complete Implementation
+ 
+-State tools always honor the `session_id` argument, so even force mode still clears the session-scoped paths before deleting compatibility-only legacy state.
++Here's the complete bash implementation you should run:
+ 
+-Mode-specific subsections below describe what extra cleanup each handler performs after the state-wide operations finish.
++```bash
++#!/bin/bash
++
++# Parse arguments
++FORCE_MODE=false
++if [[ "$*" == *"--force"* ]] || [[ "$*" == *"--all"* ]]; then
++  FORCE_MODE=true
++fi
++
++# Force mode: clear everything
++if [[ "$FORCE_MODE" == "true" ]]; then
++  echo "FORCE CLEAR: Removing all OMC state files..."
++
++  mkdir -p .omc ~/.codex
++
++  # Remove local state files
++  rm -f .omc/state/autopilot-state.json
++  rm -f .omc/state/ralph-state.json
++  rm -f .omc/state/ultrawork-state.json
++  rm -f .omc/state/ecomode-state.json
++  rm -f .omc/state/ultraqa-state.json
++  rm -f .omc/state/ralph-plan-state.json
++  rm -f .omc/state/ralph-verification.json
++  rm -f .omc/state/swarm.db
++  rm -f .omc/state/swarm.db-wal
++  rm -f .omc/state/swarm.db-shm
++  rm -f .omc/state/swarm-active.marker
++  rm -f .omc/state/ultrapilot-state.json
++  rm -f .omc/state/pipeline-state.json
++  rm -f .omc/state/plan-consensus.json
++  rm -f .omc/state/ralplan-state.json
++
++  # Remove global state files
++  rm -f ~/.codex/ralph-state.json
++  rm -f ~/.codex/ultrawork-state.json
++  rm -f ~/.codex/ecomode-state.json
++
++  echo ""
++  echo "All OMC modes cleared. You are free to start fresh."
++  exit 0
++fi
++
++# Track what we cancelled
++CANCELLED_ANYTHING=false
++
++# 1. Check Autopilot (highest priority, includes cleanup of ralph/ultraqa)
++if [[ -f .omc/state/autopilot-state.json ]]; then
++  AUTOPILOT_STATE=$(cat .omc/state/autopilot-state.json)
++  AUTOPILOT_ACTIVE=$(echo "$AUTOPILOT_STATE" | jq -r '.active // false')
++
++  if [[ "$AUTOPILOT_ACTIVE" == "true" ]]; then
++    CURRENT_PHASE=$(echo "$AUTOPILOT_STATE" | jq -r '.phase // "unknown"')
++    CLEANED_UP=()
++
++    # Clean up ralph if active
++    if [[ -f .omc/state/ralph-state.json ]]; then
++      RALPH_STATE=$(cat .omc/state/ralph-state.json)
++      RALPH_ACTIVE=$(echo "$RALPH_STATE" | jq -r '.active // false')
++
++      if [[ "$RALPH_ACTIVE" == "true" ]]; then
++        LINKED_UW=$(echo "$RALPH_STATE" | jq -r '.linked_ultrawork // false')
++
++        # Clean linked ultrawork first
++        if [[ "$LINKED_UW" == "true" ]] && [[ -f .omc/state/ultrawork-state.json ]]; then
++          rm -f .omc/state/ultrawork-state.json
++          rm -f ~/.codex/ultrawork-state.json
++          CLEANED_UP+=("ultrawork")
++        fi
++
++        # Clean ralph
++        rm -f .omc/state/ralph-state.json
++        rm -f ~/.codex/ralph-state.json
++        rm -f .omc/state/ralph-verification.json
++        CLEANED_UP+=("ralph")
++      fi
++    fi
++
++    # Clean up ultraqa if active
++    if [[ -f .omc/state/ultraqa-state.json ]]; then
++      ULTRAQA_STATE=$(cat .omc/state/ultraqa-state.json)
++      ULTRAQA_ACTIVE=$(echo "$ULTRAQA_STATE" | jq -r '.active // false')
++
++      if [[ "$ULTRAQA_ACTIVE" == "true" ]]; then
++        rm -f .omc/state/ultraqa-state.json
++        CLEANED_UP+=("ultraqa")
++      fi
++    fi
++
++    # Mark autopilot inactive but preserve state for resume
++    echo "$AUTOPILOT_STATE" | jq '.active = false' > .omc/state/autopilot-state.json
++
++    echo "Autopilot cancelled at phase: $CURRENT_PHASE."
++
++    if [[ ${#CLEANED_UP[@]} -gt 0 ]]; then
++      echo "Cleaned up: ${CLEANED_UP[*]}"
++    fi
++
++    echo "Progress preserved for resume. Run $autopilot to continue."
++    CANCELLED_ANYTHING=true
++    exit 0
++  fi
++fi
++
++# 2. Check Ralph (if not handled by autopilot)
++if [[ -f .omc/state/ralph-state.json ]]; then
++  RALPH_STATE=$(cat .omc/state/ralph-state.json)
++  RALPH_ACTIVE=$(echo "$RALPH_STATE" | jq -r '.active // false')
++
++  if [[ "$RALPH_ACTIVE" == "true" ]]; then
++    LINKED_UW=$(echo "$RALPH_STATE" | jq -r '.linked_ultrawork // false')
++
++    # Clean linked ultrawork first
++    if [[ "$LINKED_UW" == "true" ]] && [[ -f .omc/state/ultrawork-state.json ]]; then
++      UW_STATE=$(cat .omc/state/ultrawork-state.json)
++      UW_LINKED=$(echo "$UW_STATE" | jq -r '.linked_to_ralph // false')
++
++      # Only clear if it was linked to ralph
++      if [[ "$UW_LINKED" == "true" ]]; then
++        rm -f .omc/state/ultrawork-state.json
++        rm -f ~/.codex/ultrawork-state.json
++        echo "Cleaned up: ultrawork (linked to ralph)"
++      fi
++    fi
++
++    # Clean linked ecomode if present
++    LINKED_ECO=$(echo "$RALPH_STATE" | jq -r '.linked_ecomode // false')
++
++    if [[ "$LINKED_ECO" == "true" ]] && [[ -f .omc/state/ecomode-state.json ]]; then
++      ECO_STATE=$(cat .omc/state/ecomode-state.json)
++      ECO_LINKED=$(echo "$ECO_STATE" | jq -r '.linked_to_ralph // false')
++
++      if [[ "$ECO_LINKED" == "true" ]]; then
++        rm -f .omc/state/ecomode-state.json
++        rm -f ~/.codex/ecomode-state.json
++        echo "Cleaned up: ecomode (linked to ralph)"
++      fi
++    fi
++
++    # Clean ralph state (both local and global)
++    rm -f .omc/state/ralph-state.json
++    rm -f ~/.codex/ralph-state.json
++    rm -f .omc/state/ralph-plan-state.json
++    rm -f .omc/state/ralph-verification.json
++
++    echo "Ralph cancelled. Persistent mode deactivated."
++    CANCELLED_ANYTHING=true
++    exit 0
++  fi
++fi
++
++# 3. Check Ultrawork (standalone, not linked)
++if [[ -f .omc/state/ultrawork-state.json ]]; then
++  UW_STATE=$(cat .omc/state/ultrawork-state.json)
++  UW_ACTIVE=$(echo "$UW_STATE" | jq -r '.active // false')
++
++  if [[ "$UW_ACTIVE" == "true" ]]; then
++    LINKED=$(echo "$UW_STATE" | jq -r '.linked_to_ralph // false')
++
++    if [[ "$LINKED" == "true" ]]; then
++      echo "Warning: Ultrawork is linked to Ralph, but Ralph is not active."
++      echo "Clearing ultrawork state anyway..."
++    fi
++
++    # Remove both local and global state
++    rm -f .omc/state/ultrawork-state.json
++    rm -f ~/.codex/ultrawork-state.json
++
++    echo "Ultrawork cancelled. Parallel execution mode deactivated."
++    CANCELLED_ANYTHING=true
++    exit 0
++  fi
++fi
++
++# 4. Check Ecomode (standalone, not linked)
++if [[ -f .omc/state/ecomode-state.json ]]; then
++  ECO_STATE=$(cat .omc/state/ecomode-state.json)
++  ECO_ACTIVE=$(echo "$ECO_STATE" | jq -r '.active // false')
++
++  if [[ "$ECO_ACTIVE" == "true" ]]; then
++    LINKED=$(echo "$ECO_STATE" | jq -r '.linked_to_ralph // false')
++
++    if [[ "$LINKED" == "true" ]]; then
++      echo "Warning: Ecomode is linked to Ralph, but Ralph is not active."
++      echo "Clearing ecomode state anyway..."
++    fi
++
++    # Remove both local and global state
++    rm -f .omc/state/ecomode-state.json
++    rm -f ~/.codex/ecomode-state.json
++
++    echo "Ecomode cancelled. Token-efficient execution mode deactivated."
++    CANCELLED_ANYTHING=true
++    exit 0
++  fi
++fi
++
++# 5. Check UltraQA (standalone)
++if [[ -f .omc/state/ultraqa-state.json ]]; then
++  ULTRAQA_STATE=$(cat .omc/state/ultraqa-state.json)
++  ULTRAQA_ACTIVE=$(echo "$ULTRAQA_STATE" | jq -r '.active // false')
++
++  if [[ "$ULTRAQA_ACTIVE" == "true" ]]; then
++    rm -f .omc/state/ultraqa-state.json
++    echo "UltraQA cancelled. QA cycling workflow stopped."
++    CANCELLED_ANYTHING=true
++    exit 0
++  fi
++fi
++
++# 6. Check Swarm (SQLite-based)
++SWARM_DB=".omc/state/swarm.db"
++if [[ -f "$SWARM_DB" ]]; then
++  # Check if sqlite3 CLI is available
++  if command -v sqlite3 &>/dev/null; then
++    # Query SQLite to check if swarm is active
++    SWARM_ACTIVE=$(sqlite3 "$SWARM_DB" "SELECT active FROM swarm_session WHERE id = 1;" 2>/dev/null || echo "0")
++
++    if [[ "$SWARM_ACTIVE" == "1" ]]; then
++      # Get stats before cancelling
++      DONE_TASKS=$(sqlite3 "$SWARM_DB" "SELECT COUNT(*) FROM tasks WHERE status = 'done';" 2>/dev/null || echo "0")
++      TOTAL_TASKS=$(sqlite3 "$SWARM_DB" "SELECT COUNT(*) FROM tasks;" 2>/dev/null || echo "0")
++
++      # Mark swarm as inactive
++      sqlite3 "$SWARM_DB" "UPDATE swarm_session SET active = 0, completed_at = $(date +%s000) WHERE id = 1;"
++
++      echo "Swarm cancelled. $DONE_TASKS/$TOTAL_TASKS tasks completed."
++      echo "Database preserved at $SWARM_DB for analysis."
++      CANCELLED_ANYTHING=true
++      exit 0
++    fi
++  else
++    # Fallback: Check marker file if sqlite3 is not available
++    MARKER_FILE=".omc/state/swarm-active.marker"
++    if [[ -f "$MARKER_FILE" ]]; then
++      rm -f "$MARKER_FILE"
++      echo "Swarm cancelled (marker file removed). Database at $SWARM_DB may need manual cleanup."
++      CANCELLED_ANYTHING=true
++      exit 0
++    fi
++  fi
++fi
++
++# 7. Check Ultrapilot (standalone)
++if [[ -f .omc/state/ultrapilot-state.json ]]; then
++  ULTRAPILOT_STATE=$(cat .omc/state/ultrapilot-state.json)
++  ULTRAPILOT_ACTIVE=$(echo "$ULTRAPILOT_STATE" | jq -r '.active // false')
++
++  if [[ "$ULTRAPILOT_ACTIVE" == "true" ]]; then
++    rm -f .omc/state/ultrapilot-state.json
++    echo "Ultrapilot cancelled. Parallel autopilot workers stopped."
++    CANCELLED_ANYTHING=true
++    exit 0
++  fi
++fi
++
++# 8. Check Pipeline (standalone)
++if [[ -f .omc/state/pipeline-state.json ]]; then
++  PIPELINE_STATE=$(cat .omc/state/pipeline-state.json)
++  PIPELINE_ACTIVE=$(echo "$PIPELINE_STATE" | jq -r '.active // false')
++
++  if [[ "$PIPELINE_ACTIVE" == "true" ]]; then
++    rm -f .omc/state/pipeline-state.json
++    echo "Pipeline cancelled. Sequential agent chain stopped."
++    CANCELLED_ANYTHING=true
++    exit 0
++  fi
++fi
++
++# 9. Check Plan Consensus (standalone)
++if [[ "$PLAN_CONSENSUS_ACTIVE" == "true" ]]; then
++  echo "Cancelling Plan Consensus mode..."
++
++  # Clear state files
++  rm -f .omc/state/plan-consensus.json
++  rm -f .omc/state/ralplan-state.json
++
++  echo "Plan Consensus cancelled. Planning session ended."
++  echo "Note: Plan file preserved at path specified in state."
++  CANCELLED_ANYTHING=true
++  exit 0
++fi
++
++# No active modes found
++if [[ "$CANCELLED_ANYTHING" == "false" ]]; then
++  echo "No active OMC modes detected."
++  echo ""
++  echo "Checked for:"
++  echo "  - Autopilot (.omc/state/autopilot-state.json)"
++  echo "  - Ralph (.omc/state/ralph-state.json)"
++  echo "  - Ultrawork (.omc/state/ultrawork-state.json)"
++  echo "  - Ecomode (.omc/state/ecomode-state.json)"
++  echo "  - UltraQA (.omc/state/ultraqa-state.json)"
++  echo "  - Swarm (.omc/state/swarm.db)"
++  echo "  - Ultrapilot (.omc/state/ultrapilot-state.json)"
++  echo "  - Pipeline (.omc/state/pipeline-state.json)"
++  echo "  - Plan Consensus (.omc/state/plan-consensus.json)"
++  echo ""
++  echo "Use --force to clear all state files anyway."
++fi
++```
++
+ ## Messages Reference
+ 
+ | Mode | Success Message |
+@@ -354,16 +637,15 @@
+ | Swarm | "Swarm cancelled. Coordinated agents stopped." |
+ | Ultrapilot | "Ultrapilot cancelled. Parallel autopilot workers stopped." |
+ | Pipeline | "Pipeline cancelled. Sequential agent chain stopped." |
+-| Team | "Team cancelled. Teammates shut down and cleaned up." |
+ | Plan Consensus | "Plan Consensus cancelled. Planning session ended." |
+-| Force | "All OMX modes cleared. You are free to start fresh." |
+-| None | "No active OMX modes detected." |
++| Force | "All OMC modes cleared. You are free to start fresh." |
++| None | "No active OMC modes detected." |
+ 
+ ## What Gets Preserved
+ 
+ | Mode | State Preserved | Resume Command |
+ |------|-----------------|----------------|
+-| Autopilot | Yes (phase, files, spec, plan, verdicts) | `/autopilot` |
++| Autopilot | Yes (phase, files, spec, plan, verdicts) | `$autopilot` |
+ | Ralph | No | N/A |
+ | Ultrawork | No | N/A |
+ | UltraQA | No | N/A |
+@@ -377,23 +659,5 @@
+ - **Dependency-aware**: Autopilot cancellation cleans up Ralph and UltraQA
+ - **Link-aware**: Ralph cancellation cleans up linked Ultrawork or Ecomode
+ - **Safe**: Only clears linked Ultrawork, preserves standalone Ultrawork
+-- **Local-only**: Clears state files in `.omx/state/` directory
++- **Dual-location**: Clears both `.omc/` and `~/.codex/` state files
+ - **Resume-friendly**: Autopilot state is preserved for seamless resume
+-- **Team-aware**: Detects tmux-based teams and performs graceful shutdown with force-kill fallback
+-
+-## Tmux Team Cleanup
+-
+-When cancelling team mode, the cancel skill should:
+-
+-1. **Kill all team tmux sessions**: `tmux list-sessions -F '#{session_name}' 2>/dev/null | grep '^omx-team-'` and kill each
+-2. **Remove team state directories**: `rm -rf .omx/state/team/*/`
+-3. **Strip AGENTS.md overlay**: Remove content between `<!-- OMX:TEAM:WORKER:START -->` and `<!-- OMX:TEAM:WORKER:END -->`
+-
+-### Force Clear Addition
+-
+-When `--force` is used, also clean up:
+-```bash
+-rm -rf .omx/state/team/                  # All team state
+-# Kill all omx-team-* tmux sessions
+-tmux list-sessions -F '#{session_name}' 2>/dev/null | grep '^omx-team-' | while read s; do tmux kill-session -t "$s" 2>/dev/null; done
+-```

@@ -1,7 +1,12 @@
 ---
 name: review
 description: Review a plan with Critic
+version: 0.1.0
+source: fork
+checksum: 4e6df46179eceab92675226aeda77952bd3a5c4748501dd09c640c17710585ce
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # Review Skill
 

@@ -1,7 +1,12 @@
 ---
 name: omc-setup
 description: Setup and configure oh-my-codex (the ONLY command you need to learn)
+version: 0.1.0
+source: fork
+checksum: 1ea38e5cc5739a0b588edeeb453b046ba0605af5a95f4ccaf87a2470ec1d0dbf
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # OMC Setup
 

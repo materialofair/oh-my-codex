@@ -1,7 +1,12 @@
 ---
 name: plan
 description: Strategic planning with optional interview workflow
+version: 0.1.0
+source: fork
+checksum: 564167f230c3d96fa6df90c3143ceff0b8a653d47c0e7f74e008c4b7a8fc82cb
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # Plan - Strategic Planning Skill
 

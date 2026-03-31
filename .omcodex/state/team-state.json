@@ -1,0 +1,14 @@
+{
+  "active": true,
+  "phase": "team-plan",
+  "task_description": "verify install flow",
+  "auto_advance": true,
+  "created_at": "2026-02-23T14:00:58.475Z",
+  "phase_transitions": [],
+  "tasks": [],
+  "max_fix_attempts": 3,
+  "current_fix_attempt": 0,
+  "recommended_skills": [
+    "verify"
+  ]
+}

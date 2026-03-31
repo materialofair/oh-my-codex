@@ -1,7 +1,12 @@
 ---
 name: eval
 description: Imported from everything-codex command eval
+version: 0.1.0
+source: fork
+checksum: cb909f0ba3967918c31ca9f57f07ed3cb2dc282cc3ce494d78f402e991113f1e
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # Eval Command
 

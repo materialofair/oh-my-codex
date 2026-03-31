@@ -1,0 +1,182 @@
+{
+  "generatedAt": "2026-03-27T14:14:50.513Z",
+  "suite": "router",
+  "casesPath": "tests/llm/router-cases.json",
+  "total": 9,
+  "passed": 9,
+  "failed": 0,
+  "pass": true,
+  "results": [
+    {
+      "id": "plan_api",
+      "query": "Plan a scalable API architecture for a new billing service",
+      "pass": true,
+      "details": [],
+      "confidence": 0.8333333333333334,
+      "recommendations": [
+        {
+          "skill": "plan",
+          "score": 6,
+          "hits": 2,
+          "rationale": "matched 2 keyword(s)"
+        },
+        {
+          "skill": "backend-patterns",
+          "score": 4,
+          "hits": 2,
+          "rationale": "matched 2 keyword(s)"
+        }
+      ]
+    },
+    {
+      "id": "review_pr",
+      "query": "Please review this pull request for regressions and risky changes",
+      "pass": true,
+      "details": [],
+      "confidence": 0.3333333333333333,
+      "recommendations": [
+        {
+          "skill": "code-review",
+          "score": 4,
+          "hits": 1,
+          "rationale": "matched 1 keyword(s)"
+        }
+      ]
+    },
+    {
+      "id": "conductor_setup",
+      "query": "Use conductor to initialize this project and create track/spec/plan artifacts",
+      "pass": true,
+      "details": [],
+      "confidence": 1,
+      "recommendations": [
+        {
+          "skill": "conductor",
+          "score": 10,
+          "hits": 2,
+          "rationale": "matched 2 keyword(s)"
+        },
+        {
+          "skill": "plan",
+          "score": 3,
+          "hits": 1,
+          "rationale": "matched 1 keyword(s)"
+        }
+      ]
+    },
+    {
+      "id": "de_ai_writing_cn",
+      "query": "给这篇中文文章去 AI 味，改得更像人写的，但不要改变原意",
+      "pass": true,
+      "details": [],
+      "confidence": 0.6666666666666666,
+      "recommendations": [
+        {
+          "skill": "de-ai-writing",
+          "score": 8,
+          "hits": 2,
+          "rationale": "matched 2 keyword(s)"
+        }
+      ]
+    },
+    {
+      "id": "fix_build",
+      "query": "Fix the build error, lint failures, and type errors in auth flow",
+      "pass": true,
+      "details": [],
+      "confidence": 1,
+      "recommendations": [
+        {
+          "skill": "build-fix",
+          "score": 12,
+          "hits": 3,
+          "rationale": "matched 3 keyword(s)"
+        },
+        {
+          "skill": "security-review",
+          "score": 4,
+          "hits": 1,
+          "rationale": "matched 1 keyword(s)"
+        },
+        {
+          "skill": "frontend-patterns",
+          "score": 2,
+          "hits": 1,
+          "rationale": "matched 1 keyword(s)"
+        }
+      ]
+    },
+    {
+      "id": "implement_secure_feature",
+      "query": "Implement OAuth login with tests and verify the auth flow is safe",
+      "pass": true,
+      "details": [],
+      "confidence": 0.8333333333333334,
+      "recommendations": [
+        {
+          "skill": "security-review",
+          "score": 4,
+          "hits": 1,
+          "rationale": "matched 1 keyword(s)"
+        },
+        {
+          "skill": "autopilot",
+          "score": 3,
+          "hits": 1,
+          "rationale": "matched 1 keyword(s)"
+        },
+        {
+          "skill": "verify",
+          "score": 3,
+          "hits": 1,
+          "rationale": "matched 1 keyword(s)"
+        }
+      ]
+    },
+    {
+      "id": "de_ai_writing_zh",
+      "query": "帮我把这篇中文文章去AI味，改得像真人写的，但不要改掉原意",
+      "pass": true,
+      "details": [],
+      "confidence": 1,
+      "recommendations": [
+        {
+          "skill": "de-ai-writing",
+          "score": 12,
+          "hits": 3,
+          "rationale": "matched 3 keyword(s)"
+        }
+      ]
+    },
+    {
+      "id": "de_ai_writing_tech_cn",
+      "query": "把这篇技术博客润色成自然中文，别那么像 ChatGPT，但代码块和配置项不能动",
+      "pass": true,
+      "details": [],
+      "confidence": 0.6666666666666666,
+      "recommendations": [
+        {
+          "skill": "de-ai-writing",
+          "score": 8,
+          "hits": 2,
+          "rationale": "matched 2 keyword(s)"
+        }
+      ]
+    },
+    {
+      "id": "de_ai_writing_sermon_cn",
+      "query": "把这篇讲道稿改得像真人讲出来的，保留经文和神学立场，不要有机器感",
+      "pass": true,
+      "details": [],
+      "confidence": 1,
+      "recommendations": [
+        {
+          "skill": "de-ai-writing",
+          "score": 12,
+          "hits": 3,
+          "rationale": "matched 3 keyword(s)"
+        }
+      ]
+    }
+  ]
+}

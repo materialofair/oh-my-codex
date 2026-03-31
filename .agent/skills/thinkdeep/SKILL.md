@@ -3,7 +3,12 @@ name: thinkdeep
 description: 深度推理分析 - 使用 Gemini CLI 的原生思考能力进行复杂问题推理，支持会话延续。
 auto_invoke: true
 tags: [thinkdeep, reasoning, gemini, thinking-mode]
+version: 0.1.0
+source: fork
+checksum: 37d724cc1bf34f5b909fc60e1e51cae8dd51a84419e2fdb2e3e10c01b776bec6
+updated_at: 2026-02-06T15:19:11+08:00
 ---
+
 
 # ThinkDeep - 深度推理分析 Skill
 

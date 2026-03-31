@@ -1,7 +1,12 @@
 ---
 name: update-codemaps
 description: Imported from everything-codex command update-codemaps
+version: 0.1.0
+source: fork
+checksum: 2733fa3ec14f5d0864d00ba849a84989d4e0b34cc29a96f4af114049ba374734
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # Update Codemaps
 

@@ -1,7 +1,12 @@
 ---
 name: skill-doc-generator
 description: Automatically generates comprehensive documentation for Codex skills including README, HOW_TO_USE, and usage examples from SKILL.md
+version: 0.1.0
+source: fork
+checksum: ed8b97fb306c7c473c9202a1a9c691a79beb56c61b62b9113bce649586ffa71f
+updated_at: 2026-02-05T17:25:02+08:00
 ---
+
 
 # Skill Documentation Generator
 

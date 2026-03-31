@@ -1,11 +1,33 @@
 ---
 name: conductor
-description: Use when the user explicitly asks for Conductor, wants track/spec/plan artifacts, or needs long-lived project context management. Prefer start-dev for small or one-off tasks. If Conductor is not configured in the project, start with setup.
+description: Use when the user explicitly asks for Conductor, wants track/spec/plan/review artifacts on disk, or needs long-lived project context management. Prefer start-dev for small or one-off tasks. If Conductor is not configured in the project, start with setup.
+version: 0.1.0
+source: fork
+checksum: a792e5318c9a6fd8b09bda27b45d63730141658d5deb6e7cc006a6605596abcc
+updated_at: 2026-02-11T09:29:29+08:00
 ---
+
 
 # Conductor
 
-Conductor is a Context-Driven Development (CDD) framework that transforms AI agents into proactive project managers. The philosophy is "Measure twice, code once" - every feature follows a strict protocol: **Context -> Spec & Plan -> Implement**.
+Conductor is a Context-Driven Development (CDD) workflow for managing durable project context on disk. The working loop is:
+
+```text
+Refresh -> Spec -> Plan -> Implement -> Review -> Reconcile
+```
+
+This skill is the Codex-native adaptation of the upstream Gemini Conductor repository. Keep the workflow compatible with upstream concepts, but translate execution into Codex conventions instead of copying Gemini-only behavior literally.
+
+## When To Use
+
+Use **Conductor** when the user wants:
+- persistent artifacts under `conductor/`
+- a track with `spec.md` and `plan.md`
+- a governed multi-step implementation flow
+- a lightweight preflight summary before important work
+- review/cleanup/archive operations tied to the track lifecycle
+
+Use **start-dev** instead when the task is small, one-off, or does not need new artifacts on disk.
 
 ## Native Subagent Protocol (Codex)
 
@@ -21,24 +43,45 @@ Minimal orchestration pattern:
 spawn_agent -> send_input (optional) -> wait -> close_agent
 ```
 
-## Routing (Reduce Skill Confusion)
+## Upstream Alignment (Gemini Conductor)
 
-Use **Conductor** when the user explicitly wants:
-- Track/spec/plan artifacts stored on disk
-- Long-lived project context and workflow governance
-- A feature/bug that will span multiple sessions or contributors
+When adapting or extending this skill, inspect the upstream repository as a protocol bundle, not just the README. The highest-value upstream files are:
+- `GEMINI.md`
+- `gemini-extension.json`
+- `policies/conductor.toml`
+- `commands/conductor/*.toml`
+- `templates/workflow.md`
 
-Use **start-dev** instead when the task is:
-- Small, one-off, or exploratory
-- Focused on quick implementation without new project artifacts
+Preserve these upstream ideas when they improve Codex behavior:
+- `conductor/` is the default plan directory
+- commands are protocol files; read the TOML `prompt` field before executing
+- review is a first-class command, not an afterthought
+- file resolution should work from semantic names, not only hard-coded paths
+- implementation and verification should prefer isolated review contexts when possible
 
-If ambiguous, ask: "Do you want this managed as a Conductor track (spec/plan artifacts), or should I just use start-dev for a quick implementation?"
+The compatibility boundary for this skill is defined in:
+- `docs/CONDUCTOR_V2_COMPATIBILITY_CONTRACT.md`
 
-## Compatibility Note
+## Universal File Resolution Protocol (Codex Adaptation)
 
-Conductor writes to a fixed `conductor/` directory. If the user asks for a custom artifact path, confirm that Conductor does not support custom paths by default, and offer either:
-- Proceed with the default `conductor/` directory, or
-- Pause for a manual refactor of the protocol files.
+Before using Conductor files, resolve them in this order:
+
+1. If the project contains upstream metadata such as `GEMINI.md`, `gemini-extension.json`, or `policies/conductor.toml`, read those first and honor their plan-directory declarations.
+2. Otherwise, default to the fixed `conductor/` directory.
+3. Resolve semantic aliases as follows:
+   - Tracks Registry -> `conductor/tracks.md`
+   - Product Definition -> `conductor/product.md`
+   - Product Guidelines -> `conductor/product-guidelines.md`
+   - Tech Stack -> `conductor/tech-stack.md`
+   - Workflow -> `conductor/workflow.md`
+   - Track Folder -> `conductor/tracks/<track_id>/`
+   - Archive -> `conductor/archive/`
+   - Temp Workspace -> `conductor/tmp/`
+   - Code Styleguides -> `conductor/code_styleguides/`
+
+If the user asks for a custom artifact path, state that Conductor defaults to `conductor/` and either:
+- proceed with the default directory, or
+- pause for a deliberate protocol refactor
 
 ## Core Concepts
 
@@ -72,8 +115,10 @@ conductor/
 | Command | Purpose |
 |---------|---------|
 | **Setup** | Initialize Conductor in a project (new or existing) |
+| **Refresh** | Refresh the facts layer from code, config, and git state |
 | **New Track** | Create a new feature/bug track with spec and plan |
 | **Implement** | Execute tasks from a track's plan following TDD workflow |
+| **Review** | Review a track or current changes against spec, plan, workflow, and code guidelines |
 | **Status** | Show progress overview of all tracks |
 | **Revert** | Git-aware rollback of tracks, phases, or tasks |
 
@@ -84,8 +129,10 @@ The detailed protocols are in TOML format. Read the `prompt` field from each fil
 | Action | Protocol File |
 |--------|---------------|
 | Setup project | `commands/conductor/setup.toml` |
+| Refresh facts | `commands/conductor/refresh.toml` |
 | Create new track | `commands/conductor/newTrack.toml` |
 | Implement tasks | `commands/conductor/implement.toml` |
+| Review implementation | `commands/conductor/review.toml` |
 | Check status | `commands/conductor/status.toml` |
 | Revert changes | `commands/conductor/revert.toml` |
 
@@ -108,11 +155,13 @@ The detailed protocols are in TOML format. Read the `prompt` field from each fil
 ## When to Use Each Protocol
 
 - **"set up conductor" or "initialize project"** -> Read `commands/conductor/setup.toml`
+- **"refresh", "sync current context", "update conductor facts"** -> Read `commands/conductor/refresh.toml`
 - **"new feature", "new track", "plan a feature"** -> Read `commands/conductor/newTrack.toml`
 - **"implement", "start working", "next task"** -> Read `commands/conductor/implement.toml`
+- **"review", "audit", "check this track"** -> Read `commands/conductor/review.toml`
 - **"status", "progress", "where are we"** -> Read `commands/conductor/status.toml`
 - **"revert", "undo", "rollback"** -> Read `commands/conductor/revert.toml`
- - **If the user does not mention Conductor and the task is small** -> Use `start-dev` instead
+- **If the user does not mention Conductor and the task is small** -> Use `start-dev` instead
 
 ## Assets
 
@@ -122,7 +171,7 @@ The detailed protocols are in TOML format. Read the `prompt` field from each fil
 ## Critical Rules
 
 1. **Validate every tool call** - If any fails, halt and report to user
-2. **Sequential questions** - Ask one question at a time, wait for response
-3. **User confirmation required** - Before writing files or making changes
-4. **Check setup first** - Verify `conductor/` exists before any operation
-5. **Agnostic language** - Do not suggest slash commands like `$conductor:xxx`. Instead, tell the user to ask you directly (e.g., "to start implementing, just ask me" instead of "run $conductor:implement")
+2. **Check setup first** - Resolve and verify the required Conductor files before any operation
+3. **Codex-first interaction** - Prefer reasonable assumptions; ask one concise blocking question only when necessary
+4. **Plain-language UX** - Do not suggest slash commands. Tell the user what to ask for directly in natural language
+5. **Codex-native delegation** - Replace Gemini-only flows such as `ask_user` or isolated CLI shells with Codex chat, native subagents, and local commands

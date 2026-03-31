@@ -1,7 +1,12 @@
 ---
 name: BDD Generator
 description: Behavior-Driven Development assistant using playwright-bdd. Generates Gherkin features and step definitions with full TDD Guard integration.
+version: 0.1.0
+source: fork
+checksum: 271380db7bce2f169f101540dc59e4fd51547e884c5e0505a3ac7295b2aaf6e0
+updated_at: 2026-02-06T15:19:11+08:00
 ---
+
 
 # BDD Generator Skill
 

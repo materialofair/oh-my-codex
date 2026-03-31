@@ -1,0 +1,56 @@
+{
+  "stack": {
+    "packageManager": "npm",
+    "languages": [
+      "javascript"
+    ],
+    "frontend": null,
+    "backend": null,
+    "testFrameworks": [],
+    "e2eFrameworks": [],
+    "commands": {
+      "test": "npm test",
+      "coverage": null
+    }
+  },
+  "analysis": {
+    "targetFile": "/Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/src/cli/test.js",
+    "relativePath": "src/cli/test.js",
+    "language": "javascript",
+    "kind": "module",
+    "lineCount": 204,
+    "functionCount": 3,
+    "classCount": 0,
+    "asyncCount": 1,
+    "branchCount": 28,
+    "importCount": 2,
+    "symbols": {
+      "functions": [
+        "getFlagValue",
+        "parseNumber",
+        "test"
+      ],
+      "classes": []
+    },
+    "riskSignals": [
+      "error-handling"
+    ],
+    "suggestedTestFile": "src/cli/test.test.js",
+    "suggestedLayers": [
+      "unit",
+      "regression"
+    ],
+    "acceptanceChecklist": [
+      "AC-001 | P0 | The target module `src/cli/test.js` loads without runtime errors.",
+      "AC-002 | P0 | Primary behavior of `getFlagValue` is verified against expected input/output.",
+      "AC-003 | P0 | Primary behavior of `parseNumber` is verified against expected input/output.",
+      "AC-004 | P0 | Primary behavior of `test` is verified against expected input/output.",
+      "AC-005 | P1 | Async success and failure paths are covered."
+    ],
+    "regressionChecklist": [
+      "RG-001 | P0 | Existing public behavior remains unchanged for current callers.",
+      "RG-002 | P0 | Conditional branches and fallback paths have regression assertions."
+    ],
+    "complexity": "high"
+  }
+}

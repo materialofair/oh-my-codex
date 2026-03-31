@@ -1,7 +1,12 @@
 ---
 name: code-review
 description: Run a comprehensive code review
+version: 0.1.0
+source: fork
+checksum: 8d6819264d1ebcd4f6741feb014f92805ea541c10825195d34fccc5c1b75b232
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # Code Review Skill
 

@@ -1,7 +1,12 @@
 ---
 name: iterative-retrieval
 description: Pattern for progressively refining context retrieval to solve the subagent context problem
+version: 0.1.0
+source: fork
+checksum: 25b4bca58b8696b4eb825d030adc53b6ba4255b92a6399aa98d1038e09cfb1da
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # Iterative Retrieval Pattern
 

@@ -29,6 +29,8 @@ function validateCatalogManifest(input) {
       status,
       canonical: typeof entry.canonical === 'string' ? entry.canonical : undefined,
       core: entry.core === true,
+      source: entry.source || 'unknown',
+      version: entry.version || '0.1.0',
     };
   });
 

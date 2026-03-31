@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-03-12T12:49:29.025Z",
+  "generatedAt": "2026-03-31T13:25:33.307Z",
   "counts": {
-    "skillCount": 86,
+    "skillCount": 87,
     "promptCount": 3,
-    "activeSkillCount": 86,
+    "activeSkillCount": 87,
     "activeAgentCount": 3
   },
   "skills": [
@@ -11,517 +11,697 @@
       "name": "ai-commenting",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "aireview",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "analyze",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.3.0"
     },
     {
       "name": "architect-planner",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "auto-mbti",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "1.0.0"
     },
     {
       "name": "autopilot",
       "category": "execution",
       "status": "active",
-      "core": true
+      "core": true,
+      "source": "fork",
+      "version": "0.3.0"
     },
     {
       "name": "backend-patterns",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "bdd-generator",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "brainstorming",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "build-fix",
       "category": "shortcut",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "cancel",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "checkpoint",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "code-review",
       "category": "shortcut",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "coding-standards",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "conductor",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "consensus",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "content-research-writer",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
+    },
+    {
+      "name": "de-ai-writing",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "debug-analysis",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "deepinit",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "deepsearch",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.3.0"
     },
     {
       "name": "doctor",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "drawio",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "e2e",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "ecomode",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "electron-driver",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "eval",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "eval-harness",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "evolve",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "frontend-design",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "frontend-patterns",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "frontend-ui-ux",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "git-master",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "help",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "iterative-retrieval",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "local-skills-setup",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "log-analyzer",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "mcp-setup",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "multi-model-research",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "note",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "omc-setup",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "orchestrate",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "patent-workflow",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "pattern-recognition",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "pipeline",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "plan",
       "category": "planning",
       "status": "active",
-      "core": true
+      "core": true,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "planning-methodology",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "planning-with-files",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "\"2.10.0\""
     },
     {
       "name": "project-analyze",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "project-session-manager",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "quality-check",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "quality-validation",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "quick-init-project",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "ralph",
       "category": "execution",
       "status": "active",
-      "core": true
+      "core": true,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "ralph-init",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "ralplan",
       "category": "planning",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "refactor-clean",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "release",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "research",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.3.0"
     },
     {
       "name": "research-methodology",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "review",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "security-review",
       "category": "shortcut",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "setup-pm",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "skill",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "skill-create",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "skill-debugger",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "skill-development",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "skill-doc-generator",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "skill-quality-analyzer",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "skill-tester",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "start-dev",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "swarm",
       "category": "execution",
       "status": "active",
-      "core": true
+      "core": true,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "tdd",
       "category": "shortcut",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "tdd-generator",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "tdd-workflow",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.3.0"
     },
     {
       "name": "test-coverage",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "test-gen",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.3.0"
     },
     {
       "name": "thinkdeep",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "ui-ux-pro-max",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "ultrapilot",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "ultraqa",
       "category": "execution",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "ultrawork",
       "category": "execution",
       "status": "active",
-      "core": true
+      "core": true,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "update-codemaps",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "update-docs",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     },
     {
       "name": "verification-loop",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.3.0"
     },
     {
       "name": "verify",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.3.0"
     },
     {
       "name": "writer-memory",
       "category": "utility",
       "status": "active",
-      "core": false
+      "core": false,
+      "source": "fork",
+      "version": "0.1.0"
     }
   ],
   "agents": [

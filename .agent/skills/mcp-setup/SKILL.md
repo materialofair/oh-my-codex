@@ -1,7 +1,12 @@
 ---
 name: mcp-setup
 description: Configure popular MCP servers for enhanced agent capabilities
+version: 0.1.0
+source: fork
+checksum: 165d0039ff8886021f1b2cd04fe1458aa7e5f0a7a36169e3dcf22ba9f12d5ee3
+updated_at: 2026-02-11T15:02:15+08:00
 ---
+
 
 # MCP Setup
 

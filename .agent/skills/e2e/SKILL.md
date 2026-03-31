@@ -1,7 +1,12 @@
 ---
 name: e2e
 description: Imported from everything-codex command e2e
+version: 0.1.0
+source: fork
+checksum: 48c320cf10e8036cab90f671e33e31173f08dc99cad3e331e527fd31c5cbfb8e
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 ---
 description: Generate and run end-to-end tests with Playwright. Creates test journeys, runs tests, captures screenshots/videos/traces, and uploads artifacts.

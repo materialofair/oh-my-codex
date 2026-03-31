@@ -1,7 +1,12 @@
 ---
 name: content-research-writer
 description: Research-driven content creation with citations, hooks, outline iteration, and real-time feedback. Collaborative writing partnership.
+version: 0.1.0
+source: fork
+checksum: 32a5556b002a75f9704c90b341628b11c481cb339d44b4c1b39e2b1285dae5ca
+updated_at: 2026-02-11T09:29:29+08:00
 ---
+
 
 # Content Research Writer
 

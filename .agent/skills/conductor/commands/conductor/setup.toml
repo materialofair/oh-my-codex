@@ -24,7 +24,7 @@ CRITICAL: You must validate the success of every tool call. If any tool call fai
     - If `STEP` is "2.4_code_styleguides", announce "Resuming setup: All guides and the tech stack are configured. Next, we will define the project workflow." and proceed to **Section 2.5**.
     - If `STEP` is "2.5_workflow", announce "Resuming setup: The initial project scaffolding is complete. Next, we will generate the first track." and proceed to **Phase 2 (3.0)**.
     - If `STEP` is "3.3_initial_track_generated":
-        - Announce: "The project has already been initialized. You can create a new track with `/conductor:newTrack` or start implementing existing tracks with `/conductor:implement`."
+        - Announce: "The project has already been initialized. You can ask me to create a new track or start implementing an existing one."
         - Halt the `setup` process.
     - If `STEP` is unrecognized, announce an error and halt.
 
@@ -274,9 +274,10 @@ CRITICAL: You must validate the success of every tool call. If any tool call fai
 1.  **Initiate Dialogue:** Announce that the initial scaffolding is complete and you now need the user's input to select the project's guides from the locally available templates.
 2.  **Select Code Style Guides:**
     -   List the available style guides by checking for templates in these locations (in order):
-        - `~/.claude/skills/conductor/templates/code_styleguides/`
+        - the current Conductor skill's local `templates/code_styleguides/` directory
+        - `~/.codex/skills/conductor/templates/code_styleguides/`
+        - `<workspace>/.agent/skills/conductor/templates/code_styleguides/`
         - `~/.opencode/skill/conductor/templates/code_styleguides/`
-        - `~/.gemini/extensions/conductor/templates/code_styleguides/`
         Use the first location that exists.
     -   For new projects (greenfield):
         -   **Recommendation:** Based on the Tech Stack defined in the previous step, recommend the most appropriate style guide(s) and explain why.
@@ -292,16 +293,17 @@ CRITICAL: You must validate the success of every tool call. If any tool call fai
             - Ask the user for a simple confirmation to proceed with options like:
                     A) Yes, I want to proceed with the suggested code style guides.
                     B) No, I want to add more code style guides.
-    -   **Action:** Construct and execute a command to create the directory and copy all selected files. First determine which templates directory exists (checking `~/.claude/skills/conductor/templates/`, `~/.opencode/skill/conductor/templates/`, or `~/.gemini/extensions/conductor/templates/`), then copy from that location. For example: `mkdir -p conductor/code_styleguides && cp $TEMPLATES_DIR/code_styleguides/python.md $TEMPLATES_DIR/code_styleguides/javascript.md conductor/code_styleguides/`
+    -   **Action:** Construct and execute a command to create the directory and copy all selected files. First resolve the templates directory using the priority order above, then copy from that location. For example: `mkdir -p conductor/code_styleguides && cp $TEMPLATES_DIR/code_styleguides/python.md $TEMPLATES_DIR/code_styleguides/javascript.md conductor/code_styleguides/`
     -   **Commit State:** Upon successful completion of the copy command, you MUST immediately write to `conductor/setup_state.json` with the exact content:
         `{"last_successful_step": "2.4_code_styleguides"}`
 
 ### 2.5 Select Workflow (Interactive)
 1.  **Copy Initial Workflow:**
     -   Copy the workflow template to `conductor/workflow.md` from the first existing location:
-        - `~/.claude/skills/conductor/templates/workflow.md`
+        - the current Conductor skill's local `templates/workflow.md`
+        - `~/.codex/skills/conductor/templates/workflow.md`
+        - `<workspace>/.agent/skills/conductor/templates/workflow.md`
         - `~/.opencode/skill/conductor/templates/workflow.md`
-        - `~/.gemini/extensions/conductor/templates/workflow.md`
 2.  **Customize Workflow:**
     -   Ask the user: "Do you want to use the default workflow or customize it?"
         The default workflow includes:
@@ -425,5 +427,5 @@ CRITICAL: You must validate the success of every tool call. If any tool call fai
 ### 3.4 Final Announcement
 1.  **Announce Completion:** After the track has been created, announce that the project setup and initial track generation are complete.
 2.  **Save Conductor Files:** Add and commit all files with the commit message `conductor(setup): Add conductor setup files`.
-3.  **Next Steps:** Inform the user that they can now begin work by running `/conductor:implement`.
+3.  **Next Steps:** Inform the user that they can now begin work by asking you to implement the next track.
 """

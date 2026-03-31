@@ -2,7 +2,12 @@
 name: frontend-design
 description: Design and implement modern frontend interfaces. Covers React, Vue, state management, routing, and component architecture patterns.
 license: Complete terms in LICENSE.txt
+version: 0.1.0
+source: fork
+checksum: b7bb3abb38a7c4e1d4644b1b28593ee0bf1a7fbd56e73ae43044032e40a9ae72
+updated_at: 2026-02-06T15:19:11+08:00
 ---
+
 
 This skill guides creation of distinctive, production-grade frontend interfaces that avoid generic "AI slop" aesthetics. Implement real working code with exceptional attention to aesthetic details and creative choices.
 

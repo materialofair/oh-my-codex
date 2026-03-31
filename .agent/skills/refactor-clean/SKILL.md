@@ -1,7 +1,12 @@
 ---
 name: refactor-clean
 description: Imported from everything-codex command refactor-clean
+version: 0.1.0
+source: fork
+checksum: 89ab1b7284e4c51942171e674e83c163963d74cbb6ee37fb8ba2908e146b9309
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # Refactor Clean
 

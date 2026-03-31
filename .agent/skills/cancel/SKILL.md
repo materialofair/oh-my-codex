@@ -1,7 +1,12 @@
 ---
 name: cancel
 description: Cancel any active OMC mode (autopilot, ralph, ultrawork, ecomode, ultraqa, swarm, ultrapilot, pipeline)
+version: 0.1.0
+source: fork
+checksum: abe0c32273e7f90f6254e71a0cbb81615ef83d3cf39441d9e625a22d2118638f
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # Cancel Skill
 

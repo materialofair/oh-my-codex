@@ -1,7 +1,12 @@
 ---
 name: drawio
 description: Professional diagramming and architecture visualization using Draw.io MCP server. Create, modify, and manage system diagrams, flowcharts, and technical documentation visuals programmatically.
+version: 0.1.0
+source: fork
+checksum: 9bd76bd2cde6fff273f4b33d53a3e8b614949bbb93e6709c3b42db6063f231ea
+updated_at: 2026-02-11T09:29:29+08:00
 ---
+
 
 # Draw.io Diagramming Skill
 

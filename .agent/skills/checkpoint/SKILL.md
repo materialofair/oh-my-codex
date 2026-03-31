@@ -1,7 +1,12 @@
 ---
 name: checkpoint
 description: Imported from everything-codex command checkpoint
+version: 0.1.0
+source: fork
+checksum: d2d6e9f4109d4415ddd6e064346a9c37051b441f1d889293501f8a4802efd5cf
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # Checkpoint Command
 

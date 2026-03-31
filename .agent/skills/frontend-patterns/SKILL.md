@@ -1,7 +1,12 @@
 ---
 name: frontend-patterns
 description: Frontend development patterns for React, Next.js, state management, performance optimization, and UI best practices.
+version: 0.1.0
+source: fork
+checksum: e1a19061437910d9f69c74bafc970e56bd7f12a7be869888846e9884d2299b08
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # Frontend Development Patterns
 

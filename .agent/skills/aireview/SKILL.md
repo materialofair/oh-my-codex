@@ -1,7 +1,12 @@
 ---
 name: aireview
 description: Professional multi-agent AI code review with confidence scoring
+version: 0.1.0
+source: fork
+checksum: e294f027466850be8df992fd69a6a323fff029ef8d1b0a323f9f821f62e5d975
+updated_at: 2026-02-24T17:51:53+08:00
 ---
+
 
 # aireview - Enhanced AI Code Review
 

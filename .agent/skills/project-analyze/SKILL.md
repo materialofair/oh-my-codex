@@ -1,7 +1,12 @@
 ---
 name: project-analyze
 description: Analyze project architecture and dependencies using ProjectMind knowledge graph. Provides 40s intelligent understanding and impact analysis.
+version: 0.1.0
+source: fork
+checksum: e782f38ae97518289ea75708d616f9bb9389dff3e45b8f62b38b2650d9864ffc
+updated_at: 2026-02-05T16:22:10+08:00
 ---
+
 
 > Codex CLI: Manual invocation only (`$project-analyze`). No hooks or auto-run.
 

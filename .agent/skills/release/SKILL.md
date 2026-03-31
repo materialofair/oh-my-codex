@@ -1,7 +1,12 @@
 ---
 name: release
 description: Automated release workflow for oh-my-codex
+version: 0.1.0
+source: fork
+checksum: 4162482cc3cd78d3fafb1c2fb9f2885bccf57f3d8ba26a5793b89bca2f29b3f7
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # Release Skill
 

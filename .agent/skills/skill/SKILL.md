@@ -2,7 +2,12 @@
 name: skill
 description: Manage local skills - list, add, remove, search, edit
 argument-hint: "<command> [args]"
+version: 0.1.0
+source: fork
+checksum: d688a2308c5c6514510f1773839f280ef0935682869945c85aeb309df3c4a7f4
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # Skill Management CLI
 

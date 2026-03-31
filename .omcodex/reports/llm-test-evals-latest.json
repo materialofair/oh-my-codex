@@ -1,0 +1,71 @@
+{
+  "generatedAt": "2026-03-07T16:11:07.909Z",
+  "suite": "evals",
+  "casesPath": "tests/llm/prompt-contract-cases.json",
+  "eval": {
+    "hasApiKey": false,
+    "enabled": true,
+    "ready": false
+  },
+  "warmup": {
+    "pass": true,
+    "output": "0.120.27\n"
+  },
+  "pass": true,
+  "results": [
+    {
+      "id": "architect-prompt",
+      "configPath": "/Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/.omcodex/promptfoo/architect-prompt.promptfoo.yaml",
+      "validate": {
+        "pass": true,
+        "output": "Configuration is valid.\n"
+      },
+      "eval": {
+        "status": "skipped",
+        "output": "",
+        "resultPath": null,
+        "stats": null
+      },
+      "notes": [
+        "validate passed",
+        "eval skipped: OPENAI_API_KEY or CODEX_API_KEY not set"
+      ]
+    },
+    {
+      "id": "planner-prompt",
+      "configPath": "/Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/.omcodex/promptfoo/planner-prompt.promptfoo.yaml",
+      "validate": {
+        "pass": true,
+        "output": "Configuration is valid.\n"
+      },
+      "eval": {
+        "status": "skipped",
+        "output": "",
+        "resultPath": null,
+        "stats": null
+      },
+      "notes": [
+        "validate passed",
+        "eval skipped: OPENAI_API_KEY or CODEX_API_KEY not set"
+      ]
+    },
+    {
+      "id": "executor-prompt",
+      "configPath": "/Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/.omcodex/promptfoo/executor-prompt.promptfoo.yaml",
+      "validate": {
+        "pass": true,
+        "output": "Configuration is valid.\n"
+      },
+      "eval": {
+        "status": "skipped",
+        "output": "",
+        "resultPath": null,
+        "stats": null
+      },
+      "notes": [
+        "validate passed",
+        "eval skipped: OPENAI_API_KEY or CODEX_API_KEY not set"
+      ]
+    }
+  ]
+}

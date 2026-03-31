@@ -2,7 +2,12 @@
 name: local-skills-setup
 description: Set up and manage local skills for automatic matching and invocation
 argument-hint: "[list|add|scan]"
+version: 0.1.0
+source: fork
+checksum: 3c903560a577d377f86426dd85ebb56a15abe654ff32799692df59906cb0c674
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # Local Skills Setup
 

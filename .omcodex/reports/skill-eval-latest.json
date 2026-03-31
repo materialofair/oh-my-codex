@@ -1,0 +1,855 @@
+{
+  "generatedAt": "2026-03-31T13:25:33.496Z",
+  "skillsDir": "/Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/.agent/skills",
+  "minScore": 70,
+  "total": 87,
+  "averageScore": 97.7,
+  "passCount": 87,
+  "failCount": 0,
+  "results": [
+    {
+      "skill": "ai-commenting",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "aireview",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "analyze",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "architect-planner",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "auto-mbti",
+      "score": 90,
+      "findings": [
+        "missing workflow guidance sections"
+      ],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "autopilot",
+      "score": 90,
+      "findings": [
+        "missing workflow guidance sections"
+      ],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "backend-patterns",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "bdd-generator",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "brainstorming",
+      "score": 96,
+      "findings": [
+        "contains ambiguous instruction wording"
+      ],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "build-fix",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "cancel",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "checkpoint",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "code-review",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "coding-standards",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "conductor",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md",
+        "commands/conductor/implement.toml",
+        "commands/conductor/newTrack.toml",
+        "commands/conductor/refresh.toml",
+        "commands/conductor/revert.toml",
+        "commands/conductor/review.toml",
+        "commands/conductor/setup.toml",
+        "commands/conductor/status.toml",
+        "templates/workflow.md",
+        "templates/current.md",
+        "templates/rules/agents.md",
+        "templates/rules/coding-style.md",
+        "templates/rules/dev.md",
+        "templates/rules/git-workflow.md",
+        "templates/rules/hooks.md",
+        "templates/rules/patterns.md",
+        "templates/rules/performance.md",
+        "templates/rules/README.md",
+        "templates/rules/research.md",
+        "templates/rules/review.md",
+        "templates/rules/security.md",
+        "templates/rules/testing.md"
+      ]
+    },
+    {
+      "skill": "consensus",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "content-research-writer",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "de-ai-writing",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "debug-analysis",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "deepinit",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "deepsearch",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "doctor",
+      "score": 78,
+      "findings": [
+        "missing workflow guidance sections",
+        "contains non-codex runtime reference"
+      ],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "drawio",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "e2e",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "ecomode",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "electron-driver",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "eval",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "eval-harness",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "evolve",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "frontend-design",
+      "score": 82,
+      "findings": [
+        "missing workflow guidance sections",
+        "missing runnable examples"
+      ],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "frontend-patterns",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "frontend-ui-ux",
+      "score": 90,
+      "findings": [
+        "missing workflow guidance sections"
+      ],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "git-master",
+      "score": 90,
+      "findings": [
+        "missing workflow guidance sections"
+      ],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "help",
+      "score": 90,
+      "findings": [
+        "missing workflow guidance sections"
+      ],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "iterative-retrieval",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "local-skills-setup",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "log-analyzer",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "mcp-setup",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "multi-model-research",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "note",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "omc-setup",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "orchestrate",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "patent-workflow",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "pattern-recognition",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "pipeline",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "plan",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "planning-methodology",
+      "score": 96,
+      "findings": [
+        "contains ambiguous instruction wording"
+      ],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "planning-with-files",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "project-analyze",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "project-session-manager",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "quality-check",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "quality-validation",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "quick-init-project",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "ralph",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "ralph-init",
+      "score": 90,
+      "findings": [
+        "missing workflow guidance sections"
+      ],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "ralplan",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "refactor-clean",
+      "score": 90,
+      "findings": [
+        "missing workflow guidance sections"
+      ],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "release",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "research",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "research-methodology",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "review",
+      "score": 90,
+      "findings": [
+        "missing workflow guidance sections"
+      ],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "security-review",
+      "score": 90,
+      "findings": [
+        "missing workflow guidance sections"
+      ],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "setup-pm",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "skill",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "skill-create",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "skill-debugger",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "skill-development",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "skill-doc-generator",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "skill-quality-analyzer",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "skill-tester",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "start-dev",
+      "score": 88,
+      "findings": [
+        "contains legacy Task(...) syntax"
+      ],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "swarm",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "tdd",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "tdd-generator",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "tdd-workflow",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "test-coverage",
+      "score": 90,
+      "findings": [
+        "missing workflow guidance sections"
+      ],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "test-gen",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "thinkdeep",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "ui-ux-pro-max",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "ultrapilot",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "ultraqa",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "ultrawork",
+      "score": 90,
+      "findings": [
+        "missing workflow guidance sections"
+      ],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "update-codemaps",
+      "score": 90,
+      "findings": [
+        "missing workflow guidance sections"
+      ],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "update-docs",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "verification-loop",
+      "score": 90,
+      "findings": [
+        "missing workflow guidance sections"
+      ],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "verify",
+      "score": 90,
+      "findings": [
+        "missing workflow guidance sections"
+      ],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "writer-memory",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    }
+  ]
+}

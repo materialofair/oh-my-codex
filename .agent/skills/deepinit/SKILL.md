@@ -1,7 +1,12 @@
 ---
 name: deepinit
 description: Deep codebase initialization with hierarchical AGENTS.md documentation
+version: 0.1.0
+source: fork
+checksum: c5bb2ae997ff4083542f8780d74fe1a66ba58729f7e6a0f98c8dbe4eabba4578
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # Deep Init Skill
 

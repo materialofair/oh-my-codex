@@ -1,0 +1,359 @@
+{
+  "generatedAt": "2026-03-31T12:28:27.331Z",
+  "skillsDir": "/Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/.omcodex/tmp/source-skills/upstream/skills",
+  "minScore": 70,
+  "total": 36,
+  "averageScore": 96.22,
+  "passCount": 36,
+  "failCount": 0,
+  "results": [
+    {
+      "skill": "ai-slop-cleaner",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "analyze",
+      "score": 92,
+      "findings": [
+        "missing runnable examples"
+      ],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "ask-claude",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "ask-gemini",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "autopilot",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "build-fix",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "cancel",
+      "score": 88,
+      "findings": [
+        "contains non-codex runtime reference"
+      ],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "code-review",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "configure-notifications",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "deep-interview",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "deepsearch",
+      "score": 92,
+      "findings": [
+        "missing runnable examples"
+      ],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "doctor",
+      "score": 78,
+      "findings": [
+        "missing workflow guidance sections",
+        "contains non-codex runtime reference"
+      ],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "ecomode",
+      "score": 90,
+      "findings": [
+        "missing workflow guidance sections"
+      ],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "frontend-ui-ux",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "git-master",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "help",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "hud",
+      "score": 88,
+      "findings": [
+        "contains non-codex runtime reference"
+      ],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "note",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "omx-setup",
+      "score": 88,
+      "findings": [
+        "contains non-codex runtime reference"
+      ],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "pipeline",
+      "score": 78,
+      "findings": [
+        "missing workflow guidance sections",
+        "contains non-codex runtime reference"
+      ],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "plan",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "ralph",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "ralph-init",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "ralplan",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "review",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "security-review",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "skill",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "swarm",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "tdd",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "team",
+      "score": 88,
+      "findings": [
+        "contains non-codex runtime reference"
+      ],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "trace",
+      "score": 92,
+      "findings": [
+        "missing runnable examples"
+      ],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "ultraqa",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "ultrawork",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "visual-verdict",
+      "score": 90,
+      "findings": [
+        "missing workflow guidance sections"
+      ],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "web-clone",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "worker",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    }
+  ]
+}

@@ -1,7 +1,12 @@
 ---
 name: ultrapilot
 description: Parallel autopilot with file ownership partitioning
+version: 0.1.0
+source: fork
+checksum: 063c889be726de679daa4e86fb65763b7c931f798d89dc22f513594819a05cf3
+updated_at: 2026-02-11T09:29:16+08:00
 ---
+
 
 # Ultrapilot Skill
 

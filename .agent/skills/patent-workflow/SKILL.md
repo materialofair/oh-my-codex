@@ -3,7 +3,12 @@ name: patent-workflow
 description: 三阶段专利撰写workflow（Research → Plan → Implement），借鉴AutoPatent架构，集成Zen MCP多AI协作，确保专利质量和授权率
 auto_invoke: true
 tags: [patent, workflow, multi-agent, quality-gate, zen-mcp]
+version: 0.1.0
+source: fork
+checksum: 0f2fd73278f99b4871868273bc308cdf8812a46879d725012e459b4e9bdc160d
+updated_at: 2026-02-11T09:29:29+08:00
 ---
+
 
 # Patent Workflow Skill - 专利三阶段撰写工作流
 

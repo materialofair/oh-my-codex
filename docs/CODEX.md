@@ -27,6 +27,7 @@ cp -R .agent/skills /path/to/your/repo/.codex/
 Codex will automatically load skills from both locations.
 
 Note: The installer prefers `.agent/skills` when present, and falls back to `.codex/skills`.
+In this repository, `.agent/skills` is the maintained source directory. `.codex/skills` is a runtime destination, not a second source tree.
 
 ## Enable Codex Plan Mode (0.9+)
 
@@ -123,7 +124,7 @@ See `docs/ALIGNMENT.md` for a full checklist of what matches oh-my-claudecode an
 If a skill doesn’t seem to activate:
 1. Confirm `~/.codex/skills/<skill>/SKILL.md` exists.
 2. Try explicit invocation: `$skill-name ...`
-3. Make sure your Codex session is running in a repo with `.codex/skills` (if using repo-local install).
+3. Make sure your Codex session is running in a repo where repo-local skills have been copied into `.codex/skills` from `.agent/skills` (if using repo-local install).
 
 ## New Productivity Commands
 

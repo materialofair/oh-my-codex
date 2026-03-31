@@ -3,7 +3,11 @@ name: research
 description: Use this skill for multi-stage, evidence-based research with parallel investigation, source ranking, verification, and synthesis.
 argument-hint: <research goal>
 version: 0.3.0
+source: fork
+checksum: 8df93b71878064d07ade907db758fcfdb9a7e32f50cd69e14f9f08908c0002ed
+updated_at: 2026-03-12T18:57:03+08:00
 ---
+
 
 # Research Skill
 
