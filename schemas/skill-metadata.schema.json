@@ -54,6 +54,30 @@
       "items": {
         "type": "string"
       }
+    },
+    "intent": {
+      "type": "string",
+      "description": "Canonical intent ID for de-duplication (e.g., tdd, verification, planning)",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "layer": {
+      "type": "string",
+      "description": "Architectural layer classification",
+      "enum": ["foundation", "orchestration", "domain", "meta", "utility", "research", "quality"]
+    },
+    "composes": {
+      "type": "array",
+      "description": "Skills this skill delegates to or orchestrates",
+      "items": {
+        "type": "string"
+      }
+    },
+    "provides": {
+      "type": "array",
+      "description": "Capabilities this skill exposes to other skills",
+      "items": {
+        "type": "string"
+      }
     }
   }
 }

@@ -4,7 +4,7 @@
 /**
  * Skill Metadata Migration Script
  *
- * Scans all skills in .agent/skills/ and ensures they have complete metadata.
+ * Scans all skills in .agent/skills/local/ and ensures they have complete metadata.
  * Adds missing fields: version, source, checksum, updated_at
  */
 
@@ -14,7 +14,7 @@ const path = require('path');
 const crypto = require('crypto');
 const { execSync } = require('child_process');
 
-const SKILLS_DIR = path.join(__dirname, '..', '.agent', 'skills');
+const SKILLS_DIR = path.join(__dirname, '..', '.agent', 'skills', 'local');
 const DEFAULT_VERSION = '0.1.0';
 const DEFAULT_SOURCE = 'fork';
 

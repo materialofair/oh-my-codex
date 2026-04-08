@@ -1,6 +1,6 @@
 {
   "name": "oh-my-codex-cli",
-  "version": "0.5.0",
+  "version": "1.0.0",
   "description": "Codex skill pack and workflow orchestration",
   "bin": {
     "omcodex": "bin/omcodex.js"
@@ -26,7 +26,9 @@
     "source:list": "node bin/omcodex.js source list",
     "source:sync": "node bin/omcodex.js source sync",
     "source:status": "node bin/omcodex.js source status",
-    "source:skills:sync": "./scripts/sync-upstream-skills.sh",
+    "source:skills:sync": "./scripts/sync-upstream-skills.sh --source all",
+    "source:skills:sync:omc": "./scripts/sync-upstream-skills.sh --source oh-my-codex",
+    "source:skills:sync:sp": "./scripts/sync-upstream-skills.sh --source superpowers",
     "skill:migrate": "node scripts/migrate-skill-metadata.js",
     "skill:list": "node bin/omcodex.js skill list",
     "skill:conflicts": "node bin/omcodex.js skill conflicts",
@@ -38,6 +40,11 @@
     "governance:skills:sources": "./scripts/test-skill-governance-sources.sh",
     "governance:skills:overlap": "node scripts/report-skill-overlap-governance.js",
     "governance:skills:patches": "./scripts/generate-upstream-overlap-patches.sh",
+    "harness:graph": "node bin/omcodex.js harness graph",
+    "harness:intents": "node bin/omcodex.js harness intents",
+    "harness:lint": "node bin/omcodex.js harness lint",
+    "harness:migrate": "node scripts/add-harness-metadata.js",
+    "governance:harness": "./scripts/check-harness-governance.sh",
     "eval:skills": "node scripts/eval-skills.js",
     "test:llm": "node bin/omcodex.js test llm all --router-cases tests/llm/router-cases.json",
     "test:llm:router": "node bin/omcodex.js test llm router --cases tests/llm/router-cases.json",
@@ -50,7 +57,7 @@
     "test:similarity": "node scripts/test-similarity.js",
     "test": "npm run governance:skills && npm run governance:skills:llm && npm run catalog:generate && npm run eval:skills && node bin/omcodex.js doctor",
     "pack:dry-run": "npm pack --dry-run",
-    "prepublishOnly": "npm test"
+    "prepublishOnly": "npm run source:skills:sync -- --skip-fetch && npm test"
   },
   "engines": {
     "node": ">=20"

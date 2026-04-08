@@ -83,7 +83,7 @@ ensure_node() {
 
 detect_repo_skills_path() {
   local base="$1"
-  local candidates=(".agent/skills" ".codex/skills" "skills")
+  local candidates=(".agent/skills/local" ".agent/skills" ".codex/skills" "skills")
   local candidate
   for candidate in "${candidates[@]}"; do
     if [[ -d "$base/$candidate" ]]; then
@@ -96,7 +96,7 @@ detect_repo_skills_path() {
 
 detect_ref_skills_path() {
   local ref="$1"
-  local candidates=(".agent/skills" ".codex/skills" "skills")
+  local candidates=(".agent/skills/local" ".agent/skills" ".codex/skills" "skills")
   local candidate
   for candidate in "${candidates[@]}"; do
     if git cat-file -e "$ref:$candidate" 2>/dev/null; then

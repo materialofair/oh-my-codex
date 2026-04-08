@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "WebFetch(domain:generalistprogrammer.com)",
-      "WebFetch(domain:pnpm.io)"
+      "WebFetch(domain:pnpm.io)",
+      "Bash(ls /Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/*.toml /Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/*.json)",
+      "Bash(git add:*)"
     ]
   }
 }

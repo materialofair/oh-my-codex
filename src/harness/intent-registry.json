@@ -1,0 +1,97 @@
+{
+  "tdd": {
+    "canonical": "tdd",
+    "variants": {
+      "tdd-workflow": { "source": "local", "role": "full lifecycle with phase gates" },
+      "test-driven-development": { "source": "superpowers", "role": "methodology principle" },
+      "tdd-generator": { "source": "local", "role": "test code generation" }
+    }
+  },
+  "verification": {
+    "canonical": "verify",
+    "variants": {
+      "verification-loop": { "source": "local", "role": "iterative fix cycles" },
+      "verification-before-completion": { "source": "superpowers", "role": "principle: evidence before claims" }
+    }
+  },
+  "planning": {
+    "canonical": "plan",
+    "variants": {
+      "planning-with-files": { "source": "local", "role": "file-based persistent planning" },
+      "writing-plans": { "source": "superpowers", "role": "plan writing methodology" },
+      "ralplan": { "source": "oh-my-codex", "role": "consensus planning alias" }
+    }
+  },
+  "debugging": {
+    "canonical": "systematic-debugging",
+    "variants": {
+      "debug-analysis": { "source": "local", "role": "multi-model deep diagnosis" },
+      "analyze": { "source": "oh-my-codex", "role": "evidence-driven investigation" }
+    }
+  },
+  "code-review": {
+    "canonical": "code-review",
+    "variants": {
+      "aireview": { "source": "local", "role": "multi-agent review with confidence scoring" },
+      "requesting-code-review": { "source": "superpowers", "role": "pre-review dispatch checklist" },
+      "receiving-code-review": { "source": "superpowers", "role": "feedback response protocol" },
+      "review": { "source": "oh-my-codex", "role": "reviewer-only pass" }
+    }
+  },
+  "execution": {
+    "canonical": "autopilot",
+    "variants": {
+      "ralph": { "source": "oh-my-codex", "role": "persistence loop with architect verification" },
+      "ultrawork": { "source": "oh-my-codex", "role": "parallel execution engine" },
+      "ultrapilot": { "source": "local", "role": "parallel autopilot with file partitioning" },
+      "team": { "source": "oh-my-codex", "role": "coordinated multi-agent" },
+      "swarm": { "source": "oh-my-codex", "role": "team compatibility facade" },
+      "pipeline": { "source": "oh-my-codex", "role": "configurable stage sequencer" },
+      "conductor": { "source": "local", "role": "durable context-driven development" },
+      "start-dev": { "source": "local", "role": "adaptive workflow with pattern loading" }
+    }
+  },
+  "research": {
+    "canonical": "research",
+    "variants": {
+      "multi-model-research": { "source": "local", "role": "multi-model technical research" },
+      "brainstorming": { "source": "superpowers", "role": "design exploration before implementation" },
+      "deep-interview": { "source": "oh-my-codex", "role": "Socratic ambiguity gating" }
+    }
+  },
+  "testing": {
+    "canonical": "test-gen",
+    "variants": {
+      "test-coverage": { "source": "local", "role": "coverage analysis and improvement" },
+      "bdd-generator": { "source": "local", "role": "BDD with Gherkin + playwright-bdd" },
+      "e2e": { "source": "local", "role": "end-to-end Playwright orchestration" },
+      "eval-harness": { "source": "local", "role": "eval-driven development framework" }
+    }
+  },
+  "skill-management": {
+    "canonical": "skill",
+    "variants": {
+      "skill-create": { "source": "local", "role": "extract patterns from git history" },
+      "skill-debugger": { "source": "local", "role": "diagnose trigger issues" },
+      "skill-development": { "source": "local", "role": "skill authoring workflow" },
+      "skill-doc-generator": { "source": "local", "role": "auto-generate skill docs" },
+      "skill-quality-analyzer": { "source": "local", "role": "6-dimension quality scoring" },
+      "skill-tester": { "source": "local", "role": "TDD-based skill testing" },
+      "writing-skills": { "source": "superpowers", "role": "skill creation methodology" }
+    }
+  },
+  "frontend": {
+    "canonical": "frontend-ui-ux",
+    "variants": {
+      "frontend-design": { "source": "local", "role": "React/Vue component architecture" },
+      "frontend-patterns": { "source": "local", "role": "Next.js patterns and optimization" },
+      "ui-ux-pro-max": { "source": "local", "role": "50+ style catalog for React/Vue/SwiftUI" }
+    }
+  },
+  "security": {
+    "canonical": "security-review",
+    "variants": {
+      "ai-slop-cleaner": { "source": "oh-my-codex", "role": "anti-slop cleanup workflow" }
+    }
+  }
+}

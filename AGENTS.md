@@ -20,7 +20,8 @@ oh-my-codex enhances Codex with:
 |------|-------------|
 | `README.md` | Entry point documentation |
 | `docs/CODEX.md` | Codex-specific install and usage guide |
-| `.agent/skills/` | Source-of-truth Codex skill definitions |
+| `.agent/skills/local/` | Source-of-truth local Codex skill definitions |
+| `.agent/skills/upstream/` | Upstream skills (oh-my-codex, superpowers) |
 | `scripts/install-codex.sh` | Global skill installer |
 
 ## For AI Agents
@@ -75,7 +76,7 @@ Commenting rules:
 For this repository, **`oh-my-codex` is the single source of truth** for skills and docs.
 
 Required order:
-1. Edit and validate files in this repo first (for example `.agent/skills/**/SKILL.md`).
+1. Edit and validate files in this repo first (for example `.agent/skills/local/**/SKILL.md`).
 2. Commit/push repository changes.
 3. Install/sync to runtime using installer scripts (for example `scripts/install-codex.sh` / `scripts/install-codex-force.sh`).
 

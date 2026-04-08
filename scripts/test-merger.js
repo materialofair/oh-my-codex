@@ -13,10 +13,13 @@ const {
   generateReport,
 } = require('../src/merge/skill-merger');
 
+const fs = require('fs');
 const path = require('path');
 
 const root = path.resolve(__dirname, '..');
-const skillsPath = path.join(root, '.agent', 'skills');
+const skillsPath = fs.existsSync(path.join(root, '.agent', 'skills', 'local'))
+  ? path.join(root, '.agent', 'skills', 'local')
+  : path.join(root, '.agent', 'skills');
 
 console.log('Testing Skill Merger');
 console.log('====================\n');

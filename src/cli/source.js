@@ -11,18 +11,27 @@ function listSources() {
   const active = getActiveSource();
   const originUrl = checkGitRemote('origin');
   const upstreamUrl = checkGitRemote('upstream');
+  const superpowersUrl = checkGitRemote('superpowers');
 
   console.log('Available sources:');
   console.log('');
-  console.log(`${active === 'fork' ? '●' : '○'} fork (current repository)`);
+  console.log(`${active === 'fork' ? '●' : '○'} local (custom skills in .agent/skills/local/)`);
   if (originUrl) console.log(`  ${originUrl}`);
   console.log('');
-  console.log(`${active === 'upstream' ? '●' : '○'} upstream (original repository)`);
+  console.log(`${active === 'upstream' ? '●' : '○'} oh-my-codex (upstream)`);
   if (upstreamUrl) {
     console.log(`  ${upstreamUrl}`);
   } else {
     console.log('  Not configured. Run:');
     console.log('  git remote add upstream https://github.com/Yeachan-Heo/oh-my-codex.git');
+  }
+  console.log('');
+  console.log('○ superpowers (upstream)');
+  if (superpowersUrl) {
+    console.log(`  ${superpowersUrl}`);
+  } else {
+    console.log('  Not configured. Run:');
+    console.log('  git remote add superpowers https://github.com/obra/superpowers.git');
   }
 }
 

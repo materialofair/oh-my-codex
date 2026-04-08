@@ -16,13 +16,24 @@ async function doctor() {
 
   checks.push({ name: 'Codex CLI', pass: codexCliInstalled, msg: codexCliInstalled ? 'installed' : 'not found' });
 
-  const skillsRoot = fs.existsSync(path.join(root, '.agent', 'skills'))
-    ? path.join(root, '.agent', 'skills')
-    : path.join(root, '.codex', 'skills');
+  const localSkillsRoot = path.join(root, '.agent', 'skills', 'local');
+  const upstreamSkillsRoot = path.join(root, '.agent', 'skills', 'upstream');
+  const skillsRoot = fs.existsSync(localSkillsRoot)
+    ? localSkillsRoot
+    : fs.existsSync(path.join(root, '.agent', 'skills'))
+      ? path.join(root, '.agent', 'skills')
+      : path.join(root, '.codex', 'skills');
   checks.push({
-    name: 'Skills source',
+    name: 'Skills source (local)',
     pass: fs.existsSync(skillsRoot),
     msg: skillsRoot,
+  });
+  checks.push({
+    name: 'Skills source (upstream)',
+    pass: fs.existsSync(upstreamSkillsRoot),
+    msg: fs.existsSync(upstreamSkillsRoot)
+      ? fs.readdirSync(upstreamSkillsRoot).join(', ')
+      : 'not found (run npm run source:skills:sync)',
   });
 
   const promptsRoot = path.join(root, 'prompts');

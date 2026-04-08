@@ -15,9 +15,12 @@ function codexPromptsPath(scope, cwd) {
 }
 
 function skillsSource(root) {
-  const agentSkills = path.join(root, '.agent', 'skills');
+  const localSkills = path.join(root, '.agent', 'skills', 'local');
+  const upstreamDir = path.join(root, '.agent', 'skills', 'upstream');
   const codexSkills = path.join(root, '.codex', 'skills');
-  return { agentSkills, codexSkills };
+  // Legacy alias for backward compatibility
+  const agentSkills = localSkills;
+  return { localSkills, upstreamDir, agentSkills, codexSkills };
 }
 
 function promptsSource(root) {

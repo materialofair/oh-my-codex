@@ -69,8 +69,11 @@ bin/** text
 src/** text
 scripts/** text
 
-# Skills - 合并,但需要审查冲突
-.agent/skills/** text
+# Local skills - 永远保持本地版本
+.agent/skills/local/** merge=ours
+
+# Upstream skills - 合并,由 sync 脚本管理
+.agent/skills/upstream/** text
 
 # Prompts - 合并,但需要审查冲突
 prompts/** text

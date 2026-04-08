@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": "2026-03-31",
+  "catalogVersion": "2026-04-07",
   "skills": [
     {
       "name": "ai-commenting",
@@ -8,7 +8,21 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "utility",
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "ai-slop-cleaner",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "quality",
+      "intent": "security",
+      "composes": []
     },
     {
       "name": "aireview",
@@ -16,15 +30,21 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "quality",
+      "intent": "code-review",
+      "composes": []
     },
     {
       "name": "analyze",
       "category": "utility",
       "status": "active",
       "core": false,
-      "source": "fork",
-      "version": "0.3.0"
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "foundation",
+      "intent": "debugging",
+      "composes": []
     },
     {
       "name": "architect-planner",
@@ -32,7 +52,32 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "research",
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "ask-claude",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "utility",
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "ask-gemini",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "utility",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "auto-mbti",
@@ -40,15 +85,21 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "1.0.0"
+      "version": "1.0.0",
+      "layer": "utility",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "autopilot",
       "category": "execution",
       "status": "active",
       "core": true,
-      "source": "fork",
-      "version": "0.3.0"
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "orchestration",
+      "intent": "execution",
+      "composes": []
     },
     {
       "name": "backend-patterns",
@@ -56,7 +107,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "domain",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "bdd-generator",
@@ -64,31 +118,43 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "domain",
+      "intent": "testing",
+      "composes": []
     },
     {
       "name": "brainstorming",
       "category": "utility",
       "status": "active",
       "core": false,
-      "source": "fork",
-      "version": "0.1.0"
+      "source": "superpowers",
+      "version": "0.1.0",
+      "layer": "research",
+      "intent": "research",
+      "composes": []
     },
     {
       "name": "build-fix",
       "category": "shortcut",
       "status": "active",
       "core": false,
-      "source": "fork",
-      "version": "0.1.0"
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "foundation",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "cancel",
       "category": "utility",
       "status": "active",
       "core": false,
-      "source": "fork",
-      "version": "0.1.0"
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "foundation",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "checkpoint",
@@ -96,15 +162,21 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "utility",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "code-review",
       "category": "shortcut",
       "status": "active",
       "core": false,
-      "source": "fork",
-      "version": "0.1.0"
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "foundation",
+      "intent": "code-review",
+      "composes": []
     },
     {
       "name": "coding-standards",
@@ -112,7 +184,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "domain",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "conductor",
@@ -120,7 +195,21 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "orchestration",
+      "intent": "execution",
+      "composes": []
+    },
+    {
+      "name": "configure-notifications",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "utility",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "consensus",
@@ -128,7 +217,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "research",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "content-research-writer",
@@ -136,7 +228,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "domain",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "de-ai-writing",
@@ -144,7 +239,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "domain",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "debug-analysis",
@@ -152,7 +250,21 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "research",
+      "intent": "debugging",
+      "composes": []
+    },
+    {
+      "name": "deep-interview",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "research",
+      "intent": "research",
+      "composes": []
     },
     {
       "name": "deepinit",
@@ -160,23 +272,43 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "meta",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "deepsearch",
       "category": "utility",
       "status": "active",
       "core": false,
-      "source": "fork",
-      "version": "0.3.0"
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "foundation",
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "dispatching-parallel-agents",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "superpowers",
+      "version": "0.1.0",
+      "layer": "foundation",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "doctor",
       "category": "utility",
       "status": "active",
       "core": false,
-      "source": "fork",
-      "version": "0.1.0"
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "meta",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "drawio",
@@ -184,7 +316,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "utility",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "e2e",
@@ -192,15 +327,21 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "domain",
+      "intent": "testing",
+      "composes": []
     },
     {
       "name": "ecomode",
       "category": "utility",
       "status": "active",
       "core": false,
-      "source": "fork",
-      "version": "0.1.0"
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "foundation",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "electron-driver",
@@ -208,7 +349,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "domain",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "eval",
@@ -216,7 +360,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "quality",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "eval-harness",
@@ -224,7 +371,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "quality",
+      "intent": "testing",
+      "composes": []
     },
     {
       "name": "evolve",
@@ -232,7 +382,32 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "quality",
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "executing-plans",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "superpowers",
+      "version": "0.1.0",
+      "layer": "orchestration",
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "finishing-a-development-branch",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "superpowers",
+      "version": "0.1.0",
+      "layer": "domain",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "frontend-design",
@@ -240,7 +415,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "domain",
+      "intent": "frontend",
+      "composes": []
     },
     {
       "name": "frontend-patterns",
@@ -248,31 +426,54 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "domain",
+      "intent": "frontend",
+      "composes": []
     },
     {
       "name": "frontend-ui-ux",
       "category": "utility",
       "status": "active",
       "core": false,
-      "source": "fork",
-      "version": "0.1.0"
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "domain",
+      "intent": "frontend",
+      "composes": []
     },
     {
       "name": "git-master",
       "category": "utility",
       "status": "active",
       "core": false,
-      "source": "fork",
-      "version": "0.1.0"
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "foundation",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "help",
       "category": "utility",
       "status": "active",
       "core": false,
-      "source": "fork",
-      "version": "0.1.0"
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "meta",
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "hud",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "utility",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "iterative-retrieval",
@@ -280,7 +481,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "utility",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "local-skills-setup",
@@ -288,7 +492,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "meta",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "log-analyzer",
@@ -296,7 +503,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "utility",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "mcp-setup",
@@ -304,7 +514,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "utility",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "multi-model-research",
@@ -312,31 +525,32 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "research",
+      "intent": "research",
+      "composes": []
     },
     {
       "name": "note",
       "category": "utility",
       "status": "active",
       "core": false,
-      "source": "fork",
-      "version": "0.1.0"
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "foundation",
+      "intent": null,
+      "composes": []
     },
     {
-      "name": "omc-setup",
+      "name": "omx-setup",
       "category": "utility",
       "status": "active",
       "core": false,
-      "source": "fork",
-      "version": "0.1.0"
-    },
-    {
-      "name": "orchestrate",
-      "category": "utility",
-      "status": "active",
-      "core": false,
-      "source": "fork",
-      "version": "0.1.0"
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "meta",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "patent-workflow",
@@ -344,7 +558,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "domain",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "pattern-recognition",
@@ -352,23 +569,32 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "utility",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "pipeline",
       "category": "utility",
       "status": "active",
       "core": false,
-      "source": "fork",
-      "version": "0.1.0"
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "orchestration",
+      "intent": "execution",
+      "composes": []
     },
     {
       "name": "plan",
       "category": "planning",
       "status": "active",
       "core": true,
-      "source": "fork",
-      "version": "0.1.0"
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "foundation",
+      "intent": "planning",
+      "composes": []
     },
     {
       "name": "planning-methodology",
@@ -376,7 +602,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
     },
     {
       "name": "planning-with-files",
@@ -384,7 +613,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "\"2.10.0\""
+      "version": "\"2.10.0\"",
+      "layer": null,
+      "intent": "planning",
+      "composes": []
     },
     {
       "name": "project-analyze",
@@ -392,7 +624,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "research",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "project-session-manager",
@@ -400,7 +635,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "domain",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "quality-check",
@@ -408,7 +646,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "quality",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "quality-validation",
@@ -416,7 +657,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "quality",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "quick-init-project",
@@ -424,31 +668,54 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "domain",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "ralph",
       "category": "execution",
       "status": "active",
       "core": true,
-      "source": "fork",
-      "version": "0.1.0"
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "orchestration",
+      "intent": "execution",
+      "composes": []
     },
     {
       "name": "ralph-init",
       "category": "utility",
       "status": "active",
       "core": false,
-      "source": "fork",
-      "version": "0.1.0"
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "orchestration",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "ralplan",
       "category": "planning",
       "status": "active",
       "core": false,
-      "source": "fork",
-      "version": "0.1.0"
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "orchestration",
+      "intent": "planning",
+      "composes": []
+    },
+    {
+      "name": "receiving-code-review",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "superpowers",
+      "version": "0.1.0",
+      "layer": "quality",
+      "intent": "code-review",
+      "composes": []
     },
     {
       "name": "refactor-clean",
@@ -456,7 +723,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "quality",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "release",
@@ -464,7 +734,21 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "meta",
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "requesting-code-review",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "superpowers",
+      "version": "0.1.0",
+      "layer": "quality",
+      "intent": "code-review",
+      "composes": []
     },
     {
       "name": "research",
@@ -472,31 +756,32 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.3.0"
-    },
-    {
-      "name": "research-methodology",
-      "category": "utility",
-      "status": "active",
-      "core": false,
-      "source": "fork",
-      "version": "0.1.0"
+      "version": "0.3.0",
+      "layer": "research",
+      "intent": "research",
+      "composes": []
     },
     {
       "name": "review",
       "category": "utility",
       "status": "active",
       "core": false,
-      "source": "fork",
-      "version": "0.1.0"
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": "code-review",
+      "composes": []
     },
     {
       "name": "security-review",
       "category": "shortcut",
       "status": "active",
       "core": false,
-      "source": "fork",
-      "version": "0.1.0"
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "quality",
+      "intent": "security",
+      "composes": []
     },
     {
       "name": "setup-pm",
@@ -504,15 +789,21 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "utility",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "skill",
       "category": "utility",
       "status": "active",
       "core": false,
-      "source": "fork",
-      "version": "0.1.0"
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "meta",
+      "intent": "skill-management",
+      "composes": []
     },
     {
       "name": "skill-create",
@@ -520,7 +811,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "meta",
+      "intent": "skill-management",
+      "composes": []
     },
     {
       "name": "skill-debugger",
@@ -528,7 +822,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "meta",
+      "intent": "skill-management",
+      "composes": []
     },
     {
       "name": "skill-development",
@@ -536,7 +833,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "meta",
+      "intent": "skill-management",
+      "composes": []
     },
     {
       "name": "skill-doc-generator",
@@ -544,7 +844,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "meta",
+      "intent": "skill-management",
+      "composes": []
     },
     {
       "name": "skill-quality-analyzer",
@@ -552,7 +855,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "meta",
+      "intent": "skill-management",
+      "composes": []
     },
     {
       "name": "skill-tester",
@@ -560,7 +866,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "meta",
+      "intent": "skill-management",
+      "composes": []
     },
     {
       "name": "start-dev",
@@ -568,23 +877,54 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "orchestration",
+      "intent": "execution",
+      "composes": []
+    },
+    {
+      "name": "subagent-driven-development",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "superpowers",
+      "version": "0.1.0",
+      "layer": "orchestration",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "swarm",
       "category": "execution",
       "status": "active",
       "core": true,
-      "source": "fork",
-      "version": "0.1.0"
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "orchestration",
+      "intent": "execution",
+      "composes": []
+    },
+    {
+      "name": "systematic-debugging",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "superpowers",
+      "version": "0.1.0",
+      "layer": "foundation",
+      "intent": "debugging",
+      "composes": []
     },
     {
       "name": "tdd",
       "category": "shortcut",
       "status": "active",
       "core": false,
-      "source": "fork",
-      "version": "0.1.0"
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "foundation",
+      "intent": "tdd",
+      "composes": []
     },
     {
       "name": "tdd-generator",
@@ -592,7 +932,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "quality",
+      "intent": "tdd",
+      "composes": []
     },
     {
       "name": "tdd-workflow",
@@ -600,7 +943,21 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.3.0"
+      "version": "0.3.0",
+      "layer": "quality",
+      "intent": "tdd",
+      "composes": []
+    },
+    {
+      "name": "team",
+      "category": "execution",
+      "status": "active",
+      "core": false,
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "orchestration",
+      "intent": "execution",
+      "composes": []
     },
     {
       "name": "test-coverage",
@@ -608,7 +965,21 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "quality",
+      "intent": "testing",
+      "composes": []
+    },
+    {
+      "name": "test-driven-development",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "superpowers",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": "tdd",
+      "composes": []
     },
     {
       "name": "test-gen",
@@ -616,7 +987,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.3.0"
+      "version": "0.3.0",
+      "layer": "quality",
+      "intent": "testing",
+      "composes": []
     },
     {
       "name": "thinkdeep",
@@ -624,7 +998,21 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "research",
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "trace",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "utility",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "ui-ux-pro-max",
@@ -632,7 +1020,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "domain",
+      "intent": "frontend",
+      "composes": []
     },
     {
       "name": "ultrapilot",
@@ -640,23 +1031,32 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "orchestration",
+      "intent": "execution",
+      "composes": []
     },
     {
       "name": "ultraqa",
       "category": "execution",
       "status": "active",
       "core": false,
-      "source": "fork",
-      "version": "0.1.0"
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "quality",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "ultrawork",
       "category": "execution",
       "status": "active",
       "core": true,
-      "source": "fork",
-      "version": "0.1.0"
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "orchestration",
+      "intent": "execution",
+      "composes": []
     },
     {
       "name": "update-codemaps",
@@ -664,7 +1064,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "utility",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "update-docs",
@@ -672,7 +1075,43 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "utility",
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "using-git-worktrees",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "superpowers",
+      "version": "0.1.0",
+      "layer": "domain",
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "using-superpowers",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "superpowers",
+      "version": "0.1.0",
+      "layer": "meta",
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "verification-before-completion",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "superpowers",
+      "version": "0.1.0",
+      "layer": "foundation",
+      "intent": "verification",
+      "composes": []
     },
     {
       "name": "verification-loop",
@@ -680,7 +1119,10 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.3.0"
+      "version": "0.3.0",
+      "layer": "quality",
+      "intent": "verification",
+      "composes": []
     },
     {
       "name": "verify",
@@ -688,7 +1130,43 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.3.0"
+      "version": "0.3.0",
+      "layer": "foundation",
+      "intent": "verification",
+      "composes": []
+    },
+    {
+      "name": "visual-verdict",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "utility",
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "web-clone",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "domain",
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "worker",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": "foundation",
+      "intent": null,
+      "composes": []
     },
     {
       "name": "writer-memory",
@@ -696,7 +1174,32 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "layer": "domain",
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "writing-plans",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "superpowers",
+      "version": "0.1.0",
+      "layer": "foundation",
+      "intent": "planning",
+      "composes": []
+    },
+    {
+      "name": "writing-skills",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "superpowers",
+      "version": "0.1.0",
+      "layer": "meta",
+      "intent": "skill-management",
+      "composes": []
     }
   ],
   "agents": [

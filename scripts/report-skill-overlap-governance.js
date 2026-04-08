@@ -225,7 +225,9 @@ async function main() {
   const args = parseArgs(process.argv.slice(2));
   const localSkillsDir = args.localSkillsDir
     ? path.resolve(args.localSkillsDir)
-    : path.join(root, '.agent', 'skills');
+    : fs.existsSync(path.join(root, '.agent', 'skills', 'local'))
+      ? path.join(root, '.agent', 'skills', 'local')
+      : path.join(root, '.agent', 'skills');
   const outDir = args.outDir
     ? path.resolve(args.outDir)
     : path.join(root, '.omcodex', 'reports');

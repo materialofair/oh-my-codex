@@ -132,8 +132,10 @@ async function mergeSkillsFromSources(root, options = {}) {
   let upstreamSkillsRaw = [];
   const qualityWinners = [];
 
-  // Load fork skills
-  const forkPath = path.join(root, '.agent', 'skills');
+  // Load local skills from .agent/skills/local/
+  const localPath = path.join(root, '.agent', 'skills', 'local');
+  const legacyForkPath = path.join(root, '.agent', 'skills');
+  const forkPath = fs.existsSync(localPath) ? localPath : legacyForkPath;
   if (fs.existsSync(forkPath)) {
     forkSkills = loadSkillsFromSource(forkPath, 'fork');
     sources.push({
@@ -142,19 +144,39 @@ async function mergeSkillsFromSources(root, options = {}) {
     });
   }
 
-  // Load upstream skills snapshot (optional)
-  const upstreamCandidates = [
+  // Load upstream skills from .agent/skills/upstream/<source>/
+  const upstreamBaseDir = path.join(root, '.agent', 'skills', 'upstream');
+  const legacyUpstreamCandidates = [
     path.join(root, '.upstream', 'skills'),
     path.join(root, '.upstream', '.agent', 'skills'),
     path.join(root, '.upstream', '.codex', 'skills'),
   ];
-  const upstreamPath = upstreamCandidates.find((candidate) => fs.existsSync(candidate));
-  if (upstreamPath) {
-    upstreamSkillsRaw = loadSkillsFromSource(upstreamPath, 'upstream');
-    sources.push({
-      name: 'upstream',
-      skills: upstreamSkillsRaw,
-    });
+
+  if (fs.existsSync(upstreamBaseDir)) {
+    // New multi-source layout: each subdirectory is an upstream source
+    const upstreamSources = fs.readdirSync(upstreamBaseDir, { withFileTypes: true })
+      .filter((entry) => entry.isDirectory());
+    for (const srcDir of upstreamSources) {
+      const srcPath = path.join(upstreamBaseDir, srcDir.name);
+      const srcSkills = loadSkillsFromSource(srcPath, srcDir.name);
+      if (srcSkills.length > 0) {
+        upstreamSkillsRaw.push(...srcSkills);
+        sources.push({
+          name: srcDir.name,
+          skills: srcSkills,
+        });
+      }
+    }
+  } else {
+    // Legacy: single .upstream/ directory
+    const upstreamPath = legacyUpstreamCandidates.find((candidate) => fs.existsSync(candidate));
+    if (upstreamPath) {
+      upstreamSkillsRaw = loadSkillsFromSource(upstreamPath, 'upstream');
+      sources.push({
+        name: 'upstream',
+        skills: upstreamSkillsRaw,
+      });
+    }
   }
 
   // Load merge config
@@ -184,8 +206,10 @@ async function mergeSkillsFromSources(root, options = {}) {
 
   for (const name of overlapNames) {
     const forkQuality = evaluateSkillQuality(forkByName.get(name));
-    const upstreamQuality = evaluateSkillQuality(upstreamByName.get(name));
-    const winner = forkQuality.score >= upstreamQuality.score ? 'fork' : 'upstream';
+    const upstreamSkill = upstreamByName.get(name);
+    const upstreamQuality = evaluateSkillQuality(upstreamSkill);
+    const upstreamSourceName = upstreamSkill.source || 'upstream';
+    const winner = forkQuality.score >= upstreamQuality.score ? 'fork' : upstreamSourceName;
     autoPreferences[name] = winner;
     qualityWinners.push({
       skill: name,
@@ -276,9 +300,10 @@ async function setup(options = {}) {
 
   const skillSrc = (() => {
     const src = skillsSource(root);
+    if (fs.existsSync(src.localSkills)) return src.localSkills;
     if (fs.existsSync(src.agentSkills)) return src.agentSkills;
     if (fs.existsSync(src.codexSkills)) return src.codexSkills;
-    throw new Error('No skills source found (.agent/skills or .codex/skills)');
+    throw new Error('No skills source found (.agent/skills/local or .codex/skills)');
   })();
 
   const skillsDest = scope === 'user'

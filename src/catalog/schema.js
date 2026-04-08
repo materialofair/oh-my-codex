@@ -1,5 +1,6 @@
 const REQUIRED_CORE_SKILLS = new Set(['autopilot', 'ralph', 'ultrawork', 'swarm', 'plan']);
 const STATUSES = new Set(['active', 'alias', 'merged', 'deprecated', 'internal']);
+const LAYERS = new Set(['foundation', 'orchestration', 'domain', 'meta', 'utility', 'research', 'quality']);
 
 function assertString(value, field) {
   if (typeof value !== 'string' || value.trim() === '') {
@@ -23,6 +24,8 @@ function validateCatalogManifest(input) {
     if (seen.has(entry.name)) throw new Error(`catalog_manifest_invalid:duplicate_skill:${entry.name}`);
     seen.add(entry.name);
 
+    const layer = entry.layer && LAYERS.has(entry.layer) ? entry.layer : null;
+
     return {
       name: entry.name,
       category: entry.category || 'utility',
@@ -31,6 +34,9 @@ function validateCatalogManifest(input) {
       core: entry.core === true,
       source: entry.source || 'unknown',
       version: entry.version || '0.1.0',
+      layer,
+      intent: entry.intent || null,
+      composes: Array.isArray(entry.composes) ? entry.composes : [],
     };
   });
 

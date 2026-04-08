@@ -151,6 +151,32 @@ function detectConflicts(sourcesArray) {
     }
   }
 
+  // Detect intent-based conflicts (same intent across different sources)
+  const intentMap = new Map();
+  for (const source of sourcesArray) {
+    for (const skill of source.skills) {
+      const intent = skill.metadata.intent;
+      if (!intent) continue;
+      if (!intentMap.has(intent)) intentMap.set(intent, []);
+      intentMap.get(intent).push({
+        ...skill,
+        sourceName: source.name,
+      });
+    }
+  }
+
+  for (const [intent, versions] of intentMap.entries()) {
+    const sources = new Set(versions.map((v) => v.sourceName));
+    if (sources.size > 1) {
+      conflicts.push({
+        type: 'same_intent',
+        name: `intent:${intent}`,
+        intent,
+        versions,
+      });
+    }
+  }
+
   return conflicts;
 }
 
@@ -185,6 +211,19 @@ function resolveConflicts(conflicts, config = {}) {
 
   for (const conflict of conflicts) {
     const { name, versions, type, similarity } = conflict;
+
+    // Handle intent-based conflicts as informational warnings
+    if (type === 'same_intent') {
+      resolutions.push({
+        name,
+        type: 'same_intent',
+        resolution: 'info',
+        intent: conflict.intent,
+        versions,
+        message: `Intent "${conflict.intent}" shared across sources: ${versions.map(v => `${v.name}[${v.sourceName}]`).join(', ')}`,
+      });
+      continue;
+    }
 
     // Handle description similarity conflicts differently
     if (type === 'similar_description') {
@@ -341,6 +380,7 @@ function generateReport(conflicts, resolutions) {
         'namespace': 0,
         'default-first': 0,
         'warning': 0,
+        'info': 0,
       },
     },
     conflicts: [],

@@ -67,8 +67,8 @@ MISSING_COUNT=0
 while IFS=$'\t' read -r skill decision reason issues; do
   [[ -z "$skill" ]] && continue
 
-  upstream_file="$ROOT_DIR/.upstream/skills/$skill/SKILL.md"
-  local_file="$ROOT_DIR/.agent/skills/$skill/SKILL.md"
+  upstream_file="$ROOT_DIR/.agent/skills/upstream/oh-my-codex/$skill/SKILL.md"
+  local_file="$ROOT_DIR/.agent/skills/local/$skill/SKILL.md"
   patch_file="$OUTPUT_DIR/$skill.patch"
 
   if [[ ! -f "$upstream_file" || ! -f "$local_file" ]]; then

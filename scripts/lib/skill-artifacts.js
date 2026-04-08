@@ -5,6 +5,7 @@ const path = require('path');
 function detectSkillsDir(root, explicit) {
   if (explicit) return path.resolve(explicit);
   const candidates = [
+    path.join(root, '.agent', 'skills', 'local'),
     path.join(root, '.agent', 'skills'),
     path.join(root, '.codex', 'skills'),
   ];

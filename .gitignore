@@ -5,6 +5,13 @@ dist/
 .omc/
 .sisyphus/
 
+# Upstream skills are tracked in git so npm package includes them.
+# To update: npm run source:skills:sync
+# .agent/skills/upstream/ — DO NOT manually edit, use sync scripts.
+
+# Legacy upstream directory (migrated to .agent/skills/upstream/)
+.upstream/
+
 # Windows reserved names (prevent accidental creation)
 nul
 NUL

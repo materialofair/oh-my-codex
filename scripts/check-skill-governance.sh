@@ -2,9 +2,9 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-SKILLS_DIR="$ROOT_DIR/.agent/skills"
+SKILLS_DIR="$ROOT_DIR/.agent/skills/local"
 ALLOWLIST="$ROOT_DIR/.governance/skill-lint.allowlist"
-SKILLS_REL_PREFIX=".agent/skills"
+SKILLS_REL_PREFIX=".agent/skills/local"
 ARTIFACT_GLOBS=(--glob 'SKILL.md' --glob 'commands/**/*.toml' --glob 'templates/workflow.md' --glob 'templates/rules/*.md')
 COMMAND_GLOBS=(--glob 'commands/**/*.toml' --glob 'templates/workflow.md' --glob 'templates/rules/*.md')
 

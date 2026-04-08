@@ -27,6 +27,10 @@ Usage:
   omcodex skill list [--verbose]
   omcodex skill prefer <name> <source>
   omcodex skill conflicts
+  omcodex harness graph [--skill <name>]
+  omcodex harness intents
+  omcodex harness lint
+  omcodex harness chain <skill>
   omcodex help
 `;
 
@@ -93,6 +97,32 @@ async function main(args) {
   if (command === 'test') {
     await test(args.slice(1));
     return;
+  }
+
+  if (command === 'harness') {
+    const harness = require('./harness');
+    const subcommand = args[1];
+    if (subcommand === 'graph') {
+      const skillIdx = args.indexOf('--skill');
+      const skill = skillIdx !== -1 ? args[skillIdx + 1] : undefined;
+      await harness.showGraph({ skill });
+      return;
+    }
+    if (subcommand === 'intents') {
+      await harness.showIntents();
+      return;
+    }
+    if (subcommand === 'lint') {
+      const issues = await harness.lintHarness();
+      process.exit(issues > 0 ? 1 : 0);
+    }
+    if (subcommand === 'chain') {
+      await harness.showChain(args[2]);
+      return;
+    }
+    console.error(`Unknown harness subcommand: ${subcommand}`);
+    console.error('Available: graph, intents, lint, chain');
+    process.exit(1);
   }
 
   if (command === 'source') {

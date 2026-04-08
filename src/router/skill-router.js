@@ -1,39 +1,64 @@
 const { tryReadCatalogManifest } = require('../catalog/reader');
+const { loadAllSkills, buildIntentIndex } = require('../harness');
+const intentRegistry = require('../harness/intent-registry.json');
+const layerMap = require('../harness/layer-map.json');
 
-const ROUTE_RULES = [
-  { skill: 'plan', weight: 3, keywords: ['plan', '规划', '设计', 'architecture', '架构', '方案', 'roadmap'] },
-  { skill: 'research', weight: 3, keywords: ['research', '调研', 'compare', '对比', 'benchmark'] },
+// High-confidence keyword boosts (kept from original for precision shortcuts)
+const BOOST_RULES = [
+  { skill: 'conductor', weight: 5, keywords: ['conductor', 'track', 'spec.md', 'plan.md', 'tracks.md', '长期项目上下文'] },
+  { skill: 'de-ai-writing', weight: 4, keywords: ['去ai味', 'ai味', '机器感', '像人写的', '自然中文', 'humanize', 'remove ai tone'] },
+  { skill: 'security-review', weight: 4, keywords: ['security', '鉴权', '漏洞', '安全'] },
+  { skill: 'build-fix', weight: 4, keywords: ['build error', 'compile', 'type error', '报错'] },
   { skill: 'code-review', weight: 4, keywords: ['review', 'code review', '审查', '评审'] },
-  { skill: 'conductor', weight: 5, keywords: ['conductor', 'track', 'spec.md', 'plan.md', 'tracks.md', 'long-lived project context', '长期项目上下文'] },
-  { skill: 'de-ai-writing', weight: 4, keywords: ['去ai味', '去 ai 味', 'ai味', '机器感', '机器味', '像人写的', '自然中文', 'humanize', 'remove ai tone', '像真人讲出来', '讲道稿去 ai 味', '保留经文', '牧养语气', '代码块不能动', '配置项不能动', '保留术语'] },
-  { skill: 'security-review', weight: 4, keywords: ['security', 'auth', '鉴权', '漏洞', '安全'] },
-  { skill: 'build-fix', weight: 4, keywords: ['build error', 'compile', 'type error', 'lint', '失败', '报错'] },
-  { skill: 'verify', weight: 3, keywords: ['verify', '验证', 'check', '检查'] },
-  { skill: 'tdd', weight: 3, keywords: ['tdd', 'test first', '测试先行'] },
-  { skill: 'tdd-workflow', weight: 2, keywords: ['unit test', 'integration test', 'e2e', 'coverage'] },
-  { skill: 'ultraqa', weight: 3, keywords: ['qa', '回归', 'quality loop', '质量闭环'] },
-  { skill: 'de-ai-writing', weight: 4, keywords: ['去ai味', 'ai味', 'ai 感', '降低ai感', '像真人写的', '像人写的', '太像chatgpt', '模板腔', '像模型写的', 'humanize this article', '神学分享去掉机器感', '别改掉经文', '保留神学立场', '技术博客润色', '命令和术语都别动'] },
-  { skill: 'autopilot', weight: 3, keywords: ['implement', '实现', '开发', 'build feature', '交付'] },
-  { skill: 'start-dev', weight: 3, keywords: ['start', 'kickoff', '开始开发', '新功能'] },
-  { skill: 'swarm', weight: 2, keywords: ['parallel', '并行', 'multi-agent', '多代理'] },
-  { skill: 'ultrawork', weight: 2, keywords: ['batch', '批量', 'high throughput', '大量'] },
-  { skill: 'backend-patterns', weight: 2, keywords: ['api', 'backend', '数据库', 'service'] },
-  { skill: 'frontend-patterns', weight: 2, keywords: ['frontend', 'ui', '组件', '页面'] },
-  { skill: 'frontend-ui-ux', weight: 2, keywords: ['ux', '视觉', '交互', '界面设计'] },
-  { skill: 'debug-analysis', weight: 3, keywords: ['debug', '定位问题', '根因', 'trace'] },
 ];
+
+// Build layer → weight map for ranking
+const LAYER_WEIGHTS = {
+  foundation: 3,
+  orchestration: 2,
+  quality: 2,
+  research: 2,
+  domain: 1,
+  utility: 1,
+  meta: 0,
+};
+
+// Build reverse layer index: skill → layer
+const skillLayerIndex = new Map();
+for (const [layer, skills] of Object.entries(layerMap)) {
+  for (const skill of skills) skillLayerIndex.set(skill, layer);
+}
 
 function normalizeText(input) {
   return String(input || '').toLowerCase().replace(/\s+/g, ' ').trim();
 }
 
-function countHits(text, keywords) {
+function tokenize(text) {
+  return text.split(/[\s,;:.()\[\]{}'"]+/).filter((w) => w.length > 1);
+}
+
+// Score a skill against task text using its description + tags
+function scoreSkill(taskTokens, taskText, skill) {
+  const desc = normalizeText(skill.metadata.description || '');
+  const tags = (skill.metadata.tags || '').replace(/[\[\]]/g, '').split(',').map((t) => t.trim().toLowerCase()).filter(Boolean);
+  const name = skill.name.replace(/-/g, ' ');
+
   let hits = 0;
-  for (const keyword of keywords) {
-    const token = normalizeText(keyword);
-    if (!token) continue;
-    if (text.includes(token)) hits += 1;
+
+  // Name match (high value)
+  if (taskText.includes(skill.name) || taskText.includes(name)) hits += 3;
+
+  // Tag matches
+  for (const tag of tags) {
+    if (taskText.includes(tag)) hits += 2;
   }
+
+  // Description token overlap
+  const descTokens = new Set(tokenize(desc));
+  for (const token of taskTokens) {
+    if (descTokens.has(token)) hits += 1;
+  }
+
   return hits;
 }
 
@@ -44,26 +69,68 @@ function catalogSkills(root) {
 }
 
 function routeTaskToSkills(taskDescription, options = {}) {
-  const text = normalizeText(taskDescription);
+  const taskText = normalizeText(taskDescription);
+  const taskTokens = tokenize(taskText);
   const limit = Math.max(1, Number(options.limit) || 5);
   const root = options.root;
   const available = catalogSkills(root);
+  const intentIndex = buildIntentIndex();
 
-  const scored = [];
-  for (const rule of ROUTE_RULES) {
+  // Phase 1: Boost rules (high-confidence keyword shortcuts)
+  const boostScores = new Map();
+  for (const rule of BOOST_RULES) {
     if (available && !available.has(rule.skill)) continue;
-    const hits = countHits(text, rule.keywords);
-    if (hits === 0) continue;
-    scored.push({
-      skill: rule.skill,
-      score: hits * rule.weight,
-      hits,
-      rationale: `matched ${hits} keyword(s)`,
-    });
+    let hits = 0;
+    for (const kw of rule.keywords) {
+      if (taskText.includes(normalizeText(kw))) hits += 1;
+    }
+    if (hits > 0) boostScores.set(rule.skill, hits * rule.weight);
   }
 
-  scored.sort((a, b) => b.score - a.score || a.skill.localeCompare(b.skill));
+  // Phase 2: Dynamic scoring from all skill descriptions
+  const dynamicScores = new Map();
+  if (root) {
+    const allSkills = loadAllSkills(root);
+    for (const [name, skill] of allSkills) {
+      if (available && !available.has(name)) continue;
+      const score = scoreSkill(taskTokens, taskText, skill);
+      if (score > 0) dynamicScores.set(name, score);
+    }
+  }
 
+  // Merge scores (boost takes precedence)
+  const merged = new Map();
+  for (const [name, score] of dynamicScores) merged.set(name, score);
+  for (const [name, score] of boostScores) {
+    merged.set(name, (merged.get(name) || 0) + score);
+  }
+
+  // Phase 3: Layer-aware ranking
+  for (const [name, score] of merged) {
+    const layer = skillLayerIndex.get(name);
+    const layerBoost = LAYER_WEIGHTS[layer] || 0;
+    merged.set(name, score + layerBoost);
+  }
+
+  // Phase 4: Intent grouping — annotate with intent info
+  const scored = Array.from(merged.entries())
+    .map(([name, score]) => {
+      const intent = intentIndex.get(name);
+      const isCanonical = intent ? intentRegistry[intent]?.canonical === name : false;
+      // Canonical skills get a small boost
+      if (isCanonical) score += 1;
+      return {
+        skill: name,
+        score,
+        intent: intent || null,
+        isCanonical,
+        layer: skillLayerIndex.get(name) || 'unknown',
+        rationale: boostScores.has(name) ? 'keyword boost + description match' : 'description match',
+      };
+    })
+    .sort((a, b) => b.score - a.score || a.skill.localeCompare(b.skill));
+
+  // Deduplicate
   const unique = [];
   const seen = new Set();
   for (const item of scored) {
@@ -72,9 +139,10 @@ function routeTaskToSkills(taskDescription, options = {}) {
     unique.push(item);
   }
 
+  // Fallback
   if (unique.length === 0) {
-    if (!available || available.has('autopilot')) unique.push({ skill: 'autopilot', score: 1, hits: 0, rationale: 'default execution fallback' });
-    if (!available || available.has('plan')) unique.push({ skill: 'plan', score: 1, hits: 0, rationale: 'default planning fallback' });
+    if (!available || available.has('autopilot')) unique.push({ skill: 'autopilot', score: 1, intent: 'execution', isCanonical: true, layer: 'orchestration', rationale: 'default fallback' });
+    if (!available || available.has('plan')) unique.push({ skill: 'plan', score: 1, intent: 'planning', isCanonical: true, layer: 'foundation', rationale: 'default fallback' });
   }
 
   const top = unique.slice(0, limit);
