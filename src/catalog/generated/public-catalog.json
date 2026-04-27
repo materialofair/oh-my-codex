@@ -1,12 +1,56 @@
 {
-  "generatedAt": "2026-04-07T02:37:20.637Z",
+  "generatedAt": "2026-04-27T12:43:58.327Z",
   "counts": {
-    "skillCount": 109,
+    "skillCount": 138,
     "promptCount": 3,
-    "activeSkillCount": 109,
+    "activeSkillCount": 138,
     "activeAgentCount": 3
   },
   "skills": [
+    {
+      "name": ".codex",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": ".omc-source",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "agent-introspection-debugging",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "agent-sort",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
     {
       "name": "ai-commenting",
       "category": "utility",
@@ -25,8 +69,8 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "quality",
-      "intent": "security",
+      "layer": null,
+      "intent": null,
       "composes": []
     },
     {
@@ -47,8 +91,19 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "foundation",
-      "intent": "debugging",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "api-design",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
       "composes": []
     },
     {
@@ -63,13 +118,24 @@
       "composes": []
     },
     {
+      "name": "article-writing",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
       "name": "ask-claude",
       "category": "utility",
       "status": "active",
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "utility",
+      "layer": null,
       "intent": null,
       "composes": []
     },
@@ -80,7 +146,7 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "utility",
+      "layer": null,
       "intent": null,
       "composes": []
     },
@@ -102,8 +168,8 @@
       "core": true,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "orchestration",
-      "intent": "execution",
+      "layer": null,
+      "intent": null,
       "composes": []
     },
     {
@@ -135,8 +201,19 @@
       "core": false,
       "source": "superpowers",
       "version": "0.1.0",
-      "layer": "research",
-      "intent": "research",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "brand-voice",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
       "composes": []
     },
     {
@@ -146,7 +223,18 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "foundation",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "bun-runtime",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
       "intent": null,
       "composes": []
     },
@@ -157,7 +245,7 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "foundation",
+      "layer": null,
       "intent": null,
       "composes": []
     },
@@ -173,14 +261,25 @@
       "composes": []
     },
     {
+      "name": "claude-api",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
       "name": "code-review",
       "category": "shortcut",
       "status": "active",
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "foundation",
-      "intent": "code-review",
+      "layer": null,
+      "intent": null,
       "composes": []
     },
     {
@@ -212,7 +311,7 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "utility",
+      "layer": null,
       "intent": null,
       "composes": []
     },
@@ -228,6 +327,17 @@
       "composes": []
     },
     {
+      "name": "content-engine",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
       "name": "content-research-writer",
       "category": "utility",
       "status": "active",
@@ -235,6 +345,17 @@
       "source": "fork",
       "version": "0.1.0",
       "layer": "domain",
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "crosspost",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
       "intent": null,
       "composes": []
     },
@@ -267,8 +388,19 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "research",
-      "intent": "research",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "deep-research",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
       "composes": []
     },
     {
@@ -289,7 +421,7 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "foundation",
+      "layer": null,
       "intent": null,
       "composes": []
     },
@@ -300,7 +432,18 @@
       "core": false,
       "source": "superpowers",
       "version": "0.1.0",
-      "layer": "foundation",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "dmux-workflows",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
       "intent": null,
       "composes": []
     },
@@ -311,7 +454,18 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "meta",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "documentation-lookup",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
       "intent": null,
       "composes": []
     },
@@ -338,13 +492,24 @@
       "composes": []
     },
     {
+      "name": "e2e-testing",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
       "name": "ecomode",
       "category": "utility",
       "status": "active",
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "foundation",
+      "layer": null,
       "intent": null,
       "composes": []
     },
@@ -382,6 +547,17 @@
       "composes": []
     },
     {
+      "name": "everything-claude-code",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
       "name": "evolve",
       "category": "utility",
       "status": "active",
@@ -393,13 +569,35 @@
       "composes": []
     },
     {
+      "name": "exa-search",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
       "name": "executing-plans",
       "category": "utility",
       "status": "active",
       "core": false,
       "source": "superpowers",
       "version": "0.1.0",
-      "layer": "orchestration",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "fal-ai-media",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
       "intent": null,
       "composes": []
     },
@@ -410,7 +608,7 @@
       "core": false,
       "source": "superpowers",
       "version": "0.1.0",
-      "layer": "domain",
+      "layer": null,
       "intent": null,
       "composes": []
     },
@@ -437,14 +635,25 @@
       "composes": []
     },
     {
+      "name": "frontend-slides",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
       "name": "frontend-ui-ux",
       "category": "utility",
       "status": "active",
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "domain",
-      "intent": "frontend",
+      "layer": null,
+      "intent": null,
       "composes": []
     },
     {
@@ -454,7 +663,7 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "foundation",
+      "layer": null,
       "intent": null,
       "composes": []
     },
@@ -465,7 +674,7 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "meta",
+      "layer": null,
       "intent": null,
       "composes": []
     },
@@ -476,7 +685,29 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "utility",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "investor-materials",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "investor-outreach",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
       "intent": null,
       "composes": []
     },
@@ -514,6 +745,28 @@
       "composes": []
     },
     {
+      "name": "market-research",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "mcp-server-patterns",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
       "name": "mcp-setup",
       "category": "utility",
       "status": "active",
@@ -536,13 +789,24 @@
       "composes": []
     },
     {
+      "name": "nextjs-turbopack",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
       "name": "note",
       "category": "utility",
       "status": "active",
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "foundation",
+      "layer": null,
       "intent": null,
       "composes": []
     },
@@ -553,7 +817,7 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "meta",
+      "layer": null,
       "intent": null,
       "composes": []
     },
@@ -586,8 +850,8 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "orchestration",
-      "intent": "execution",
+      "layer": null,
+      "intent": null,
       "composes": []
     },
     {
@@ -597,8 +861,8 @@
       "core": true,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "foundation",
-      "intent": "planning",
+      "layer": null,
+      "intent": null,
       "composes": []
     },
     {
@@ -624,6 +888,17 @@
       "composes": []
     },
     {
+      "name": "product-capability",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
       "name": "project-analyze",
       "category": "utility",
       "status": "active",
@@ -642,6 +917,17 @@
       "source": "fork",
       "version": "0.1.0",
       "layer": "domain",
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "prompt-optimizer",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "\"1.0.0\"",
+      "layer": null,
       "intent": null,
       "composes": []
     },
@@ -685,8 +971,8 @@
       "core": true,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "orchestration",
-      "intent": "execution",
+      "layer": null,
+      "intent": null,
       "composes": []
     },
     {
@@ -696,7 +982,7 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "orchestration",
+      "layer": null,
       "intent": null,
       "composes": []
     },
@@ -707,8 +993,8 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "orchestration",
-      "intent": "planning",
+      "layer": null,
+      "intent": null,
       "composes": []
     },
     {
@@ -718,8 +1004,8 @@
       "core": false,
       "source": "superpowers",
       "version": "0.1.0",
-      "layer": "quality",
-      "intent": "code-review",
+      "layer": null,
+      "intent": null,
       "composes": []
     },
     {
@@ -751,8 +1037,8 @@
       "core": false,
       "source": "superpowers",
       "version": "0.1.0",
-      "layer": "quality",
-      "intent": "code-review",
+      "layer": null,
+      "intent": null,
       "composes": []
     },
     {
@@ -774,7 +1060,7 @@
       "source": "oh-my-codex",
       "version": "0.1.0",
       "layer": null,
-      "intent": "code-review",
+      "intent": null,
       "composes": []
     },
     {
@@ -782,10 +1068,10 @@
       "category": "shortcut",
       "status": "active",
       "core": false,
-      "source": "oh-my-codex",
+      "source": "ecc",
       "version": "0.1.0",
-      "layer": "quality",
-      "intent": "security",
+      "layer": null,
+      "intent": null,
       "composes": []
     },
     {
@@ -806,8 +1092,8 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "meta",
-      "intent": "skill-management",
+      "layer": null,
+      "intent": null,
       "composes": []
     },
     {
@@ -888,13 +1174,24 @@
       "composes": []
     },
     {
+      "name": "strategic-compact",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
       "name": "subagent-driven-development",
       "category": "utility",
       "status": "active",
       "core": false,
       "source": "superpowers",
       "version": "0.1.0",
-      "layer": "orchestration",
+      "layer": null,
       "intent": null,
       "composes": []
     },
@@ -905,8 +1202,8 @@
       "core": true,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "orchestration",
-      "intent": "execution",
+      "layer": null,
+      "intent": null,
       "composes": []
     },
     {
@@ -916,8 +1213,8 @@
       "core": false,
       "source": "superpowers",
       "version": "0.1.0",
-      "layer": "foundation",
-      "intent": "debugging",
+      "layer": null,
+      "intent": null,
       "composes": []
     },
     {
@@ -927,8 +1224,8 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "foundation",
-      "intent": "tdd",
+      "layer": null,
+      "intent": null,
       "composes": []
     },
     {
@@ -960,8 +1257,8 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "orchestration",
-      "intent": "execution",
+      "layer": null,
+      "intent": null,
       "composes": []
     },
     {
@@ -983,7 +1280,7 @@
       "source": "superpowers",
       "version": "0.1.0",
       "layer": null,
-      "intent": "tdd",
+      "intent": null,
       "composes": []
     },
     {
@@ -1015,7 +1312,7 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "utility",
+      "layer": null,
       "intent": null,
       "composes": []
     },
@@ -1048,7 +1345,7 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "quality",
+      "layer": null,
       "intent": null,
       "composes": []
     },
@@ -1059,8 +1356,8 @@
       "core": true,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "orchestration",
-      "intent": "execution",
+      "layer": null,
+      "intent": null,
       "composes": []
     },
     {
@@ -1092,7 +1389,7 @@
       "core": false,
       "source": "superpowers",
       "version": "0.1.0",
-      "layer": "domain",
+      "layer": null,
       "intent": null,
       "composes": []
     },
@@ -1103,7 +1400,7 @@
       "core": false,
       "source": "superpowers",
       "version": "0.1.0",
-      "layer": "meta",
+      "layer": null,
       "intent": null,
       "composes": []
     },
@@ -1114,8 +1411,8 @@
       "core": false,
       "source": "superpowers",
       "version": "0.1.0",
-      "layer": "foundation",
-      "intent": "verification",
+      "layer": null,
+      "intent": null,
       "composes": []
     },
     {
@@ -1141,13 +1438,24 @@
       "composes": []
     },
     {
+      "name": "video-editing",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
       "name": "visual-verdict",
       "category": "utility",
       "status": "active",
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "utility",
+      "layer": null,
       "intent": null,
       "composes": []
     },
@@ -1158,7 +1466,7 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "domain",
+      "layer": null,
       "intent": null,
       "composes": []
     },
@@ -1169,7 +1477,7 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": "foundation",
+      "layer": null,
       "intent": null,
       "composes": []
     },
@@ -1191,8 +1499,8 @@
       "core": false,
       "source": "superpowers",
       "version": "0.1.0",
-      "layer": "foundation",
-      "intent": "planning",
+      "layer": null,
+      "intent": null,
       "composes": []
     },
     {
@@ -1202,8 +1510,19 @@
       "core": false,
       "source": "superpowers",
       "version": "0.1.0",
-      "layer": "meta",
-      "intent": "skill-management",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "x-api",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
       "composes": []
     }
   ],
