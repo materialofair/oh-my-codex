@@ -1,7 +1,6 @@
 ---
 name: worker
 description: Team worker protocol (ACK, mailbox, task lifecycle) for tmux-based OMX teams
-layer: foundation
 ---
 
 # Worker Skill

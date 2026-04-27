@@ -1,8 +1,6 @@
 ---
 name: security-review
 description: Run a comprehensive security review on code
-intent: security
-layer: quality
 ---
 
 # Security Review Skill

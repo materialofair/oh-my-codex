@@ -1,7 +1,6 @@
 ---
 name: review
 description: Reviewer-only pass for /plan --review and cleanup artifact review
-intent: code-review
 ---
 
 # Review (Reviewer-Only Pass)

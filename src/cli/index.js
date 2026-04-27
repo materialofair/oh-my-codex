@@ -9,7 +9,9 @@ const { test } = require('./test');
 const HELP = `oh-my-codex CLI (omcodex)
 
 Usage:
-  omcodex setup [--scope user|project-local|project] [--force] [--dry-run] [--verbose] [--no-prompts] [--no-agents]
+  omcodex setup [--scope user|project-local|project] [--force] [--dry-run] [--verbose]
+                 [--no-skills] [--no-prompts] [--no-rules] [--no-agents] [--no-config]
+                 [--no-upstream-codex] [--enable-context7]
   omcodex doctor
   omcodex team start \"<task>\"
   omcodex team status
@@ -70,6 +72,7 @@ async function main(args) {
       installRules: !flags.has('--no-rules'),
       installAgents: !flags.has('--no-agents'),
       installConfig: !flags.has('--no-config'),
+      installUpstreamCodex: !flags.has('--no-upstream-codex'),
     });
     return;
   }

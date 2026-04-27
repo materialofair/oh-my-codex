@@ -1,7 +1,6 @@
 ---
 name: git-master
 description: Git expert for atomic commits, rebasing, and history management
-layer: foundation
 ---
 
 # Git Master Command

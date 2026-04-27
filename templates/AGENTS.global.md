@@ -26,6 +26,32 @@ For every non-trivial request, execute in this order:
 5. Verify with concrete commands.
 6. Report outcome with evidence.
 
+## Coding Discipline
+
+Apply to non-trivial changes. Trivial fixes can use judgment.
+Source: https://github.com/forrestchang/andrej-karpathy-skills (MIT).
+
+### 1. Think Before Coding
+- State material assumptions; ask instead of guess.
+- Surface multiple interpretations rather than picking silently.
+- Push back when a simpler path exists.
+- Stop and name the confusion rather than proceeding blind.
+
+### 2. Simplicity First
+- Smallest correct change; no speculative features, flags, or abstractions.
+- No error handling for impossible scenarios.
+- If 200 lines could be 50, rewrite it.
+
+### 3. Surgical Changes
+- Touch only files/lines the task requires.
+- Match existing style; no drive-by refactor, reformat, or comment edits.
+- Remove orphans your own change created; leave pre-existing dead code alone unless asked.
+
+### 4. Goal-Driven Execution
+- Translate imperatives into verifiable goals (write failing test first, then pass).
+- For multi-step work, state `step -> verify: check` per step.
+- Loop until the verification check passes; weak criteria require re-clarification.
+
 ## Skill Router
 
 ### Explicit trigger

@@ -1,8 +1,6 @@
 ---
 name: pipeline
 description: Configurable pipeline orchestrator for sequencing stages
-intent: execution
-layer: orchestration
 ---
 
 # Pipeline Skill

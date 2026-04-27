@@ -5,6 +5,19 @@ dist/
 .omc/
 .sisyphus/
 
+# omcodex runtime artifacts (regenerated on every `omcodex setup`)
+.omcodex/merge-report.json
+.omcodex/reports/
+.omcodex/setup-scope.json
+
+# Project-local install targets (rebuilt by `omcodex setup --scope project-local`)
+# Templates/source remain under templates/ and .agent/.
+.codex/skills/
+.codex/agents/
+.codex/prompts/
+.codex/rules/
+.codex/config.toml
+
 # Upstream skills are tracked in git so npm package includes them.
 # To update: npm run source:skills:sync
 # .agent/skills/upstream/ — DO NOT manually edit, use sync scripts.

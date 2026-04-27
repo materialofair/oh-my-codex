@@ -43,20 +43,98 @@ function parseSkillMetadata(skillPath) {
 }
 
 /**
- * Load skills from a source directory
+ * Read .omc-source/manifest.json if present. Lets a vendored upstream declare
+ * a non-flat skillsPath and a selection allowlist alongside provenance.
+ */
+function readSourceManifest(sourceDir) {
+  const manifestPath = path.join(sourceDir, '.omc-source', 'manifest.json');
+  if (!fs.existsSync(manifestPath)) return null;
+  try {
+    const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+    return { manifest, manifestPath };
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Walk up from a path until a directory containing both .agent/ and src/
+ * exists — that's the project root. Used to resolve "/..."-anchored
+ * manifest paths regardless of how deep the source is vendored.
+ */
+function findProjectRoot(startDir) {
+  let cur = path.resolve(startDir);
+  while (cur !== path.dirname(cur)) {
+    if (fs.existsSync(path.join(cur, '.agent')) && fs.existsSync(path.join(cur, 'src'))) {
+      return cur;
+    }
+    cur = path.dirname(cur);
+  }
+  return null;
+}
+
+/**
+ * Resolve the selection allowlist for a source. Returns Set<string> | null.
+ * The selection file path comes from manifest.selectionFile:
+ *   - "/foo/bar.json"  -> resolved against the project root
+ *   - other            -> resolved against the upstream source directory
+ *                         (parent of .omc-source/)
+ */
+function loadSourceSelection(manifestEntry) {
+  if (!manifestEntry || !manifestEntry.manifest.selectionFile) return null;
+
+  const declared = manifestEntry.manifest.selectionFile;
+  const sourceDir = path.dirname(path.dirname(manifestEntry.manifestPath));
+
+  let selectionPath;
+  if (declared.startsWith('/')) {
+    const projectRoot = findProjectRoot(sourceDir);
+    if (!projectRoot) return null;
+    selectionPath = path.join(projectRoot, declared.slice(1));
+  } else {
+    selectionPath = path.resolve(sourceDir, declared);
+  }
+
+  if (!fs.existsSync(selectionPath)) return null;
+  try {
+    const selection = JSON.parse(fs.readFileSync(selectionPath, 'utf8'));
+    if (!Array.isArray(selection.skills) || selection.skills.length === 0) return null;
+    return new Set(selection.skills);
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Load skills from a source directory.
+ *
+ * Honors .omc-source/manifest.json when present:
+ *   - skillsPath: subpath inside sourceDir to scan (default ".")
+ *   - selectionFile: JSON allowlist of skill names to install
  */
 function loadSkillsFromSource(sourceDir, sourceName) {
   if (!fs.existsSync(sourceDir)) {
     return [];
   }
 
-  const entries = fs.readdirSync(sourceDir, { withFileTypes: true });
+  const manifestEntry = readSourceManifest(sourceDir);
+  const skillsPath = manifestEntry && manifestEntry.manifest.skillsPath
+    ? path.join(sourceDir, manifestEntry.manifest.skillsPath)
+    : sourceDir;
+
+  if (!fs.existsSync(skillsPath)) return [];
+
+  const allowlist = loadSourceSelection(manifestEntry);
+  const entries = fs.readdirSync(skillsPath, { withFileTypes: true });
   const skills = [];
 
   for (const entry of entries) {
     if (!entry.isDirectory()) continue;
+    // Skip dotfiles like .omc-source, .codex when scanning a flat source root.
+    if (entry.name.startsWith('.')) continue;
+    if (allowlist && !allowlist.has(entry.name)) continue;
 
-    const skillPath = path.join(sourceDir, entry.name);
+    const skillPath = path.join(skillsPath, entry.name);
     const metadata = parseSkillMetadata(skillPath);
 
     if (metadata) {

@@ -1,34 +1,126 @@
-# ============================================================
-
-# ============================================================
-
 [features]
 multi_agent = true
 child_agents_md = true
 collaboration_modes = true
 
 # ============================================================
+
+# ============================================================
+
+# ============================================================
+
+# ============================================================
+
+# ============================================================
+
+# ============================================================
+
+# ============================================================
 # oh-my-codex managed block
 # ============================================================
-[mcp_servers.openaiDeveloperDocs]
-url = "https://developers.openai.com/mcp"
+[mcp_servers.skills]
+command = "npx"
+args = ["universal-skills", "mcp", "--skill-dir", "/Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/.codex/skills"]
 enabled = true
 
 [mcp_servers.omcodex_state]
 command = "node"
-args = ["/opt/homebrew/lib/node_modules/oh-my-codex-cli/src/mcp/state-server.js"]
+args = ["/Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/src/mcp/state-server.js"]
 enabled = true
 
 [mcp_servers.omcodex_memory]
 command = "node"
-args = ["/opt/homebrew/lib/node_modules/oh-my-codex-cli/src/mcp/memory-server.js"]
+args = ["/Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/src/mcp/memory-server.js"]
 enabled = true
 
 [mcp_servers.omcodex_trace]
 command = "node"
-args = ["/opt/homebrew/lib/node_modules/oh-my-codex-cli/src/mcp/trace-server.js"]
+args = ["/Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/src/mcp/trace-server.js"]
+enabled = true
+
+[mcp_servers.openaiDeveloperDocs]
+url = "https://developers.openai.com/mcp"
 enabled = true
 
 # ============================================================
 # end oh-my-codex managed block
+# ============================================================
+
+# ============================================================
+# ecc managed agents block
+# Sourced from config.toml — keep in sync via the source's sync script
+# ============================================================
+[agents]
+# Multi-agent role limits and local role definitions.
+# These map to `.codex/agents/*.toml` and mirror the repo's explorer/reviewer/docs workflow.
+max_threads = 6
+max_depth = 1
+
+[agents.explorer]
+description = "Read-only codebase explorer for gathering evidence before changes are proposed."
+config_file = "agents/explorer.toml"
+
+[agents.reviewer]
+description = "PR reviewer focused on correctness, security, and missing tests."
+config_file = "agents/reviewer.toml"
+
+[agents.docs_researcher]
+description = "Documentation specialist that verifies APIs, framework behavior, and release notes."
+config_file = "agents/docs-researcher.toml"
+# ============================================================
+# end ecc managed agents block
+# ============================================================
+
+# ============================================================
+# ecc managed mcp block
+# Sourced from config.toml — keep in sync via the source's sync script
+# ============================================================
+[mcp_servers.github]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-github"]
+startup_timeout_sec = 30
+
+[mcp_servers.context7]
+command = "npx"
+# Canonical Codex section name is `context7`; the package itself remains
+# `@upstash/context7-mcp`.
+args = ["-y", "@upstash/context7-mcp@latest"]
+startup_timeout_sec = 30
+
+[mcp_servers.exa]
+url = "https://mcp.exa.ai/mcp"
+
+[mcp_servers.memory]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-memory"]
+startup_timeout_sec = 30
+
+[mcp_servers.playwright]
+command = "npx"
+args = ["-y", "@playwright/mcp@latest", "--extension"]
+startup_timeout_sec = 30
+
+[mcp_servers.sequential-thinking]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+startup_timeout_sec = 30
+
+# Additional MCP servers (uncomment as needed):
+# [mcp_servers.supabase]
+# command = "npx"
+# args = ["-y", "supabase-mcp-server@latest", "--read-only"]
+#
+# [mcp_servers.firecrawl]
+# command = "npx"
+# args = ["-y", "firecrawl-mcp"]
+#
+# [mcp_servers.fal-ai]
+# command = "npx"
+# args = ["-y", "fal-ai-mcp-server"]
+#
+# [mcp_servers.cloudflare]
+# command = "npx"
+# args = ["-y", "@cloudflare/mcp-server-cloudflare"]
+# ============================================================
+# end ecc managed mcp block
 # ============================================================

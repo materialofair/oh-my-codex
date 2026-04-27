@@ -1,7 +1,6 @@
 ---
 name: ask-claude
 description: Ask Claude via local CLI and capture a reusable artifact
-layer: utility
 ---
 
 # Ask Claude (Local CLI)

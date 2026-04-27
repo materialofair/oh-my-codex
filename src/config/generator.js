@@ -167,6 +167,135 @@ function stripSections(config, sectionNames = []) {
   return nextLines.join('\n').replace(/\n{3,}/g, '\n\n').trim();
 }
 
+/**
+ * Slice out one or more TOML sections by exact name from a source config
+ * string. Sections are returned in source order joined by blank lines,
+ * including their header line and all lines up to (but not including) the
+ * next section header or end-of-file. Limitations:
+ *  - Only `[name]` and `[name.subname]` headers — array-of-tables `[[name]]`
+ *    are intentionally skipped (and treated as a delimiter).
+ *  - Trailing whitespace and `#` line comments after a header are tolerated.
+ *  - Sections not present in the source are silently skipped.
+ */
+function extractTomlSections(sourceConfig, sectionNames = []) {
+  if (!sourceConfig || sectionNames.length === 0) return '';
+
+  const lines = sourceConfig.split(/\r?\n/);
+  const isSectionHeader = (line) => /^\s*\[[^[\]]+\]\s*(#.*)?$/.test(line);
+  const isArrayHeader = (line) => /^\s*\[\[[^\]]+\]\]/.test(line);
+  const matchSection = (line) => {
+    const m = line.match(/^\s*\[([^[\]]+)\]\s*(#.*)?$/);
+    if (!m) return null;
+    return sectionNames.find((name) => m[1].trim() === name) || null;
+  };
+
+  const blocks = [];
+  for (let i = 0; i < lines.length; i += 1) {
+    if (!matchSection(lines[i])) continue;
+    const start = i;
+    let end = lines.length;
+    for (let j = i + 1; j < lines.length; j += 1) {
+      if (isSectionHeader(lines[j]) || isArrayHeader(lines[j])) {
+        end = j;
+        break;
+      }
+    }
+    blocks.push(lines.slice(start, end).join('\n').trimEnd());
+    i = end - 1;
+  }
+
+  return blocks.join('\n\n');
+}
+
+/**
+ * Inject an upstream-sourced TOML block as a separate managed region,
+ * idempotently. Block is rebuilt from the upstream source's own config.toml
+ * so we never silently drift. Generic over what sections it pulls — see
+ * mergeUpstreamMcpBlock and mergeUpstreamAgentsBlock for callers.
+ */
+function mergeUpstreamSectionBlock(configFile, options = {}) {
+  const {
+    sourceName,
+    sourceConfigPath,
+    sectionNames = [],
+    blockLabel,
+    sourceLabel,
+  } = options;
+
+  if (!sourceName || !sourceConfigPath || sectionNames.length === 0) return false;
+  if (!blockLabel) return false;
+  if (!fs.existsSync(sourceConfigPath)) return false;
+
+  const startMarker = `# ${sourceName} managed ${blockLabel} block`;
+  const endMarker = `# end ${sourceName} managed ${blockLabel} block`;
+
+  const sourceConfig = fs.readFileSync(sourceConfigPath, 'utf8');
+  const extracted = extractTomlSections(sourceConfig, sectionNames);
+
+  const existing = fs.existsSync(configFile) ? fs.readFileSync(configFile, 'utf8') : '';
+  const stripped = stripManagedBlock(existing, startMarker, endMarker).trim();
+
+  if (!extracted) {
+    if (stripped !== existing.trim()) {
+      fs.writeFileSync(configFile, `${stripped}\n`, 'utf8');
+    }
+    return false;
+  }
+
+  const provenance = sourceLabel
+    || `Sourced from ${path.basename(sourceConfigPath)} — keep in sync via the source's sync script`;
+
+  const managed = [
+    '# ============================================================',
+    startMarker,
+    `# ${provenance}`,
+    '# ============================================================',
+    extracted,
+    '# ============================================================',
+    endMarker,
+    '# ============================================================',
+  ].join('\n');
+
+  const output = stripped ? `${stripped}\n\n${managed}\n` : `${managed}\n`;
+  fs.writeFileSync(configFile, output, 'utf8');
+  return true;
+}
+
+function mergeUpstreamMcpBlock(configFile, options = {}) {
+  const allowedServers = options.allowedServers || [];
+  return mergeUpstreamSectionBlock(configFile, {
+    sourceName: options.sourceName,
+    sourceConfigPath: options.sourceConfigPath,
+    sectionNames: allowedServers.map((name) => `mcp_servers.${name}`),
+    blockLabel: 'mcp',
+  });
+}
+
+/**
+ * Inject the upstream's [agents] root + [agents.<name>] declarations.
+ * Without these, copied .codex/agents/*.toml files are not discoverable
+ * by the codex CLI. Agent name normalization (hyphen <-> underscore)
+ * matches both spellings to ECC's actual section keys.
+ */
+function mergeUpstreamAgentsBlock(configFile, options = {}) {
+  const allowedAgents = options.allowedAgents || [];
+  if (allowedAgents.length === 0) return false;
+
+  const variants = new Set();
+  for (const name of allowedAgents) {
+    variants.add(`agents.${name}`);
+    variants.add(`agents.${name.replace(/-/g, '_')}`);
+    variants.add(`agents.${name.replace(/_/g, '-')}`);
+  }
+
+  return mergeUpstreamSectionBlock(configFile, {
+    sourceName: options.sourceName,
+    sourceConfigPath: options.sourceConfigPath,
+    sectionNames: ['agents', ...variants],
+    blockLabel: 'agents',
+  });
+}
+
 function mergeConfig(configFile, root, options = {}) {
   const dir = path.dirname(configFile);
   fs.mkdirSync(dir, { recursive: true });
@@ -193,4 +322,10 @@ function mergeConfig(configFile, root, options = {}) {
   fs.writeFileSync(configFile, output, 'utf8');
 }
 
-module.exports = { mergeConfig };
+module.exports = {
+  mergeConfig,
+  mergeUpstreamMcpBlock,
+  mergeUpstreamAgentsBlock,
+  mergeUpstreamSectionBlock,
+  extractTomlSections,
+};

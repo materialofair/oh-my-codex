@@ -1,8 +1,6 @@
 ---
 name: plan
 description: Strategic planning with optional interview workflow
-intent: planning
-layer: foundation
 ---
 
 <Purpose>

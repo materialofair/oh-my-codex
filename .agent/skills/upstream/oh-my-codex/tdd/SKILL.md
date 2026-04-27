@@ -1,8 +1,6 @@
 ---
 name: tdd
 description: Test-Driven Development enforcement skill - write tests first, always
-intent: tdd
-layer: foundation
 ---
 
 # TDD Mode

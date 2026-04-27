@@ -1,7 +1,6 @@
 ---
 name: ecomode
 description: Token-efficient model routing modifier
-layer: foundation
 ---
 
 # Ecomode Skill

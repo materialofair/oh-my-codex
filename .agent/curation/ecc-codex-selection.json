@@ -1,0 +1,49 @@
+{
+  "_comment": "Curated subset of ECC artifacts that install to ~/.codex/. Full ingestion stays in .agent/skills/upstream/ecc/; only these names install. Skills omitted from this list remain available offline for inspection but are not copied to runtime.",
+  "_source": "ecc",
+  "_generated": "2026-04-27",
+  "skills": [
+    "agent-introspection-debugging",
+    "agent-sort",
+    "api-design",
+    "article-writing",
+    "backend-patterns",
+    "brand-voice",
+    "bun-runtime",
+    "claude-api",
+    "coding-standards",
+    "content-engine",
+    "deep-research",
+    "dmux-workflows",
+    "documentation-lookup",
+    "e2e-testing",
+    "eval-harness",
+    "exa-search",
+    "fal-ai-media",
+    "frontend-design",
+    "frontend-patterns",
+    "frontend-slides",
+    "mcp-server-patterns",
+    "nextjs-turbopack",
+    "product-capability",
+    "security-review",
+    "strategic-compact",
+    "tdd-workflow",
+    "verification-loop",
+    "video-editing",
+    "x-api"
+  ],
+  "agents": [
+    "explorer",
+    "reviewer",
+    "docs-researcher"
+  ],
+  "mcpServers": [
+    "github",
+    "context7",
+    "exa",
+    "memory",
+    "playwright",
+    "sequential-thinking"
+  ]
+}

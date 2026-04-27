@@ -1,7 +1,6 @@
 ---
 name: note
 description: Save notes to notepad.md for compaction resilience
-layer: foundation
 ---
 
 # Note Skill

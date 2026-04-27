@@ -1,7 +1,6 @@
 ---
 name: web-clone
 description: URL-driven website cloning with visual + functional verification
-layer: domain
 ---
 
 <Purpose>

@@ -1,8 +1,6 @@
 ---
 name: ralplan
 description: Alias for $plan --consensus
-intent: planning
-layer: orchestration
 ---
 
 # Ralplan (Consensus Planning Alias)

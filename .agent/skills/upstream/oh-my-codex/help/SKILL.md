@@ -1,7 +1,6 @@
 ---
 name: help
 description: Guide on using oh-my-codex plugin
-layer: meta
 ---
 
 # How OMX Works

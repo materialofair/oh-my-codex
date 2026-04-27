@@ -1,7 +1,6 @@
 ---
 name: doctor
 description: Diagnose and fix oh-my-codex installation issues
-layer: meta
 ---
 
 # Doctor Skill

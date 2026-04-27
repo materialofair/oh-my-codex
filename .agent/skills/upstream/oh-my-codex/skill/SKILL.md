@@ -2,8 +2,6 @@
 name: skill
 description: Manage local skills - list, add, remove, search, edit, setup wizard
 argument-hint: "<command> [args]"
-intent: skill-management
-layer: meta
 ---
 
 # Skill Management CLI

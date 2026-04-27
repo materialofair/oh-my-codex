@@ -1,8 +1,6 @@
 ---
 name: ralph
 description: Self-referential loop until task completion with architect verification
-intent: execution
-layer: orchestration
 ---
 
 [RALPH + ULTRAWORK - ITERATION {{ITERATION}}/{{MAX}}]

@@ -10,7 +10,11 @@ const {
   skillsSource,
   promptsSource,
 } = require('../utils/paths');
-const { mergeConfig } = require('../config/generator');
+const {
+  mergeConfig,
+  mergeUpstreamMcpBlock,
+  mergeUpstreamAgentsBlock,
+} = require('../config/generator');
 const { getCatalogHeadlineCounts } = require('../catalog/reader');
 const {
   loadSkillsFromSource,
@@ -270,6 +274,156 @@ async function copyMergedSkills(merged, dest, options) {
 }
 
 
+/**
+ * Resolve a manifest-declared path. Paths starting with "/" anchor at the
+ * project root; everything else resolves relative to the upstream source
+ * directory (e.g. .agent/skills/upstream/ecc/), which matches how the
+ * manifest writer naturally describes its own assets.
+ * Returns the absolute path (or null on falsy input).
+ */
+function resolveManifestPath(root, sourceDir, declared) {
+  if (!declared) return null;
+  if (declared.startsWith('/')) {
+    return path.join(root, declared.slice(1));
+  }
+  return path.resolve(sourceDir, declared);
+}
+
+/**
+ * Walk .agent/skills/upstream/* looking for sources that ship Codex-native
+ * assets (declared in .omc-source/manifest.json). Returns one entry per
+ * source describing its agents dir, config.toml, agents supplement, and
+ * selection-derived allowlists. Sources without a manifest or codexAssets
+ * block are skipped. A declared-but-missing selectionFile throws.
+ */
+function discoverUpstreamCodexAssets(root) {
+  const upstreamBase = path.join(root, '.agent', 'skills', 'upstream');
+  if (!fs.existsSync(upstreamBase)) return [];
+
+  const results = [];
+  const sources = fs.readdirSync(upstreamBase, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory());
+
+  for (const src of sources) {
+    const sourceDir = path.join(upstreamBase, src.name);
+    const manifestPath = path.join(sourceDir, '.omc-source', 'manifest.json');
+    if (!fs.existsSync(manifestPath)) continue;
+
+    let manifest;
+    try {
+      manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+    } catch (err) {
+      throw new Error(`Invalid manifest at ${manifestPath}: ${err.message}`);
+    }
+    if (!manifest.codexAssets) continue;
+
+    let selection = null;
+    if (manifest.selectionFile) {
+      const selectionPath = resolveManifestPath(root, sourceDir, manifest.selectionFile);
+      if (!fs.existsSync(selectionPath)) {
+        throw new Error(
+          `Manifest ${manifestPath} declares selectionFile "${manifest.selectionFile}" `
+          + `but the resolved path does not exist: ${selectionPath}. `
+          + 'Use a project-root anchored path ("/.agent/curation/...") or a source-relative path that exists.'
+        );
+      }
+      try {
+        selection = JSON.parse(fs.readFileSync(selectionPath, 'utf8'));
+      } catch (err) {
+        throw new Error(`Invalid selection at ${selectionPath}: ${err.message}`);
+      }
+    }
+
+    results.push({
+      name: src.name,
+      sourceDir,
+      manifest,
+      selection,
+      agentsDir: resolveManifestPath(root, sourceDir, manifest.codexAssets.agentsDir),
+      configToml: resolveManifestPath(root, sourceDir, manifest.codexAssets.configToml),
+      agentsSupplement: resolveManifestPath(root, sourceDir, manifest.codexAssets.agentsSupplement),
+    });
+  }
+
+  return results;
+}
+
+/**
+ * Append upstream AGENTS.md supplements to the global AGENTS.md as an
+ * idempotent managed block. Each source contributes one labeled section.
+ */
+async function mergeUpstreamAgentsSupplements(globalAgentsDest, assets, options) {
+  const eligible = assets.filter((a) => a.agentsSupplement && fs.existsSync(a.agentsSupplement));
+  if (eligible.length === 0) return 0;
+
+  const startMarker = '<!-- omcodex upstream AGENTS supplements -->';
+  const endMarker = '<!-- end omcodex upstream AGENTS supplements -->';
+
+  const existing = fs.existsSync(globalAgentsDest)
+    ? fs.readFileSync(globalAgentsDest, 'utf8')
+    : '';
+
+  const start = existing.indexOf(startMarker);
+  let stripped = existing;
+  if (start >= 0) {
+    const end = existing.indexOf(endMarker, start);
+    if (end >= 0) {
+      stripped = (existing.slice(0, start) + existing.slice(end + endMarker.length)).trimEnd() + '\n';
+    }
+  }
+
+  const sections = eligible.map((asset) => {
+    const body = fs.readFileSync(asset.agentsSupplement, 'utf8').trim();
+    return [
+      `## Upstream supplement: ${asset.name}`,
+      `<!-- source: ${path.basename(asset.agentsSupplement)} from .agent/skills/upstream/${asset.name}/ -->`,
+      '',
+      body,
+    ].join('\n');
+  });
+
+  const block = [startMarker, '', ...sections, '', endMarker].join('\n');
+  const next = `${stripped.trimEnd()}\n\n${block}\n`;
+
+  if (!options.dryRun) {
+    await fsp.mkdir(path.dirname(globalAgentsDest), { recursive: true });
+    await fsp.writeFile(globalAgentsDest, next, 'utf8');
+  }
+  return eligible.length;
+}
+
+async function installUpstreamCodexAgents(asset, agentsDest, options) {
+  if (!asset.agentsDir || !fs.existsSync(asset.agentsDir)) return 0;
+
+  const allowed = asset.selection && Array.isArray(asset.selection.agents)
+    ? new Set(asset.selection.agents)
+    : null;
+
+  const entries = await fsp.readdir(asset.agentsDir, { withFileTypes: true });
+  let count = 0;
+
+  for (const entry of entries) {
+    if (!entry.isFile()) continue;
+    if (!entry.name.endsWith('.toml')) continue;
+
+    const baseName = entry.name.replace(/\.toml$/, '');
+    // Tolerate explorer / docs-researcher / docs_researcher cross-spellings.
+    const normalized = baseName.replace(/_/g, '-');
+    if (allowed && !allowed.has(baseName) && !allowed.has(normalized)) continue;
+
+    const from = path.join(asset.agentsDir, entry.name);
+    const to = path.join(agentsDest, entry.name);
+    if (!options.force && fs.existsSync(to)) continue;
+    if (!options.dryRun) {
+      await fsp.mkdir(agentsDest, { recursive: true });
+      await fsp.copyFile(from, to);
+    }
+    count += 1;
+  }
+
+  return count;
+}
+
 async function setup(options = {}) {
   const cwd = process.cwd();
   const root = path.resolve(__dirname, '..', '..');
@@ -312,7 +466,7 @@ async function setup(options = {}) {
 
   await persistScope(cwd, scope, options.dryRun);
 
-  console.log('[1/6] Installing skills...');
+  console.log('[1/7] Installing skills...');
   const shouldInstallSkills = options.installSkills !== false && scope !== 'project';
 
   let skillCount = 0;
@@ -359,7 +513,7 @@ async function setup(options = {}) {
     console.log('  Skipped for project scope');
   }
 
-  console.log('[2/6] Installing prompts...');
+  console.log('[2/7] Installing prompts...');
   const shouldInstallPrompts = options.installPrompts !== false && scope !== 'project';
   if (!shouldInstallPrompts) {
     console.log('  Skipped (--no-prompts or project scope)');
@@ -371,7 +525,7 @@ async function setup(options = {}) {
     console.log(`  ${label} ${promptCount} files -> ${promptsDest}`);
   }
 
-  console.log('[3/6] Installing rules...');
+  console.log('[3/7] Installing rules...');
   if (options.installRules !== false) {
     const ruleCount = await copyDirectory(rulesSource, rulesDest, options);
     const label = options.dryRun ? 'Would install/update' : 'Installed/updated';
@@ -380,7 +534,7 @@ async function setup(options = {}) {
     console.log('  Skipped (--no-rules)');
   }
 
-  console.log('[4/6] Installing global AGENTS.md...');
+  console.log('[4/7] Installing global AGENTS.md...');
   if (options.installAgents === false) {
     console.log('  Skipped (--no-agents)');
   } else if (scope !== 'user') {
@@ -396,9 +550,21 @@ async function setup(options = {}) {
     } else {
       console.log(`  Skipped (already exists): ${globalAgentsDest}`);
     }
+
+    // Append upstream AGENTS.md supplements (e.g. ECC's .codex/AGENTS.md) as
+    // an idempotent managed block. Only meaningful at user scope where a
+    // global AGENTS.md exists.
+    if (fs.existsSync(globalAgentsDest) || options.dryRun) {
+      const supplementAssets = discoverUpstreamCodexAssets(root);
+      const appended = await mergeUpstreamAgentsSupplements(globalAgentsDest, supplementAssets, options);
+      if (appended > 0) {
+        const verb = options.dryRun ? 'Would append' : 'Appended';
+        console.log(`  ${verb} ${appended} upstream AGENTS supplement(s) -> ${globalAgentsDest}`);
+      }
+    }
   }
 
-  console.log('[5/6] Merging config.toml...');
+  console.log('[5/7] Merging config.toml...');
   if (options.installConfig !== false && !options.dryRun) {
     mergeConfig(configPath, root, {
       enableContext7: options.enableContext7,
@@ -412,7 +578,67 @@ async function setup(options = {}) {
     console.log('  Skipped (--no-config)');
   }
 
-  console.log('[6/6] Catalog check...');
+  console.log('[6/7] Installing upstream Codex assets...');
+  if (options.installUpstreamCodex === false) {
+    console.log('  Skipped (--no-upstream-codex)');
+  } else {
+    const upstreamAssets = discoverUpstreamCodexAssets(root);
+    if (upstreamAssets.length === 0) {
+      console.log('  No upstream sources declare codexAssets');
+    } else {
+      const agentsDest = scope === 'user'
+        ? path.join(os.homedir(), '.codex', 'agents')
+        : path.join(cwd, '.codex', 'agents');
+
+      for (const asset of upstreamAssets) {
+        const agentCount = await installUpstreamCodexAgents(asset, agentsDest, options);
+        const label = options.dryRun ? 'Would install' : 'Installed';
+        if (agentCount > 0) {
+          console.log(`  ${label} ${agentCount} agents from ${asset.name} -> ${agentsDest}`);
+        }
+
+        const allowedAgents = asset.selection && Array.isArray(asset.selection.agents)
+          ? asset.selection.agents
+          : [];
+        const allowedServers = asset.selection && Array.isArray(asset.selection.mcpServers)
+          ? asset.selection.mcpServers
+          : [];
+        const canTouchConfig = options.installConfig !== false && asset.configToml;
+
+        if (canTouchConfig && allowedAgents.length > 0) {
+          if (!options.dryRun) {
+            const wired = mergeUpstreamAgentsBlock(configPath, {
+              sourceName: asset.name,
+              sourceConfigPath: asset.configToml,
+              allowedAgents,
+            });
+            if (wired) {
+              console.log(`  Registered ${allowedAgents.length} agents from ${asset.name} -> ${configPath}`);
+            }
+          } else {
+            console.log(`  Would register ${allowedAgents.length} agents from ${asset.name} -> ${configPath}`);
+          }
+        }
+
+        if (canTouchConfig && allowedServers.length > 0) {
+          if (!options.dryRun) {
+            const merged = mergeUpstreamMcpBlock(configPath, {
+              sourceName: asset.name,
+              sourceConfigPath: asset.configToml,
+              allowedServers,
+            });
+            if (merged) {
+              console.log(`  Merged ${allowedServers.length} MCP servers from ${asset.name} -> ${configPath}`);
+            }
+          } else {
+            console.log(`  Would merge ${allowedServers.length} MCP servers from ${asset.name} -> ${configPath}`);
+          }
+        }
+      }
+    }
+  }
+
+  console.log('[7/7] Catalog check...');
   const headline = getCatalogHeadlineCounts(root);
   if (headline) {
     console.log(`  Catalog baseline: ${headline.skills} skills, ${headline.prompts} prompts`);

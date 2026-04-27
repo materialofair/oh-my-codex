@@ -1,7 +1,6 @@
 ---
 name: omx-setup
 description: Setup and configure oh-my-codex using current CLI behavior
-layer: meta
 ---
 
 # OMX Setup

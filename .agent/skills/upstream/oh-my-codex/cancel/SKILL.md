@@ -1,7 +1,6 @@
 ---
 name: cancel
 description: Cancel any active OMX mode (autopilot, ralph, ultrawork, ecomode, ultraqa, swarm, ultrapilot, pipeline, team)
-layer: foundation
 ---
 
 # Cancel Skill

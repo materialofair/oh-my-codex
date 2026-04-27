@@ -1,8 +1,6 @@
 ---
 name: team
 description: N coordinated agents on shared task list using tmux-based orchestration
-intent: execution
-layer: orchestration
 ---
 
 # Team Skill

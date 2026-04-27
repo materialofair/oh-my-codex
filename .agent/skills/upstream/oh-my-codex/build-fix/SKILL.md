@@ -1,7 +1,6 @@
 ---
 name: build-fix
 description: Fix build and TypeScript errors with minimal changes
-layer: foundation
 ---
 
 # Build Fix Skill

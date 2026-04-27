@@ -1,7 +1,6 @@
 ---
 name: ultraqa
 description: QA cycling workflow - test, verify, fix, repeat until goal met
-layer: quality
 ---
 
 # UltraQA Skill

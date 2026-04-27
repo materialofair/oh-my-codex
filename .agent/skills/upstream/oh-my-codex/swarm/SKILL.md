@@ -1,8 +1,6 @@
 ---
 name: swarm
 description: N coordinated agents on shared task list (compatibility facade over team)
-intent: execution
-layer: orchestration
 ---
 
 # Swarm (Compatibility Facade)

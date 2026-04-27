@@ -1,8 +1,6 @@
 ---
 name: frontend-ui-ux
 description: Designer-developer for UI/UX work
-intent: frontend
-layer: domain
 ---
 
 # Frontend UI/UX Command

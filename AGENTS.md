@@ -21,7 +21,9 @@ oh-my-codex enhances Codex with:
 | `README.md` | Entry point documentation |
 | `docs/CODEX.md` | Codex-specific install and usage guide |
 | `.agent/skills/local/` | Source-of-truth local Codex skill definitions |
-| `.agent/skills/upstream/` | Upstream skills (oh-my-codex, superpowers) |
+| `.agent/skills/upstream/` | Upstream skills (oh-my-codex, superpowers, ecc) |
+| `.agent/skills/upstream/<name>/.omc-source/manifest.json` | Per-source provenance + selection link |
+| `.agent/curation/<source>-*.json` | Curated allowlists for distribution-style upstream sources |
 | `scripts/install-codex.sh` | Global skill installer |
 
 ## For AI Agents

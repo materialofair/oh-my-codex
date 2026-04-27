@@ -1,8 +1,6 @@
 ---
 name: autopilot
 description: Full autonomous execution from idea to working code
-intent: execution
-layer: orchestration
 ---
 
 <Purpose>

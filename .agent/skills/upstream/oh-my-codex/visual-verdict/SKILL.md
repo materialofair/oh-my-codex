@@ -1,7 +1,6 @@
 ---
 name: visual-verdict
 description: Structured visual QA verdict for screenshot-to-reference comparisons
-layer: utility
 ---
 
 <Purpose>

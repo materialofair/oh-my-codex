@@ -20,7 +20,6 @@ triggers:
   - "discord webhook"
   - "telegram bot"
   - "slack webhook"
-layer: utility
 ---
 
 # Configure OMX Notifications

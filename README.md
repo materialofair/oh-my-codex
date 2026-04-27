@@ -102,6 +102,59 @@ project_doc_max_bytes = 65536
 
 ---
 
+## Upstream Source: everything‑claude‑code (ECC)
+
+[everything‑claude‑code](https://github.com/affaan-m/everything-claude-code) ships
+first‑class Codex support (`.codex/config.toml`, three `.codex/agents/*.toml`
+roles, and 34 SKILL.md skills with paired `agents/openai.yaml` definitions).
+oh‑my‑codex absorbs that Codex‑native subset directly through the standard
+upstream merge pipeline.
+
+**Layout**:
+- `.agent/skills/upstream/ecc/` — vendored ECC subtree (skills + `.codex/`)
+- `.agent/skills/upstream/ecc/.omc-source/manifest.json` — provenance + selection link
+- `.agent/curation/ecc-codex-selection.json` — curated allowlist (which skills/agents/MCP servers actually install)
+
+**What `omcodex setup` does for ECC**:
+1. Loads ECC skills from the vendored source, filtered by the selection's
+   `skills` allowlist; conflicts with local skills are resolved by the existing
+   quality‑score merger (local wins by default).
+2. Copies selected `.codex/agents/*.toml` (default: explorer, reviewer,
+   docs-researcher) to `~/.codex/agents/`.
+3. Extracts the selection's `agents` and writes the matching
+   `[agents.<name>]` registration sections from ECC's `.codex/config.toml`
+   into `~/.codex/config.toml` as a `# ecc managed agents block` — without
+   this, copied agent files are not discoverable by the codex CLI.
+4. Extracts the selection's `mcpServers` from ECC's `.codex/config.toml` and
+   injects them as a separate `# ecc managed mcp block`.
+5. Appends ECC's `.codex/AGENTS.md` (if declared as `agentsSupplement` in
+   the manifest) into the global `~/.codex/AGENTS.md` between
+   `<!-- omcodex upstream AGENTS supplements -->` markers.
+
+All managed blocks are idempotent and never duplicated across re-runs.
+
+**Refresh ECC from upstream**:
+```bash
+./scripts/sync-ecc.sh           # re-sparse-clone, preserves .omc-source/
+                                # (refuses if there are local edits; pass --force to override)
+omcodex setup --force           # reinstall with refreshed source
+```
+
+**Curate the selection**: edit `.agent/curation/ecc-codex-selection.json` and
+re-run `omcodex setup`. Removing a name skips that artifact on the next install.
+
+**Skip ECC at install time**:
+```bash
+omcodex setup --no-upstream-codex   # only fork + standard skills, ignore .codex/agents and ECC MCP/agents blocks
+```
+
+**Audit overlap across all sources**:
+```bash
+npm run governance:skills:overlap:multi   # JSON + Markdown report under .omcodex/reports/
+```
+
+---
+
 ## Notify Positioning
 
 Codex does not provide Claude Code style interception lifecycle support (for example pre/post tool interception).

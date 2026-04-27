@@ -1,7 +1,6 @@
 ---
 name: trace
 description: Show agent flow trace timeline and summary
-layer: utility
 ---
 
 # Agent Flow Trace

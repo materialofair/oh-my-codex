@@ -1,8 +1,6 @@
 ---
 name: ultrawork
 description: Parallel execution engine for high-throughput task completion
-intent: execution
-layer: orchestration
 ---
 
 <Purpose>

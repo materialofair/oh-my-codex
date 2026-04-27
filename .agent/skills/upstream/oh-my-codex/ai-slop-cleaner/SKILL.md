@@ -1,8 +1,6 @@
 ---
 name: ai-slop-cleaner
 description: Run an anti-slop cleanup/refactor/deslop workflow
-intent: security
-layer: quality
 ---
 
 # AI Slop Cleaner Skill

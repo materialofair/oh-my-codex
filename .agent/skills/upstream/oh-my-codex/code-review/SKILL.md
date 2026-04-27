@@ -1,8 +1,6 @@
 ---
 name: code-review
 description: Run a comprehensive code review
-intent: code-review
-layer: foundation
 ---
 
 # Code Review Skill
