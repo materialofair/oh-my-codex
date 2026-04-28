@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": "2026-04-27",
+  "catalogVersion": "2026-04-28",
   "skills": [
     {
       "name": ".codex",
@@ -920,7 +920,7 @@
       "category": "utility",
       "status": "active",
       "core": false,
-      "source": "ecc",
+      "source": "local",
       "version": "\"1.0.0\"",
       "layer": null,
       "intent": null,
