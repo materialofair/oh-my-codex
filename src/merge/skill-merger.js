@@ -354,7 +354,7 @@ function resolveConflicts(conflicts, config = {}) {
     }
 
     // Tier 3: Fork priority
-    const forkVersion = versions.find(v => v.metadata.source === 'fork');
+    const forkVersion = versions.find(v => v.sourceName === 'fork');
     if (forkVersion) {
       resolutions.push({
         name,
