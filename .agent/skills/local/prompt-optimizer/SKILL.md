@@ -33,7 +33,7 @@ and output a complete optimized prompt the user can paste and run in Codex.
 - User says "优化prompt", "改进prompt", "怎么写prompt", "帮我优化这个指令"
 - User pastes a draft prompt and asks for feedback or enhancement
 - User says "I don't know how to prompt for this"
-- User explicitly invokes `/prompt-optimize`
+- User explicitly invokes the `prompt-optimize` skill by name
 
 ### Do Not Use When
 
