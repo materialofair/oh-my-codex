@@ -1,9 +1,14 @@
 node_modules/
 dist/
 *.log
+*.tgz
 .DS_Store
 .omc/
 .sisyphus/
+
+# Local backup files left by omcodex setup / config rewrites
+.codex/*.bak-*
+.codex/**/*.bak-*
 
 # omcodex runtime artifacts (regenerated on every `omcodex setup`)
 .omcodex/merge-report.json
