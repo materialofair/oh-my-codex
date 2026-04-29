@@ -30,6 +30,11 @@ dist/
 # Legacy upstream directory (migrated to .agent/skills/upstream/)
 .upstream/
 
+# Local tool state (Claude Code, claude_memory, codepilot uploads)
+.claude/
+.claude_memory/
+.codepilot-uploads/
+
 # Windows reserved names (prevent accidental creation)
 nul
 NUL
