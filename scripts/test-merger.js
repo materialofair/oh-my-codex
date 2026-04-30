@@ -88,6 +88,13 @@ for (const resolution of resolutions) {
   console.log('');
 }
 
+const exactNameResolutions = resolutions.filter((resolution) => resolution.type === 'exact_name');
+const nonForkWinner = exactNameResolutions.find((resolution) => resolution.winner?.sourceName !== 'fork');
+if (nonForkWinner) {
+  console.error(`Expected fork/local source to win exact-name conflict: ${nonForkWinner.name}`);
+  process.exit(1);
+}
+
 // Apply resolutions
 console.log('Applying resolutions...');
 const merged = applyResolutions(sources, resolutions);

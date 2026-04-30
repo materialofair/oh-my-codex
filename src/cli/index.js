@@ -11,7 +11,7 @@ const HELP = `oh-my-codex CLI (omcodex)
 Usage:
   omcodex setup [--scope user|project-local|project] [--force] [--dry-run] [--verbose]
                  [--no-skills] [--no-prompts] [--no-rules] [--no-agents] [--no-config]
-                 [--no-upstream-codex] [--enable-context7]
+                 [--no-upstream-codex] [--enable-context7] [--allow-merge-fallback]
   omcodex doctor
   omcodex team start \"<task>\"
   omcodex team status
@@ -73,6 +73,7 @@ async function main(args) {
       installAgents: !flags.has('--no-agents'),
       installConfig: !flags.has('--no-config'),
       installUpstreamCodex: !flags.has('--no-upstream-codex'),
+      allowMergeFallback: flags.has('--allow-merge-fallback'),
     });
     return;
   }

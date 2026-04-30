@@ -280,8 +280,8 @@ function compareVersions(v1, v2) {
 /**
  * Resolve conflicts using 4-tier strategy:
  * 1. User config preferences
- * 2. SemVer (highest version wins)
- * 3. Fork priority (fork > upstream)
+ * 2. Fork priority (fork > upstream)
+ * 3. SemVer (highest version wins)
  * 4. Namespace (keep both with prefixes)
  */
 function resolveConflicts(conflicts, config = {}) {
@@ -334,7 +334,21 @@ function resolveConflicts(conflicts, config = {}) {
       }
     }
 
-    // Tier 2: SemVer comparison
+    // Tier 2: Fork priority. The repository's documented contract is
+    // local-first; upstream SemVer must not override local authoring source.
+    const forkVersion = versions.find(v => v.sourceName === 'fork');
+    if (forkVersion) {
+      resolutions.push({
+        name,
+        type: 'exact_name',
+        resolution: 'fork-priority',
+        winner: forkVersion,
+        rejected: versions.filter(v => v !== forkVersion),
+      });
+      continue;
+    }
+
+    // Tier 3: SemVer comparison
     const withVersions = versions.filter(v => v.metadata.version);
     if (withVersions.length === versions.length) {
       const sorted = [...versions].sort((a, b) =>
@@ -351,19 +365,6 @@ function resolveConflicts(conflicts, config = {}) {
         });
         continue;
       }
-    }
-
-    // Tier 3: Fork priority
-    const forkVersion = versions.find(v => v.sourceName === 'fork');
-    if (forkVersion) {
-      resolutions.push({
-        name,
-        type: 'exact_name',
-        resolution: 'fork-priority',
-        winner: forkVersion,
-        rejected: versions.filter(v => v !== forkVersion),
-      });
-      continue;
     }
 
     // Tier 4: Namespace (if allowed)
@@ -524,6 +525,5 @@ module.exports = {
   applyResolutions,
   generateReport,
 };
-
 
 

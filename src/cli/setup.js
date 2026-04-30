@@ -498,6 +498,12 @@ async function setup(options = {}) {
           }
         }
       } catch (err) {
+        if (!options.allowMergeFallback) {
+          throw new Error(
+            `Skill merge failed: ${err.message}. `
+            + 'Refusing partial install; rerun with --allow-merge-fallback to copy only the direct skill source.'
+          );
+        }
         console.warn(`  Warning: Merge failed (${err.message}), falling back to direct copy`);
         skillCount = await copyDirectory(skillSrc, skillsDest, options);
         const label = options.dryRun ? 'Would install/update' : 'Installed/updated';
