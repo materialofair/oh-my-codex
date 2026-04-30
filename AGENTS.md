@@ -4,7 +4,7 @@
 
 Skill pack and workflow orchestration for **OpenAI Codex CLI**.
 
-**Version:** 1.1.5
+**Version:** 1.1.6
 **Purpose:** Make Codex behave like a multi-agent conductor using structured skills
 
 ## Purpose
