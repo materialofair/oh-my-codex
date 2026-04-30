@@ -4,6 +4,7 @@ dist/
 *.tgz
 .DS_Store
 .omc/
+.omcodex/
 .sisyphus/
 
 # Local backup files left by omcodex setup / config rewrites
