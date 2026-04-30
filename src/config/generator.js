@@ -1,16 +1,25 @@
-/* eslint-disable no-useless-escape */
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
+const {
+  extractTomlSections,
+  hasTomlSection,
+  removeTomlSections,
+} = require('./toml-sections');
 
 function stripManagedBlock(content, startMarker, endMarker) {
-  const start = content.indexOf(startMarker);
+  const lines = String(content || '').split(/\r?\n/);
+  let start = lines.findIndex((line) => line.includes(startMarker));
   if (start < 0) return content;
-  const end = content.indexOf(endMarker, start);
+  let end = lines.findIndex((line, index) => index >= start && line.includes(endMarker));
   if (end < 0) return content;
-  const tailIndex = end + endMarker.length;
-  const before = content.slice(0, start).trimEnd();
-  const after = content.slice(tailIndex).trimStart();
+
+  const isBlockChrome = (line) => /^\s*# =+\s*$/.test(line) || /^\s*$/.test(line);
+  while (start > 0 && isBlockChrome(lines[start - 1])) start -= 1;
+  while (end + 1 < lines.length && isBlockChrome(lines[end + 1])) end += 1;
+
+  const before = lines.slice(0, start).join('\n').trimEnd();
+  const after = lines.slice(end + 1).join('\n').trimStart();
   return [before, after].filter(Boolean).join('\n\n');
 }
 
@@ -113,98 +122,13 @@ function buildManagedBlock(root, options = {}) {
   return lines.join('\n');
 }
 
-function hasSection(config, sectionName) {
-  const escaped = sectionName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const pattern = new RegExp(`^\\s*\\[${escaped}\\]\\s*$`, 'm');
-  return pattern.test(config);
-}
-
 function stripLegacySkillsSection(config) {
-  const lines = config.split(/\r?\n/);
-  const start = lines.findIndex((line) => /^\s*\[mcp_servers\.skills\]\s*$/.test(line));
-  if (start < 0) return config;
-
-  let end = lines.length;
-  for (let i = start + 1; i < lines.length; i += 1) {
-    if (/^\s*\[[^\]]+\]\s*$/.test(lines[i])) {
-      end = i;
-      break;
-    }
-  }
-
-  const section = lines.slice(start, end).join('\n');
+  const section = extractTomlSections(config, ['mcp_servers.skills']);
+  if (!section) return config;
   const isLegacyUniversalSkills = section.includes('universal-skills') && !section.includes('--skill-dir');
   if (!isLegacyUniversalSkills) return config;
 
-  lines.splice(start, end - start);
-  return lines.join('\n').trim();
-}
-
-function stripSections(config, sectionNames = []) {
-  if (!config || sectionNames.length === 0) return config;
-
-  const escapedNames = sectionNames.map((name) => name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-  const sectionPatterns = escapedNames.map((escaped) => new RegExp(`^\\s*\\[${escaped}\\]\\s*$`));
-  const isSectionHeader = (line) => /^\s*\[[^\]]+\]\s*$/.test(line);
-
-  const lines = config.split(/\r?\n/);
-  const nextLines = [];
-
-  for (let i = 0; i < lines.length; i += 1) {
-    const line = lines[i];
-    const shouldStripSection = sectionPatterns.some((pattern) => pattern.test(line));
-    if (!shouldStripSection) {
-      nextLines.push(line);
-      continue;
-    }
-
-    // Skip current section until next TOML section header.
-    while (i + 1 < lines.length && !isSectionHeader(lines[i + 1])) {
-      i += 1;
-    }
-  }
-
-  return nextLines.join('\n').replace(/\n{3,}/g, '\n\n').trim();
-}
-
-/**
- * Slice out one or more TOML sections by exact name from a source config
- * string. Sections are returned in source order joined by blank lines,
- * including their header line and all lines up to (but not including) the
- * next section header or end-of-file. Limitations:
- *  - Only `[name]` and `[name.subname]` headers — array-of-tables `[[name]]`
- *    are intentionally skipped (and treated as a delimiter).
- *  - Trailing whitespace and `#` line comments after a header are tolerated.
- *  - Sections not present in the source are silently skipped.
- */
-function extractTomlSections(sourceConfig, sectionNames = []) {
-  if (!sourceConfig || sectionNames.length === 0) return '';
-
-  const lines = sourceConfig.split(/\r?\n/);
-  const isSectionHeader = (line) => /^\s*\[[^[\]]+\]\s*(#.*)?$/.test(line);
-  const isArrayHeader = (line) => /^\s*\[\[[^\]]+\]\]/.test(line);
-  const matchSection = (line) => {
-    const m = line.match(/^\s*\[([^[\]]+)\]\s*(#.*)?$/);
-    if (!m) return null;
-    return sectionNames.find((name) => m[1].trim() === name) || null;
-  };
-
-  const blocks = [];
-  for (let i = 0; i < lines.length; i += 1) {
-    if (!matchSection(lines[i])) continue;
-    const start = i;
-    let end = lines.length;
-    for (let j = i + 1; j < lines.length; j += 1) {
-      if (isSectionHeader(lines[j]) || isArrayHeader(lines[j])) {
-        end = j;
-        break;
-      }
-    }
-    blocks.push(lines.slice(start, end).join('\n').trimEnd());
-    i = end - 1;
-  }
-
-  return blocks.join('\n\n');
+  return removeTomlSections(config, ['mcp_servers.skills']);
 }
 
 /**
@@ -305,7 +229,7 @@ function mergeConfig(configFile, root, options = {}) {
   const existing = fs.existsSync(configFile) ? fs.readFileSync(configFile, 'utf8') : '';
   let next = stripManagedBlock(existing, startMarker, endMarker).trim();
   next = stripLegacySkillsSection(next);
-  next = stripSections(next, [
+  next = removeTomlSections(next, [
     'mcp_servers.omcodex_state',
     'mcp_servers.omcodex_memory',
     'mcp_servers.omcodex_trace',
@@ -314,9 +238,9 @@ function mergeConfig(configFile, root, options = {}) {
 
   const managed = buildManagedBlock(root, {
     ...options,
-    includeSkillsServer: !hasSection(next, 'mcp_servers.skills'),
-    includeOpenaiDocs: !hasSection(next, 'mcp_servers.openaiDeveloperDocs'),
-    includeContext7Server: !hasSection(next, 'mcp_servers.context7'),
+    includeSkillsServer: !hasTomlSection(next, 'mcp_servers.skills'),
+    includeOpenaiDocs: !hasTomlSection(next, 'mcp_servers.openaiDeveloperDocs'),
+    includeContext7Server: !hasTomlSection(next, 'mcp_servers.context7'),
   });
   const output = `${next.trim()}\n\n${managed}\n`;
   fs.writeFileSync(configFile, output, 'utf8');
