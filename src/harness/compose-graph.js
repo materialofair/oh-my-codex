@@ -29,15 +29,17 @@ function buildIntentIndex() {
   return index;
 }
 
-// Parse $skill-name and skill: references from SKILL.md body
-function parseImplicitRefs(content) {
+// Parse explicit composition declarations from SKILL.md body. Plain `$skill`
+// examples are not dependencies; treating every mention as an edge creates
+// cycles between alternative handoff paths.
+function parseCompositionRefs(content) {
   const refs = new Set();
-  // Match $skill-name patterns
-  const dollarRefs = content.matchAll(/\$([a-z][a-z0-9-]*)/g);
-  for (const m of dollarRefs) refs.add(m[1]);
-  // Match "Use the Skill tool to invoke: skillname"
-  const invokeRefs = content.matchAll(/invoke[:\s]+(\w[\w-]*)/gi);
-  for (const m of invokeRefs) refs.add(m[1].toLowerCase());
+  const lines = String(content || '').split(/\r?\n/);
+  for (const line of lines) {
+    if (!/^\s*(composes?|depends on|requires|delegates to)\s*:/i.test(line)) continue;
+    const dollarRefs = line.matchAll(/\$([a-z][a-z0-9-]*)/g);
+    for (const m of dollarRefs) refs.add(m[1]);
+  }
   return Array.from(refs);
 }
 
@@ -85,11 +87,11 @@ function buildComposeGraph(root) {
       for (const dep of list) deps.add(dep);
     }
 
-    // From implicit refs in SKILL.md body
+    // From explicit composition refs in SKILL.md body
     const skillFile = path.join(skill.path, 'SKILL.md');
     if (fs.existsSync(skillFile)) {
       const content = fs.readFileSync(skillFile, 'utf8');
-      for (const ref of parseImplicitRefs(content)) {
+      for (const ref of parseCompositionRefs(content)) {
         if (ref !== name && skills.has(ref)) deps.add(ref);
       }
     }
