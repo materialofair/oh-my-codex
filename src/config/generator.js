@@ -4,6 +4,7 @@ const path = require('path');
 const {
   extractTomlSections,
   hasTomlSection,
+  parseTomlSections,
   removeTomlSections,
 } = require('./toml-sections');
 
@@ -154,10 +155,15 @@ function mergeUpstreamSectionBlock(configFile, options = {}) {
   const endMarker = `# end ${sourceName} managed ${blockLabel} block`;
 
   const sourceConfig = fs.readFileSync(sourceConfigPath, 'utf8');
-  const extracted = extractTomlSections(sourceConfig, sectionNames);
 
   const existing = fs.existsSync(configFile) ? fs.readFileSync(configFile, 'utf8') : '';
   const stripped = stripManagedBlock(existing, startMarker, endMarker).trim();
+
+  const existingSectionNames = new Set(
+    parseTomlSections(stripped).sections.map((section) => section.name),
+  );
+  const filteredSectionNames = sectionNames.filter((name) => !existingSectionNames.has(name));
+  const extracted = extractTomlSections(sourceConfig, filteredSectionNames);
 
   if (!extracted) {
     if (stripped !== existing.trim()) {
