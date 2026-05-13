@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": "2026-04-28",
+  "catalogVersion": "2026-05-13",
   "skills": [
     {
       "name": ".codex",
@@ -360,7 +360,7 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "layer": "domain",
       "intent": null,
       "composes": []
@@ -921,7 +921,7 @@
       "status": "active",
       "core": false,
       "source": "local",
-      "version": "\"1.0.0\"",
+      "version": "\"1.1.0\"",
       "layer": null,
       "intent": null,
       "composes": []

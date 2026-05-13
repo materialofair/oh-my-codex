@@ -1,9 +1,9 @@
 ---
 name: prompt-optimizer
 description: >-
-  Analyze raw prompts, identify intent and gaps, match oh-my-codex skills
-  (138 installed skills across local/oh-my-codex/superpowers/ecc sources),
-  and output a ready-to-paste optimized prompt for Codex.
+  Analyze raw prompts, identify intent and gaps, inventory the current
+  oh-my-codex skill catalog across local/upstream sources, choose the best-fit
+  skill chain, and output a ready-to-paste optimized prompt for Codex.
   Advisory role only — never executes the task itself.
   TRIGGER when: user says "optimize prompt", "improve my prompt",
   "how to write a prompt for", "help me prompt", "rewrite this prompt",
@@ -14,10 +14,12 @@ description: >-
   "优化性能", "optimize performance", "optimize this code" — those are
   refactoring/performance tasks, not prompt optimization.
 origin: local
+version: 1.1.0
 metadata:
   author: oh-my-codex
-  version: "1.0.0"
+  version: "1.1.0"
   based-on: ecc/prompt-optimizer@1.0.0
+  updated_at: 2026-05-13
 ---
 
 # Prompt Optimizer (oh-my-codex Edition)
@@ -48,7 +50,7 @@ and output a complete optimized prompt the user can paste and run in Codex.
 Do NOT write code, create files, run commands, or take any implementation
 action. Your ONLY output is an analysis plus an optimized prompt.
 
-Run this 6-phase pipeline sequentially. Present results using the Output Format below.
+Run this pipeline sequentially. Present results using the Output Format below.
 
 ---
 
@@ -74,13 +76,64 @@ If no project files found, flag "tech stack unknown" in Phase 4.
 
 ---
 
+### Phase 0.5: Lightweight Skill Catalog Inventory
+
+Before recommending any skill, build a **lightweight** view of the current
+project skill catalog and resolve likely aliases. This phase is a routing index,
+not a full skill-body review.
+
+Token budget rule:
+
+1. Prefer the runtime skill index cache at `.omcodex/cache/skill-index.json`.
+   If missing or stale, suggest running `npm run catalog:skill-index` or let
+   tooling fall back to catalog/frontmatter lookup.
+2. Use catalog/manifest data such as `src/catalog/manifest.json`,
+   `src/catalog/generated/public-catalog.json`, or `templates/catalog-manifest.json`
+   to confirm source, intent, layer, and conflicts.
+3. If catalog files are missing or stale, inspect only each `SKILL.md`
+   frontmatter block (`name`, `description`, `intent`, `layer`, `origin`,
+   `version`). Do not read every skill body.
+4. Prefer `.agent/skills/local/**/SKILL.md` over upstream copies when duplicate
+   names exist.
+5. Include upstream sources under `.agent/skills/upstream/**/SKILL.md` only as
+   candidates, using metadata/frontmatter first.
+6. Group available skills by intent/layer instead of dumping a long flat list:
+   planning, execution, debugging, testing, review, verification, research,
+   documentation, frontend, backend, security, orchestration, skill-management.
+7. Shortlist at most 2-5 candidate skills or chains, then read full skill bodies
+   only for the shortlisted skills if the prompt needs precise workflow details.
+8. For short, clear prompts, skip full body reads entirely and use metadata plus
+   the best-practice chains below.
+9. Recommend only skills that appear in the current project/runtime catalog. If a
+   well-known capability is absent, name the nearest installed substitute and
+   state the substitution.
+
+This keeps prompt optimization fast: catalog/frontmatter lookup is cheap, while
+full skill loading is reserved for ambiguous or high-risk choices.
+
+Common aliases and substitutes:
+
+| Capability | Prefer if Installed | Substitute |
+|------------|---------------------|------------|
+| Durable multi-session delivery | `conductor` | `ralplan`, `planning-with-files`, `project-session-manager` |
+| Test-driven implementation | `test-driven-development`, `tdd` | `tdd-workflow`, `tdd-generator` |
+| Evidence-based completion | `verification-before-completion`, `verify` | `verification-loop` |
+| Root-cause debugging | `systematic-debugging` | `trace`, `analyze`, `debug-analysis` |
+| External research | `external-context` | `research`, `deepsearch`, `iterative-retrieval` |
+| Code review | `requesting-code-review`, `code-review` | `review`, `aireview` |
+
+Do not recommend phantom slash commands or unavailable skills. In optimized
+prompts, refer to skills in natural language: "Use the `conductor` skill..."
+
+---
+
 ### Phase 1: Intent Detection
 
 Classify the user's task into one or more categories:
 
 | Category | Signal Words | Example |
 |----------|-------------|---------|
-| New Feature | build, create, add, implement, 创建, 实现, 添加 | "Build a login page" |
+| New Requirement / Feature | build, create, add, implement, 创建, 实现, 添加, 新需求 | "Build a login page" |
 | Bug Fix | fix, broken, not working, error, 修复, 报错 | "Fix the auth flow" |
 | Refactor | refactor, clean up, restructure, 重构, 整理 | "Refactor the API layer" |
 | Research | how to, what is, explore, investigate, 怎么, 如何 | "How to add SSO" |
@@ -89,18 +142,37 @@ Classify the user's task into one or more categories:
 | Documentation | document, update docs, 文档 | "Update the API docs" |
 | Infrastructure | deploy, CI, docker, database, 部署, 数据库 | "Set up CI/CD pipeline" |
 | Design | design, architecture, plan, 设计, 架构 | "Design the data model" |
+| Workflow / Intent Change | change process, update plan, shift scope, 改变意图, 调整方案 | "Change the workflow from direct execution to conductor" |
+
+If a prompt contains multiple intents, split them instead of flattening them
+into one instruction. Preserve explicit order signals such as "先 X 再 Y".
 
 ---
 
 ### Phase 2: Scope Assessment
 
-| Scope | Heuristic | Orchestration |
-|-------|-----------|---------------|
-| TRIVIAL | Single file, < 50 lines | Direct execution |
-| LOW | Single component or module | Single skill |
-| MEDIUM | Multiple components, same domain | Skill chain + `verify` |
-| HIGH | Cross-domain, 5+ files | `plan` first, then phased execution |
-| EPIC | Multi-session, multi-PR, architectural shift | `ralplan` for multi-session blueprint |
+| Scope | Heuristic | Orchestration | Conductor Gate |
+|-------|-----------|---------------|----------------|
+| TRIVIAL | Single file, < 50 lines | Direct execution | Skip |
+| LOW | Single component or module | Single skill | Skip |
+| MEDIUM | Multiple components, same domain | Skill chain + `verify` | Optional; suggest when future follow-up is likely |
+| HIGH | Cross-domain, 5+ files, several phases, or several skills | `conductor` track + phased execution | Default |
+| EPIC | Multi-session, multi-PR, architectural shift | `conductor` required; use `ralplan` only if conductor is unavailable | Required |
+
+For **new requirements**, prefer `conductor` when the work is HIGH/EPIC or when
+the prompt asks for durable context, a track, spec/plan/review artifacts, or
+multi-session continuity. Do not force `conductor` for TRIVIAL/LOW tasks; that
+adds ceremony without improving execution.
+
+When using superpowers or any other workflow, check whether it changes the
+project's durable intent layer:
+
+- Requirements, scope, acceptance criteria, architecture, workflow rules, or
+  long-lived delivery plan changed -> include `conductor` refresh/new-track or
+  reconcile steps in the optimized prompt.
+- Pure implementation technique, debugging method, review pass, or verification
+  gate with no intent change -> use the workflow directly and do not add
+  conductor solely for formality.
 
 ---
 
@@ -112,8 +184,9 @@ Map intent + scope + tech stack to **installed oh-my-codex skills**.
 
 | Intent | Primary Skills | Supporting Skills |
 |--------|---------------|------------------|
-| New Feature | `plan`, `tdd`, `code-review`, `verify` | `brainstorming`, `architect-planner`, `verification-loop` |
-| Bug Fix | `tdd`, `build-fix`, `verify` | `systematic-debugging`, `debug-analysis`, `trace` |
+| New Requirement / Feature (LOW-MEDIUM) | `brainstorming`, `plan`, `tdd`, `verify` | `code-review`, `planning-methodology` |
+| New Requirement / Feature (HIGH-EPIC) | `conductor`, `writing-plans`, `test-driven-development`, `verify` | `using-git-worktrees`, `requesting-code-review`, `project-session-manager` |
+| Bug Fix | `systematic-debugging`, `tdd`, `verify` | `trace`, `analyze`, `debug-analysis`, `build-fix` |
 | Refactor | `refactor-clean`, `code-review`, `verify` | `verification-loop`, `coding-standards` |
 | Research | `research`, `deepsearch`, `iterative-retrieval` | `plan`, `multi-model-research` |
 | Testing | `tdd`, `e2e`, `test-coverage` | `tdd-workflow`, `tdd-generator`, `test-gen`, `bdd-generator` |
@@ -121,7 +194,27 @@ Map intent + scope + tech stack to **installed oh-my-codex skills**.
 | Documentation | `update-docs`, `update-codemaps` | `writer-memory` |
 | Infrastructure | `plan`, `verify`, `mcp-setup` | `mcp-server-patterns`, `backend-patterns` |
 | Design (MEDIUM-HIGH) | `plan`, `brainstorming`, `architect-planner` | `planning-methodology`, `planning-with-files` |
-| Design (EPIC) | `ralplan`, `ultrawork` | `ralph`, `team` |
+| Design (EPIC) | `conductor`, `ralplan` | `architect-planner`, `team` |
+| Workflow / Intent Change | `conductor` | `planning-with-files`, `strategic-compact`, `review` |
+
+#### Best-Practice Skill Chains
+
+Use ordered chains in the optimized prompt. Do not output an unprioritized pile
+of skills.
+
+| Scenario | Recommended Chain |
+|----------|-------------------|
+| New requirement, LOW-MEDIUM | `brainstorming` -> `plan` -> `test-driven-development`/`tdd` -> `verify` -> optional `code-review` |
+| New requirement, HIGH-EPIC | `conductor` -> `writing-plans` -> per-phase `test-driven-development` -> `verify` -> `requesting-code-review` |
+| Bug fix | `systematic-debugging` -> optional `trace` -> `test-driven-development`/`tdd` -> `verify` -> optional `requesting-code-review` |
+| Performance | `analyze` -> `trace` -> `planning-methodology` -> implement one optimization at a time -> `verify` with re-measurement |
+| Research then build | `external-context`/`research` -> comparison report -> `conductor` if HIGH+ -> implementation chain |
+| Refactor | current-state `code-review` -> `planning-methodology` -> characterization tests via `tdd` -> `refactor-clean` -> `verify` |
+| Documentation | `update-docs` -> `update-codemaps` -> `verify` docs/examples |
+| Security-sensitive work | domain implementation chain -> `security-review` -> `verify` |
+
+If a selected workflow changes durable intent, insert `conductor` refresh or
+reconcile before implementation and after review.
 
 #### By Tech Stack
 
@@ -143,8 +236,8 @@ Map intent + scope + tech stack to **installed oh-my-codex skills**.
 | Scope | Orchestration Skills |
 |-------|---------------------|
 | MEDIUM | `plan` → implement → `verify` |
-| HIGH | `plan` → phased implement → `code-review` → `verify` |
-| EPIC | `ralplan` → `ultrawork` (or `ralph`) → `verify` gates between phases |
+| HIGH | `conductor` → phased implement → `code-review` → `verify` |
+| EPIC | `conductor` → `ralplan` only if needed for blueprint → `verify` gates between phases |
 | Multi-session | `project-session-manager` to save/resume context |
 
 ---
@@ -178,8 +271,10 @@ Lifecycle position:
 Research → Plan → Implement (TDD) → Review → Verify → Commit
 ```
 
-For MEDIUM+ tasks, always start with `plan` skill.
-For EPIC tasks, use `ralplan` skill (multi-session blueprint).
+For MEDIUM tasks, start with `plan` unless the task explicitly needs durable
+artifacts. For HIGH/EPIC tasks, start with `conductor`; use `ralplan` as a
+blueprint helper only when `conductor` is unavailable or the user explicitly
+requests it.
 
 **Model recommendation:**
 
@@ -188,11 +283,11 @@ For EPIC tasks, use `ralplan` skill (multi-session blueprint).
 | TRIVIAL-LOW | Sonnet 4.6 | Fast, cost-efficient |
 | MEDIUM | Sonnet 4.6 | Best coding model for standard work |
 | HIGH | Sonnet 4.6 (impl) + Opus 4.7 (planning) | Opus for architecture decisions |
-| EPIC | Opus 4.7 (blueprint) + Sonnet 4.6 (execution) | Deep reasoning for multi-session planning |
+| EPIC | Opus 4.7 (conductor/spec planning) + Sonnet 4.6 (execution) | Deep reasoning for multi-session planning |
 
 **Multi-prompt splitting (for HIGH/EPIC scope):**
 
-- Prompt 1: Research + Plan (`research`/`deepsearch` skill, then `plan` skill)
+- Prompt 1: Research + Plan (`research`/`deepsearch` skill, then `conductor` for HIGH/EPIC or `plan` for MEDIUM)
 - Prompt 2–N: Implement one phase per prompt (each ends with `verify` skill)
 - Final Prompt: Integration test + `code-review` across all phases
 - Use `project-session-manager` skill to preserve context between sessions
@@ -219,6 +314,16 @@ Present analysis in this exact structure. **Respond in the same language as the 
 
 ### Section 2: Recommended oh-my-codex Skills
 
+Start with a compact catalog summary based on catalog/frontmatter metadata, not
+full-body reads:
+
+| Skill Group | Best Matches Found | Why Relevant |
+|-------------|--------------------|--------------|
+| Orchestration | `conductor` | Durable track/spec/plan/review for HIGH+ new requirements |
+
+Then list only the selected skill chain. If full skill bodies were read, name
+which ones and why; otherwise state "metadata-only routing was sufficient."
+
 | Type | Skill | Purpose |
 |------|-------|---------|
 | Planning | `plan` | Architecture before coding |
@@ -228,6 +333,7 @@ Present analysis in this exact structure. **Respond in the same language as the 
 | Model | Sonnet 4.6 | Recommended for this scope |
 
 Only list skills that are actually useful for this task. Do not pad the table.
+State when `conductor` was deliberately skipped because scope is TRIVIAL/LOW.
 
 ---
 
@@ -261,7 +367,8 @@ Compact version for experienced users:
 | Testing | `` `tdd` [module]. `e2e` for critical flows. `test-coverage`. `` |
 | Review | `` `code-review`. Then `security-review`. `` |
 | Docs | `` `update-docs`. `update-codemaps`. `` |
-| EPIC | `` `ralplan` for "[objective]". Execute phases with `verify` gates. `` |
+| HIGH/EPIC New Requirement | `` `conductor` for "[objective]": create/refresh track, write spec + plan, execute phases with `verify` gates. `` |
+| Intent Change | `` `conductor` refresh/reconcile for changed requirements/scope/workflow, then run the selected implementation chain. `` |
 
 ---
 
@@ -363,17 +470,17 @@ Migrate our monolith to microservices
 
 **Optimized Prompt (Full):**
 ```
-Use the `ralplan` skill to create a multi-session blueprint for:
+Use the `conductor` skill to create a durable track for:
 "Migrate monolith to microservices architecture"
 
-Before executing, the blueprint must answer:
+Before executing, the track spec and plan must answer:
 1. Which domain boundaries exist in the current monolith?
 2. Which service to extract first (lowest coupling)?
 3. Communication pattern: REST, gRPC, or event-driven?
 4. Database strategy: shared DB initially or database-per-service?
 5. Deployment target: Kubernetes, Docker Compose, or serverless?
 
-Blueprint phases:
+Track phases:
 - Phase 1: Identify service boundaries, create domain map
 - Phase 2: Set up infrastructure (API gateway, CI/CD per service)
 - Phase 3: Extract first service (strangler fig pattern)
@@ -384,14 +491,16 @@ Each phase = 1 PR with `verify` skill gate.
 Use `project-session-manager` skill between phases to preserve context.
 Use `using-git-worktrees` skill for parallel service extraction.
 
-Recommended: Opus 4.7 for blueprint planning, Sonnet 4.6 for phase execution.
+Recommended: Opus 4.7 for conductor/spec planning, Sonnet 4.6 for phase execution.
 ```
 
 ---
 
 ## Installed Skills Reference
 
-Key skills available in this oh-my-codex installation (138 total):
+Before using this reference, refresh it from `.agent/skills/local` and
+`.agent/skills/upstream` and prefer local overrides. Key skill groups commonly
+available in this oh-my-codex installation:
 
 **Planning & Architecture:** `plan`, `brainstorming`, `architect-planner`, `planning-methodology`, `planning-with-files`, `ralplan`, `ultrawork`, `ralph`
 

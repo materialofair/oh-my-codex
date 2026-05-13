@@ -1,6 +1,6 @@
 {
   "name": "oh-my-codex-cli",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "Codex skill pack and workflow orchestration",
   "bin": {
     "omcodex": "bin/omcodex.js"
@@ -36,6 +36,7 @@
     "install:codex": "./scripts/install-codex.sh",
     "mcp:codex": "./scripts/generate-codex-mcp-config.sh",
     "catalog:generate": "node scripts/generate-catalog-docs.js",
+    "catalog:skill-index": "node scripts/generate-skill-index.js",
     "governance:skills": "./scripts/check-skill-governance.sh",
     "governance:skills:llm": "node scripts/check-skill-llm-governance.js --mode=auto",
     "governance:skills:sources": "./scripts/test-skill-governance-sources.sh",
@@ -57,7 +58,8 @@
     "test:ai:sample": "node bin/omcodex.js test gen src/router/skill-router.js",
     "test:merger": "node scripts/test-merger.js",
     "test:similarity": "node scripts/test-similarity.js",
-    "test": "npm run governance:skills && npm run governance:skills:llm && npm run catalog:generate && npm run eval:skills && node bin/omcodex.js doctor",
+    "test:skill-index": "node scripts/test-skill-index.js",
+    "test": "npm run governance:skills && npm run test:skill-index && npm run governance:skills:llm && npm run catalog:generate && npm run eval:skills && node bin/omcodex.js doctor",
     "pack:dry-run": "npm pack --dry-run",
     "prepublishOnly": "npm run source:skills:sync -- --skip-fetch && npm test"
   },

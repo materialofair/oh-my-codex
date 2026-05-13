@@ -1,4 +1,5 @@
 const { tryReadCatalogManifest } = require('../catalog/reader');
+const { getFreshSkillIndex } = require('../catalog/skill-index');
 const { loadAllSkills, buildIntentIndex } = require('../harness');
 const intentRegistry = require('../harness/intent-registry.json');
 const layerMap = require('../harness/layer-map.json');
@@ -68,13 +69,35 @@ function catalogSkills(root) {
   return new Set(manifest.skills.filter((skill) => skill.status === 'active').map((skill) => skill.name));
 }
 
+function indexedSkills(root) {
+  const index = getFreshSkillIndex(root);
+  if (!index) return null;
+
+  const skills = new Map();
+  for (const entry of index.skills) {
+    if (entry.status !== 'active') continue;
+    skills.set(entry.name, {
+      name: entry.name,
+      metadata: {
+        description: entry.description || '',
+        tags: Array.isArray(entry.tags) ? entry.tags.join(',') : '',
+        intent: entry.intent || '',
+        layer: entry.layer || '',
+      },
+    });
+  }
+  return skills;
+}
+
 function routeTaskToSkills(taskDescription, options = {}) {
   const taskText = normalizeText(taskDescription);
   const taskTokens = tokenize(taskText);
   const limit = Math.max(1, Number(options.limit) || 5);
   const root = options.root;
-  const available = catalogSkills(root);
   const intentIndex = buildIntentIndex();
+  const fromSkillIndex = root ? indexedSkills(root) : null;
+  const available = fromSkillIndex ? new Set(fromSkillIndex.keys()) : catalogSkills(root);
+  const dynamicSkillSource = fromSkillIndex || (root ? loadAllSkills(root) : null);
 
   // Phase 1: Boost rules (high-confidence keyword shortcuts)
   const boostScores = new Map();
@@ -89,12 +112,13 @@ function routeTaskToSkills(taskDescription, options = {}) {
 
   // Phase 2: Dynamic scoring from all skill descriptions
   const dynamicScores = new Map();
-  if (root) {
-    const allSkills = loadAllSkills(root);
-    for (const [name, skill] of allSkills) {
+  const dynamicMetadata = new Map();
+  if (dynamicSkillSource) {
+    for (const [name, skill] of dynamicSkillSource) {
       if (available && !available.has(name)) continue;
       const score = scoreSkill(taskTokens, taskText, skill);
       if (score > 0) dynamicScores.set(name, score);
+      dynamicMetadata.set(name, skill.metadata || {});
     }
   }
 
@@ -107,7 +131,7 @@ function routeTaskToSkills(taskDescription, options = {}) {
 
   // Phase 3: Layer-aware ranking
   for (const [name, score] of merged) {
-    const layer = skillLayerIndex.get(name);
+    const layer = skillLayerIndex.get(name) || dynamicMetadata.get(name)?.layer;
     const layerBoost = LAYER_WEIGHTS[layer] || 0;
     merged.set(name, score + layerBoost);
   }
@@ -124,8 +148,10 @@ function routeTaskToSkills(taskDescription, options = {}) {
         score,
         intent: intent || null,
         isCanonical,
-        layer: skillLayerIndex.get(name) || 'unknown',
-        rationale: boostScores.has(name) ? 'keyword boost + description match' : 'description match',
+        layer: skillLayerIndex.get(name) || dynamicMetadata.get(name)?.layer || 'unknown',
+        rationale: boostScores.has(name)
+          ? `keyword boost + ${fromSkillIndex ? 'skill-index match' : 'description match'}`
+          : (fromSkillIndex ? 'skill-index match' : 'description match'),
       };
     })
     .sort((a, b) => b.score - a.score || a.skill.localeCompare(b.skill));
