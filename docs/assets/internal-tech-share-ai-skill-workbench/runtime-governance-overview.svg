@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="860" viewBox="0 0 1440 860" role="img" aria-labelledby="title desc">
+  <title id="title">Claude Code 与 Codex 的共同治理架构</title>
+  <desc id="desc">展示开发者请求经过 Prompt Optimizer 和共同治理层后，分别安装到 Claude Code 与 Codex 运行时。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#141d1d"/>
+      <stop offset="0.55" stop-color="#1f2725"/>
+      <stop offset="1" stop-color="#25221d"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#000000" flood-opacity="0.28"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#86d7cf"/>
+    </marker>
+  </defs>
+
+  <rect width="1440" height="860" fill="url(#bg)"/>
+  <text x="84" y="82" fill="#fbf3e8" font-family="Inter, PingFang SC, Arial, sans-serif" font-size="42" font-weight="800">一套治理思想，两种 AI 编程运行时</text>
+  <text x="86" y="124" fill="#b4c2bd" font-family="Inter, PingFang SC, Arial, sans-serif" font-size="22">Claude Code 和 Codex 的能力边界不同，但都可以通过同一层 source / curation / conflict governance 管起来。</text>
+
+  <g filter="url(#shadow)" font-family="Inter, PingFang SC, Arial, sans-serif">
+    <rect x="90" y="250" width="270" height="160" rx="24" fill="#2b2d2a" stroke="#657069"/>
+    <text x="128" y="312" fill="#f8f1e7" font-size="28" font-weight="800">开发者请求</text>
+    <text x="128" y="358" fill="#cad6d0" font-size="20">自然语言任务</text>
+  </g>
+
+  <g filter="url(#shadow)" font-family="Inter, PingFang SC, Arial, sans-serif">
+    <rect x="490" y="210" width="330" height="240" rx="28" fill="#20302f" stroke="#508a80"/>
+    <text x="545" y="278" fill="#f8f1e7" font-size="31" font-weight="800">Prompt Optimizer</text>
+    <text x="545" y="320" fill="#9fd8cf" font-size="20">intent / scope / skill routing</text>
+    <rect x="545" y="360" width="220" height="48" rx="13" fill="#2c4743" stroke="#669a91"/>
+    <text x="590" y="391" fill="#edf8f5" font-size="20">任务入口层</text>
+  </g>
+
+  <g filter="url(#shadow)" font-family="Inter, PingFang SC, Arial, sans-serif">
+    <rect x="380" y="545" width="560" height="200" rx="30" fill="#202b2b" stroke="#557970"/>
+    <text x="445" y="605" fill="#f8f1e7" font-size="31" font-weight="800">共同治理层</text>
+    <g fill="#2a3b39" stroke="#5e8179">
+      <rect x="440" y="650" width="130" height="45" rx="12"/>
+      <rect x="595" y="650" width="130" height="45" rx="12"/>
+      <rect x="750" y="650" width="130" height="45" rx="12"/>
+    </g>
+    <text x="470" y="679" fill="#eaf7f3" font-size="19">source</text>
+    <text x="620" y="679" fill="#eaf7f3" font-size="19">curation</text>
+    <text x="772" y="679" fill="#eaf7f3" font-size="19">conflict</text>
+    <text x="445" y="724" fill="#b9cac5" font-size="19">Local 优先，上游可吸收；同步之后先选择，安装之前先解释。</text>
+  </g>
+
+  <g filter="url(#shadow)" font-family="Inter, PingFang SC, Arial, sans-serif">
+    <rect x="1045" y="155" width="305" height="250" rx="28" fill="#263030" stroke="#567d77"/>
+    <text x="1105" y="220" fill="#f8f1e7" font-size="30" font-weight="800">claudecode-omc</text>
+    <text x="1105" y="262" fill="#9fd8cf" font-size="20">omc-manage setup</text>
+    <text x="1105" y="316" fill="#cbd8d3" font-size="19">~/.claude/</text>
+    <text x="1105" y="350" fill="#cbd8d3" font-size="19">skills / agents / hooks</text>
+  </g>
+
+  <g filter="url(#shadow)" font-family="Inter, PingFang SC, Arial, sans-serif">
+    <rect x="1045" y="500" width="305" height="250" rx="28" fill="#263030" stroke="#567d77"/>
+    <text x="1115" y="565" fill="#f8f1e7" font-size="30" font-weight="800">oh-my-codex</text>
+    <text x="1115" y="607" fill="#9fd8cf" font-size="20">omcodex setup</text>
+    <text x="1115" y="661" fill="#cbd8d3" font-size="19">~/.codex/</text>
+    <text x="1115" y="695" fill="#cbd8d3" font-size="19">skills / AGENTS / MCP</text>
+  </g>
+
+  <path d="M360 330 C410 330 435 330 490 330" fill="none" stroke="#86d7cf" stroke-width="6" marker-end="url(#arrow)"/>
+  <path d="M655 450 C655 490 655 510 655 545" fill="none" stroke="#86d7cf" stroke-width="6" marker-end="url(#arrow)"/>
+  <path d="M940 610 C995 520 1005 300 1045 280" fill="none" stroke="#86d7cf" stroke-width="6" marker-end="url(#arrow)"/>
+  <path d="M940 660 C995 680 1005 645 1045 625" fill="none" stroke="#86d7cf" stroke-width="6" marker-end="url(#arrow)"/>
+</svg>

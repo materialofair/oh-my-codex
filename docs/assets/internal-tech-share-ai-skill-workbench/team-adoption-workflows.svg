@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="760" viewBox="0 0 1440 760" role="img" aria-labelledby="title desc">
+  <title id="title">团队落地的四条默认工作流</title>
+  <desc id="desc">展示新需求、bug、重构和安全相关任务的团队默认技能链。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#17201f"/>
+      <stop offset="1" stop-color="#28251f"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#000000" flood-opacity="0.24"/>
+    </filter>
+  </defs>
+
+  <rect width="1440" height="760" fill="url(#bg)"/>
+  <text x="86" y="82" fill="#fbf3e8" font-family="Inter, PingFang SC, Arial, sans-serif" font-size="42" font-weight="800">团队落地：不要背技能大全，先固定四条链路</text>
+  <text x="88" y="124" fill="#b6c3bd" font-family="Inter, PingFang SC, Arial, sans-serif" font-size="22">让 Prompt Optimizer 做入口，团队只需要记住常见任务该进入哪条可验证路径。</text>
+
+  <g filter="url(#shadow)" font-family="Inter, PingFang SC, Arial, sans-serif">
+    <rect x="80" y="195" width="600" height="185" rx="24" fill="#20302f" stroke="#4d867c"/>
+    <text x="120" y="248" fill="#f8f1e7" font-size="28" font-weight="800">新需求链路</text>
+    <text x="120" y="292" fill="#cfe3dd" font-size="19">Prompt Optimizer → conductor / plan → TDD</text>
+    <text x="120" y="324" fill="#cfe3dd" font-size="19">→ verify → code-review</text>
+    <text x="120" y="354" fill="#91cec4" font-size="18">适合：跨模块功能、多人协作、需要长期上下文的需求。</text>
+
+    <rect x="760" y="195" width="600" height="185" rx="24" fill="#2f2a20" stroke="#897142"/>
+    <text x="800" y="248" fill="#f8f1e7" font-size="28" font-weight="800">Bug 链路</text>
+    <text x="800" y="292" fill="#eadcc0" font-size="19">Prompt Optimizer → systematic-debugging</text>
+    <text x="800" y="324" fill="#eadcc0" font-size="19">→ trace / analyze → 回归测试 → verify</text>
+    <text x="800" y="354" fill="#dbc077" font-size="18">适合：偶发、复现不清、需要先定位根因的问题。</text>
+
+    <rect x="80" y="440" width="600" height="185" rx="24" fill="#252d32" stroke="#54717a"/>
+    <text x="120" y="493" fill="#f8f1e7" font-size="28" font-weight="800">重构链路</text>
+    <text x="120" y="537" fill="#d6e2e5" font-size="19">Prompt Optimizer → code-review</text>
+    <text x="120" y="569" fill="#d6e2e5" font-size="19">→ characterization tests → refactor-clean → verify</text>
+    <text x="120" y="599" fill="#9ec8d3" font-size="18">适合：行为不能变，但内部结构需要变清楚的代码。</text>
+
+    <rect x="760" y="440" width="600" height="185" rx="24" fill="#203127" stroke="#5b8d67"/>
+    <text x="800" y="493" fill="#f8f1e7" font-size="28" font-weight="800">安全链路</text>
+    <text x="800" y="537" fill="#d8eadb" font-size="19">普通实现链路 → security-review → verify</text>
+    <text x="800" y="569" fill="#d8eadb" font-size="19">→ 必要时 code-review</text>
+    <text x="800" y="599" fill="#a8d3ad" font-size="18">适合：鉴权、输入边界、秘密信息、外部系统接入。</text>
+  </g>
+</svg>

@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="820" viewBox="0 0 1440 820" role="img" aria-labelledby="title desc">
+  <title id="title">Prompt Optimizer 任务路由架构</title>
+  <desc id="desc">展示 Prompt Optimizer 如何把自然语言请求转成可验证的技能链。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#121b1b"/>
+      <stop offset="1" stop-color="#242521"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#000000" flood-opacity="0.28"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#86d7cf"/>
+    </marker>
+  </defs>
+
+  <rect width="1440" height="820" fill="url(#bg)"/>
+  <text x="90" y="86" fill="#f8f1e7" font-family="Inter, PingFang SC, Arial, sans-serif" font-size="42" font-weight="800">Prompt Optimizer：模糊请求到工程工作流的编译器</text>
+  <text x="92" y="128" fill="#aebbb6" font-family="Inter, PingFang SC, Arial, sans-serif" font-size="22">它不是把提示词写漂亮，而是把 intent、scope、risk、skill catalog 和验收标准连起来。</text>
+
+  <g filter="url(#shadow)">
+    <rect x="80" y="220" width="300" height="360" rx="24" fill="#292b29" stroke="#5b625c"/>
+    <text x="125" y="275" fill="#f8f1e7" font-family="Inter, PingFang SC, Arial, sans-serif" font-size="30" font-weight="800">自然语言入口</text>
+    <rect x="120" y="330" width="220" height="112" rx="18" fill="#3a3830" stroke="#8a774d"/>
+    <text x="145" y="376" fill="#efdfb6" font-family="Inter, PingFang SC, Arial, sans-serif" font-size="20">“登录页偶尔</text>
+    <text x="145" y="408" fill="#efdfb6" font-family="Inter, PingFang SC, Arial, sans-serif" font-size="20">跳不过去...”</text>
+    <text x="120" y="498" fill="#c7d1cc" font-family="Inter, PingFang SC, Arial, sans-serif" font-size="19">问题：信息自然但不稳定</text>
+    <text x="120" y="532" fill="#c7d1cc" font-family="Inter, PingFang SC, Arial, sans-serif" font-size="19">隐含 bug、复现、测试、范围</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="515" y="190" width="400" height="420" rx="28" fill="#1f3030" stroke="#4f9187"/>
+    <text x="580" y="252" fill="#f8f1e7" font-family="Inter, PingFang SC, Arial, sans-serif" font-size="32" font-weight="800">Prompt Optimizer</text>
+    <text x="592" y="288" fill="#99d8cf" font-family="Inter, PingFang SC, Arial, sans-serif" font-size="20">任务编译 / skill 路由 / scope 控制</text>
+    <g fill="#263f3d" stroke="#5e8a83">
+      <rect x="565" y="340" width="300" height="46" rx="12"/>
+      <rect x="565" y="405" width="300" height="46" rx="12"/>
+      <rect x="565" y="470" width="300" height="46" rx="12"/>
+      <rect x="565" y="535" width="300" height="46" rx="12"/>
+    </g>
+    <text x="596" y="370" fill="#eaf7f3" font-family="Inter, PingFang SC, Arial, sans-serif" font-size="20">Intent：bug / feature / refactor</text>
+    <text x="596" y="435" fill="#eaf7f3" font-family="Inter, PingFang SC, Arial, sans-serif" font-size="20">Scope：trivial 到 epic</text>
+    <text x="596" y="500" fill="#eaf7f3" font-family="Inter, PingFang SC, Arial, sans-serif" font-size="20">Risk：安全 / 数据 / 跨模块</text>
+    <text x="596" y="565" fill="#eaf7f3" font-family="Inter, PingFang SC, Arial, sans-serif" font-size="20">Catalog：确认 skill 真存在</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="1040" y="170" width="310" height="500" rx="28" fill="#202a2a" stroke="#567a74"/>
+    <text x="1094" y="232" fill="#f8f1e7" font-family="Inter, PingFang SC, Arial, sans-serif" font-size="32" font-weight="800">可执行链路</text>
+    <g fill="#273635" stroke="#4f706a">
+      <rect x="1085" y="300" width="220" height="52" rx="12"/>
+      <rect x="1085" y="378" width="220" height="52" rx="12"/>
+      <rect x="1085" y="456" width="220" height="52" rx="12"/>
+      <rect x="1085" y="534" width="220" height="52" rx="12"/>
+    </g>
+    <text x="1118" y="334" fill="#eaf7f3" font-family="Inter, PingFang SC, Arial, sans-serif" font-size="20">systematic-debugging</text>
+    <text x="1137" y="412" fill="#eaf7f3" font-family="Inter, PingFang SC, Arial, sans-serif" font-size="20">tdd / regression</text>
+    <text x="1162" y="490" fill="#eaf7f3" font-family="Inter, PingFang SC, Arial, sans-serif" font-size="20">minimal fix</text>
+    <text x="1147" y="568" fill="#eaf7f3" font-family="Inter, PingFang SC, Arial, sans-serif" font-size="20">verify / review</text>
+  </g>
+
+  <path d="M380 400 C430 400 460 400 515 400" fill="none" stroke="#86d7cf" stroke-width="6" marker-end="url(#arrow)"/>
+  <path d="M915 400 C965 400 990 400 1040 400" fill="none" stroke="#86d7cf" stroke-width="6" marker-end="url(#arrow)"/>
+  <text x="420" y="372" fill="#bddbd5" font-family="Inter, PingFang SC, Arial, sans-serif" font-size="18">补齐上下文</text>
+  <text x="938" y="372" fill="#bddbd5" font-family="Inter, PingFang SC, Arial, sans-serif" font-size="18">输出 prompt</text>
+
+  <rect x="408" y="690" width="625" height="54" rx="18" fill="#2d302c" stroke="#5b625c"/>
+  <text x="445" y="725" fill="#d9e5df" font-family="Inter, PingFang SC, Arial, sans-serif" font-size="21">好路由器的价值：不是推荐更多 skill，而是少推荐但推荐对。</text>
+</svg>
