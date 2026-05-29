@@ -8,7 +8,7 @@
 
 - ✅ **三阶段workflow**: Research（专利检索） → Plan（大纲规划） → Implement（撰写审查）
 - ✅ **质量门禁系统**: 每阶段有明确的质量标准（≥80% / ≥85% / ≥90%）
-- ✅ **Zen MCP协作**: 集成Gemini（架构分析）和Codex（权利要求优化）
+- ✅ **Codex 原生 child agent 协作**: `spawn_agent(explorer)` 做架构分析、`spawn_agent(reviewer)` 做权利要求对抗审查、`spawn_agent(docs-researcher)` 可选校验 prior-art
 - ✅ **IRR质量指标**: 借鉴AutoPatent的重复率检测（目标≥0.85）
 - ✅ **RLHF优化策略**: 借鉴InstructPatentGPT的权利要求优化方法
 
@@ -35,7 +35,7 @@ patent-workflow (三阶段系统):
 ### 一键启动
 
 ```bash
-# 在Claude对话中说：
+# 在 Codex CLI 中输入：
 "使用patent-workflow撰写[技术名称]的高质量专利"
 
 # 或者
@@ -47,24 +47,24 @@ patent-workflow (三阶段系统):
 ```
 用户触发
     ↓
-Claude询问：使用三阶段workflow？
+Codex 询问：使用三阶段workflow？
     ↓
 Phase 1: Research (15-20分钟)
   - 技术信息收集
-  - 专利检索（exa-code）
-  - Gemini技术分析
+  - 专利检索（exa-code + WebSearch）
+  - spawn_agent(explorer) 做发明架构分析
   - Quality Gate 1 (≥80%)
     ↓
 Phase 2: Plan (15-20分钟)
   - PGTree大纲规划
   - 权利要求设计
-  - Codex权利要求审查
+  - spawn_agent(reviewer) 做四视角对抗审查
   - Quality Gate 2 (≥85%)
     ↓
 Phase 3: Implement (40-60分钟)
   - Writer分段撰写
-  - Examiner质量审查
-  - Zen MCP多轮优化
+  - Examiner本地质量审查（IRR/术语/合规）
+  - 并行 spawn_agent: explorer(技术完整性) + reviewer(授权率)
   - Quality Gate 3 (≥90%)
     ↓
 交付成果
@@ -82,36 +82,37 @@ Phase 3: Implement (40-60分钟)
 
 **目标**: 检索相关专利、收集术语、分析技术布局
 
-**输出**: ResearchPack（包含现有专利分析、技术术语库、Gemini架构建议）
+**输出**: ResearchPack（包含现有专利分析、技术术语库、explorer subagent 架构建议）
 
 **关键工具**:
 - exa-code: 专利文献检索
-- Zen MCP (Gemini): 技术架构分析（1M上下文）
+- `spawn_agent(agent_type="explorer")`: 发明架构分析（read-only，trace & cite，不出权利要求）
 - WebSearch: 补充中文专利信息
+- 可选 `spawn_agent(agent_type="docs-researcher")`: 校验 prior-art 引用真实性
 
 **Quality Gate 1**:
 - ✅ 检索到≥3个相关专利
 - ✅ 术语库≥10个标准术语
 - ✅ 现有技术方案分析完整
-- ✅ Gemini技术分析完成
+- ✅ explorer subagent 分析完成（含保护策略与不确定性清单）
 - 综合评分 ≥80%
 
 ### Phase 2: Plan阶段
 
 **目标**: 生成结构化专利大纲，设计权利要求层次
 
-**输出**: ImplementationPlan（包含PGTree大纲、权利要求结构、Codex审查建议）
+**输出**: ImplementationPlan（包含PGTree大纲、权利要求结构、reviewer subagent 审查建议）
 
 **核心方法**:
 - **PGTree**: 树形大纲结构（AutoPatent借鉴）
 - **权利要求层次**: 独立+从属，3层保护
-- **Codex审查**: GPT-5级别的权利要求优化
+- **reviewer subagent 审查**: `.codex/agents/reviewer.toml`（high reasoning effort + read-only）做四视角对抗审查（审查员/规避者/诉讼/代理人）
 
 **Quality Gate 2**:
 - ✅ 大纲完整（5个主要章节）
 - ✅ 权利要求层次清晰
 - ✅ 段落规划详细
-- ✅ Codex审查建议已整合
+- ✅ reviewer subagent 审查建议已整合
 - 综合评分 ≥85%
 
 ### Phase 3: Implement阶段
@@ -125,16 +126,16 @@ Phase 3: Implement (40-60分钟)
 2. **术语一致性验证**: 全文统一术语
 3. **法律合规性检查**: 新颖性、创造性、实用性
 
-**Zen MCP协作**:
-- Gemini: 技术方案完整性审查
-- Codex: 权利要求授权率优化
-- Claude: 综合修订和质量把关
+**Codex 双 subagent 并行复审**:
+- `spawn_agent(explorer)`: 技术方案完整性审查（实施例覆盖度、可实施性、技术效果）
+- `spawn_agent(reviewer)`: 权利要求授权率优化（四视角复审 + diff 建议）
+- 主线 Codex: 收齐两份报告后做综合修订，按"三性优先 > 完整性"仲裁冲突
 
 **Quality Gate 3**:
 - ✅ IRR ≥ 0.85
 - ✅ 术语一致性检查通过
 - ✅ 法律合规性检查通过
-- ✅ Zen MCP审查建议已整合
+- ✅ 双 subagent (explorer + reviewer) 审查建议已整合
 - 综合评分 ≥90%
 
 ---
@@ -144,8 +145,8 @@ Phase 3: Implement (40-60分钟)
 ### IRR重复率检查工具
 
 ```bash
-# 使用IRR检查脚本
-python ~/.claude/skills/patent-workflow/tools/irr_checker.py [专利文档路径]
+# 使用IRR检查脚本（从 skill 目录运行）
+python .agent/skills/local/patent-workflow/tools/irr_checker.py [专利文档路径]
 
 # 输出示例：
 # IRR Score: 0.87 (✅ Pass - 目标≥0.85)
@@ -160,8 +161,8 @@ python ~/.claude/skills/patent-workflow/tools/irr_checker.py [专利文档路径
 ### 术语一致性检查工具
 
 ```bash
-# 使用术语一致性检查脚本
-python ~/.claude/skills/patent-workflow/tools/term_checker.py [专利文档路径] [术语库路径]
+# 使用术语一致性检查脚本（从 skill 目录运行）
+python .agent/skills/local/patent-workflow/tools/term_checker.py [专利文档路径] [术语库路径]
 
 # 输出示例：
 # Terminology Consistency: 95% (✅ Pass - 目标≥90%)
@@ -207,23 +208,28 @@ Implement阶段:
   - 每段补充新的技术信息（避免模板化）
 ```
 
-### Zen MCP使用技巧
+### Codex Subagent 使用技巧
 
 ```yaml
-Gemini最佳用途:
-  - 复杂技术方案的架构分析（1M上下文优势）
-  - 识别技术演进趋势和专利布局
+explorer subagent 最佳用途 (.codex/agents/explorer.toml):
+  - 复杂技术方案的架构分析（拆解模块、数据流、控制流）
+  - 识别技术演进趋势和 prior-art 差异面
   - 建议多实施例的变形方案
+  - "Trace, cite, don't fix" 默认指令保证只分析不出权利要求
 
-Codex最佳用途:
-  - 权利要求的措辞优化（GPT-5级别）
-  - 识别可能被规避的技术特征
+reviewer subagent 最佳用途 (.codex/agents/reviewer.toml):
+  - 权利要求的措辞优化（high reasoning effort + read-only）
+  - 四视角识别可规避的技术特征
   - 建议限制性术语（提高授权率）
 
-Claude角色:
-  - 中央协调者（调用Gemini和Codex）
-  - 主要执行者（撰写专利文档）
-  - 质量把关者（综合AI建议优化）
+docs-researcher subagent 可选用途 (.codex/agents/docs-researcher.toml):
+  - Phase 1.2 校验 prior-art 专利号 / URL / 摘要的真实性
+  - 防止幻觉 prior-art 进 ResearchPack
+
+主线 Codex 角色:
+  - 编排者: 派发 spawn_agent → wait → close_agent
+  - 撰写者: 唯一可写实体（三个 subagent 全 read-only）
+  - 仲裁者: 综合 subagent 报告并按"三性优先 > 完整性"收敛冲突
 ```
 
 ---
@@ -251,11 +257,12 @@ IRR指标: ≥0.85（重复率≤15%）
 
 ```
 完全零成本:
-  - 利用现有SuperClaude系统
-  - Zen MCP工具（已配置）
+  - 利用 Codex CLI 原生 spawn_agent 协议（仓库自带）
+  - 复用 .codex/agents/ 现有 child agent（reviewer / explorer / docs-researcher）
   - exa-code MCP（已集成）
   - 无需训练新模型
-  - 无需额外API调用
+  - 无需额外 API 调用
+  - 无外部 MCP server 依赖（不依赖已淘汰的 zen-mcp）
 ```
 
 ---
@@ -275,7 +282,7 @@ IRR指标: ≥0.85（重复率≤15%）
 exa-code + WebSearch + Context7 并行检索
 
 # 3. 调整技术领域描述
-用户可能描述不够准确 → 使用AskUserQuestion澄清
+用户可能描述不够准确 → 主动向用户问询澄清
 ```
 
 ### 问题2: Quality Gate 2未通过（大纲不完整）
@@ -287,8 +294,8 @@ exa-code + WebSearch + Context7 并行检索
 # 1. 回到Research阶段补充信息
 ResearchPack技术方案不够详细 → 补充检索
 
-# 2. 使用Codex审查
-clink with codex codereviewer to review the claims structure
+# 2. 重新派发 reviewer subagent
+spawn_agent(agent_type="reviewer", message=<Step 2.3 中的四视角审查 prompt 框架>)
 
 # 3. 参考相关专利的章节结构
 从ResearchPack的代表性专利学习结构
@@ -326,13 +333,14 @@ python tools/irr_checker.py [文档路径]
   - GitHub: https://github.com/jiehsheng/InstructPatentGPT
   - 论文: "Reinforcement Learning from Human Feedback for Patent Claims"
 
-### SuperClaude系统集成
+### Codex CLI 系统集成
 
-- **Zen MCP**: 多AI协作系统
-  - 配置: ~/.claude/MCP.md
-  - 使用指南: ~/.claude/ZEN_MCP_USAGE.md
+- **原生 child agent (spawn_agent)**: 派发 / 等待 / 关闭 only-read subagent
+  - 配置位置: `.codex/agents/*.toml`
+  - 默认 agent: `reviewer.toml`、`explorer.toml`、`docs-researcher.toml`
+  - 调用约定参考: `.agent/skills/upstream/superpowers/using-superpowers/references/codex-tools.md`
 
-- **exa-code MCP**: 代码和文档检索
+- **exa-code MCP**: 专利文献和代码检索
   - 工具: `mcp__exa__get_code_context_exa`
   - 工具: `mcp__exa__web_search_exa`
 
@@ -354,19 +362,19 @@ python tools/irr_checker.py [文档路径]
   Phase 1 (18分钟):
     - 检索到12个相关专利
     - 术语库15个标准术语
-    - Gemini架构分析（1M上下文）
+    - spawn_agent(explorer) 架构分析 + 保护策略
     - Gate 1: 85分 ✅
 
   Phase 2 (17分钟):
     - PGTree大纲（5章节、3实施例）
     - 权利要求（1独立 + 9从属）
-    - Codex审查（补充2个限制性术语）
+    - spawn_agent(reviewer) 四视角审查（补充2个限制性术语）
     - Gate 2: 88分 ✅
 
   Phase 3 (55分钟):
     - Writer撰写（17,500字）
-    - Examiner审查（IRR=0.88）
-    - Zen MCP优化
+    - Examiner本地审查（IRR=0.88）
+    - 并行 spawn_agent: explorer + reviewer 双复审
     - Gate 3: 93分 ✅
 
 输出:
@@ -437,8 +445,8 @@ A: 是的。质量门禁系统要求每阶段通过才能进入下一阶段。�
 **Q: 可以跳过某个Quality Gate吗？**
 A: 不建议。质量门禁是保证专利质量的关键。如果某个Gate未通过，应该回滚修正，而不是跳过。
 
-**Q: Zen MCP的Gemini和Codex是否必需？**
-A: 不是必需，但强烈建议。Gemini的1M上下文和Codex的GPT-5能力能显著提高专利质量和授权率。
+**Q: explorer / reviewer subagent 是否必需？**
+A: 不是必需。当 Codex CLI 的 child agent 不可用（如未启用 `multi_agent = true`）时，主线 Codex 可降级用 `[EXPLORER]` / `[REVIEWER]` 块在单线程内自演相同 prompt，仍能产出三阶段评审，只是少了"独立上下文"的隔离优势。强烈建议开启 multi_agent 以获得最佳效果。
 
 **Q: IRR指标如何计算？**
 A: IRR = 1 - (重复句子数 / 总句子数)。使用`tools/irr_checker.py`自动计算。

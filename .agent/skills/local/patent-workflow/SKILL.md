@@ -1,12 +1,11 @@
 ---
 name: patent-workflow
-description: 三阶段专利撰写workflow（Research → Plan → Implement），借鉴AutoPatent架构，集成Zen MCP多AI协作，确保专利质量和授权率
+description: 三阶段专利撰写workflow（Research → Plan → Implement），借鉴AutoPatent架构，通过 Codex CLI 原生 spawn_agent 派发 explorer/reviewer child agent 协作，确保专利质量和授权率
 auto_invoke: true
-tags: [patent, workflow, multi-agent, quality-gate, zen-mcp]
-version: 0.1.0
+tags: [patent, workflow, multi-agent, quality-gate, omc-agents]
+version: 0.2.0
 source: fork
-checksum: 777ad6bf8d3dc371b8e8231eb090ec6dd36f003a2a2cf3f4b81c76f4e8007482
-updated_at: 2026-02-11T09:29:29+08:00
+updated_at: 2026-05-27T00:00:00+08:00
 layer: domain
 ---
 
@@ -23,13 +22,47 @@ Research阶段 (Planner) → Plan阶段 (Planner) → Implement阶段 (Writer + 
      ↓                      ↓                         ↓
   专利检索            专利大纲生成              分段撰写 + 质量审查
   术语收集            PGTree结构               IRR检查 + 术语一致性
-  技术分析            权利要求策略              Zen MCP协作优化
+  发明分析(explorer)   权利要求审查(reviewer)    explorer+reviewer 并行复审
 ```
 
 **质量门禁**:
 - Gate 1: Research → Plan (检索完整性 ≥80%)
 - Gate 2: Plan → Implement (大纲完整性 ≥85%)
 - Gate 3: Implement → Delivery (质量综合评分 ≥90%)
+
+---
+
+## Native Subagent Protocol (Codex)
+
+Codex CLI 支持原生 child agent。本 skill 在三个阶段都通过 `spawn_agent` 派发只读 subagent，主线 Codex 负责撰写与综合。最小编排：
+
+```text
+spawn_agent -> (send_input 可选) -> wait -> close_agent
+```
+
+**派发到哪个 agent_type**（对应 `.codex/agents/*.toml` 已有定义）：
+
+| 角色 | agent_type | TOML 默认 | 用于 |
+|---|---|---|---|
+| 发明架构分析 | `explorer` | medium effort, read-only | Phase 1.3 拆解发明结构、对比 prior-art |
+| 权利要求对抗审查 | `reviewer` | high effort, read-only | Phase 2.3 / 3.3 多视角 claims 复审 |
+| 文献核验（可选） | `docs-researcher` | medium effort, read-only | Phase 1.2 校验 prior-art 引用真实性 |
+
+**Message framing**（Codex 把 `message` 视作 user-level 输入，按官方建议加 XML 标签）：
+
+```text
+Your task is to perform the following. Follow the instructions below exactly.
+
+<agent-instructions>
+[本 SKILL 中各 Step 给出的 prompt 内容]
+</agent-instructions>
+
+Execute this now. Output ONLY the structured response specified above.
+```
+
+**当 child agent 不可用时的 fallback**（参考 ultrapilot 约定）：在单条响应里用 `[EXPLORER]` / `[REVIEWER]` / `[SYNTHESIS]` 块顺序自演三个角色，仍按 prompt 模板输出。
+
+**可选强化**：如需更强专利领域偏置，可在 `.codex/agents/` 新增 `patent-analyst.toml`（基于 explorer）和 `patent-claims-reviewer.toml`（基于 reviewer），把 `developer_instructions` 换成专利特定指令；本 skill 不要求，但能进一步降低发散。
 
 ---
 
@@ -55,7 +88,7 @@ Research阶段 (Planner) → Plan阶段 (Planner) → Implement阶段 (Writer + 
 ### Step 1.1: 技术信息收集（5分钟）
 
 ```yaml
-使用AskUserQuestion收集:
+向用户提问收集（Codex CLI 直接以问答方式获取）:
   发明概述:
     Q: "请简要描述你的发明（1-2句话）"
     示例: "一种基于联邦学习的用户建模方法，保护数据隐私"
@@ -80,9 +113,9 @@ Research阶段 (Planner) → Plan阶段 (Planner) → Implement阶段 (Writer + 
      tokensNum: 5000
      目的: 获取高质量专利文献和技术术语
 
-  2. Zen MCP WebSearch (备选):
+  2. WebSearch / WebFetch (备选):
      query: "[发明关键词] 专利 现有技术"
-     目的: 补充中文专利信息
+     目的: 补充中文专利信息（CNIPA、知网等）
 
   3. Context7检索 (可选):
      libraryID: 专利领域相关库
@@ -106,20 +139,45 @@ Research阶段 (Planner) → Plan阶段 (Planner) → Implement阶段 (Writer + 
     - 技术发展方向
 ```
 
-### Step 1.3: Zen MCP技术分析（5分钟）
+### Step 1.3: 派发 explorer subagent 做发明架构分析（5分钟）
 
-**Gemini架构分析** (利用1M上下文):
+`spawn_agent(agent_type="explorer", message=<下方框架>)`，主线 `wait` 取回结果后 `close_agent`。
 
-```bash
-# Claude调用Gemini分析技术方案
-clink with gemini planner to analyze the technical solution architecture and compare with existing patents
+**Message 框架**（已套上 Codex 推荐的 XML 包装）：
 
-# Gemini任务:
-# 1. 分析用户技术方案的架构层次
-# 2. 识别核心创新点和次要创新点
-# 3. 对比现有专利的技术路线
-# 4. 建议专利保护策略（宽权利要求 vs 窄权利要求）
+```text
+Your task is to perform the following. Follow the instructions below exactly.
+
+<agent-instructions>
+You are doing pre-drafting analysis for a patent application. Read-only.
+Do not propose claim text. Cite sources by URL or by patent number.
+
+Inputs:
+  - Invention summary: [发明概述]
+  - Technical domain: [技术领域]
+  - Core innovation claim: [核心创新点]
+  - Prior art shortlist (from Step 1.2): [代表性专利号 + URL 列表]
+  - Terminology pool (from Step 1.2): [术语列表]
+
+Deliver a markdown report with these sections:
+  1. 架构层次拆解（模块 / 数据流 / 控制流）
+  2. 核心创新点 vs 次要创新点（每条附 prior-art 对比证据）
+  3. 与现有专利技术路线的差异面（表格：本发明 / 代表性 prior art / 差异）
+  4. 专利保护策略建议:
+     - 推荐独立权利要求宽度: 宽 / 中 / 窄（附理由）
+     - 建议保留的可选技术特征（供从属权利要求使用）
+  5. 不确定性 / 信息缺口（供 Quality Gate 1 判断是否需要补检）
+</agent-instructions>
+
+Execute this now. Output ONLY the structured markdown report.
 ```
+
+**为什么选 `explorer` 而不是 `reviewer`**：
+- `explorer.toml` 的 developer_instructions 是 "Stay in exploration mode. Trace the real execution path, cite, avoid proposing fixes" —— 恰好匹配 Research 阶段"只分析、不出权利要求"。
+- `reviewer` 留给 Plan / Implement 阶段做对抗式 claims 评审，避免角色重叠。
+- 若发明本质是某个仓库的代码改造，可追加一个 `spawn_agent(agent_type="explorer", ...)` 单独跑代码路径调研，不替换本次。
+
+**Fallback（child agent 不可用时）**：主线 Codex 在单条响应中以 `[EXPLORER]` 块自演同样的 prompt，紧跟主线综合。
 
 ### Step 1.4: Research阶段输出
 
@@ -166,8 +224,8 @@ clink with gemini planner to analyze the technical solution architecture and com
 - ❌ "优化"、"改进"（需具体说明如何优化）
 - ❌ 主观判断词汇（"优秀"、"高效"）
 
-## Gemini技术分析结果
-[Gemini的架构分析和保护策略建议]
+## Explorer Subagent 技术分析结果
+[explorer subagent 输出的架构分析、prior-art 差异、保护策略建议]
 
 ## 保护策略建议
 ### 独立权利要求策略
@@ -183,7 +241,7 @@ clink with gemini planner to analyze the technical solution architecture and com
 - ✅ 检索到≥3个相关专利
 - ✅ 技术术语库≥10个术语
 - ✅ 现有技术方案分析完整
-- ✅ Gemini技术分析完成
+- ✅ Explorer subagent 分析完成（含保护策略与不确定性清单）
 - 综合评分: [X/100] (≥80通过)
 
 ## Sources
@@ -269,20 +327,46 @@ clink with gemini planner to analyze the technical solution architecture and com
   从属权利要求: 8-15个（覆盖主要变形）
 ```
 
-### Step 2.3: Zen MCP权利要求优化（5分钟）
+### Step 2.3: 派发 reviewer subagent 做权利要求对抗审查（5分钟）
 
-**Codex GPT-5审查**:
+`spawn_agent(agent_type="reviewer", message=<下方框架>)`，`wait` 取回 → `close_agent`。
 
-```bash
-# Claude调用Codex审查权利要求策略
-clink with codex codereviewer to review the patent claims structure and suggest improvements for authorization rate
+**为什么选 `reviewer`**：`.codex/agents/reviewer.toml` 默认 `model_reasoning_effort = "high"` + `sandbox_mode = "read-only"` + "Review like an owner, lead with concrete findings" —— 与权利要求需要承受审查员/规避者/诉讼三方压力测试的特性高度匹配。
 
-# Codex任务:
-# 1. 审查权利要求的保护范围是否合理
-# 2. 识别可能被规避的技术特征
-# 3. 建议补充的限制性术语（提高授权率）
-# 4. 检查术语一致性
+**Message 框架**：
+
+```text
+Your task is to perform the following. Follow the instructions below exactly.
+
+<agent-instructions>
+You are reviewing a *draft* patent claims structure (claims not yet finalized).
+Read-only. Do not rewrite claims wholesale. Produce concrete findings only.
+
+Inputs:
+  - ResearchPack (Phase 1 输出, 含 prior art + 术语库)
+  - 草拟权利要求层次:
+      独立权利要求: [列表]
+      从属权利要求: [列表]
+  - 选定的保护范围档位: 宽 / 中 / 窄
+
+请用四视角对抗方式输出 findings (每条标注视角):
+  [审查员视角]   哪些特征会被判"非显而易见性不足"或"权利要求过宽"
+  [规避者视角]   哪些措辞最容易被竞争对手设计绕过（给反例）
+  [诉讼律师视角] 哪些表述在维权时举证困难
+  [代理人视角]   是否符合《专利审查指南》标准范式 / 术语规范
+
+最终结构化输出:
+  1. 高风险条款清单（按风险等级排序，每条附"哪个视角发现 / 为什么 / 建议改法"）
+  2. 建议补充的限制性术语 / 功能性表述（给出具体替换文本）
+  3. 推荐的层级再编排（如有）
+  4. 术语一致性问题列表（对照 ResearchPack 术语库）
+  5. 总判: 建议返工 Plan / 直接进入 Implement
+</agent-instructions>
+
+Execute this now. Output ONLY the five structured sections above.
 ```
+
+**Fallback**：主线 Codex 在单条响应中用 `[REVIEWER]` 块自演四视角，输出同样 5 个 section。
 
 ### Step 2.4: Plan阶段输出
 
@@ -374,8 +458,8 @@ S3: [步骤3描述]
 
 ---
 
-## Codex审查建议
-[Codex的权利要求优化建议]
+## Reviewer Subagent 审查建议
+[reviewer subagent 的四视角对抗审查结果与可执行修改建议]
 
 ---
 
@@ -403,7 +487,7 @@ S3: [步骤3描述]
 - ✅ 大纲完整（5个主要章节）
 - ✅ 权利要求层次清晰（独立+从属）
 - ✅ 段落规划详细（每段有关键术语）
-- ✅ Codex审查建议已整合
+- ✅ Reviewer subagent 审查建议已整合（高风险条款已处理）
 - 综合评分: [X/100] (≥85通过)
 
 ---
@@ -482,7 +566,7 @@ def calculate_irr(document):
 
     return irr
 
-# Codex执行逻辑:
+# Examiner 执行逻辑 (本地 Python 工具, 无 LLM 依赖):
 # 1. 读取撰写的专利文档
 # 2. 计算IRR指标
 # 3. 如果IRR < 0.85，标记重复段落
@@ -533,20 +617,64 @@ def calculate_irr(document):
     ✓ 附图引用正确
 ```
 
-### Step 3.3: Zen MCP多轮优化（10分钟）
+### Step 3.3: 并行派发两个 subagent 复审已撰写文档（10分钟）
 
-**三方协作优化**:
+**编排模式**：在同一条响应中发两次 `spawn_agent`（一个 `explorer`、一个 `reviewer`），各自带独立 message，主线 `wait` 收集两份报告后做综合修订，最后 `close_agent`。
 
-```bash
-# Round 1: Gemini技术方案审查
-clink with gemini to review the technical solution completeness and suggest improvements
+**派发 1 — explorer subagent（技术完整性审计）**:
 
-# Round 2: Codex权利要求审查
-clink with codex codereviewer to review patent claims for authorization rate optimization
+```text
+Your task is to perform the following. Follow the instructions below exactly.
 
-# Round 3: Claude综合修订
-# 基于Gemini和Codex的建议，Claude进行最终修订
+<agent-instructions>
+Audit the *written* patent draft for technical completeness. Read-only.
+
+Input: 完整专利文档（说明书 + 权利要求 + 附图说明）
+检查项:
+  1. 实施例覆盖度: 是否覆盖了 Plan 阶段约定的全部变形方案
+  2. 可实施性: 关键步骤 / 参数是否齐全，本领域技术人员能否复现
+  3. 技术效果可验证性: 是否有量化指标 / 对比数据
+  4. 与 ResearchPack 中 prior art 的差异是否在"背景技术"与"发明内容"显式体现
+  5. 附图编号 / 数据流与文字描述的一致性
+
+输出: 缺漏清单（每条标 P0/P1/P2 优先级 + 具体补写建议 + 应插入的章节位置）
+</agent-instructions>
+
+Execute this now. Output ONLY the gap list.
 ```
+
+**派发 2 — reviewer subagent（权利要求授权率复审）**:
+
+```text
+Your task is to perform the following. Follow the instructions below exactly.
+
+<agent-instructions>
+Adversarial review of *written* claims for authorization-rate optimization. Read-only.
+
+Input: 权利要求书全文 + ResearchPack 中已授权 prior art 的 claim 范式样本
+四视角复审:
+  [审查员]   新颖性 / 创造性 / 实用性 三性挑战 (逐条标注)
+  [规避者]   给出可绕过的反例 (counter-examples)
+  [诉讼律师] 哪些表述维权时举证困难
+  [代理人]   是否符合最新《专利审查指南》范式
+
+输出:
+  - 必改条款列表
+  - 每条给出 diff 形式的建议改稿文本
+  - 预估授权率影响 (相对当前稿)
+</agent-instructions>
+
+Execute this now. Output ONLY the structured diff list.
+```
+
+**主线综合修订**（两个 `wait` 都返回后）:
+1. 收齐两份 markdown 报告
+2. 冲突仲裁：explorer "要补" vs reviewer "要删" 冲突时，按 **"先满足三性，再满足完整性"** 排序
+3. 主线 Codex 落盘修订专利文档
+4. 进入 Quality Gate 3 打分
+5. 评分 <90 时可选再跑一次 `santa-method`（两个独立 reviewer 必须同 pass 才放行）
+
+**Fallback（child agent 不可用）**：主线 Codex 在单条响应中依次输出 `[EXPLORER]`、`[REVIEWER]`、`[SYNTHESIS]` 三块，再落盘修订。
 
 ### Step 3.4: Implement阶段输出
 
@@ -638,18 +766,18 @@ clink with codex codereviewer to review patent claims for authorization rate opt
 - 实用性: ✅ 通过
 - 完整性: ✅ 通过
 
-### Zen MCP审查建议
-#### Gemini技术审查:
-[Gemini的技术方案完整性建议]
+### Codex Subagent 审查建议
+#### Explorer subagent 技术完整性审查:
+[explorer 的技术方案完整性 + 实施例覆盖度建议（P0/P1/P2 清单）]
 
-#### Codex权利要求审查:
-[Codex的授权率优化建议]
+#### Reviewer subagent 权利要求审查:
+[reviewer 的四视角复审 + 授权率优化建议（diff 形式）]
 
 ### 综合质量评分
 - IRR检查: [分数]/25
 - 术语一致性: [分数]/25
 - 法律合规性: [分数]/25
-- MCP审查: [分数]/25
+- 双 Subagent 审查: [分数]/25
 - **总分**: [X]/100 (≥90通过)
 
 ---
@@ -672,7 +800,7 @@ clink with codex codereviewer to review patent claims for authorization rate opt
 
 ---
 
-## 🤖 Codex执行流程总览
+## 🤖 完整 Workflow 执行总览
 
 ### 完整Workflow执行
 
@@ -688,9 +816,9 @@ Step 0: Trigger Detection
 ---
 
 Phase 1: Research (15-20分钟)
-  ├─ Step 1.1: 收集技术信息 (AskUserQuestion)
-  ├─ Step 1.2: 专利检索 (exa-code + WebSearch)
-  ├─ Step 1.3: Gemini技术分析 (clink with gemini)
+  ├─ Step 1.1: 收集技术信息 (主动向用户问询)
+  ├─ Step 1.2: 专利检索 (exa-code + WebSearch；可选 docs-researcher 校验)
+  ├─ Step 1.3: spawn_agent(explorer) 做发明架构分析
   ├─ Step 1.4: 生成ResearchPack
   └─ Quality Gate 1: 检索完整性 ≥80% → Pass
 
@@ -699,28 +827,28 @@ Phase 1: Research (15-20分钟)
 Phase 2: Plan (15-20分钟)
   ├─ Step 2.1: PGTree大纲规划
   ├─ Step 2.2: 权利要求层次设计
-  ├─ Step 2.3: Codex权利要求审查 (clink with codex)
+  ├─ Step 2.3: spawn_agent(reviewer) 做四视角对抗审查
   ├─ Step 2.4: 生成ImplementationPlan
   └─ Quality Gate 2: 大纲完整性 ≥85% → Pass
 
 ---
 
 Phase 3: Implement (40-60分钟)
-  ├─ Step 3.1: Writer Agent分段撰写
+  ├─ Step 3.1: Writer 分段撰写
   │   ├─ 具体实施方式 (20分钟)
   │   ├─ 发明内容 (5分钟)
   │   ├─ 背景技术 (3分钟)
   │   └─ 权利要求书 (2分钟)
   │
-  ├─ Step 3.2: Examiner Agent质量审查
-  │   ├─ IRR重复率检查
+  ├─ Step 3.2: Examiner 本地质量审查 (Python 工具)
+  │   ├─ IRR 重复率检查
   │   ├─ 术语一致性验证
-  │   └─ 法律合规性检查
+  │   └─ 法律合规性人工 checklist
   │
-  ├─ Step 3.3: Zen MCP多轮优化
-  │   ├─ Gemini技术审查
-  │   ├─ Codex权利要求优化
-  │   └─ Claude综合修订
+  ├─ Step 3.3: 并行 spawn_agent 双复审
+  │   ├─ explorer: 技术完整性审查
+  │   ├─ reviewer: 权利要求四视角复审
+  │   └─ 主线综合修订 (可选 santa-method 对抗收敛)
   │
   ├─ Step 3.4: 生成最终文档
   └─ Quality Gate 3: 综合质量 ≥90% → Deliver
@@ -773,23 +901,38 @@ Step Final: Delivery
   保护范围: 扩大20-30%（多实施例设计）
 ```
 
-### Zen MCP协作价值
+### Codex Subagent 协作价值
 
 ```yaml
-Gemini贡献:
-  - 1M上下文分析复杂技术方案
-  - 识别技术演进趋势
-  - 建议专利布局策略
+explorer subagent 贡献 (.codex/agents/explorer.toml):
+  - Research 阶段: 发明架构拆解 + prior-art 差异分析 + 保护策略建议
+  - Implement 阶段: 文档技术完整性审查（实施例覆盖度、可实施性、技术效果）
+  - sandbox_mode = "read-only"，保证分析独立性，不污染主线撰写
+  - "Trace, cite, don't propose fixes" 默认指令与"先分析再起草"语义一致
 
-Codex贡献:
-  - GPT-5级别的权利要求优化
-  - 识别可规避的技术特征
-  - 建议限制性术语（提高授权率）
+reviewer subagent 贡献 (.codex/agents/reviewer.toml):
+  - Plan 阶段: 四视角对抗审查权利要求结构（审查员 / 规避者 / 诉讼 / 代理人）
+  - Implement 阶段: 权利要求成稿的授权率优化与可规避点排查（diff 形式建议）
+  - model_reasoning_effort = "high"，对应"严苛 reviewer"角色
+  - sandbox_mode = "read-only"，绝对不直接改稿
 
-Claude角色:
-  - 中央协调者（调用Gemini和Codex）
-  - 主要执行者（撰写专利文档）
-  - 质量把关者（综合AI建议优化）
+docs-researcher subagent (可选, .codex/agents/docs-researcher.toml):
+  - Phase 1.2 校验 prior-art 引用真实性（链接 / 专利号 / 摘要）
+  - 防止幻觉 prior-art 进入 ResearchPack
+  - "Verify against primary documentation, do not invent" 默认指令直接复用
+
+主线 Codex 角色:
+  - 编排者: 在三个阶段的关键节点 spawn_agent → wait → close_agent
+  - 撰写者: 唯一可写实体（三个 subagent 全 read-only）
+  - 仲裁者: explorer "要补" 与 reviewer "要删" 冲突时按"三性优先 > 完整性"收敛
+  - 可选 escalation: 评分仍 <90 时调用 santa-method skill 走双独立 reviewer 对抗收敛
+
+为什么放弃 Zen MCP 路线:
+  - 原方案强依赖单一 MCP server (zen-mcp 已淘汰)，故障即整条 workflow 阻塞
+  - 改用 Codex 原生 child agent (spawn_agent) ，是 codex CLI 一等公民协议，
+    跟 ultrapilot / research / subagent-driven-development 等 skill 互通
+  - 必要时仍可显式 escalate 到外部模型 (例如让主线调用 MCP-based gemini-bridge,
+    或人工切到 `omc-cli ask gemini`)，但不作为默认依赖
 ```
 
 ---
@@ -824,18 +967,18 @@ Claude角色:
   Gate 1: 研究完整性 ≥80%
     - 检索到≥3个相关专利
     - 术语库≥10个标准术语
-    - Gemini技术分析完成
+    - explorer subagent 技术分析完成
 
   Gate 2: 大纲完整性 ≥85%
     - 5个主要章节齐全
     - 权利要求层次清晰（独立+从属）
-    - Codex权利要求审查通过
+    - reviewer subagent 四视角审查通过
 
   Gate 3: 综合质量 ≥90%
     - IRR ≥ 0.85
     - 术语一致性检查通过
     - 法律合规性检查通过
-    - Zen MCP审查建议已整合
+    - 双 subagent (explorer + reviewer) 审查建议已整合
 ```
 
 ---
@@ -927,10 +1070,11 @@ Claude角色:
 - GitHub: https://github.com/jiehsheng/InstructPatentGPT
 - 核心借鉴: RLHF权利要求优化、授权率提升策略
 
-### SuperClaude系统集成
-- Research阶段: 使用exa-code、Context7、Zen MCP
-- Plan阶段: 使用implementation-planner方法论
-- Implement阶段: 使用code-implementer的TDD思想（测试=质量门禁）
+### Codex CLI 系统集成
+- Research阶段: 使用 exa-code、WebSearch；`spawn_agent(explorer)` 做架构分析；可选 `spawn_agent(docs-researcher)` 校验 prior-art
+- Plan阶段: PGTree 大纲方法论 + `spawn_agent(reviewer)` 做四视角对抗审查
+- Implement阶段: Writer 撰写 + Examiner（Python 工具做 IRR/术语/合规）+ 并行 `spawn_agent(explorer)` / `spawn_agent(reviewer)` 双复审
+- 可选 escalation: 评分顽固 <90 时调用 santa-method skill 走双独立 reviewer 对抗收敛
 
 ### 专利法律法规
 - 《中华人民共和国专利法》（2020年修订）
@@ -945,29 +1089,29 @@ Claude角色:
 ```bash
 用户: "我想申请一个高质量专利，关于企业间联邦学习的方法，需要高授权率"
 
-Claude:
+Codex:
   ✅ 加载patent-workflow skill
   ✅ 询问使用三阶段workflow（用户同意）
 
   Phase 1 - Research (18分钟):
     - 收集技术信息（联邦学习、隐私计算）
     - exa-code检索到12个相关专利
-    - Gemini分析技术架构（1M上下文优势）
+    - spawn_agent(explorer) 分析技术架构 + 给出保护策略
     - 生成ResearchPack（术语库15个）
     - Gate 1: 85分通过 ✅
 
   Phase 2 - Plan (17分钟):
     - PGTree大纲规划（5章节、3实施例）
     - 权利要求设计（1独立 + 9从属）
-    - Codex审查权利要求（建议补充2个限制性术语）
+    - spawn_agent(reviewer) 四视角审查（建议补充2个限制性术语）
     - 生成ImplementationPlan
     - Gate 2: 88分通过 ✅
 
   Phase 3 - Implement (55分钟):
     - Writer撰写（3个实施例、详细技术方案）
     - Examiner审查（IRR=0.88、术语一致性98%）
-    - Zen MCP优化（Gemini+Codex双重审查）
-    - 综合修订
+    - 并行 spawn_agent: explorer(技术完整性) + reviewer(授权率)
+    - 主线综合修订
     - Gate 3: 93分通过 ✅
 
   交付:
@@ -985,7 +1129,7 @@ Claude:
 ```bash
 用户: "我需要快速申请一个防御性专利，占位用，30分钟内完成"
 
-Claude:
+Codex:
   ✅ 检测到"快速"和"防御性"关键词
   ✅ 建议使用cn-patent-application skill（快速模板）
 
@@ -1008,7 +1152,7 @@ Claude:
 ```bash
 用户: "使用patent-workflow撰写[技术名称]的高质量专利"
 
-Claude:
+Codex:
   立即启动三阶段workflow
   → Research → Plan → Implement
   → 70-100分钟后交付高质量专利文档
@@ -1037,6 +1181,6 @@ Claude:
 **💡 核心价值**:
 - ✅ **借鉴AutoPatent**: PGTree结构 + IRR质量指标 + 多Agent框架
 - ✅ **借鉴InstructPatentGPT**: 权利要求优化 + 授权率提升策略
-- ✅ **集成SuperClaude**: Zen MCP协作 + 质量门禁 + 三阶段workflow
-- ✅ **完全零成本**: 使用现有系统，无需训练新模型
+- ✅ **集成Codex原生 child agent**: explorer（架构/技术完整性）+ reviewer（权利要求对抗审查）+ docs-researcher（prior-art 校验，可选）+ 三阶段质量门禁
+- ✅ **完全零成本**: 使用 Codex CLI 内置 spawn_agent 协议 + 仓库自带的 `.codex/agents/*.toml`，无需训练新模型，无外部 MCP 依赖
 - ✅ **显著提升**: 授权率+15-25%，效率提升6-10倍

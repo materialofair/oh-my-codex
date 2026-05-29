@@ -4,9 +4,23 @@
 
 基于AutoPatent和InstructPatentGPT两个开源项目的研究，成功实现了**方案A：轻量级整合**。
 
-**实施日期**: 2025-11-27
-**实施方式**: 零成本集成到SuperClaude系统
+**初始实施日期**: 2025-11-27（集成到 SuperClaude / Claude Code + Zen MCP）
+**架构迁移日期**: 2026-05-27（重写为 Codex CLI 原生 `spawn_agent` 协议）
+**当前实施方式**: 零成本集成到 Codex CLI（仓库自带 `.codex/agents/*.toml` 复用，无外部 MCP 依赖）
 **预期效果**: 专利授权率提升15-25%，效率提升6-10倍
+
+### 2026-05-27 架构迁移注记
+
+原方案依赖 `zen-mcp` MCP server 实现 Claude ↔ Gemini ↔ Codex 三方协作；该 MCP 已淘汰。本 skill 现在通过 Codex CLI 一等公民的 child agent 协议（`spawn_agent` / `wait` / `close_agent`）派发本仓 `.codex/agents/` 中的只读 child agent 完成评审，跟 `ultrapilot` / `research` / `subagent-driven-development` 等 skill 使用同一套协议。
+
+| 旧（zen-mcp）            | 新（Codex CLI 原生）                            | 用途                              |
+|--------------------------|-------------------------------------------------|-----------------------------------|
+| Gemini 架构分析（1M ctx）  | `spawn_agent(agent_type="explorer", ...)`         | Phase 1.3 发明架构分析 + 保护策略 |
+| Codex 权利要求审查（GPT-5） | `spawn_agent(agent_type="reviewer", ...)`         | Phase 2.3 四视角对抗审查           |
+| Zen MCP 三方多轮优化        | 并行 `spawn_agent(explorer)` + `spawn_agent(reviewer)` | Phase 3.3 文档复审 + 综合修订     |
+| —                        | 可选 `spawn_agent(agent_type="docs-researcher")`  | Phase 1.2 校验 prior-art 真实性    |
+
+下文的旧"Zen MCP 协作集成"架构图保留作为历史背景；新协议见 SKILL.md 中的 "Native Subagent Protocol (Codex)" 章节。
 
 ---
 
@@ -39,7 +53,7 @@
 - 效果: 预估授权率提升15-25%
 
 ✅ **限制性术语建议** - 从授权专利学习的策略
-- 实现位置: Codex权利要求审查
+- 实现位置: `spawn_agent(reviewer)` 权利要求审查（Phase 2.3 / 3.3）
 - 功能: 建议补充限制性术语，平衡保护范围和授权率
 - 效果: 避免权利要求过宽被驳回
 
@@ -71,7 +85,34 @@
 └──────────────┘   └──────────────┘   └──────────────┘
 ```
 
-### Zen MCP协作集成
+### Codex Subagent 协作集成（当前架构）
+
+```
+┌─────────────────────────────────────────────────────────┐
+│              Codex CLI spawn_agent Layer                 │
+│  ┌──────────┐      ┌──────────┐      ┌──────────┐     │
+│  │ explorer │      │ reviewer │      │ Codex主线 │     │
+│  │ medium   │      │  high    │      │ (撰写者+   │     │
+│  │read-only │      │read-only │      │ 仲裁者)    │     │
+│  └────┬─────┘      └────┬─────┘      └────┬─────┘     │
+│       │                 │                  │            │
+│       ▼                 ▼                  ▼            │
+│  发明架构           权利要求          唯一可写实体        │
+│  prior-art差异      四视角对抗审查    综合修订 + 落盘     │
+│  保护策略           授权率优化        Quality Gate 仲裁  │
+└─────────────────────────────────────────────────────────┘
+                            │
+        ┌───────────────────┼───────────────────┐
+        │                   │                   │
+        ▼                   ▼                   ▼
+   Phase 1              Phase 2              Phase 3
+   Research              Plan              Implement
+  (explorer)          (reviewer)        (explorer+reviewer 并行)
+```
+
+### Zen MCP 协作集成（历史架构，已废弃）
+
+> 以下为 2025-11-27 初版架构，依赖已淘汰的 zen-mcp。保留以便对照迁移。
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -85,12 +126,6 @@
 │  架构分析          权利要求          主导撰写            │
 │  技术布局          授权率优化         质量把关            │
 └─────────────────────────────────────────────────────────┘
-                            │
-        ┌───────────────────┼───────────────────┐
-        │                   │                   │
-        ▼                   ▼                   ▼
-   Phase 1              Phase 2              Phase 3
-   Research              Plan              Implement
 ```
 
 ### 质量门禁系统
@@ -100,21 +135,21 @@ Quality Gate 1 (Research → Plan):
   ✓ 检索到≥3个相关专利
   ✓ 术语库≥10个标准术语
   ✓ 现有技术方案分析完整
-  ✓ Gemini技术分析完成
+  ✓ explorer subagent 技术分析完成
   → 综合评分 ≥80%
 
 Quality Gate 2 (Plan → Implement):
   ✓ 大纲完整（5个主要章节）
   ✓ 权利要求层次清晰
   ✓ 段落规划详细
-  ✓ Codex审查建议已整合
+  ✓ reviewer subagent 审查建议已整合
   → 综合评分 ≥85%
 
 Quality Gate 3 (Implement → Delivery):
   ✓ IRR ≥ 0.85
   ✓ 术语一致性检查通过
   ✓ 法律合规性检查通过
-  ✓ Zen MCP审查建议已整合
+  ✓ 双 subagent (explorer + reviewer) 审查建议已整合
   → 综合评分 ≥90%
 ```
 
@@ -137,7 +172,7 @@ Quality Gate 3 (Implement → Delivery):
 
 ## 🔧 集成点
 
-### 与SuperClaude系统的集成
+### 与 Codex CLI 系统的集成
 
 ```yaml
 exa-code MCP:
@@ -145,13 +180,16 @@ exa-code MCP:
   - 工具: mcp__exa__get_code_context_exa
   - 优势: 高质量专利案例和技术术语
 
-Zen MCP:
-  - Gemini: Research阶段技术架构分析（1M上下文）
-  - Codex: Plan阶段权利要求优化（GPT-5）
-  - Claude: 主导专利撰写和协调
-
-Context7:
-  - 可选使用，获取专利撰写标准和最佳实践
+Codex 原生 child agent (spawn_agent / wait / close_agent):
+  - explorer (.codex/agents/explorer.toml):
+      Phase 1.3 发明架构分析 + 保护策略
+      Phase 3.3 文档技术完整性审查
+  - reviewer (.codex/agents/reviewer.toml):
+      Phase 2.3 权利要求四视角对抗审查
+      Phase 3.3 权利要求授权率复审
+  - docs-researcher (.codex/agents/docs-researcher.toml, 可选):
+      Phase 1.2 校验 prior-art 引用真实性
+  - 调用约定: .agent/skills/upstream/superpowers/using-superpowers/references/codex-tools.md
 
 WebSearch:
   - 补充中文专利信息检索
@@ -159,10 +197,6 @@ WebSearch:
 质量门禁:
   - 借鉴quality-validation skill的评分机制
   - 三阶段强制门禁（≥80% / ≥85% / ≥90%）
-
-Agent-KB:
-  - 记录专利撰写经验
-  - 查询专利领域最佳实践
 ```
 
 ---
@@ -212,11 +246,12 @@ Agent-KB:
 
 ```
 完全零成本:
-  ✅ 利用现有SuperClaude系统
-  ✅ Zen MCP工具（已配置）
+  ✅ 利用 Codex CLI 原生 spawn_agent 协议（仓库自带）
+  ✅ 复用 .codex/agents/ 中的 reviewer / explorer / docs-researcher
   ✅ exa-code MCP（已集成）
   ✅ 无需训练新模型
-  ✅ 无需额外API调用
+  ✅ 无需额外 API 调用
+  ✅ 无外部 MCP server 依赖
 
 vs AutoPatent原项目:
   ❌ 需要训练专用模型
@@ -236,7 +271,7 @@ vs InstructPatentGPT原项目:
 ### 快速启动
 
 ```bash
-# 在Claude对话中说：
+# 在 Codex CLI 中输入：
 "使用patent-workflow撰写[技术名称]的高质量专利"
 
 # 或者
@@ -248,29 +283,29 @@ vs InstructPatentGPT原项目:
 ```
 用户: "使用patent-workflow撰写企业间联邦学习的高质量专利"
 
-Claude:
+Codex:
   ✅ 加载patent-workflow skill
   ✅ 询问：使用三阶段workflow？（用户同意）
 
   Phase 1 - Research (18分钟):
-    - 收集技术信息（AskUserQuestion）
+    - 收集技术信息（主动向用户问询）
     - exa-code检索到12个相关专利
-    - Gemini技术架构分析（1M上下文）
+    - spawn_agent(explorer) 做发明架构分析 + 保护策略
     - 生成ResearchPack（术语库15个）
     - Gate 1: 85分通过 ✅
 
   Phase 2 - Plan (17分钟):
     - PGTree大纲规划（5章节、3实施例）
     - 权利要求设计（1独立 + 9从属）
-    - Codex权利要求审查（建议补充2个限制性术语）
+    - spawn_agent(reviewer) 四视角审查（建议补充2个限制性术语）
     - 生成ImplementationPlan
     - Gate 2: 88分通过 ✅
 
   Phase 3 - Implement (55分钟):
     - Writer分段撰写（17,500字）
-    - Examiner三层审查（IRR、术语、合规）
-    - Zen MCP多轮优化（Gemini + Codex）
-    - 综合修订
+    - Examiner三层审查（IRR、术语、合规，本地 Python 工具）
+    - 并行 spawn_agent: explorer(技术完整性) + reviewer(授权率)
+    - 主线综合修订
     - Gate 3: 93分通过 ✅
 
   交付:
@@ -392,17 +427,18 @@ Implement阶段:
 
 借鉴InstructPatentGPT:
   ✅ 权利要求优化策略 → Phase 2权利要求层次设计
-  ✅ 限制性术语建议 → Codex权利要求审查
+  ✅ 限制性术语建议 → spawn_agent(reviewer) 权利要求审查
 
-集成SuperClaude:
-  ✅ Zen MCP协作 → Gemini(架构) + Codex(权利要求)
+集成 Codex CLI:
+  ✅ 原生 child agent 协议 → spawn_agent(explorer / reviewer / docs-researcher)
   ✅ 质量门禁系统 → 三阶段强制质量标准
   ✅ 三阶段workflow → Research → Plan → Implement
 
 零成本实现:
-  ✅ 完全使用现有系统
+  ✅ 完全使用现有系统（Codex CLI + 仓库自带 .codex/agents/*.toml）
   ✅ 无需训练新模型
-  ✅ 无需额外API调用
+  ✅ 无需额外 API 调用
+  ✅ 无外部 MCP server 依赖
 ```
 
 ### 📈 预期效果
@@ -420,7 +456,7 @@ Implement阶段:
 ```
 自动触发:
   - 用户说"写专利"、"专利workflow"
-  - Claude自动加载patent-workflow skill
+  - Codex CLI 自动加载 patent-workflow skill
   - 询问是否使用三阶段workflow
 
 辅助工具:
@@ -448,11 +484,12 @@ Implement阶段:
   - 核心借鉴: RLHF权利要求优化、授权率提升策略
   - 论文: "Reinforcement Learning from Human Feedback for Patent Claims"
 
-### SuperClaude系统
+### Codex CLI 平台
 
-- **Zen MCP**: 多AI协作系统
-  - 配置: ~/.claude/MCP.md
-  - 使用指南: ~/.claude/ZEN_MCP_USAGE.md
+- **原生 child agent (spawn_agent / wait / close_agent)**
+  - Agent 配置: `.codex/agents/*.toml`（本仓自带 reviewer / explorer / docs-researcher）
+  - 主配置: `.codex/config.toml`（已启用 `multi_agent = true`）
+  - 调用约定: `.agent/skills/upstream/superpowers/using-superpowers/references/codex-tools.md`
 
 - **exa-code MCP**: 代码和文档检索
   - 工具: mcp__exa__get_code_context_exa
@@ -483,8 +520,8 @@ RLHF训练:
   - 部署到本地Ollama
 
 集成:
-  - 专利claim生成调用本地模型
-  - 其他部分使用Claude + Zen MCP
+  - 专利 claim 生成调用本地模型
+  - 其他部分仍走 Codex CLI 原生 child agent
 
 成本: 中等（GPU训练时间）
 周期: 2-4周
