@@ -1,10 +1,10 @@
 ---
 name: project-analyze
-description: Analyze project architecture and dependencies using ProjectMind knowledge graph. Provides 40s intelligent understanding and impact analysis.
+description: Analyze project architecture and dependencies using local ProjectMind knowledge graph data. Provides fast codebase understanding and impact analysis without Gemini.
 version: 0.1.0
 source: fork
-checksum: e272cdb99811b589ff31211bcf1d37ade8f18c174be08f10cda6f772b9528ab9
-updated_at: 2026-02-05T16:22:10+08:00
+checksum: 078937d3b6e0175321c146b05f95b531d6f80a1b86bcdc99c762aa138831a98d
+updated_at: 2026-05-29T11:36:33+08:00
 layer: research
 ---
 
@@ -32,6 +32,12 @@ Automatically invoke this Skill when:
 4. **Impact Prediction** - Change impact estimation
 5. **Smart Caching** - 40s first run, <1s subsequent queries
 
+ProjectMind is a local static-analysis workflow. Do not call Gemini, gemp,
+`gemini_stable.py`, `hybrid_intelligent_system.py`,
+`hybrid_intelligent_system_v2.py`, `hybrid_intelligent_system_v3.py`, or any
+external AI advisor as part of this skill. Use the local knowledge graph output
+plus direct repository inspection by Codex.
+
 ## Instructions
 
 When this Skill is invoked:
@@ -42,18 +48,25 @@ Identify:
 - **User's Question**: What they want to know
 - **Project Path**: Usually current directory `$(pwd)` or user-specified path
 
-### Step 2: Execute the Analysis
+### Step 2: Execute the Local ProjectMind Scan
 
-**IMPORTANT**: You MUST execute this Python command:
+**IMPORTANT**: You MUST execute the local ProjectMind knowledge graph scanner:
 
 ```bash
-python /Users/WangQiao/claude-enhanced-quality/hybrid_intelligent_system_v2.py "user's question" [project_path]
+python /Users/WangQiao/claude-enhanced-quality/project_mind.py [project_path]
 ```
 
 If project path is not specified, use current directory:
 ```bash
-python /Users/WangQiao/claude-enhanced-quality/hybrid_intelligent_system_v2.py "user's question" $(pwd)
+python /Users/WangQiao/claude-enhanced-quality/project_mind.py $(pwd)
 ```
+
+Use the scanner output as structured evidence. For query-specific details that
+the summary does not contain, inspect the repository directly with `rg`,
+`rg --files`, `find`, `sed`, and targeted file reads.
+
+Do not use the legacy hybrid intelligent system entrypoints. They delegate to
+Gemini and are outside this skill's current execution model.
 
 ### Step 3: Present Results
 
@@ -75,7 +88,7 @@ Format the output as:
 
 ### 🎯 Answer to Your Question
 
-[Direct answer to the user's specific question based on ProjectMind analysis]
+[Direct answer to the user's specific question based on ProjectMind output and targeted local code inspection]
 
 ### 🏗️ Architecture Insights
 
@@ -167,27 +180,27 @@ Offer specific next steps:
 
 **You execute**:
 ```bash
-python ~/claude-enhanced-quality/hybrid_intelligent_system_v2.py "authentication system flow" $(pwd)
+python /Users/WangQiao/claude-enhanced-quality/project_mind.py $(pwd)
 ```
 
-**You present**: Architecture explanation with module relationships, file paths, and authentication flow diagram.
+**You present**: Architecture explanation with module relationships, file paths, and authentication flow diagram, using ProjectMind output plus targeted `rg` searches for authentication entry points.
 
 ### Example 2: Refactoring Impact
 **User**: "I want to refactor the database layer, what's the impact?"
 
 **You execute**:
 ```bash
-python ~/claude-enhanced-quality/hybrid_intelligent_system_v2.py "database layer refactoring impact" $(pwd)
+python /Users/WangQiao/claude-enhanced-quality/project_mind.py $(pwd)
 ```
 
-**You present**: Impact analysis showing XX affected files, risk assessment, and refactoring strategy.
+**You present**: Impact analysis showing affected files, risk assessment, and refactoring strategy, verified with local dependency/file searches.
 
 ### Example 3: Finding High-Risk Code
 **User**: "What are the most critical files in this project?"
 
 **You execute**:
 ```bash
-python ~/claude-enhanced-quality/hybrid_intelligent_system_v2.py "identify critical and high-risk files" $(pwd)
+python /Users/WangQiao/claude-enhanced-quality/project_mind.py $(pwd)
 ```
 
 **You present**: List of high-risk files with dependency counts, complexity scores, and business criticality.
@@ -242,6 +255,7 @@ Annotation fields:
 ## Important Notes
 
 - **Always execute** the Python command, don't simulate analysis
+- **Never use Gemini** or the legacy hybrid AI analysis scripts for this skill
 - **Use current directory** as default project path
 - **Explain relationships**, not just list files
 - **Provide visual diagrams** when helpful
@@ -279,13 +293,16 @@ Annotation fields:
 
 ## Fallback Strategy
 
-**DO NOT use V1** (`hybrid_intelligent_system.py`) - it's deprecated
+**DO NOT use legacy hybrid scripts** (`hybrid_intelligent_system.py`,
+`hybrid_intelligent_system_v2.py`, or `hybrid_intelligent_system_v3.py`) - they
+delegate to Gemini and are deprecated for this skill.
 
-If V2 fails:
+If the local ProjectMind scan fails:
 1. Check project path is correct
 2. Verify Python environment
 3. Examine error message
-4. Report the issue
+4. Fall back to direct local inspection with `rg`, `rg --files`, and targeted file reads
+5. Report the issue and mark which parts are based on fallback inspection
 
 ## Performance Tips
 

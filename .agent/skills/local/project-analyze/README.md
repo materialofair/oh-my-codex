@@ -1,12 +1,12 @@
 # Project Analyze (ProjectMind)
 
-Analyze project architecture, dependencies, and structure using ProjectMind knowledge graph for intelligent project understanding.
+Analyze project architecture, dependencies, and structure using the local ProjectMind knowledge graph for intelligent project understanding.
 
 ## Quick Install
 
 ```bash
-# Already installed at:
-~/.claude/skills/project-analyze/
+# Source of truth in this repository:
+.agent/skills/local/project-analyze/
 ```
 
 ## Usage
@@ -24,6 +24,7 @@ Analyze project architecture, dependencies, and structure using ProjectMind know
 - ✅ Dependency analysis and visualization
 - ✅ Impact analysis for changes
 - ✅ Knowledge graph generation
+- ✅ Local-only analysis; no Gemini dependency
 
 ## Files
 
