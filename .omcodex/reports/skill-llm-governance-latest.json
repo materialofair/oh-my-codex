@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-13T02:56:50.947Z",
+  "generatedAt": "2026-05-29T05:58:44.184Z",
   "mode": "heuristic",
   "model": null,
   "skillsDir": "/Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/.agent/skills/local",
@@ -8,7 +8,7 @@
     "non_codex_runtime:doctor"
   ],
   "summary": {
-    "totalSkills": 60,
+    "totalSkills": 62,
     "severity": {
       "high": 0,
       "medium": 5,
@@ -36,6 +36,14 @@
     },
     {
       "skill": "architect-planner",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "ask-gemini",
       "mode": "heuristic",
       "issues": [],
       "auditedFiles": [
@@ -221,6 +229,14 @@
     },
     {
       "skill": "frontend-patterns",
+      "mode": "heuristic",
+      "issues": [],
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "frontend-ui-ux",
       "mode": "heuristic",
       "issues": [],
       "auditedFiles": [

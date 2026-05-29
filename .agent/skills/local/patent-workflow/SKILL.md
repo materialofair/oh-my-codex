@@ -1,14 +1,14 @@
 ---
 name: patent-workflow
-description: 三阶段专利撰写workflow（Research → Plan → Implement），借鉴AutoPatent架构，通过 Codex CLI 原生 spawn_agent 派发 explorer/reviewer child agent 协作，确保专利质量和授权率
+description: 三阶段专利撰写workflow（Research → Plan → Implement），借鉴AutoPatent架构，通过 Codex CLI 原生 spawn_agent 派发 explorer/reviewer child agent 协作，确保专利质量和授权率；也用于整理或优化已有 DOCX 专利交底书、保留图片和版式资源并生成新版 Word 文档
 auto_invoke: true
 tags: [patent, workflow, multi-agent, quality-gate, omc-agents]
 version: 0.2.0
 source: fork
-updated_at: 2026-05-27T00:00:00+08:00
+updated_at: 2026-05-29T11:50:00+08:00
 layer: domain
+checksum: 917cd56131d6d9db6b2431ba2b2612053881fe48be843576d7199c4a99a80f1e
 ---
-
 
 # Patent Workflow Skill - 专利三阶段撰写工作流
 
@@ -29,6 +29,11 @@ Research阶段 (Planner) → Plan阶段 (Planner) → Implement阶段 (Writer + 
 - Gate 1: Research → Plan (检索完整性 ≥80%)
 - Gate 2: Plan → Implement (大纲完整性 ≥85%)
 - Gate 3: Implement → Delivery (质量综合评分 ≥90%)
+
+**交付约束**:
+- 最终交付物必须是 Word `.docx` 文件；聊天回复只给文件路径、简短摘要、质量评估和风险说明。
+- 如果用户提供已有 `.docx` 交底书并要求优化，默认进入 DOCX 保真优化模式，先保留原文档容器资源，再修改正文。
+- 不把完整专利正文作为最终交付直接贴在聊天里；如果当前环境无法生成 `.docx`，先说明阻塞并要求启用 Documents/Word 处理能力或提供可用 DOCX 生成工具。
 
 ---
 
@@ -72,10 +77,53 @@ Execute this now. Output ONLY the structured response specified above.
 - 用户说："写专利"、"申请专利"、"专利workflow"
 - 用户说："三阶段专利撰写"、"专利质量优化"
 - 用户提到："专利检索"、"权利要求优化"、"专利授权率"
+- 用户上传 `.docx` 专利交底书并要求："优化交底书"、"生成新版 Word"、"保留图片/附图/题注/格式"
 
 **与现有cn-patent-application的区别**:
 - `cn-patent-application`: 单阶段文档模板填充，适合快速生成交底书
 - `patent-workflow`: 三阶段系统化workflow，适合高质量专利申请（目标：提高授权率）
+
+---
+
+## Word / DOCX 处理协议
+
+本 skill 生成或优化专利材料时，默认以 `.docx` 作为最终交付格式。优先使用可用的 Documents skill、结构化 DOCX API、`python-docx`、OpenXML 解包编辑或等价工具；选择工具时以“保真”和“可校验”为第一目标。
+
+### A. 新建专利申请 DOCX
+
+适用于用户没有提供原始 Word 交底书，或明确要求生成全新专利申请文本。
+
+1. 先完成 ResearchPack、ImplementationPlan 和 Gate 3 审查，再生成 `.docx`。
+2. 文档至少包含：技术领域、背景技术、发明内容、附图说明、具体实施方式、权利要求书、摘要、质量评估报告。
+3. 如有附图，先确认图片来源和图号，再插入 Word；不要只在正文写“见图1”却没有实际图片或附件路径。
+4. 文件名建议使用 `[发明名称]-专利申请交付包.docx`，并在最终回复中提供绝对路径。
+
+### B. 已上传 DOCX 保真优化模式
+
+适用于用户提供 `.docx` 专利交底书并要求优化、改写、完善、补强权利要求或生成新版 Word。默认启用本模式，除非用户明确要求重新排版。
+
+核心原则：
+- 保留原 DOCX 容器资源，而不是从抽取出的纯文本重新生成空白文档。
+- 纯文本抽取只能用于理解内容，不能作为最终生成 Word 的唯一来源。
+- 优先修改原文档解包后的 `word/document.xml` 及确需修改的页眉、页脚、脚注、尾注或批注 XML。
+- 不删除或重命名 `word/media/*`；不移除仍被正文引用的 `word/_rels/document.xml.rels` 图片关系；不破坏 `[Content_Types].xml` 中的图片类型声明。
+- 尽量保留图片、附图题注、图号、编号、表格、样式、页眉页脚、脚注、批注和修订痕迹。
+
+执行步骤：
+1. 识别输入文档：记录原始 `.docx` 路径、输出路径、用户指定的优化目标和必须保留的资源。
+2. 建立资源清单：统计 `word/media/*` 图片数量、文件名和可行时的哈希；统计图片 relationship 数量和 target；记录题注、图号和图片附近段落。
+3. 执行保真编辑：只改需要优化的正文、权利要求、摘要、质量报告等文字；如需新增章节，把新内容插入原文档结构，不覆盖整份文档。
+4. 重打包输出：基于修改后的原 DOCX 目录生成新版 `.docx`。
+5. 交付前校验：比对优化前后图片数量、文件名、哈希和 relationship；发现图片丢失、关系断裂或题注错位时先修复，不交付缺图文档。
+
+### C. 允许重排版的例外
+
+只有满足以下任一条件，才允许创建全新 `.docx` 替代保真编辑：
+- 用户明确要求“重新排版”“不要保留原版式”。
+- 原 DOCX 损坏、无法解包、无法编辑或不是真正的 Word 文档。
+- 原文档只是参考资料，用户明确要求生成全新的专利申请文本。
+
+即便重排版，也要优先提取原图片并重新插入新版 Word；如果无法保留图片，必须在质量评估报告和最终回复中标注图片/版式风险。
 
 ---
 
@@ -100,6 +148,10 @@ Execute this now. Output ONLY the structured response specified above.
   核心创新点:
     Q: "与现有技术相比，你的核心创新是什么？"
     示例: "使用第三方鉴权节点进行ID对齐，避免数据外泄"
+
+  Word文档输入:
+    Q: "是否已有 DOCX 交底书需要优化？如果有，是否必须保留图片、题注、表格、页眉页脚、批注或修订痕迹？"
+    默认: "已有 DOCX 时启用保真优化模式；无 DOCX 时生成全新专利申请 Word"
 ```
 
 ### Step 1.2: 专利检索（10分钟）
@@ -788,15 +840,17 @@ Execute this now. Output ONLY the structured diff list.
 ---
 
 ## 交付文件
-1. 专利申请说明书: [文件路径]
-2. 权利要求书: [文件路径]
-3. 附图: [文件路径]
-4. 质量评估报告: [文件路径]
+1. 专利申请 Word 文档: [绝对文件路径]/[发明名称]-专利申请交付包.docx
+2. 附图或原始图片资源: [文件路径，如单独导出]
+3. 质量评估报告: [文件路径或 Word 文档内章节]
+4. DOCX 保真结果: [新建文档 / 已基于原交底书保留图片与资源 / 存在需人工确认的图片或版式风险]
 ```
 
 **Quality Gate 3判断**:
 - 综合质量评分 ≥90分 → 交付成果
 - <90分 → 根据建议优化后重新审查
+- 输入为已有 DOCX 时，原图片文件数、图片 relationship 和仍被引用的题注/图号不得无说明地减少或断裂
+- 无法自动校验 DOCX 资源时，必须在质量评估报告列出验证限制和人工复核点
 
 ---
 
@@ -850,16 +904,18 @@ Phase 3: Implement (40-60分钟)
   │   ├─ reviewer: 权利要求四视角复审
   │   └─ 主线综合修订 (可选 santa-method 对抗收敛)
   │
-  ├─ Step 3.4: 生成最终文档
+  ├─ Step 3.4: 生成最终 Word .docx
+  │   ├─ 无原始 DOCX: 新建专利申请交付包
+  │   └─ 有原始 DOCX: 保真编辑、重打包、校验 media/rels/content types
   └─ Quality Gate 3: 综合质量 ≥90% → Deliver
 
 ---
 
 Step Final: Delivery
-  ✅ 专利申请说明书
-  ✅ 权利要求书
-  ✅ 附图（如需要）
-  ✅ 质量评估报告
+  ✅ 专利申请 Word .docx
+  ✅ 权利要求书、摘要、质量评估报告（写入 Word 或作为同包文件）
+  ✅ 附图（如需要；已有 DOCX 时保留原图片和关系）
+  ✅ DOCX 保真检查结果
   ✅ 后续优化建议
 ```
 
@@ -927,12 +983,11 @@ docs-researcher subagent (可选, .codex/agents/docs-researcher.toml):
   - 仲裁者: explorer "要补" 与 reviewer "要删" 冲突时按"三性优先 > 完整性"收敛
   - 可选 escalation: 评分仍 <90 时调用 santa-method skill 走双独立 reviewer 对抗收敛
 
-为什么放弃 Zen MCP 路线:
-  - 原方案强依赖单一 MCP server (zen-mcp 已淘汰)，故障即整条 workflow 阻塞
+为什么放弃 legacy MCP 路线:
+  - 原方案强依赖单一外部 MCP server（已淘汰），故障即整条 workflow 阻塞
   - 改用 Codex 原生 child agent (spawn_agent) ，是 codex CLI 一等公民协议，
     跟 ultrapilot / research / subagent-driven-development 等 skill 互通
-  - 必要时仍可显式 escalate 到外部模型 (例如让主线调用 MCP-based gemini-bridge,
-    或人工切到 `omc-cli ask gemini`)，但不作为默认依赖
+  - 必要时仍可由用户显式要求外部顾问模型参与，但不作为默认依赖
 ```
 
 ---

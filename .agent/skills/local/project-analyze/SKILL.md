@@ -1,10 +1,10 @@
 ---
 name: project-analyze
-description: Analyze project architecture and dependencies using local ProjectMind knowledge graph data. Provides fast codebase understanding and impact analysis without Gemini.
+description: Analyze project architecture and dependencies using local ProjectMind knowledge graph data. Provides fast codebase understanding and impact analysis without external model CLIs.
 version: 0.1.0
 source: fork
-checksum: 078937d3b6e0175321c146b05f95b531d6f80a1b86bcdc99c762aa138831a98d
-updated_at: 2026-05-29T11:36:33+08:00
+checksum: f2ceef75cb41ba653bf0b232e2857ccec8bee47a45066cc7cd55e884868b8214
+updated_at: 2026-05-29T11:50:00+08:00
 layer: research
 ---
 
@@ -32,8 +32,8 @@ Automatically invoke this Skill when:
 4. **Impact Prediction** - Change impact estimation
 5. **Smart Caching** - 40s first run, <1s subsequent queries
 
-ProjectMind is a local static-analysis workflow. Do not call Gemini, gemp,
-`gemini_stable.py`, `hybrid_intelligent_system.py`,
+ProjectMind is a local static-analysis workflow. Do not call external model
+CLIs, legacy long-context wrappers, `hybrid_intelligent_system.py`,
 `hybrid_intelligent_system_v2.py`, `hybrid_intelligent_system_v3.py`, or any
 external AI advisor as part of this skill. Use the local knowledge graph output
 plus direct repository inspection by Codex.
@@ -66,7 +66,7 @@ the summary does not contain, inspect the repository directly with `rg`,
 `rg --files`, `find`, `sed`, and targeted file reads.
 
 Do not use the legacy hybrid intelligent system entrypoints. They delegate to
-Gemini and are outside this skill's current execution model.
+external model tooling and are outside this skill's current execution model.
 
 ### Step 3: Present Results
 
@@ -255,7 +255,7 @@ Annotation fields:
 ## Important Notes
 
 - **Always execute** the Python command, don't simulate analysis
-- **Never use Gemini** or the legacy hybrid AI analysis scripts for this skill
+- **Never use external model CLIs** or the legacy hybrid AI analysis scripts for this skill
 - **Use current directory** as default project path
 - **Explain relationships**, not just list files
 - **Provide visual diagrams** when helpful
@@ -295,7 +295,7 @@ Annotation fields:
 
 **DO NOT use legacy hybrid scripts** (`hybrid_intelligent_system.py`,
 `hybrid_intelligent_system_v2.py`, or `hybrid_intelligent_system_v3.py`) - they
-delegate to Gemini and are deprecated for this skill.
+delegate to external model tooling and are deprecated for this skill.
 
 If the local ProjectMind scan fails:
 1. Check project path is correct

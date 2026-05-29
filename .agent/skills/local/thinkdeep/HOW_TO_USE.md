@@ -2,182 +2,46 @@
 
 ## Overview
 
-Extended reasoning using Gemini CLI's native thinking capability for complex problem analysis, multi-hypothesis exploration, and evidence-based conclusions.
+ThinkDeep is for problems where a quick answer would be premature. It keeps reasoning evidence-led and explicit: known facts, assumptions, options, verification, and confidence.
 
-## When to Use
+## Workflow
 
-- Complex architectural decisions
-- Multi-faceted problem solving
-- Trade-off analysis requiring deep thought
-- Strategic planning
-- Risk assessment
+1. Define the decision or question.
+2. List known facts and unknowns.
+3. Gather local or official evidence.
+4. Compare options in a table.
+5. Challenge assumptions with `reviewer` when risk is high.
+6. Recommend the smallest useful next step.
 
-## Basic Usage
+## Example Prompts
 
+```text
+使用 thinkdeep 分析我们是否应该重写这个模块
 ```
-"Think deeply about microservices vs monolith for our use case"
-"Extended reasoning on database sharding strategy"
-"Analyze trade-offs of event sourcing pattern"
+
+```text
+使用 thinkdeep 分析这个性能问题的可能根因
 ```
 
-## Extended Thinking Mode
+```text
+使用 thinkdeep 比较三种发布策略
+```
 
-Gemini's native thinking capability provides:
-- **Multi-hypothesis exploration**: Consider multiple approaches
-- **Evidence evaluation**: Weigh pros/cons systematically
-- **Confidence scoring**: Rate certainty of conclusions
-- **Alternative generation**: Explore different perspectives
-
-## Output Format
+## Output Template
 
 ```markdown
-## 🧠 Deep Reasoning Analysis
+## ThinkDeep Analysis
 
-**Topic**: [Your question]
-
-### Hypothesis Exploration
-
-**Hypothesis 1**: Microservices architecture
-- Pros: Independent scaling, tech diversity
-- Cons: Operational complexity, distributed debugging
-- Confidence: Medium (60%)
-
-**Hypothesis 2**: Modular monolith
-- Pros: Simpler operations, easier debugging
-- Cons: Scaling limitations, tighter coupling
-- Confidence: High (80%)
-
-**Hypothesis 3**: Hybrid approach
-- Pros: Gradual migration path
-- Cons: Temporary complexity increase
-- Confidence: Medium-High (70%)
-
-### Evidence Analysis
-
-**Supporting modular monolith**:
-1. Team size (10 developers) suits monolith
-2. Traffic (100k users) within monolith capacity
-3. Deployment simplicity reduces ops overhead
-
-**Against microservices**:
-1. Operational overhead high for small team
-2. Distributed tracing complexity
-3. Service orchestration learning curve
-
-### Trade-off Analysis
-
-| Factor | Monolith | Microservices | Winner |
-|--------|----------|---------------|--------|
-| Ops complexity | Simple | Complex | Monolith |
-| Scaling flexibility | Limited | High | Microservices |
-| Development speed | Fast | Slower | Monolith |
-| Tech diversity | Limited | High | Microservices |
-
-### Final Recommendation
-
-**Choose Modular Monolith** (Confidence: 85%)
-
-**Rationale**:
-- Team size and traffic don't justify microservices complexity
-- Can achieve modular benefits without distributed overhead
-- Clear migration path to microservices if needed later
-
-**Decision triggers for microservices**:
-- Team grows beyond 30 developers
-- Traffic exceeds 1M daily active users
-- Need independent deployment of modules
-
-**Action plan**:
-1. Design clear module boundaries now
-2. Use dependency injection for loose coupling
-3. Separate databases per module
-4. Monitor when triggers are approached
+### Problem
+### Known Facts
+### Options
+### Recommendation
+### Verification Plan
+### Open Questions
 ```
 
-## Advanced Usage
+## Notes
 
-### Confidence-Based Decisions
-
-```
-"Think deeply - what's the confidence level for using Kafka vs RabbitMQ?"
-```
-
-Provides explicit confidence scores for each option.
-
-### Multi-Dimensional Analysis
-
-```
-"Deeply analyze database choice across performance, cost, team expertise, and scalability"
-```
-
-Systematic evaluation across specified dimensions.
-
-### Risk Assessment
-
-```
-"Extended reasoning on risks of migrating from MySQL to Cassandra"
-```
-
-Identifies and quantifies potential risks.
-
-## Real-World Scenarios
-
-### Scenario 1: Technology Migration Decision
-
-**Question**: "Think deeply about migrating from REST to GraphQL"
-
-**Analysis includes**:
-- Current REST pain points
-- GraphQL benefits and costs
-- Migration complexity
-- Team readiness
-- Rollback strategy
-
-### Scenario 2: Architecture Pattern Selection
-
-**Question**: "Deep analysis of CQRS pattern for our e-commerce system"
-
-**Analysis includes**:
-- CQRS fit for use case
-- Implementation complexity
-- Eventual consistency implications
-- Alternative patterns comparison
-
-## CLI Usage
-
-```bash
-cat > /tmp/thinkdeep_prompt.txt << 'PROMPT_EOF'
-Think deeply about the following decision:
-
-[Your complex question]
-
-Consider:
-- Multiple perspectives
-- Evidence for/against each option
-- Trade-offs and risks
-- Confidence levels
-- Decision criteria
-PROMPT_EOF
-
-cat /tmp/thinkdeep_prompt.txt | gemini --yolo 2>&1 | grep -v "STARTUP\|YOLO\|Load"
-```
-
-## Tips for Better Results
-
-**Be specific about**:
-- Context and constraints
-- Decision criteria
-- What dimensions to analyze
-- Acceptable trade-offs
-
-**Example**:
-```
-❌ "Should I use Redis?"
-✅ "Think deeply: Redis vs Memcached for session storage with 100k concurrent users, 10GB RAM budget, high availability requirement"
-```
-
-## Related Skills
-
-- **consensus**: Multi-model validation of deep reasoning
-- **architect-planner**: Architecture planning with deep analysis
-- **brainstorming**: Explore alternatives before deep thinking
+- Mark speculation clearly.
+- Do not invent missing facts.
+- Prefer reversible recommendations when confidence is not high.

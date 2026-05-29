@@ -1,9 +1,9 @@
 # Skill Eval Report
 
-Generated At: 2026-05-13T02:56:51.299Z
-Skills Evaluated: 60
-Average Score: 98.43
-Pass: 60
+Generated At: 2026-05-29T05:58:44.599Z
+Skills Evaluated: 62
+Average Score: 98.35
+Pass: 62
 Fail: 0
 
 | Skill | Score | Pass | Findings |
@@ -11,6 +11,7 @@ Fail: 0
 | ai-commenting | 100 | Y | - |
 | aireview | 100 | Y | - |
 | architect-planner | 100 | Y | - |
+| ask-gemini | 92 | Y | missing runnable examples |
 | auto-mbti | 90 | Y | missing workflow guidance sections |
 | backend-patterns | 100 | Y | - |
 | bdd-generator | 100 | Y | - |
@@ -30,6 +31,7 @@ Fail: 0
 | evolve | 100 | Y | - |
 | frontend-design | 82 | Y | missing workflow guidance sections; missing runnable examples |
 | frontend-patterns | 100 | Y | - |
+| frontend-ui-ux | 100 | Y | - |
 | iterative-retrieval | 100 | Y | - |
 | local-skills-setup | 100 | Y | - |
 | log-analyzer | 100 | Y | - |

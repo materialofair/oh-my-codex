@@ -2,7 +2,7 @@
 
 ## Overview
 
-ProjectMind-powered intelligent project analysis providing fast architectural understanding through local dependency graphs and pattern detection. This workflow does not call Gemini; Codex synthesizes answers from ProjectMind output and targeted local repository inspection.
+ProjectMind-powered intelligent project analysis providing fast architectural understanding through local dependency graphs and pattern detection. This workflow does not call external model CLIs; Codex synthesizes answers from ProjectMind output and targeted local repository inspection.
 
 ## Usage Scenarios
 

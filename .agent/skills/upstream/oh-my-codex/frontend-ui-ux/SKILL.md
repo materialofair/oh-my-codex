@@ -5,7 +5,7 @@ description: Designer-developer for UI/UX work
 
 # Frontend UI/UX Command
 
-Routes to the designer agent or Gemini MCP for frontend work.
+Routes frontend design work to Codex-native design and implementation workflows.
 
 ## Usage
 
@@ -15,14 +15,16 @@ Routes to the designer agent or Gemini MCP for frontend work.
 
 ## Routing
 
-### Preferred: MCP Direct
-Before first MCP tool use, call `ToolSearch("mcp")` to discover deferred MCP tools.
-Use `mcp__g__ask_gemini` with `agent_role: "designer"` for design tasks.
-If ToolSearch finds no MCP tools, use the Codex agent fallback below.
+### Preferred: Codex Frontend Workflow
+Use the repository's existing frontend stack, design system, and local docs first.
+For substantial UI work, use the `frontend-design` or `frontend-patterns` skill when applicable.
 
-### Fallback: Codex Agent
+### Optional Read-Only Review
+For independent critique, dispatch a read-only reviewer/explorer child agent:
+
 ```
-delegate(role="designer", tier="STANDARD", task="{{ARGUMENTS}}")
+spawn_agent(agent_type="explorer", message="Read-only UI/UX exploration: {{ARGUMENTS}}")
+spawn_agent(agent_type="reviewer", message="Read-only UI/UX risk review: {{ARGUMENTS}}")
 ```
 
 ## Capabilities

@@ -3,8 +3,8 @@ name: conductor
 description: Use when the user explicitly asks for Conductor, wants track/spec/plan/review artifacts on disk, or needs long-lived project context management. Prefer start-dev for small or one-off tasks. If Conductor is not configured in the project, start with setup.
 version: 0.1.0
 source: fork
-checksum: 4518ae124ef6043b1e2d6b3bd5898a9a828ce3c6379ef207f24e2c75f87a5d51
-updated_at: 2026-02-11T09:29:29+08:00
+checksum: adf8bf4bc4f26b82d39d35ce6699ecd65504ead8143a243de1e0c59cc3b03620
+updated_at: 2026-05-29T11:50:00+08:00
 intent: execution
 layer: orchestration
 ---
@@ -18,7 +18,7 @@ Conductor is a Context-Driven Development (CDD) workflow for managing durable pr
 Refresh -> Spec -> Plan -> Implement -> Review -> Reconcile
 ```
 
-This skill is the Codex-native adaptation of the upstream Gemini Conductor repository. Keep the workflow compatible with upstream concepts, but translate execution into Codex conventions instead of copying Gemini-only behavior literally.
+This skill is the Codex-native adaptation of the upstream Conductor repository. Keep the workflow compatible with upstream concepts, but translate execution into Codex conventions instead of copying upstream-only behavior literally.
 
 ## When To Use
 
@@ -45,11 +45,11 @@ Minimal orchestration pattern:
 spawn_agent -> send_input (optional) -> wait -> close_agent
 ```
 
-## Upstream Alignment (Gemini Conductor)
+## Upstream Alignment (Conductor)
 
 When adapting or extending this skill, inspect the upstream repository as a protocol bundle, not just the README. The highest-value upstream files are:
-- `GEMINI.md`
-- `gemini-extension.json`
+- upstream project instruction files
+- upstream extension metadata
 - `policies/conductor.toml`
 - `commands/conductor/*.toml`
 - `templates/workflow.md`
@@ -68,7 +68,7 @@ The compatibility boundary for this skill is defined in:
 
 Before using Conductor files, resolve them in this order:
 
-1. If the project contains upstream metadata such as `GEMINI.md`, `gemini-extension.json`, or `policies/conductor.toml`, read those first and honor their plan-directory declarations.
+1. If the project contains upstream metadata such as project instruction files, extension metadata, or `policies/conductor.toml`, read those first and honor their plan-directory declarations.
 2. Otherwise, default to the fixed `conductor/` directory.
 3. Resolve semantic aliases as follows:
    - Tracks Registry -> `conductor/tracks.md`
@@ -176,4 +176,4 @@ The detailed protocols are in TOML format. Read the `prompt` field from each fil
 2. **Check setup first** - Resolve and verify the required Conductor files before any operation
 3. **Codex-first interaction** - Prefer reasonable assumptions; ask one concise blocking question only when necessary
 4. **Plain-language UX** - Do not suggest slash commands. Tell the user what to ask for directly in natural language
-5. **Codex-native delegation** - Replace Gemini-only flows such as `ask_user` or isolated CLI shells with Codex chat, native subagents, and local commands
+5. **Codex-native delegation** - Replace upstream-only flows such as `ask_user` or isolated CLI shells with Codex chat, native subagents, and local commands

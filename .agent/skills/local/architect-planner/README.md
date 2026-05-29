@@ -1,41 +1,31 @@
 # Architect Planner
 
-Architecture planning expert using Gemini CLI (1M context) for large-scale system design and strategic planning.
-
-## Quick Install
-
-```bash
-# Already installed at:
-~/.claude/skills/architect-planner/
-```
+Codex-native architecture planning for large systems, migrations, and technical design reviews.
 
 ## Usage
 
-```
-"Plan microservices architecture for e-commerce"
-"Design scalable real-time notification system"
-"Architecture strategy for data pipeline"
+```text
+使用 architect-planner 设计：<架构需求>
 ```
 
 ## What It Does
 
-- ✅ Leverages Gemini 1M context window
-- ✅ Large-scale system design
-- ✅ Architecture pattern recommendations
-- ✅ Scalability analysis
-- ✅ Technology stack planning
+- Collects business and non-functional requirements
+- Reads local project docs, config, and code paths
+- Uses `ProjectMind` and targeted `rg` searches for evidence
+- Optionally delegates read-only exploration to `spawn_agent(explorer)`
+- Optionally delegates risk review to `spawn_agent(reviewer)`
+- Produces a migration-aware architecture plan with verification checks
+
+## Output
+
+- Current-state map
+- Recommended target architecture
+- Alternatives and tradeoffs
+- Migration steps
+- Risks and validation plan
 
 ## Files
 
-- `SKILL.md` - Complete architecture methodology
-- `README.md` - This quick start guide
-- `HOW_TO_USE.md` - Detailed planning guide (Phase 1)
-- `references/` - Architecture patterns library (Phase 2)
-
-## When to Use
-
-- Planning new systems from scratch
-- Major architecture refactoring
-- Scalability planning
-- Technology stack decisions
-- System design reviews
+- `SKILL.md` - Full workflow
+- `HOW_TO_USE.md` - Usage examples

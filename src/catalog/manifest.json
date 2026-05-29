@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": "2026-05-13",
+  "catalogVersion": "2026-05-29",
   "skills": [
     {
       "name": ".codex",
@@ -74,7 +74,7 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "layer": "quality",
       "intent": "code-review",
       "composes": []
@@ -107,7 +107,7 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "layer": "research",
       "intent": null,
       "composes": []
@@ -139,9 +139,9 @@
       "category": "utility",
       "status": "active",
       "core": false,
-      "source": "oh-my-codex",
-      "version": "0.1.0",
-      "layer": null,
+      "source": "fork",
+      "version": "0.2.0",
+      "layer": "utility",
       "intent": null,
       "composes": []
     },
@@ -316,7 +316,7 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "layer": "research",
       "intent": null,
       "composes": []
@@ -371,7 +371,7 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "layer": "research",
       "intent": "debugging",
       "composes": []
@@ -645,10 +645,10 @@
       "category": "utility",
       "status": "active",
       "core": false,
-      "source": "oh-my-codex",
-      "version": "0.1.0",
+      "source": "fork",
+      "version": "0.2.0",
       "layer": null,
-      "intent": null,
+      "intent": "frontend",
       "composes": []
     },
     {
@@ -778,7 +778,7 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "layer": "research",
       "intent": "research",
       "composes": []
@@ -822,7 +822,7 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "layer": "domain",
       "intent": null,
       "composes": []
@@ -1295,7 +1295,7 @@
       "status": "active",
       "core": false,
       "source": "fork",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "layer": "research",
       "intent": null,
       "composes": []

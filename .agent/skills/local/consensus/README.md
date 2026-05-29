@@ -1,41 +1,22 @@
-# Consensus (Multi-Model Decision)
+# Consensus
 
-Multi-model consensus decision-making using Gemini/Codex CLI for collaborative analysis and synthesis.
-
-## Quick Install
-
-```bash
-# Already installed at:
-~/.claude/skills/consensus/
-```
+Codex-native multi-perspective decision workflow using read-only child agents and evidence synthesis.
 
 ## Usage
 
-```
-"Get consensus on microservices vs monolith"
-"Multi-model decision for database choice"
-"Analyze trade-offs with multiple AI perspectives"
+```text
+使用 consensus 分析：<决策问题>
 ```
 
 ## What It Does
 
-- ✅ Multi-model collaborative decision
-- ✅ Consensus identification
-- ✅ Disagreement analysis
-- ✅ Trade-off evaluation
-- ✅ Confidence-weighted recommendations
+- Clarifies candidate options and decision criteria
+- Delegates architecture, risk, and documentation perspectives
+- Compares agreements and disagreements
+- Produces a recommendation with confidence and verification steps
 
-## Files
+## Agent Roles
 
-- `SKILL.md` - Complete consensus methodology
-- `README.md` - This quick start guide
-- `HOW_TO_USE.md` - Detailed decision guide (Phase 1)
-- `references/` - Decision frameworks (Phase 2)
-
-## When to Use
-
-- Critical technical decisions
-- Architecture pattern selection
-- Technology stack choices
-- Design trade-off analysis
-- Risk-sensitive decisions
+- `explorer`: architecture and current-state evidence
+- `reviewer`: correctness, security, regression, and test risks
+- `docs-researcher`: official documentation and version claims

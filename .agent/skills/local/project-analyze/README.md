@@ -24,7 +24,7 @@ Analyze project architecture, dependencies, and structure using the local Projec
 - ✅ Dependency analysis and visualization
 - ✅ Impact analysis for changes
 - ✅ Knowledge graph generation
-- ✅ Local-only analysis; no Gemini dependency
+- ✅ Local-only analysis; no external model CLI dependency
 
 ## Files
 

@@ -11,6 +11,7 @@
 - ✅ **Codex 原生 child agent 协作**: `spawn_agent(explorer)` 做架构分析、`spawn_agent(reviewer)` 做权利要求对抗审查、`spawn_agent(docs-researcher)` 可选校验 prior-art
 - ✅ **IRR质量指标**: 借鉴AutoPatent的重复率检测（目标≥0.85）
 - ✅ **RLHF优化策略**: 借鉴InstructPatentGPT的权利要求优化方法
+- ✅ **Word/DOCX 交付**: 最终生成 `.docx`；已有 DOCX 交底书默认保真优化，保留图片、题注、relationship、样式和页眉页脚资源
 
 ### 与现有系统的区别
 
@@ -68,10 +69,10 @@ Phase 3: Implement (40-60分钟)
   - Quality Gate 3 (≥90%)
     ↓
 交付成果
-  - 专利申请说明书
-  - 权利要求书
-  - 附图
-  - 质量评估报告
+  - 专利申请 Word .docx
+  - 权利要求书、摘要、质量评估报告
+  - 附图或原 DOCX 图片资源
+  - DOCX 保真检查结果
 ```
 
 ---
@@ -121,6 +122,12 @@ Phase 3: Implement (40-60分钟)
 
 **输出**: 完整专利申请文档 + 质量评估报告
 
+**Word/DOCX 要求**:
+- 最终交付必须是 `.docx` 文件，聊天回复只提供文件路径、简短摘要、质量分和风险说明。
+- 用户提供已有 `.docx` 交底书时，默认基于原 DOCX 保真编辑和重打包，不从纯文本抽取结果新建空白 Word。
+- 交付前比对 `word/media/*`、`word/_rels/document.xml.rels`、`[Content_Types].xml`，确认图片、关系和内容类型声明没有无说明丢失。
+- 只有用户明确要求重排版，或原 DOCX 损坏/不可编辑时，才允许新建 `.docx`；仍需尽量提取并重新插入原图片。
+
 **三层审查**:
 1. **IRR重复率检查**: 目标≥0.85（AutoPatent借鉴）
 2. **术语一致性验证**: 全文统一术语
@@ -136,6 +143,7 @@ Phase 3: Implement (40-60分钟)
 - ✅ 术语一致性检查通过
 - ✅ 法律合规性检查通过
 - ✅ 双 subagent (explorer + reviewer) 审查建议已整合
+- ✅ DOCX 已生成；已有原 DOCX 时图片数量、relationship、题注/图号和关键版式资源已完成保真检查
 - 综合评分 ≥90%
 
 ---
@@ -378,10 +386,10 @@ python tools/irr_checker.py [文档路径]
     - Gate 3: 93分 ✅
 
 输出:
-  ✅ 专利申请说明书（17,500字）
+  ✅ 专利申请 Word .docx（含说明书、权利要求书、摘要、质量评估报告）
   ✅ 权利要求书（1独立 + 9从属）
-  ✅ 流程图和架构图
-  ✅ 质量评估报告
+  ✅ 流程图和架构图（写入 Word；已有 DOCX 时保留原图片资源）
+  ✅ DOCX 保真检查结果
   ✅ 授权率预估: +20%
 
 总耗时: 90分钟

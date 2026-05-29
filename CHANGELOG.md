@@ -5,6 +5,17 @@ All notable changes to `oh-my-codex-cli` are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.9] - 2026-05-29
+
+### Changed
+- Reworked Gemini-dependent local skills to use Codex-native workflows, local analysis, and child-agent review patterns by default.
+- Added durable local overrides for `ask-gemini` and `frontend-ui-ux` so upstream sync cannot reintroduce Gemini runtime paths.
+- Improved `patent-workflow` Word/DOCX handling: final delivery is a `.docx`, existing DOCX disclosure documents default to fidelity-preserving edits, and image/media relationships must be checked before delivery.
+
+### Fixed
+- Made `project-analyze` local-only and removed the external model CLI dependency from its user-facing docs.
+- Added missing patent workflow metadata so skill governance treats the updated local skill as complete.
+
 ## [1.1.8] - 2026-05-26
 
 ### Changed

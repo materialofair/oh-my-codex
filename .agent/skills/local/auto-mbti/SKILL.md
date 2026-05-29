@@ -4,8 +4,8 @@ description: 根据开发任务自动选择最适合的MBTI人格，让AI以专�
 author: SuperClaude System
 version: 1.0.0
 source: fork
-checksum: fab9937d0f6c03929061756fbfc262bd35130a8e256b052dcb708759ebc758fa
-updated_at: 2026-02-06T15:19:11+08:00
+checksum: a47a9f4e3d4445327be3581ef3ebe34ff197045623ac62980e69dada1ca11fc9
+updated_at: 2026-05-29T11:50:00+08:00
 layer: utility
 ---
 
@@ -174,9 +174,9 @@ P2-建议: 异常日志不够详细，影响问题排查
 
 以INTP性能极客视角，我来分析首页性能瓶颈：
 
-🚀 **启动协作模式**: 调用Gemini进行深度性能分析
+🚀 **启动协作模式**: 派发 Codex 只读 child agent 进行深度性能分析
 
-[正在调用Gemini 1M上下文能力进行性能分析...]
+[正在使用 spawn_agent(explorer) 追踪性能路径，必要时使用 reviewer 复核风险...]
 
 【性能瓶颈分析】
 1. 首屏加载时间: 5.2s → 目标 < 1.5s

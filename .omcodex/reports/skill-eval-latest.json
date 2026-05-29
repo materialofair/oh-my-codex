@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-05-13T02:56:51.299Z",
+  "generatedAt": "2026-05-29T05:58:44.599Z",
   "skillsDir": "/Users/WangQiao/Desktop/github/ios-dev/ZeroNet-Space/openSource/oh-my-codex/.agent/skills/local",
   "minScore": 70,
-  "total": 60,
-  "averageScore": 98.43,
-  "passCount": 60,
+  "total": 62,
+  "averageScore": 98.35,
+  "passCount": 62,
   "failCount": 0,
   "results": [
     {
@@ -29,6 +29,17 @@
       "skill": "architect-planner",
       "score": 100,
       "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "ask-gemini",
+      "score": 92,
+      "findings": [
+        "missing runnable examples"
+      ],
       "pass": true,
       "auditedFiles": [
         "SKILL.md"
@@ -224,6 +235,15 @@
     },
     {
       "skill": "frontend-patterns",
+      "score": 100,
+      "findings": [],
+      "pass": true,
+      "auditedFiles": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "skill": "frontend-ui-ux",
       "score": 100,
       "findings": [],
       "pass": true,

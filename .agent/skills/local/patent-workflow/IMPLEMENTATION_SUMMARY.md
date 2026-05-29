@@ -4,23 +4,23 @@
 
 基于AutoPatent和InstructPatentGPT两个开源项目的研究，成功实现了**方案A：轻量级整合**。
 
-**初始实施日期**: 2025-11-27（集成到 SuperClaude / Claude Code + Zen MCP）
+**初始实施日期**: 2025-11-27（集成到 SuperClaude / Claude Code + legacy MCP 协作）
 **架构迁移日期**: 2026-05-27（重写为 Codex CLI 原生 `spawn_agent` 协议）
 **当前实施方式**: 零成本集成到 Codex CLI（仓库自带 `.codex/agents/*.toml` 复用，无外部 MCP 依赖）
 **预期效果**: 专利授权率提升15-25%，效率提升6-10倍
 
 ### 2026-05-27 架构迁移注记
 
-原方案依赖 `zen-mcp` MCP server 实现 Claude ↔ Gemini ↔ Codex 三方协作；该 MCP 已淘汰。本 skill 现在通过 Codex CLI 一等公民的 child agent 协议（`spawn_agent` / `wait` / `close_agent`）派发本仓 `.codex/agents/` 中的只读 child agent 完成评审，跟 `ultrapilot` / `research` / `subagent-driven-development` 等 skill 使用同一套协议。
+原方案依赖已淘汰的 legacy MCP server 实现外部多模型协作。本 skill 现在通过 Codex CLI 一等公民的 child agent 协议（`spawn_agent` / `wait` / `close_agent`）派发本仓 `.codex/agents/` 中的只读 child agent 完成评审，跟 `ultrapilot` / `research` / `subagent-driven-development` 等 skill 使用同一套协议。
 
 | 旧（zen-mcp）            | 新（Codex CLI 原生）                            | 用途                              |
 |--------------------------|-------------------------------------------------|-----------------------------------|
-| Gemini 架构分析（1M ctx）  | `spawn_agent(agent_type="explorer", ...)`         | Phase 1.3 发明架构分析 + 保护策略 |
+| 外部架构分析               | `spawn_agent(agent_type="explorer", ...)`         | Phase 1.3 发明架构分析 + 保护策略 |
 | Codex 权利要求审查（GPT-5） | `spawn_agent(agent_type="reviewer", ...)`         | Phase 2.3 四视角对抗审查           |
-| Zen MCP 三方多轮优化        | 并行 `spawn_agent(explorer)` + `spawn_agent(reviewer)` | Phase 3.3 文档复审 + 综合修订     |
+| legacy MCP 三方多轮优化     | 并行 `spawn_agent(explorer)` + `spawn_agent(reviewer)` | Phase 3.3 文档复审 + 综合修订     |
 | —                        | 可选 `spawn_agent(agent_type="docs-researcher")`  | Phase 1.2 校验 prior-art 真实性    |
 
-下文的旧"Zen MCP 协作集成"架构图保留作为历史背景；新协议见 SKILL.md 中的 "Native Subagent Protocol (Codex)" 章节。
+下文的旧 legacy MCP 协作架构图保留作为历史背景；新协议见 SKILL.md 中的 "Native Subagent Protocol (Codex)" 章节。
 
 ---
 
@@ -110,16 +110,16 @@
   (explorer)          (reviewer)        (explorer+reviewer 并行)
 ```
 
-### Zen MCP 协作集成（历史架构，已废弃）
+### Legacy MCP 协作集成（历史架构，已废弃）
 
 > 以下为 2025-11-27 初版架构，依赖已淘汰的 zen-mcp。保留以便对照迁移。
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                     Zen MCP Layer                        │
+│                   Legacy MCP Layer                       │
 │  ┌──────────┐      ┌──────────┐      ┌──────────┐     │
-│  │  Gemini  │      │  Codex   │      │  Claude  │     │
-│  │ (1M ctx) │      │  (GPT-5) │      │(Coord)   │     │
+│  │External A│      │External B│      │Main Agent│     │
+│  │ analyzer │      │ reviewer │      │(Coord)   │     │
 │  └────┬─────┘      └────┬─────┘      └────┬─────┘     │
 │       │                 │                  │            │
 │       ▼                 ▼                  ▼            │

@@ -1,41 +1,24 @@
-# ThinkDeep (Deep Reasoning)
+# ThinkDeep
 
-Deep reasoning analysis using Gemini CLI's native thinking capability with extended reasoning mode.
-
-## Quick Install
-
-```bash
-# Already installed at:
-~/.claude/skills/thinkdeep/
-```
+Codex-native deep reasoning for complex decisions, multi-hypothesis analysis, and strategic planning.
 
 ## Usage
 
-```
-"Deeply analyze this architectural decision"
-"Think through this complex problem"
-"Extended reasoning for optimization strategy"
+```text
+使用 thinkdeep 分析：<复杂问题>
 ```
 
 ## What It Does
 
-- ✅ Extended thinking mode (Gemini native capability)
-- ✅ Multi-hypothesis exploration
-- ✅ Systematic problem decomposition
-- ✅ Evidence-based reasoning
-- ✅ Confidence scoring
+- Frames the problem and success criteria
+- Separates facts, assumptions, options, and risks
+- Uses local evidence and commands where relevant
+- Optionally delegates independent challenge to read-only child agents
+- Produces a recommendation with confidence and verification steps
 
-## Files
+## When To Use
 
-- `SKILL.md` - Complete reasoning methodology
-- `README.md` - This quick start guide
-- `HOW_TO_USE.md` - Detailed reasoning guide (Phase 1)
-- `references/` - Thinking patterns library (Phase 2)
-
-## When to Use
-
-- Complex architectural decisions
-- Multi-faceted problem solving
-- Trade-off analysis
-- Risk assessment
-- Strategic planning
+- Strategic or architectural decisions
+- Ambiguous root-cause reasoning
+- Multi-option tradeoffs
+- High-uncertainty planning
