@@ -1,15 +1,15 @@
 ---
 name: project-analyze
-description: Analyze project architecture and dependencies using local ProjectMind knowledge graph data. Provides fast codebase understanding and impact analysis without external model CLIs.
+description: This skill should be used when the user asks to "analyze project structure", "explain this codebase", "show dependencies", "find high-risk files", "assess refactor impact", "understand architecture", or run ProjectMind for local codebase analysis.
 version: 0.1.0
 source: fork
 checksum: f2ceef75cb41ba653bf0b232e2857ccec8bee47a45066cc7cd55e884868b8214
-updated_at: 2026-05-29T11:50:00+08:00
+updated_at: 2026-06-08T10:50:00+08:00
 layer: research
 ---
 
 
-> Codex CLI: Manual invocation only (`$project-analyze`). No hooks or auto-run.
+> Codex CLI: Invoke when the description matches, or manually with `$project-analyze`. No hooks or background auto-run.
 
 # Project Intelligence Analysis Skill
 
@@ -48,17 +48,38 @@ Identify:
 - **User's Question**: What they want to know
 - **Project Path**: Usually current directory `$(pwd)` or user-specified path
 
-### Step 2: Execute the Local ProjectMind Scan
+### Step 2: Resolve Runtime and Execute the Local ProjectMind Scan
 
-**IMPORTANT**: You MUST execute the local ProjectMind knowledge graph scanner:
+**IMPORTANT**: Execute the local ProjectMind knowledge graph scanner before
+answering architecture, dependency, risk, or impact questions. Prefer `python3`,
+fall back to `python`, and allow `PROJECTMIND_HOME` to override the default
+install path.
 
 ```bash
-python /Users/WangQiao/claude-enhanced-quality/project_mind.py [project_path]
+PROJECT_PATH="[project_path]"
+PROJECTMIND_HOME="${PROJECTMIND_HOME:-/Users/WangQiao/claude-enhanced-quality}"
+PYTHON_BIN="${PYTHON_BIN:-$(command -v python3 || command -v python || true)}"
+
+if [ -z "$PYTHON_BIN" ]; then
+  echo "ProjectMind error: no python3 or python interpreter found" >&2
+  exit 1
+fi
+
+"$PYTHON_BIN" "$PROJECTMIND_HOME/project_mind.py" "$PROJECT_PATH"
 ```
 
 If project path is not specified, use current directory:
 ```bash
-python /Users/WangQiao/claude-enhanced-quality/project_mind.py $(pwd)
+PROJECT_PATH="$(pwd)"
+PROJECTMIND_HOME="${PROJECTMIND_HOME:-/Users/WangQiao/claude-enhanced-quality}"
+PYTHON_BIN="${PYTHON_BIN:-$(command -v python3 || command -v python || true)}"
+
+if [ -z "$PYTHON_BIN" ]; then
+  echo "ProjectMind error: no python3 or python interpreter found" >&2
+  exit 1
+fi
+
+"$PYTHON_BIN" "$PROJECTMIND_HOME/project_mind.py" "$PROJECT_PATH"
 ```
 
 Use the scanner output as structured evidence. For query-specific details that
@@ -178,32 +199,41 @@ Offer specific next steps:
 ### Example 1: Understanding Architecture
 **User**: "Explain how the authentication system works"
 
-**You execute**:
+**Execute**:
 ```bash
-python /Users/WangQiao/claude-enhanced-quality/project_mind.py $(pwd)
+PROJECT_PATH="$(pwd)"
+PROJECTMIND_HOME="${PROJECTMIND_HOME:-/Users/WangQiao/claude-enhanced-quality}"
+PYTHON_BIN="${PYTHON_BIN:-$(command -v python3 || command -v python || true)}"
+"$PYTHON_BIN" "$PROJECTMIND_HOME/project_mind.py" "$PROJECT_PATH"
 ```
 
-**You present**: Architecture explanation with module relationships, file paths, and authentication flow diagram, using ProjectMind output plus targeted `rg` searches for authentication entry points.
+**Present**: Architecture explanation with module relationships, file paths, and authentication flow diagram, using ProjectMind output plus targeted `rg` searches for authentication entry points.
 
 ### Example 2: Refactoring Impact
 **User**: "I want to refactor the database layer, what's the impact?"
 
-**You execute**:
+**Execute**:
 ```bash
-python /Users/WangQiao/claude-enhanced-quality/project_mind.py $(pwd)
+PROJECT_PATH="$(pwd)"
+PROJECTMIND_HOME="${PROJECTMIND_HOME:-/Users/WangQiao/claude-enhanced-quality}"
+PYTHON_BIN="${PYTHON_BIN:-$(command -v python3 || command -v python || true)}"
+"$PYTHON_BIN" "$PROJECTMIND_HOME/project_mind.py" "$PROJECT_PATH"
 ```
 
-**You present**: Impact analysis showing affected files, risk assessment, and refactoring strategy, verified with local dependency/file searches.
+**Present**: Impact analysis showing affected files, risk assessment, and refactoring strategy, verified with local dependency/file searches.
 
 ### Example 3: Finding High-Risk Code
 **User**: "What are the most critical files in this project?"
 
-**You execute**:
+**Execute**:
 ```bash
-python /Users/WangQiao/claude-enhanced-quality/project_mind.py $(pwd)
+PROJECT_PATH="$(pwd)"
+PROJECTMIND_HOME="${PROJECTMIND_HOME:-/Users/WangQiao/claude-enhanced-quality}"
+PYTHON_BIN="${PYTHON_BIN:-$(command -v python3 || command -v python || true)}"
+"$PYTHON_BIN" "$PROJECTMIND_HOME/project_mind.py" "$PROJECT_PATH"
 ```
 
-**You present**: List of high-risk files with dependency counts, complexity scores, and business criticality.
+**Present**: List of high-risk files with dependency counts, complexity scores, and business criticality.
 
 ## Performance Characteristics
 
@@ -286,8 +316,9 @@ Annotation fields:
 
 ## Prerequisites
 
-- Python environment
-- ProjectMind V2 system installed
+- Python 3 preferred, or Python fallback
+- ProjectMind V2 system installed at `/Users/WangQiao/claude-enhanced-quality`
+  or another path supplied through `PROJECTMIND_HOME`
 - Read access to project files
 - Write access for caching (automatic)
 
@@ -299,10 +330,11 @@ delegate to external model tooling and are deprecated for this skill.
 
 If the local ProjectMind scan fails:
 1. Check project path is correct
-2. Verify Python environment
-3. Examine error message
-4. Fall back to direct local inspection with `rg`, `rg --files`, and targeted file reads
-5. Report the issue and mark which parts are based on fallback inspection
+2. Verify `python3` or `python` is available with `command -v python3 || command -v python`
+3. Verify `$PROJECTMIND_HOME/project_mind.py` exists, defaulting to `/Users/WangQiao/claude-enhanced-quality/project_mind.py`
+4. Examine error message
+5. Fall back to direct local inspection with `rg`, `rg --files`, and targeted file reads
+6. Report the issue and mark which parts are based on fallback inspection
 
 ## Performance Tips
 

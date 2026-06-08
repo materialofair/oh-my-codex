@@ -1,15 +1,15 @@
 ---
 name: quality-check
-description: CodeDNA 6-dimension intelligent scoring for code quality. Provides ROI-optimized refactoring recommendations when analyzing code.
+description: This skill should be used when the user asks to "check code quality", "score this code", "find quality hotspots", "prioritize refactoring", "analyze technical debt", "run CodeDNA", or assess maintainability, complexity, modularity, tests, documentation, and best practices.
 version: 0.1.0
 source: fork
 checksum: 0fee4661b24036455cab84e6e48678ac7a5cd8a794f10d4550d56452933d8cc6
-updated_at: 2026-02-05T16:22:10+08:00
+updated_at: 2026-06-08T10:50:00+08:00
 layer: quality
 ---
 
 
-> Codex CLI: Manual invocation only (`$quality-check`). No hooks or auto-run.
+> Codex CLI: Invoke when the description matches, or manually with `$quality-check`. No hooks or background auto-run.
 
 # Code Quality Check Skill
 
@@ -51,24 +51,48 @@ Ask yourself:
 - Is it a **project directory**? → Use `project_quality_analyzer.py --mode overview`
 - Need **impact analysis**? → Use `project_quality_analyzer.py --mode impact-analysis`
 
-### Step 2: Execute the Analysis
+### Step 2: Resolve Runtime and Execute the Analysis
 
-**IMPORTANT**: You MUST execute one of these Python commands:
+**IMPORTANT**: Execute one of these analyzer commands. Prefer `python3`, fall
+back to `python`, and allow `PROJECTMIND_HOME` to override the default local
+tool path.
 
 **Single File Analysis**:
 ```bash
-python /Users/WangQiao/claude-enhanced-quality/test_quality_simple.py [file_path]
+PROJECTMIND_HOME="${PROJECTMIND_HOME:-/Users/WangQiao/claude-enhanced-quality}"
+PYTHON_BIN="${PYTHON_BIN:-$(command -v python3 || command -v python || true)}"
+if [ -z "$PYTHON_BIN" ]; then
+  echo "CodeDNA error: no python3 or python interpreter found" >&2
+  exit 1
+fi
+"$PYTHON_BIN" "$PROJECTMIND_HOME/test_quality_simple.py" "[file_path]"
 ```
 
 **Project Overview**:
 ```bash
-python /Users/WangQiao/claude-enhanced-quality/project_quality_analyzer.py --project [directory_path] --mode overview
+PROJECTMIND_HOME="${PROJECTMIND_HOME:-/Users/WangQiao/claude-enhanced-quality}"
+PYTHON_BIN="${PYTHON_BIN:-$(command -v python3 || command -v python || true)}"
+if [ -z "$PYTHON_BIN" ]; then
+  echo "CodeDNA error: no python3 or python interpreter found" >&2
+  exit 1
+fi
+"$PYTHON_BIN" "$PROJECTMIND_HOME/project_quality_analyzer.py" --project "[directory_path]" --mode overview
 ```
 
 **Impact Analysis**:
 ```bash
-python /Users/WangQiao/claude-enhanced-quality/project_quality_analyzer.py --file [file_path] --mode impact-analysis
+PROJECTMIND_HOME="${PROJECTMIND_HOME:-/Users/WangQiao/claude-enhanced-quality}"
+PYTHON_BIN="${PYTHON_BIN:-$(command -v python3 || command -v python || true)}"
+if [ -z "$PYTHON_BIN" ]; then
+  echo "CodeDNA error: no python3 or python interpreter found" >&2
+  exit 1
+fi
+"$PYTHON_BIN" "$PROJECTMIND_HOME/project_quality_analyzer.py" --file "[file_path]" --mode impact-analysis
 ```
+
+If `$PYTHON_BIN` is empty, report that no Python interpreter was found and fall
+back to direct local inspection with `rg`, `rg --files`, targeted reads, and the
+repo's own test/lint commands.
 
 ### Step 3: Present Results
 
@@ -150,9 +174,11 @@ Explain:
 ### Example 1: Single File Review
 **User**: "Check the quality of src/auth/login.ts"
 
-**You execute**:
+**Execute**:
 ```bash
-python ~/claude-enhanced-quality/test_quality_simple.py src/auth/login.ts
+PROJECTMIND_HOME="${PROJECTMIND_HOME:-/Users/WangQiao/claude-enhanced-quality}"
+PYTHON_BIN="${PYTHON_BIN:-$(command -v python3 || command -v python || true)}"
+"$PYTHON_BIN" "$PROJECTMIND_HOME/test_quality_simple.py" src/auth/login.ts
 ```
 
 **You present**: 6-dimension scores, specific issues, and refactoring suggestions.
@@ -160,9 +186,11 @@ python ~/claude-enhanced-quality/test_quality_simple.py src/auth/login.ts
 ### Example 2: Project Overview
 **User**: "How's the code quality of my payment module?"
 
-**You execute**:
+**Execute**:
 ```bash
-python ~/claude-enhanced-quality/project_quality_analyzer.py --project src/payment --mode overview
+PROJECTMIND_HOME="${PROJECTMIND_HOME:-/Users/WangQiao/claude-enhanced-quality}"
+PYTHON_BIN="${PYTHON_BIN:-$(command -v python3 || command -v python || true)}"
+"$PYTHON_BIN" "$PROJECTMIND_HOME/project_quality_analyzer.py" --project src/payment --mode overview
 ```
 
 **You present**: Project-wide quality assessment, hotspots, and priority fixes.
@@ -170,9 +198,11 @@ python ~/claude-enhanced-quality/project_quality_analyzer.py --project src/payme
 ### Example 3: Impact Analysis
 **User**: "I want to refactor the database layer, what's the impact?"
 
-**You execute**:
+**Execute**:
 ```bash
-python ~/claude-enhanced-quality/project_quality_analyzer.py --file src/core/database.ts --mode impact-analysis
+PROJECTMIND_HOME="${PROJECTMIND_HOME:-/Users/WangQiao/claude-enhanced-quality}"
+PYTHON_BIN="${PYTHON_BIN:-$(command -v python3 || command -v python || true)}"
+"$PYTHON_BIN" "$PROJECTMIND_HOME/project_quality_analyzer.py" --file src/core/database.ts --mode impact-analysis
 ```
 
 **You present**: Dependency analysis, affected files, risk assessment, and refactoring plan.
@@ -237,7 +267,8 @@ For project-level analysis, the system uses:
 
 - Python environment with CodeDNA installed
 - Access to project files
-- ProjectMind system for project-level analysis
+- ProjectMind/CodeDNA tools installed at `/Users/WangQiao/claude-enhanced-quality`
+  or another path supplied through `PROJECTMIND_HOME`
 
 ## Performance
 

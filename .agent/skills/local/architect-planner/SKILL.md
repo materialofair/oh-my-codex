@@ -6,7 +6,7 @@ tags: [architecture, planning, codex-native, system-design]
 version: 0.2.0
 source: fork
 checksum: 8d45cc8e68cd1f71940dc4393ebdc3e3a1672cfea5c6fc9de7723d2244532555
-updated_at: 2026-05-29T11:50:00+08:00
+updated_at: 2026-06-08T10:50:00+08:00
 layer: research
 ---
 
@@ -53,7 +53,14 @@ rg -n "architecture|deploy|service|database|queue|auth|cache" README.md docs . 2
 如在代码仓内，先用本地 ProjectMind 或直接检索建立事实基础：
 
 ```bash
-python /Users/WangQiao/claude-enhanced-quality/project_mind.py $(pwd)
+PROJECT_PATH="$(pwd)"
+PROJECTMIND_HOME="${PROJECTMIND_HOME:-/Users/WangQiao/claude-enhanced-quality}"
+PYTHON_BIN="${PYTHON_BIN:-$(command -v python3 || command -v python || true)}"
+if [ -z "$PYTHON_BIN" ]; then
+  echo "ProjectMind error: no python3 or python interpreter found" >&2
+  exit 1
+fi
+"$PYTHON_BIN" "$PROJECTMIND_HOME/project_mind.py" "$PROJECT_PATH"
 ```
 
 补充读取：

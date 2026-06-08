@@ -39,7 +39,7 @@
 ```
 User: "Create BDD test for user login"
 
-Claude: [生成单个 scenario 的 feature 文件]
+Codex: [生成单个 scenario 的 feature 文件]
 ```
 
 ### 实现 Step Definitions
@@ -47,7 +47,7 @@ Claude: [生成单个 scenario 的 feature 文件]
 ```
 User: "Implement the steps"
 
-Claude: [遵循 TDD Guard，一步一步实现]
+Codex: [遵循 TDD Guard，一步一步实现]
 ```
 
 ### 项目配置
@@ -55,7 +55,7 @@ Claude: [遵循 TDD Guard，一步一步实现]
 ```
 User: "Setup BDD in my project"
 
-Claude: [完整配置指导]
+Codex: [完整配置指导]
 ```
 
 ## 与 TDD Guard 配合

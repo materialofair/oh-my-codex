@@ -17,7 +17,7 @@ This skill provides systematic methodology for identifying reusable patterns fro
 
 ## When Claude Should Use This Skill
 
-Claude will automatically invoke this skill when:
+Codex should invoke this skill when:
 - Implementation successfully completed (tests passing)
 - @code-implementer finishes major feature work
 - Chief-architect synthesizes results from multiple agents
@@ -509,9 +509,15 @@ verify_json_valid('~/.codex/data/pattern-index.json')
 
 **If any check fails**: Fix before updating knowledge-core.md
 
-## Automation via Hooks
+## Automation Notes
 
-**Stop Hook Integration**:
+Codex does not support Claude Code hook lifecycle automation. Treat the legacy
+hook example below as historical context only; do not configure `.claude/hooks`
+or claim automatic Stop-hook capture in Codex. For Codex, run this skill
+manually at the end of a meaningful implementation session, then update
+`knowledge-core.md` or the relevant repository memory file directly.
+
+**Legacy Claude Code Stop Hook Example (Do Not Use In Codex)**:
 
 ```json
 {
@@ -527,7 +533,7 @@ verify_json_valid('~/.codex/data/pattern-index.json')
 }
 ```
 
-**Hook script** (`.claude/hooks/update-knowledge-core.sh`):
+**Legacy hook script** (`.claude/hooks/update-knowledge-core.sh`):
 ```bash
 #!/bin/bash
 # Triggered at end of session to update knowledge core
@@ -535,7 +541,7 @@ verify_json_valid('~/.codex/data/pattern-index.json')
 # Check if any implementations occurred this session
 if [ -f ".claude/session-summary.json" ]; then
     # Extract patterns from session
-    # Call Claude with pattern-recognition skill
+    # Call Claude Code with pattern-recognition skill
     # Update knowledge-core.md
     echo "🧠 Updating knowledge core with session learnings..."
 fi

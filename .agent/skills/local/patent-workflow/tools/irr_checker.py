@@ -8,7 +8,7 @@ IRR = 1 - (重复句子数 / 总句子数)
 目标: IRR ≥ 0.85 (重复率 ≤ 15%)
 
 Usage:
-    python irr_checker.py <patent_document_path>
+    python3 irr_checker.py <patent_document_path>
 """
 
 import sys
@@ -226,10 +226,10 @@ class IRRChecker:
 def main():
     """主函数"""
     if len(sys.argv) < 2:
-        print("Usage: python irr_checker.py <patent_document_path>")
+        print("Usage: python3 irr_checker.py <patent_document_path>")
         print("")
         print("Example:")
-        print("  python irr_checker.py /path/to/patent.txt")
+        print("  python3 irr_checker.py /path/to/patent.txt")
         sys.exit(1)
 
     file_path = sys.argv[1]

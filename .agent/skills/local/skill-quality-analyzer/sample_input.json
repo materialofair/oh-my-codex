@@ -1,5 +1,5 @@
 {
-  "skill_path": "~/.claude/skills/example-skill/",
+  "skill_path": "~/.codex/skills/example-skill/",
   "analysis_type": "detailed",
   "options": {
     "include_recommendations": true,

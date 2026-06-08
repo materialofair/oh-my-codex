@@ -15,7 +15,15 @@ Analyze project architecture, dependencies, and structure using the local Projec
 "Analyze project structure"
 "Show dependency graph"
 "Identify architectural issues"
+"Find high-risk files"
+"Assess refactor impact"
 ```
+
+## Runtime
+
+ProjectMind is executed from the local tool directory. Prefer `python3`, fall
+back to `python`, and set `PROJECTMIND_HOME` if the tools are installed
+somewhere other than `/Users/WangQiao/claude-enhanced-quality`.
 
 ## What It Does
 

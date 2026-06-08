@@ -43,7 +43,7 @@
 
 ```bash
 # 检查MCP服务器状态
-claude mcp list
+codex mcp list
 
 # 期望输出：
 # drawio: npx -y drawio-mcp-server - ✓ Connected
@@ -52,13 +52,13 @@ claude mcp list
 **如果显示 ✗ Failed**:
 - 确保Draw.io网页已打开
 - 确保扩展显示绿色
-- 重启Claude Code会话
+- 重启 Codex 会话
 
 ---
 
 ### Step 3: 开始使用
 
-在Claude Code中测试：
+在 Codex 中测试：
 
 ```
 "在Draw.io中创建一个简单的架构图，包含API Gateway、2个服务和数据库"
@@ -200,13 +200,13 @@ fillColor=#ff9800;strokeColor=#e65100;fontColor=#ffffff;rounded=1;
 
 ### ❌ MCP连接失败
 
-**症状**: `claude mcp list` 显示 `✗ Failed to connect`
+**症状**: `codex mcp list` 显示 `✗ Failed to connect`
 
 **解决方案**:
 1. 打开 https://app.diagrams.net
 2. 检查扩展图标是否为绿色
 3. 刷新页面（F5）
-4. 重启Claude Code会话
+4. 重启 Codex 会话
 
 详细排查 → [SETUP_GUIDE.md - 故障排查](./SETUP_GUIDE.md#故障排查)
 
@@ -287,7 +287,7 @@ fillColor=#ff9800;strokeColor=#e65100;fontColor=#ffffff;rounded=1;
 - **Draw.io官网**: https://app.diagrams.net
 - **MCP服务器GitHub**: https://github.com/lgazo/drawio-mcp-server
 - **Draw.io文档**: https://www.drawio.com/doc/
-- **Claude Code文档**: https://docs.claude.com/claude-code
+- **Codex 使用指南**: `docs/CODEX.md`
 
 ---
 

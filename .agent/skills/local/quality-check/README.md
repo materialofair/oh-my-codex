@@ -5,8 +5,8 @@ Analyze code quality using CodeDNA 6-dimension intelligent scoring system with R
 ## Quick Install
 
 ```bash
-# Already installed at:
-~/.claude/skills/quality-check/
+# Source of truth in this repository:
+.agent/skills/local/quality-check/
 ```
 
 ## Usage

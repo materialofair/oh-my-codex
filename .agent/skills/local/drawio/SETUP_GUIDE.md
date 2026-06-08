@@ -81,11 +81,11 @@ open https://app.diagrams.net
 - 重启浏览器
 - 检查扩展是否已启用
 
-### 2. 检查Claude Code MCP状态
+### 2. 检查 Codex MCP 状态
 
 ```bash
 # 查看所有MCP服务器状态
-claude mcp list
+codex mcp list
 
 # 期望输出：
 # drawio: npx -y drawio-mcp-server - ✓ Connected
@@ -94,12 +94,12 @@ claude mcp list
 **如果显示 ✗ Failed to connect**:
 - 确保Draw.io网页标签页已打开
 - 确保扩展显示绿色状态
-- 重启Claude Code会话
+- 重启 Codex 会话
 - 检查网络连接
 
 ### 3. 测试MCP工具
 
-在Claude Code中测试基础工具：
+在 Codex 中测试基础工具：
 
 ```
 "列出Draw.io中所有可用的形状分类"
@@ -140,7 +140,7 @@ claude mcp list
 
 **解决方案**:
 1. 刷新Draw.io页面（F5或⌘+R）
-2. 重启Claude Code会话
+2. 重启 Codex 会话
 3. 检查浏览器控制台错误:
    - 右键点击页面 → "检查"
    - 切换到 "Console" 标签
@@ -213,7 +213,7 @@ claude mcp list
   - 新建Chrome/Firefox窗口
   - 打开 https://app.diagrams.net
   - 固定标签页（右键 → Pin Tab）
-  - 在Claude Code中开始使用draw.io工具
+  - 在 Codex 中开始使用draw.io工具
 
 优势:
   ✅ MCP连接稳定
@@ -251,4 +251,4 @@ claude mcp list
 
 ---
 
-**🎉 安装完成后，你就可以在Claude Code中使用draw.io工具了！**
+**🎉 安装完成后，你就可以在 Codex 中使用draw.io工具了！**

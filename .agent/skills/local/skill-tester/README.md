@@ -1,11 +1,11 @@
 # Skill Tester
 
-TDD tool for testing Claude Code skills functionality.
+TDD tool for testing Codex skills functionality.
 
 ## Quick Install
 
 ```bash
-cp -r skill-tester ~/.claude/skills/
+cp -r skill-tester ~/.codex/skills/
 ```
 
 ## Usage
@@ -29,7 +29,7 @@ cp -r skill-tester ~/.claude/skills/
 ```
 User: "Test if financial-analyzer calculates P/E correctly"
 
-Claude:
+Codex:
 Test: P/E Calculation
 Input: price=100, eps=6.45
 Expected: 15.5

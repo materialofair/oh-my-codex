@@ -4,6 +4,20 @@
 
 Analyze code quality using CodeDNA-inspired 6-dimension intelligent scoring system with ROI-optimized refactoring recommendations.
 
+## Runtime
+
+Run CodeDNA tools with a detected Python interpreter:
+
+```bash
+PROJECTMIND_HOME="${PROJECTMIND_HOME:-/Users/WangQiao/claude-enhanced-quality}"
+PYTHON_BIN="${PYTHON_BIN:-$(command -v python3 || command -v python || true)}"
+if [ -z "$PYTHON_BIN" ]; then
+  echo "CodeDNA error: no python3 or python interpreter found" >&2
+  exit 1
+fi
+"$PYTHON_BIN" "$PROJECTMIND_HOME/project_quality_analyzer.py" --project "$(pwd)" --mode overview
+```
+
 ## Six Quality Dimensions
 
 ### 1. Clarity (20%)

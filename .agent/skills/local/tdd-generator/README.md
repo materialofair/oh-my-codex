@@ -8,7 +8,7 @@ Just say any trigger word:
 - "TDD"
 - "Playwright Test Agents"
 
-Claude will automatically load this skill!
+Codex will invoke this skill when the request matches these triggers.
 
 ## Three Usage Scenarios
 
@@ -41,7 +41,7 @@ npx playwright test --agent=healer --repeat
 
 **You say**: "Generate test for this function"
 
-**Claude generates**:
+**Codex generates**:
 ```typescript
 import { describe, it, expect } from 'vitest';
 
@@ -86,4 +86,4 @@ Or:
 "Use Playwright Test Agents for E2E testing"
 ```
 
-Claude will do the rest! 🚀
+Codex will do the rest.

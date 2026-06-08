@@ -59,11 +59,11 @@ https://app.diagrams.net
 
 ## ✅ Step 3: 测试MCP连接
 
-### 验证Claude Code连接
+### 验证 Codex 连接
 
 ```bash
 # 在终端运行
-claude mcp list
+codex mcp list
 
 # 预期输出：
 # drawio: npx -y drawio-mcp-server - ✓ Connected
@@ -72,11 +72,11 @@ claude mcp list
 **如果显示 ✗ Failed to connect**:
 1. 确保Draw.io网页标签页已打开
 2. 确保扩展显示绿色连接状态
-3. 重启Claude Code会话
+3. 重启 Codex 会话
 
 ### 测试基本功能
 
-在Claude Code中输入：
+在 Codex 中输入：
 
 ```
 "在Draw.io中创建一个简单的矩形，文本为'测试成功'"
@@ -228,7 +228,7 @@ claude mcp list
 **立即开始**:
 1. 打开 https://app.diagrams.net
 2. 确保扩展显示绿色
-3. 在Claude Code中输入你的第一个架构图需求
+3. 在 Codex 中输入你的第一个架构图需求
 
 **享受AI驱动的图表创建体验！** 🎉
 

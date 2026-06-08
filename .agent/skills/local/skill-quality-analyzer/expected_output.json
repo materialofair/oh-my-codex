@@ -1,6 +1,6 @@
 {
   "skill_name": "example-skill",
-  "skill_path": "~/.claude/skills/example-skill/",
+  "skill_path": "~/.codex/skills/example-skill/",
   "overall_score": 85,
   "quality_level": "Good",
   "dimensions": {

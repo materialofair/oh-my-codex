@@ -154,7 +154,8 @@ Phase 3: Implement (40-60分钟)
 
 ```bash
 # 使用IRR检查脚本（从 skill 目录运行）
-python .agent/skills/local/patent-workflow/tools/irr_checker.py [专利文档路径]
+PYTHON_BIN="${PYTHON_BIN:-$(command -v python3 || command -v python || true)}"
+"$PYTHON_BIN" .agent/skills/local/patent-workflow/tools/irr_checker.py [专利文档路径]
 
 # 输出示例：
 # IRR Score: 0.87 (✅ Pass - 目标≥0.85)
@@ -170,7 +171,8 @@ python .agent/skills/local/patent-workflow/tools/irr_checker.py [专利文档路
 
 ```bash
 # 使用术语一致性检查脚本（从 skill 目录运行）
-python .agent/skills/local/patent-workflow/tools/term_checker.py [专利文档路径] [术语库路径]
+PYTHON_BIN="${PYTHON_BIN:-$(command -v python3 || command -v python || true)}"
+"$PYTHON_BIN" .agent/skills/local/patent-workflow/tools/term_checker.py [专利文档路径] [术语库路径]
 
 # 输出示例：
 # Terminology Consistency: 95% (✅ Pass - 目标≥90%)
@@ -316,7 +318,8 @@ spawn_agent(agent_type="reviewer", message=<Step 2.3 中的四视角审查 promp
 **解决**:
 ```bash
 # 1. 使用IRR检查工具定位重复段落
-python tools/irr_checker.py [文档路径]
+PYTHON_BIN="${PYTHON_BIN:-$(command -v python3 || command -v python || true)}"
+"$PYTHON_BIN" tools/irr_checker.py [文档路径]
 
 # 2. 改写策略
 - 变换表述方式（同一特征用不同角度描述）

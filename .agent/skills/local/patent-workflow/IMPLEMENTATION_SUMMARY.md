@@ -4,7 +4,7 @@
 
 基于AutoPatent和InstructPatentGPT两个开源项目的研究，成功实现了**方案A：轻量级整合**。
 
-**初始实施日期**: 2025-11-27（集成到 SuperClaude / Claude Code + legacy MCP 协作）
+**初始实施日期**: 2025-11-27（最初集成到 SuperClaude / Claude Code + legacy MCP 协作；当前为 Codex-native workflow）
 **架构迁移日期**: 2026-05-27（重写为 Codex CLI 原生 `spawn_agent` 协议）
 **当前实施方式**: 零成本集成到 Codex CLI（仓库自带 `.codex/agents/*.toml` 复用，无外部 MCP 依赖）
 **预期效果**: 专利授权率提升15-25%，效率提升6-10倍
@@ -158,7 +158,7 @@ Quality Gate 3 (Implement → Delivery):
 ## 📁 文件结构
 
 ```
-~/.claude/skills/patent-workflow/
+~/.codex/skills/patent-workflow/
 ├── skill.md                      # 主skill文件（三阶段workflow详细定义）
 ├── README.md                     # 使用指南和快速开始
 ├── IMPLEMENTATION_SUMMARY.md     # 本文件（实现总结）
@@ -326,7 +326,8 @@ Codex:
 
 ```bash
 # 检查专利文档的重复率
-python ~/.claude/skills/patent-workflow/tools/irr_checker.py /path/to/patent.txt
+PYTHON_BIN="${PYTHON_BIN:-$(command -v python3 || command -v python || true)}"
+"$PYTHON_BIN" ~/.codex/skills/patent-workflow/tools/irr_checker.py /path/to/patent.txt
 
 # 输出示例：
 # ============================================================
@@ -351,10 +352,12 @@ python ~/.claude/skills/patent-workflow/tools/irr_checker.py /path/to/patent.txt
 
 ```bash
 # 检查术语一致性（使用默认术语库）
-python ~/.claude/skills/patent-workflow/tools/term_checker.py /path/to/patent.txt
+PYTHON_BIN="${PYTHON_BIN:-$(command -v python3 || command -v python || true)}"
+"$PYTHON_BIN" ~/.codex/skills/patent-workflow/tools/term_checker.py /path/to/patent.txt
 
 # 检查术语一致性（使用自定义术语库）
-python ~/.claude/skills/patent-workflow/tools/term_checker.py /path/to/patent.txt /path/to/terminology.json
+PYTHON_BIN="${PYTHON_BIN:-$(command -v python3 || command -v python || true)}"
+"$PYTHON_BIN" ~/.codex/skills/patent-workflow/tools/term_checker.py /path/to/patent.txt /path/to/terminology.json
 
 # 输出示例：
 # ============================================================

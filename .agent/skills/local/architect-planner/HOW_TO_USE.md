@@ -11,7 +11,14 @@ Use this skill for architecture design, migration planning, and system-level tra
 3. Run `ProjectMind` when project structure matters:
 
 ```bash
-python /Users/WangQiao/claude-enhanced-quality/project_mind.py $(pwd)
+PROJECT_PATH="$(pwd)"
+PROJECTMIND_HOME="${PROJECTMIND_HOME:-/Users/WangQiao/claude-enhanced-quality}"
+PYTHON_BIN="${PYTHON_BIN:-$(command -v python3 || command -v python || true)}"
+if [ -z "$PYTHON_BIN" ]; then
+  echo "ProjectMind error: no python3 or python interpreter found" >&2
+  exit 1
+fi
+"$PYTHON_BIN" "$PROJECTMIND_HOME/project_mind.py" "$PROJECT_PATH"
 ```
 
 4. Use `spawn_agent(explorer)` for current-state architecture tracing.

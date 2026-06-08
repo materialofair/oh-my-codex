@@ -4,6 +4,21 @@
 
 ProjectMind-powered intelligent project analysis providing fast architectural understanding through local dependency graphs and pattern detection. This workflow does not call external model CLIs; Codex synthesizes answers from ProjectMind output and targeted local repository inspection.
 
+## Runtime
+
+Run ProjectMind with a detected Python interpreter:
+
+```bash
+PROJECT_PATH="$(pwd)"
+PROJECTMIND_HOME="${PROJECTMIND_HOME:-/Users/WangQiao/claude-enhanced-quality}"
+PYTHON_BIN="${PYTHON_BIN:-$(command -v python3 || command -v python || true)}"
+if [ -z "$PYTHON_BIN" ]; then
+  echo "ProjectMind error: no python3 or python interpreter found" >&2
+  exit 1
+fi
+"$PYTHON_BIN" "$PROJECTMIND_HOME/project_mind.py" "$PROJECT_PATH"
+```
+
 ## Usage Scenarios
 
 ### Scenario 1: Quick Project Understanding

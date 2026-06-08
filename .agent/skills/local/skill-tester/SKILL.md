@@ -327,7 +327,7 @@ A well-tested skill should:
 ```
 User: "Test the financial-analyzer skill"
 
-Claude: "Running test suite for financial-analyzer...
+Codex: "Running test suite for financial-analyzer...
 
 Test Results:
 ✅ Basic calculations (4/4 passed)

@@ -7,7 +7,7 @@ Terminology Consistency Checker for Patent Documents
 目标: 术语一致性 ≥ 90%
 
 Usage:
-    python term_checker.py <patent_document_path> <terminology_database_path>
+    python3 term_checker.py <patent_document_path> <terminology_database_path>
 """
 
 import sys
@@ -306,10 +306,10 @@ def create_sample_terminology():
 def main():
     """主函数"""
     if len(sys.argv) < 2:
-        print("Usage: python term_checker.py <patent_document_path> [terminology_database_path]")
+        print("Usage: python3 term_checker.py <patent_document_path> [terminology_database_path]")
         print("")
         print("Example:")
-        print("  python term_checker.py /path/to/patent.txt /path/to/terminology.json")
+        print("  python3 term_checker.py /path/to/patent.txt /path/to/terminology.json")
         print("")
         print("如果未提供术语库，将使用默认术语库。")
         sys.exit(1)
