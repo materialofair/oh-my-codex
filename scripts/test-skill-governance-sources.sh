@@ -83,7 +83,7 @@ ensure_node() {
 
 detect_repo_skills_path() {
   local base="$1"
-  local candidates=(".agent/skills/local" ".agent/skills" ".codex/skills" "skills")
+  local candidates=(".agent/skills/local" ".agent/skills" ".agents/skills" ".codex/skills" "skills")
   local candidate
   for candidate in "${candidates[@]}"; do
     if [[ -d "$base/$candidate" ]]; then
@@ -96,7 +96,7 @@ detect_repo_skills_path() {
 
 detect_ref_skills_path() {
   local ref="$1"
-  local candidates=(".agent/skills/local" ".agent/skills" ".codex/skills" "skills")
+  local candidates=(".agent/skills/local" ".agent/skills" ".agents/skills" ".codex/skills" "skills")
   local candidate
   for candidate in "${candidates[@]}"; do
     if git cat-file -e "$ref:$candidate" 2>/dev/null; then
@@ -137,12 +137,12 @@ if ! git rev-parse --verify "$UPSTREAM_REF" >/dev/null 2>&1; then
 fi
 
 if ! FORK_SKILLS_REL="$(detect_repo_skills_path "$ROOT_DIR")"; then
-  echo "No local skills directory found (.agent/skills, .codex/skills, or skills)." >&2
+  echo "No local skills directory found (.agent/skills, .agents/skills, .codex/skills, or skills)." >&2
   exit 1
 fi
 
 if ! UPSTREAM_SKILLS_REL="$(detect_ref_skills_path "$UPSTREAM_REF")"; then
-  echo "No skills directory found in ref $UPSTREAM_REF (.agent/skills, .codex/skills, or skills)." >&2
+  echo "No skills directory found in ref $UPSTREAM_REF (.agent/skills, .agents/skills, .codex/skills, or skills)." >&2
   exit 1
 fi
 

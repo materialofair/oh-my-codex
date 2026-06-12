@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-06-12T06:58:55.586Z",
+  "generatedAt": "2026-06-12T07:37:15.049Z",
   "counts": {
-    "skillCount": 138,
+    "skillCount": 139,
     "promptCount": 3,
-    "activeSkillCount": 138,
+    "activeSkillCount": 139,
     "activeAgentCount": 3
   },
   "skills": [
@@ -684,6 +684,17 @@
       "status": "active",
       "core": false,
       "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "impeccable",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "impeccable",
       "version": "0.1.0",
       "layer": null,
       "intent": null,

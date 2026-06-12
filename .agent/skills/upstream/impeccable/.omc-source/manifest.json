@@ -1,0 +1,11 @@
+{
+  "source": "github",
+  "repo": "pbakaus/impeccable",
+  "ref": "main",
+  "skillsPath": ".",
+  "upstreamSkillsPath": ".agents/skills",
+  "homepage": "https://github.com/pbakaus/impeccable",
+  "adaptations": [
+    "Codex script paths rewritten to use omcodex skill path impeccable."
+  ]
+}

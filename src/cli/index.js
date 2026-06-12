@@ -27,6 +27,7 @@ Usage:
   omcodex notify init|status|validate|test [event]
   omcodex source [list|active|set <fork|upstream>|sync|status]
   omcodex skill list [--verbose]
+  omcodex skill path <name>
   omcodex skill prefer <name> <source>
   omcodex skill conflicts
   omcodex harness graph [--skill <name>]
@@ -136,7 +137,12 @@ async function main(args) {
   }
 
   if (command === 'skill') {
-    const { listSkills, setPreference, showConflicts } = require('./skill');
+    const {
+      listSkills,
+      printSkillPath,
+      setPreference,
+      showConflicts,
+    } = require('./skill');
     const subcommand = args[1];
 
     if (subcommand === 'list') {
@@ -155,13 +161,23 @@ async function main(args) {
       return;
     }
 
+    if (subcommand === 'path') {
+      const skillName = args[2];
+      if (!skillName) {
+        console.error('Usage: omcodex skill path <name>');
+        process.exit(1);
+      }
+      await printSkillPath(skillName);
+      return;
+    }
+
     if (subcommand === 'conflicts') {
       await showConflicts();
       return;
     }
 
     console.error(`Unknown skill subcommand: ${subcommand}`);
-    console.error('Available: list, prefer, conflicts');
+    console.error('Available: list, path, prefer, conflicts');
     process.exit(1);
   }
 

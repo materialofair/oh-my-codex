@@ -42,7 +42,7 @@ npx oh-my-codex-cli setup
 ```
 
 安装内容包括：
-- **Skills** → `~/.codex/skills/`
+- **Skills** → `~/.codex/skills/`（来自 local、oh-my-codex、superpowers、ECC、Impeccable 等来源）
 - **角色 Prompt** → `~/.codex/prompts/`
 - **Rules** → `~/.codex/rules/`
 - **MCP 配置 + Plan 模式** → `~/.codex/config.toml`
@@ -88,6 +88,8 @@ project_doc_max_bytes = 65536
 - **学习与上下文**：`continuous-learning`, `strategic-compact`, `iterative-retrieval`, `verification-loop`
 - **原生 subagent 编排**：核心 skill 统一使用 `spawn_agent` + `send_input` + `wait` + `close_agent`
 - **自动技能路由**：`omcodex route "<task>"` 自动推荐最匹配的 skill（含置信度）
+- **前端设计工作流**：上游集成 Impeccable Codex skill，可用于 UI 设计、审计、polish 和 live iteration
+- **脚本型 skill 路径解析**：`omcodex skill path impeccable` 可定位已安装 skill 目录
 - **事件驱动 team 自动推进**：`omcodex team start "<task>" --auto` 可按 notify 事件推进阶段
 - **通知扩展**：`omcodex notify`（事件驱动通知扩展，不是拦截执行）
 - **规则与守护**：编码 / 安全 / 测试 / 性能 / Git 工作流

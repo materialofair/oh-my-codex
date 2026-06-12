@@ -137,6 +137,8 @@ If a skill doesn’t seem to activate:
   - `omcodex test changed`
   - `omcodex test analyze src/router/skill-router.js`
   - `omcodex test gen src/router/skill-router.js`
+- Resolve an installed skill directory for script-backed skills:
+  - `omcodex skill path impeccable`
 - Run the internal repository harness:
   - `omcodex test llm all`
   - `omcodex test llm router --cases tests/llm/router-cases.json`

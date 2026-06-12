@@ -11,6 +11,24 @@ const BOOST_RULES = [
   { skill: 'security-review', weight: 4, keywords: ['security', '鉴权', '漏洞', '安全'] },
   { skill: 'build-fix', weight: 4, keywords: ['build error', 'compile', 'type error', '报错'] },
   { skill: 'code-review', weight: 4, keywords: ['review', 'code review', '审查', '评审'] },
+  {
+    skill: 'impeccable',
+    weight: 6,
+    keywords: [
+      'impeccable',
+      'frontend',
+      'ui',
+      'ux',
+      'dashboard',
+      'landing page',
+      'design',
+      'redesign',
+      'polish',
+      'visual',
+      'interface',
+      'live iteration',
+    ],
+  },
 ];
 
 // Build layer → weight map for ranking

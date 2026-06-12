@@ -19,6 +19,44 @@ const {
   parseSkillMetadata,
 } = require('../merge/skill-merger');
 
+function expandHome(input, home) {
+  if (!input) return null;
+  if (input === '~') return home;
+  if (input.startsWith('~/')) return path.join(home, input.slice(2));
+  return input;
+}
+
+function unique(values) {
+  return Array.from(new Set(values.filter(Boolean)));
+}
+
+function candidateSkillRoots(options = {}) {
+  const cwd = options.cwd || process.cwd();
+  const home = options.home || os.homedir();
+  const env = options.env || process.env;
+  const codexHome = expandHome(env.CODEX_HOME, home);
+
+  return unique([
+    path.join(cwd, '.codex', 'skills'),
+    path.join(cwd, '.agents', 'skills'),
+    codexHome ? path.join(codexHome, 'skills') : null,
+    path.join(home, '.codex', 'skills'),
+    path.join(home, '.agents', 'skills'),
+  ]).map((candidate) => path.resolve(candidate));
+}
+
+function resolveSkillPath(skillName, options = {}) {
+  if (!skillName || /[/\\]/.test(skillName)) return null;
+
+  for (const root of candidateSkillRoots(options)) {
+    const skillDir = path.join(root, skillName);
+    const skillFile = path.join(skillDir, 'SKILL.md');
+    if (fs.existsSync(skillFile)) return skillDir;
+  }
+
+  return null;
+}
+
 /**
  * List all installed skills with their sources
  */
@@ -148,9 +186,19 @@ async function showConflicts(options = {}) {
   }
 }
 
+async function printSkillPath(skillName, options = {}) {
+  const skillPath = resolveSkillPath(skillName, options);
+  if (!skillPath) {
+    console.error(`Skill not found: ${skillName}`);
+    process.exit(1);
+  }
+  console.log(skillPath);
+}
+
 module.exports = {
   listSkills,
+  printSkillPath,
+  resolveSkillPath,
   setPreference,
   showConflicts,
 };
-

@@ -12,7 +12,18 @@ function parseLimit(args) {
 }
 
 function parseTask(args) {
-  return args.filter((arg) => !arg.startsWith('--limit') && arg !== '--json').join(' ').trim();
+  const taskParts = [];
+  for (let index = 0; index < args.length; index += 1) {
+    const arg = args[index];
+    if (arg === '--json') continue;
+    if (arg === '--limit') {
+      index += 1;
+      continue;
+    }
+    if (arg.startsWith('--limit=')) continue;
+    taskParts.push(arg);
+  }
+  return taskParts.join(' ').trim();
 }
 
 async function route(args) {
@@ -40,4 +51,4 @@ async function route(args) {
   }
 }
 
-module.exports = { route };
+module.exports = { parseLimit, parseTask, route };

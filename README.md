@@ -11,10 +11,11 @@ English | [简体中文](README.zh.md)
 A curated collection of **130+ merged skills**, **3 Codex agents**, and **11 managed MCP server entries** from multiple sources, with intelligent merging, conflict resolution, and governance tooling.
 
 **Upstream Sources:**
-- 🏠 **Local** (60 skills) — Custom skills for your workflow
+- 🏠 **Local** (62 skills) — Custom skills for your workflow
 - 🔧 **oh-my-codex** (36 skills) — Core execution modes and workflows  
 - ⚡ **superpowers** (14 skills) — Advanced patterns and utilities
 - 🌍 **everything-claude-code** (30 selected skills; 35 vendored) — Multi-language rules, MCP configs, specialized agents
+- 🎨 **Impeccable** (1 skill) — Codex-native frontend design and live UI iteration
 
 Inspired by **oh‑my‑claudecode**, rebuilt for **Codex architecture**, with manifest-driven upstream source management.
 
@@ -50,7 +51,7 @@ npm run setup:omcodex            # Runtime setup from source
 ```
 
 **What Gets Installed:**
-- **130+ Skills** → `~/.codex/skills/` (currently 131 merged unique skills from 4 sources)
+- **130+ Skills** → `~/.codex/skills/` (currently 137 merged unique skills from 5 sources)
 - **3 Codex Agents** → `~/.codex/agents/` (explorer, reviewer, docs-researcher)
 - **11 MCP Server Entries** → `~/.codex/config.toml` (5 oh-my-codex entries + 6 selected ECC servers)
 - **Role Prompts** → `~/.codex/prompts/` (architect, planner, executor)
@@ -131,14 +132,15 @@ oh-my-codex implements a **manifest-driven upstream source management system** i
 ```
 .agent/
 ├── skills/
-│   ├── local/                    # 60 skills — local customizations (always win conflicts)
+│   ├── local/                    # 62 skills — local customizations (always win conflicts)
 │   └── upstream/
 │       ├── oh-my-codex/          # 36 skills — core execution modes  
 │       ├── superpowers/          # 14 skills — advanced patterns
-│       └── ecc/                  # 30 selected skills — everything-claude-code (35 vendored)
+│       ├── ecc/                  # 30 selected skills — everything-claude-code (35 vendored)
+│       └── impeccable/           # 1 skill — Codex-native UI design workflow
 │           ├── .omc-source/
-│           │   └── manifest.json # source metadata + asset declarations
-│           └── <skill-dirs>/     # flattened SKILL.md + agents/openai.yaml
+│           │   └── manifest.json # source metadata + adaptation declarations
+│           └── <skill-dirs>/     # flattened SKILL.md + references/scripts/agents
 ├── curation/
 │   └── ecc-codex-selection.json  # curated allowlist for ECC artifacts
 └── sources.json                  # (planned) multi-source registry
@@ -162,6 +164,9 @@ oh-my-codex implements a **manifest-driven upstream source management system** i
 # Refresh ECC from upstream
 ./scripts/sync-ecc.sh              # Git sparse-checkout refresh with local-edit protection
 ./scripts/sync-ecc.sh --force      # Override local-edit protection
+
+# Refresh Impeccable from upstream
+npm run source:skills:sync:impeccable
 
 # Customize installation
 omcodex setup --no-upstream-codex  # Skip ECC agents and MCP servers
@@ -212,7 +217,7 @@ oh-my-codex implements a sophisticated **source-of-truth** architecture:
 
 1. **Source Discovery**: Manifest-driven upstream source detection via `.omc-source/manifest.json`
 2. **Selection-Based Curation**: Install only selected artifacts via `.agent/curation/*.json`
-3. **Quality-Scored Conflict Resolution**: Local skills > oh-my-codex > superpowers > ecc
+3. **Quality-Scored Conflict Resolution**: Local skills win by default; upstream conflicts are scored and reported
 4. **Idempotent TOML Merging**: Managed blocks prevent duplication in `~/.codex/config.toml`
 5. **Local-Edit Protection**: Sync scripts detect modifications and refuse to overwrite
 
@@ -302,7 +307,7 @@ npm run governance:skills:overlap:multi
 # Example output:
 # ecc x local: 7 conflicts (backend-patterns, security-review, tdd-workflow...)
 # ecc x oh-my-codex: 1 conflict (verification-loop)  
-# Resolution: local > oh-my-codex > superpowers > ecc (by quality score)
+# Resolution: local-first with quality-scored upstream conflict handling
 ```
 
 ### 🚫 **Quality Enforcement**
@@ -403,6 +408,7 @@ omcodex setup --scope project      # Project-local installation
 
 # Source management
 ./scripts/sync-ecc.sh              # Refresh from upstream
+npm run source:skills:sync:impeccable # Refresh Impeccable from upstream
 npm run governance:skills:overlap:multi # Analyze conflicts
 
 # Agent orchestration
@@ -415,6 +421,7 @@ team: coordinate multiple agents to implement feature X
 
 ### 🆕 **Version 0.2.8+ Features**
 - **everything-claude-code Integration**: 30 selected skills (35 vendored) with multi-language rules and MCP servers
+- **Impeccable Integration**: Codex-native frontend design skill vendored as an upstream source with portable script path resolution
 - **Manifest-Driven Sources**: Upstream source management via `.omc-source/manifest.json` declarations
 - **Selection-Based Curation**: Install only desired artifacts via `.agent/curation/*.json` allowlists
 - **Enhanced Conflict Resolution**: Quality-scored merging with local-first priority

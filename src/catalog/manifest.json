@@ -685,6 +685,17 @@
       "composes": []
     },
     {
+      "name": "impeccable",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "impeccable",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
       "name": "investor-materials",
       "category": "utility",
       "status": "active",
