@@ -15,6 +15,16 @@ Skill pack and workflow orchestration for OpenAI Codex CLI.
 - If the user names a skill (or `$skill`), use it.
 - If a skill conflicts with repository docs, follow repository docs and note the conflict.
 
+## Frontier Model Adapter
+
+For GPT-5.4, GPT-5.5, and later frontier Codex models:
+
+- Prefer repository evidence over model memory before using skills or changing files.
+- Ask only when blocked by a decision that local context cannot answer.
+- Keep changes small, reversible, and scoped to the requested outcome.
+- Verify before claiming completion, and report concrete evidence.
+- Treat model-version guidance as eval-driven; do not add per-version rules without repeated failures.
+
 ## AI Commenting
 
 - Proactively use `ai-commenting` for non-trivial implementations and refactors.

@@ -27,6 +27,24 @@ oh-my-codex should be composed in this order:
 
 Keep the adapter short. If an instruction belongs to all models, put it in project rules or the role prompt instead.
 
+## Automatic Activation
+
+Codex does not automatically inject arbitrary files from `~/.codex/prompts/` when a skill runs. The installed adapter file is a reusable prompt asset.
+
+For automatic behavior, oh-my-codex keeps a short frontier-model adapter summary in `templates/AGENTS.global.md`. During user-scope setup, that template is installed as:
+
+```text
+~/.codex/AGENTS.md
+```
+
+That makes the short adapter rules part of the normal Codex instruction load path for future sessions. The full adapter file remains available at:
+
+```text
+~/.codex/prompts/adapters/openai-frontier-codex.md
+```
+
+Existing users who already have `~/.codex/AGENTS.md` should rerun setup. The installer appends the `Frontier Model Adapter` section when it is missing and leaves existing copies alone.
+
 ## Version Strategy
 
 Do not create a prompt file for every model version. Use the shared `openai-frontier-codex` adapter until tests show a real reason to split.

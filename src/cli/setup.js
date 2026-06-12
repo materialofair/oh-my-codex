@@ -392,6 +392,51 @@ async function mergeUpstreamAgentsSupplements(globalAgentsDest, assets, options)
   return eligible.length;
 }
 
+async function mergeFrontierModelAdapterSupplement(globalAgentsDest, options) {
+  const startMarker = '<!-- omcodex frontier model adapter -->';
+  const endMarker = '<!-- end omcodex frontier model adapter -->';
+  const heading = '## Frontier Model Adapter';
+  const existing = fs.existsSync(globalAgentsDest)
+    ? fs.readFileSync(globalAgentsDest, 'utf8')
+    : '';
+
+  const start = existing.indexOf(startMarker);
+  let stripped = existing;
+  if (start >= 0) {
+    const end = existing.indexOf(endMarker, start);
+    if (end >= 0) {
+      stripped = (existing.slice(0, start) + existing.slice(end + endMarker.length)).trimEnd() + '\n';
+    }
+  } else if (existing.includes(heading)) {
+    return 0;
+  }
+
+  const section = [
+    startMarker,
+    '',
+    heading,
+    '',
+    'Apply this lightweight adapter for frontier OpenAI Codex models such as GPT-5.4, GPT-5.5, and later successors:',
+    '',
+    '- Treat newer models as capable but still subject to behavior drift.',
+    '- Prefer repository evidence over model memory, especially before using skills or changing files.',
+    '- Ask only when blocked by a decision that cannot be inferred from user intent or local context.',
+    '- Keep changes small, reversible, and scoped to the requested outcome.',
+    '- Use skills as on-demand workflows, not as permanent context bloat.',
+    '- Verify before claiming completion; report commands, results, changed paths, and remaining risk.',
+    '- Add version-specific model guidance only after repeated eval-backed failures.',
+    '',
+    endMarker,
+  ].join('\n');
+  const next = `${stripped.trimEnd()}\n\n${section}\n`;
+
+  if (!options.dryRun) {
+    await fsp.mkdir(path.dirname(globalAgentsDest), { recursive: true });
+    await fsp.writeFile(globalAgentsDest, next, 'utf8');
+  }
+  return 1;
+}
+
 async function installUpstreamCodexAgents(asset, agentsDest, options) {
   if (!asset.agentsDir || !fs.existsSync(asset.agentsDir)) return 0;
 
@@ -561,6 +606,12 @@ async function setup(options = {}) {
     // an idempotent managed block. Only meaningful at user scope where a
     // global AGENTS.md exists.
     if (fs.existsSync(globalAgentsDest) || options.dryRun) {
+      const adapterAppended = await mergeFrontierModelAdapterSupplement(globalAgentsDest, options);
+      if (adapterAppended > 0) {
+        const verb = options.dryRun ? 'Would append' : 'Appended';
+        console.log(`  ${verb} frontier model adapter -> ${globalAgentsDest}`);
+      }
+
       const supplementAssets = discoverUpstreamCodexAssets(root);
       const appended = await mergeUpstreamAgentsSupplements(globalAgentsDest, supplementAssets, options);
       if (appended > 0) {

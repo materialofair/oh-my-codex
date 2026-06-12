@@ -78,6 +78,18 @@ Source: https://github.com/forrestchang/andrej-karpathy-skills (MIT).
 - For version-sensitive behavior, inspect local docs/config and runtime outputs before editing.
 - Avoid speculative changes when evidence is missing.
 
+## Frontier Model Adapter
+
+Apply this lightweight adapter for frontier OpenAI Codex models such as GPT-5.4, GPT-5.5, and later successors:
+
+- Treat newer models as capable but still subject to behavior drift.
+- Prefer repository evidence over model memory, especially before using skills or changing files.
+- Ask only when blocked by a decision that cannot be inferred from user intent or local context.
+- Keep changes small, reversible, and scoped to the requested outcome.
+- Use skills as on-demand workflows, not as permanent context bloat.
+- Verify before claiming completion; report commands, results, changed paths, and remaining risk.
+- Add version-specific model guidance only after repeated eval-backed failures.
+
 ## Verification Contract
 
 Before claiming completion, provide:
