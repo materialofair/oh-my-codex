@@ -5,6 +5,21 @@ All notable changes to `oh-my-codex-cli` are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-06-12
+
+### Added
+- Added an `openai-frontier-codex` model adapter prompt for GPT-5.4, GPT-5.5,
+  and future frontier Codex models.
+- Added adapter contract coverage to the internal prompt harness.
+- Added installer support that appends a short frontier-model adapter section
+  to `~/.codex/AGENTS.md` when it is missing, so the guidance loads
+  automatically in future Codex sessions.
+
+### Changed
+- Documented the model adapter layering strategy and clarified that files under
+  `~/.codex/prompts/` are reusable prompt assets, while automatic behavior is
+  provided by AGENTS guidance.
+
 ## [1.1.11] - 2026-06-08
 
 ### Fixed
