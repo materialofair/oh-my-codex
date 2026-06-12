@@ -21,6 +21,7 @@ The internal harness covers four layers:
 
 3. `prompts`
    - validates `architect`, `planner`, and `executor` prompt contracts
+   - validates model adapter contracts such as `openai-frontier-codex`
    - checks frontmatter, required sections, keywords, and forbidden legacy terms
 
 4. `workflow`
@@ -34,6 +35,7 @@ omcodex test llm all
 omcodex test llm skills --skill-path .agent/skills/skill-tester
 omcodex test llm router --cases tests/llm/router-cases.json
 omcodex test llm prompts --cases tests/llm/prompt-contract-cases.json
+omcodex test llm prompts --adapter-cases tests/llm/model-adapter-cases.json
 omcodex test llm workflow
 ```
 
@@ -61,6 +63,7 @@ Instead, this harness protects the Codex-facing surfaces that actually control r
 - skills
 - routing
 - role prompts
+- model adapter prompts
 - workflow smoke behavior
 
 That keeps the harness aligned with the real runtime while the AI-native test generation flow remains centered in `docs/AI_TESTING.md`.

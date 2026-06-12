@@ -17,10 +17,10 @@ const HELP = `Usage:
   omcodex test analyze <file> [--json]
   omcodex test changed [--limit <n>] [--out-dir <dir>] [--json]
   omcodex test gen <file> [--out-dir <dir>] [--json]
-  omcodex test llm all [--router-cases <file>] [--skill-path <dir>]
+  omcodex test llm all [--router-cases <file>] [--skill-path <dir>] [--adapter-cases <file>]
   omcodex test llm skills [--skill-path <dir>] [--cases <file>] [--runner <name>] [--runner-cmd <cmd>]
   omcodex test llm router [--cases <file>] [--limit <n>]
-  omcodex test llm prompts [--cases <file>]
+  omcodex test llm prompts [--cases <file>] [--adapter-cases <file>]
   omcodex test llm workflow [--keep-sandbox]
 `;
 
@@ -129,6 +129,7 @@ async function test(args) {
     routerCasesPath: getFlagValue(rest, '--router-cases') || '',
     skillPath: getFlagValue(rest, '--skill-path') || '',
     promptContractCasesPath: getFlagValue(rest, '--prompt-contract-cases') || '',
+    modelAdapterCasesPath: getFlagValue(rest, '--adapter-cases') || '',
     runner: getFlagValue(rest, '--runner') || '',
     runnerCmd: getFlagValue(rest, '--runner-cmd') || '',
     mode: getFlagValue(rest, '--mode') || 'auto',
@@ -167,6 +168,9 @@ async function test(args) {
       root,
       outDir: options.outDir || undefined,
       casesPath: options.casesPath || options.promptContractCasesPath || undefined,
+      extraCasesPaths: [
+        options.modelAdapterCasesPath || path.join(root, 'tests', 'llm', 'model-adapter-cases.json'),
+      ],
     });
     console.log(`prompts suite: pass=${summary.pass}, passed=${summary.passed}, failed=${summary.failed}`);
     console.log(`reports: ${summary.reportPaths.jsonPath}`);

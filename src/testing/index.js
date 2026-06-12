@@ -57,6 +57,9 @@ async function runAllSuites(options = {}) {
     root,
     outDir,
     casesPath: options.promptContractCasesPath || options.promptCasesPath,
+    extraCasesPaths: [
+      options.modelAdapterCasesPath || path.join(root, 'tests', 'llm', 'model-adapter-cases.json'),
+    ],
   });
   suites.push({
     name: 'prompts',
