@@ -26,7 +26,7 @@
 - Create: `prompts/adapters/openai-frontier-codex.md`
 - Create: `docs/MODEL_ADAPTERS.md`
 
-- [ ] **Step 1: Add the adapter prompt**
+- [x] **Step 1: Add the adapter prompt**
 
 Create `prompts/adapters/openai-frontier-codex.md` with frontmatter and these sections:
 
@@ -50,7 +50,7 @@ model-family: "openai-frontier-codex"
 
 The body must include the exact concepts `frontier`, `repository evidence`, `verification`, `ask only when blocked`, `small reversible changes`, and `future model drift`.
 
-- [ ] **Step 2: Add user-facing documentation**
+- [x] **Step 2: Add user-facing documentation**
 
 Create `docs/MODEL_ADAPTERS.md` explaining:
 
@@ -68,7 +68,7 @@ Create `docs/MODEL_ADAPTERS.md` explaining:
 
 Include `openai-frontier-codex` as the only default adapter and explain that per-version files are created only after eval evidence.
 
-- [ ] **Step 3: Inspect the files**
+- [x] **Step 3: Inspect the files**
 
 Run:
 
@@ -87,7 +87,7 @@ Expected: both files exist, contain no placeholders, and match the approved desi
 - Modify: `src/testing/index.js`
 - Modify: `src/cli/test.js`
 
-- [ ] **Step 1: Add the adapter fixture**
+- [x] **Step 1: Add the adapter fixture**
 
 Create `tests/llm/model-adapter-cases.json`:
 
@@ -128,7 +128,7 @@ Create `tests/llm/model-adapter-cases.json`:
 ]
 ```
 
-- [ ] **Step 2: Extend the prompt suite case loader**
+- [x] **Step 2: Extend the prompt suite case loader**
 
 Modify `src/testing/prompts.js` so `runPromptsSuite()` accepts `extraCasesPaths` and evaluates the default prompt cases plus extra case files. Keep the existing result shape.
 
@@ -145,7 +145,7 @@ const cases = casesPaths.flatMap((file) => readJsonFile(file, []));
 
 Set `casesPath` in the summary to a single path for legacy behavior and add `casesPaths` for the combined list.
 
-- [ ] **Step 3: Wire adapter cases into all-suite**
+- [x] **Step 3: Wire adapter cases into all-suite**
 
 Modify `src/testing/index.js` so `runAllSuites()` passes:
 
@@ -157,7 +157,7 @@ extraCasesPaths: [
 
 to `runPromptsSuite()`.
 
-- [ ] **Step 4: Add CLI flag**
+- [x] **Step 4: Add CLI flag**
 
 Modify `src/cli/test.js` so:
 
@@ -166,7 +166,7 @@ Modify `src/cli/test.js` so:
 - `llm prompts` passes `extraCasesPaths`
 - `llm all` forwards the option through `runAllSuites(options)`
 
-- [ ] **Step 5: Run prompt suite**
+- [x] **Step 5: Run prompt suite**
 
 Run:
 
@@ -181,7 +181,7 @@ Expected: prompt suite passes and reports 4 cases: 3 role prompts plus 1 adapter
 **Files:**
 - Modify: `docs/LLM_TESTING.md`
 
-- [ ] **Step 1: Document adapter testing**
+- [x] **Step 1: Document adapter testing**
 
 Update `docs/LLM_TESTING.md` prompt layer section to say it validates role prompts and model adapter prompts.
 
@@ -191,7 +191,7 @@ Add CLI example:
 omcodex test llm prompts --adapter-cases tests/llm/model-adapter-cases.json
 ```
 
-- [ ] **Step 2: Run targeted checks**
+- [x] **Step 2: Run targeted checks**
 
 Run:
 
@@ -207,7 +207,7 @@ Expected:
 - npm prompt script passes
 - all-suite passes or reports only pre-existing unrelated failures
 
-- [ ] **Step 3: Inspect final diff**
+- [x] **Step 3: Inspect final diff**
 
 Run:
 
@@ -221,4 +221,3 @@ Expected:
 
 - no whitespace errors
 - changed files are limited to adapter prompt, docs, fixture, and prompt test wiring
-

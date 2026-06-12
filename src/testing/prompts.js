@@ -91,7 +91,13 @@ async function runPromptsSuite(options = {}) {
   const root = options.root || path.resolve(__dirname, '..', '..');
   const casesPath = options.casesPath || path.join(root, 'tests', 'llm', 'prompt-contract-cases.json');
   const outDir = options.outDir || defaultOutDir(root);
-  const cases = readJsonFile(casesPath, []);
+  const casesPaths = [
+    casesPath,
+    ...(Array.isArray(options.extraCasesPaths) ? options.extraCasesPaths : []),
+  ]
+    .filter(Boolean)
+    .map((file) => path.resolve(root, file));
+  const cases = casesPaths.flatMap((file) => readJsonFile(file, []));
 
   if (!Array.isArray(cases) || cases.length === 0) {
     throw new Error(`Prompt cases not found or empty: ${casesPath}`);
@@ -108,6 +114,7 @@ async function runPromptsSuite(options = {}) {
     generatedAt: new Date().toISOString(),
     suite: 'prompts',
     casesPath,
+    casesPaths,
     total: results.length,
     passed,
     failed,

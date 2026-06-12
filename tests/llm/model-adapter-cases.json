@@ -1,0 +1,34 @@
+[
+  {
+    "id": "openai-frontier-codex-adapter",
+    "promptFile": "prompts/adapters/openai-frontier-codex.md",
+    "requiredFrontmatter": ["description", "model-family"],
+    "requiredSections": [
+      "## Purpose",
+      "## Model Biases To Correct",
+      "## Tool Usage Policy",
+      "## Retrieval Policy",
+      "## Clarification Policy",
+      "## Persistence And Stop Conditions",
+      "## Verification Policy",
+      "## Output Policy",
+      "## Known Failure Modes",
+      "## Final Checklist"
+    ],
+    "requiredKeywords": [
+      "frontier",
+      "repository evidence",
+      "verification",
+      "ask only when blocked",
+      "small reversible changes",
+      "future model drift"
+    ],
+    "forbiddenKeywords": [
+      "Claude Code",
+      "Gemini",
+      "plugin-dir",
+      "HUD",
+      "leaked prompt"
+    ]
+  }
+]
