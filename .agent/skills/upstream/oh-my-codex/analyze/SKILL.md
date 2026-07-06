@@ -1,181 +1,146 @@
 ---
 name: analyze
-description: "Run deep investigation of architecture, bugs, performance issues, or dependencies and return structured findings with file:line evidence. Use when a user says 'analyze', 'investigate', 'why does', 'what's causing', or needs root cause analysis before making changes. Routes to architect agent or Codex MCP for thorough cross-file reasoning."
+description: "Run read-only deep repository analysis and return a ranked synthesis with explicit confidence, concrete file references, and clear evidence-vs-inference boundaries. Use when a user says 'analyze', 'investigate', 'why does', 'what's causing', or needs grounded cross-file explanation before any changes are proposed."
 ---
 
-# Analyze — Evidence-Driven Investigation
+# Analyze — Read-Only Deep Analysis
 
-Use this skill for ambiguous, causal, evidence-heavy questions where the goal is to explain **why** an observed result happened, not to jump directly into fixing or rewriting code.
+Use this skill to answer the user’s question through **read-only repository analysis**. The goal is to explain what the codebase most likely says about the question, not to drift into implementation, debugging theater, or generic fix planning.
 
-## Good entry cases
+## Use `$analyze` when
 
-Use `$analyze` when the problem is:
-
-- ambiguous or causal
-- evidence-heavy
-- best answered by exploring competing explanations
-- requires reading multiple files and reasoning across them
+- the user wants a grounded explanation, not code changes
+- the answer requires reading multiple files or tracing behavior across boundaries
+- there are several plausible explanations and they need to be ranked
+- confidence should reflect the strength of the available evidence
+- the user wants to understand architecture, behavior, causality, impact, or tradeoffs before changing anything
 
 Examples:
-- runtime bugs and regressions
-- performance / latency / resource behavior
-- architecture / premortem / postmortem analysis
-- config / routing / orchestration behavior explanation
-- dependency analysis or impact assessment
-- "given this output, trace back the likely causes"
+- why a workflow behaves a certain way
+- how a feature is wired across modules
+- what likely explains a failure, regression, or mismatch
+- what would be impacted by changing a dependency or contract
+- which interpretation of the current codebase is best supported
 
-## Do not use when
+## Do not use `$analyze` when
 
-- User wants code changes made — use `$ralph` or executor instead
-- User wants a full plan with acceptance criteria — use `$plan` instead
-- User wants a quick file lookup — use explore agent instead
-- User asks a simple factual question answerable from one file — just read and answer
+- the user explicitly wants code edits, a fix, or execution — use the appropriate implementation lane instead
+- the user wants a new product plan or acceptance criteria — use `$plan` / `$ralplan`
+- the request is a simple one-file fact lookup — read the file and answer directly
+- the request is purely about running the OMX tmux team runtime — use `$team` only when OMX runtime is active
 
-## Core investigation contract
+## Non-negotiable contract
 
-Always preserve these distinctions:
+Analyze is **read-only by contract**.
 
-1. **Observation** — what was actually observed
-2. **Hypotheses** — competing explanations
-3. **Evidence For** — what supports each explanation
-4. **Evidence Against / Gaps** — what contradicts it or is still missing
-5. **Current Best Explanation** — the leading explanation right now
-6. **Critical Unknown** — the missing fact keeping the top explanations apart
-7. **Discriminating Probe** — the highest-value next step to collapse uncertainty
+- Do not edit files.
+- Do not turn the answer into an implementation plan.
+- Do not recommend fixes as the primary output.
+- Do not silently switch into execution work.
+- Do not overclaim certainty.
+- Do not invent facts that are not supported by repository evidence.
+- Do not use judgmental, normative, or speculative language that outruns the evidence.
 
-Do **not** collapse into:
-- a generic fix-it coding loop
-- a generic debugger summary
-- a raw dump of output
-- fake certainty when evidence is incomplete
+If a next step is helpful, keep it to a **discriminating read-only probe** that would reduce uncertainty.
 
-## Evidence strength hierarchy
+## Question-aligned synthesis
 
-Treat evidence as ranked, not flat. From strongest to weakest:
+Answer the user’s actual question first.
 
-1. **Controlled reproductions / direct experiments / uniquely discriminating artifacts**
-2. **Primary source artifacts with tight provenance** (trace events, logs, metrics, configs, git history, file:line behavior)
-3. **Multiple independent sources converging on the same explanation**
-4. **Single-source code-path or behavioral inference**
-5. **Weak circumstantial clues** (timing, naming, stack order, resemblance to prior bugs)
-6. **Intuition / analogy / speculation**
+- Start from the asked question, not a generic debugger template.
+- Keep the synthesis scoped to what the user needs to know.
+- Scale the depth to the request: for simple or obvious questions, reduce swarm intensity and answer directly after enough reading.
+- For broader questions, expand the search surface but keep the final answer tightly synthesized.
 
-Explicitly down-rank hypotheses that depend mostly on lower tiers when stronger contradictory evidence exists.
+## Evidence rules
 
-## Strong falsification rules
+Maintain an explicit **evidence-vs-inference distinction**. Every material claim must be labeled as one of:
 
-Every serious investigation must try to falsify its own favorite explanation.
+1. **Evidence** — directly supported by concrete repository artifacts
+2. **Inference** — a reasoned conclusion drawn from evidence
+3. **Unknown** — a question the current repository evidence does not resolve
 
-For each top hypothesis:
-- collect evidence **for** it
-- collect evidence **against** it
-- state what distinctive prediction it makes
-- state what observation would be hard to reconcile with it
-- identify the cheapest probe that would discriminate it from the next-best alternative
+Never present an inference as if it were direct evidence.
+Never present a guess as if it were an inference.
+Call out uncertainty explicitly when the codebase does not settle the question.
 
-Down-rank a hypothesis when:
-- direct evidence contradicts it
-- it survives only by adding new unverified assumptions
-- it makes no distinctive prediction compared with rivals
-- a stronger alternative explains the same facts with fewer assumptions
+### Acceptable evidence
 
-## Team-mode orchestration (when using $team)
+Prefer stronger evidence over weaker evidence:
 
-For complex investigations, use `$team` to run parallel tracer lanes:
+1. direct code paths, contracts, tests, generated artifacts, configs, or docs with concrete file references
+2. multiple independent files pointing to the same conclusion
+3. localized behavioral inference from well-supported code structure
+4. weaker contextual clues that remain explicitly marked as tentative
 
-1. Restate the observed result or "why" question precisely
-2. Generate multiple deliberately different candidate hypotheses
-3. Spawn **3 tracer lanes** via `$team`
-4. Assign one lane per hypothesis
-5. Each lane gathers evidence **for** and **against** its hypothesis
-6. Run a **rebuttal round** between the leading hypothesis and the strongest alternative
-7. Merge findings into a ranked synthesis
+Unsupported speculation is not evidence.
 
-### Default hypothesis lanes
+## Parallel exploration policy
 
-Unless the problem strongly suggests a better partition:
+Parallel exploration is allowed when it improves quality, but it must stay runtime-safe.
 
-1. **Code-path / implementation cause**
-2. **Config / environment / orchestration cause**
-3. **Measurement / artifact / assumption mismatch cause**
+- Default to direct read-only analysis when the answer is simple.
+- When parallelism helps, prefer **native subagents by default** or equivalent in-session parallel exploration when available.
+- Keep parallel lanes bounded: each lane should answer a concrete sub-question or inspect a specific subsystem.
+- Use **`$team` only when OMX runtime is active** and durable tmux-based coordination is actually needed.
+- Do not imply that `$team` is available in plain Codex/App sessions.
 
-### Worker contract
-
-Each worker must:
-- own exactly one hypothesis lane
-- gather evidence **for** and **against** the lane
-- rank evidence strength
-- call out missing evidence and failed predictions
-- name the **critical unknown** for the lane
-- recommend the best **discriminating probe**
-- avoid collapsing into implementation
-
-### Cross-check lenses
-
-After the initial evidence pass, pressure-test with these lenses when relevant:
-
-- **Systems lens** — queues, retries, backpressure, feedback loops, upstream/downstream dependencies
-- **Premortem lens** — assume the current best explanation is wrong; what failure mode would embarrass the trace later?
-- **Science lens** — controls, confounders, measurement bias, falsifiable predictions
+A good default split for complex analysis is:
+- one lane for primary code path / contracts
+- one lane for config / orchestration / generated surfaces
+- one lane for tests / docs / secondary corroboration
 
 ## Execution policy
 
-- Default to concise, evidence-dense progress and completion reporting unless the user or risk level requires more detail
-- Treat newer user task updates as local overrides for the active workflow branch while preserving earlier non-conflicting constraints
-- If correctness depends on additional inspection, retrieval, execution, or verification, keep using the relevant tools until the analysis is grounded
-- Continue through clear, low-risk, reversible next steps automatically; ask only when the next step is materially branching, destructive, or preference-dependent
+- Default to outcome-first progress and completion reporting: state the question, evidence, inference boundaries, and stop condition before adding process detail.
+- Treat newer user task updates as local overrides for the active workflow branch while preserving earlier non-conflicting constraints.
+- If the user says `continue`, keep working from the current analysis state instead of restarting discovery.
 
-**Good:** The user says `continue` after the workflow already has a clear next step. Continue the current branch of work instead of restarting or re-asking the same question.
+## Working method
 
-**Good:** The user changes only the output shape or downstream delivery step. Preserve earlier non-conflicting workflow constraints and apply the update locally.
+1. Restate the question in one sentence.
+2. Identify the smallest set of files most likely to answer it.
+3. Read for direct evidence first.
+4. If needed, open bounded parallel exploration lanes.
+5. Compare competing explanations.
+6. Rank the explanations by support.
+7. Return a synthesis that clearly separates evidence from inference.
 
-## Execution steps
+## Output contract
 
-1. **Identify the analysis type**: Architecture, bug investigation, performance, or dependency analysis
-2. **Gather relevant context**: Read or identify the key files involved
-3. **Generate hypotheses**: At least 2-3 competing explanations
-4. **Route to analyzer**:
-   - For simple cases: investigate directly with file reads and reasoning
-   - For complex cases: use `$team` with tracer lanes
-   - Use `ask_codex` with `agent_role: "architect"` when available
-5. **Falsify**: Try to break your own best hypothesis
-6. **Return structured findings**: Present with evidence, file references, and actionable recommendations
+Structure the answer so the user can see what is known, what is inferred, and how confident the synthesis is.
 
-## Output format
+### Question
+[Restate the user’s question briefly]
 
-### Observed Result
-[What happened]
+### Ranked synthesis
+| Rank | Explanation | Confidence | Basis |
+|------|-------------|------------|-------|
+| 1 | ... | High / Medium / Low | strongest supporting evidence |
+| 2 | ... | High / Medium / Low | why it trails |
+| 3 | ... | High / Medium / Low | why it remains possible |
 
-### Ranked Hypotheses
-| Rank | Hypothesis | Confidence | Evidence Strength | Why it leads |
-|------|------------|------------|-------------------|--------------|
-| 1 | ... | High / Medium / Low | Strong / Moderate / Weak | ... |
+### Evidence
+- `path/to/file:line-line` — what this artifact directly shows
+- `path/to/file:line-line` — corroborating evidence
 
-### Evidence Summary by Hypothesis
-- Hypothesis 1: ...
-- Hypothesis 2: ...
+### Inference
+- What the evidence most strongly implies
+- Why weaker alternatives were down-ranked
 
-### Evidence Against / Missing Evidence
-- Hypothesis 1: ...
-- Hypothesis 2: ...
-
-### Most Likely Explanation
-[Current best explanation with file:line references]
-
-### Critical Unknown
-[Single missing fact keeping uncertainty open]
-
-### Recommended Next Step
-[Single best action — either a discriminating probe or a fix recommendation]
+### Unknowns / limits
+- What the repository evidence does not establish
+- What would need to be checked next to reduce uncertainty
 
 ## Quality bar
 
-Good analysis output is:
-- evidence-backed with file:line references
-- concise but rigorous
-- skeptical of premature certainty
-- explicit about missing evidence
-- practical about the next action
-- explicit about why weaker explanations were down-ranked
-
-Task: {{ARGUMENTS}}
+A good analyze response is:
+- read-only and question-aligned
+- ranked rather than flat
+- explicit about confidence
+- concrete about file references
+- careful about evidence vs inference
+- free of unsupported speculation
+- free of normative drift or judgmental filler
+- explicit about the evidence-vs-inference distinction
+- concise for simple cases, broader only when the question truly needs it

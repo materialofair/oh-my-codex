@@ -8,13 +8,13 @@ English | [简体中文](README.zh.md)
 
 *Less prompt‑tuning, more shipping.*
 
-A curated collection of **130+ merged skills**, **3 Codex agents**, and **11 managed MCP server entries** from multiple sources, with intelligent merging, conflict resolution, and governance tooling.
+A curated collection of **150+ merged skills**, **3 Codex agents**, and **11 managed MCP server entries** from multiple sources, with intelligent merging, conflict resolution, and governance tooling.
 
 **Upstream Sources:**
 - 🏠 **Local** (62 skills) — Custom skills for your workflow
-- 🔧 **oh-my-codex** (36 skills) — Core execution modes and workflows  
+- 🔧 **oh-my-codex** (46 skills) — Core execution modes and workflows
 - ⚡ **superpowers** (14 skills) — Advanced patterns and utilities
-- 🌍 **everything-claude-code** (30 selected skills; 35 vendored) — Multi-language rules, MCP configs, specialized agents
+- 🌍 **everything-claude-code** (27 selected skills; 37 vendored) — Multi-language rules, MCP configs, specialized agents
 - 🎨 **Impeccable** (1 skill) — Codex-native frontend design and live UI iteration
 
 Inspired by **oh‑my‑claudecode**, rebuilt for **Codex architecture**, with manifest-driven upstream source management.
@@ -51,7 +51,7 @@ npm run setup:omcodex            # Runtime setup from source
 ```
 
 **What Gets Installed:**
-- **130+ Skills** → `~/.codex/skills/` (currently 137 merged unique skills from 5 sources)
+- **150+ Skills** → `~/.codex/skills/` (currently 153 merged unique skills from 5 sources)
 - **3 Codex Agents** → `~/.codex/agents/` (explorer, reviewer, docs-researcher)
 - **11 MCP Server Entries** → `~/.codex/config.toml` (5 oh-my-codex entries + 6 selected ECC servers)
 - **Role Prompts** → `~/.codex/prompts/` (architect, planner, executor)
@@ -98,7 +98,7 @@ project_doc_max_bytes = 65536
 - **AI-native annotations**: `ai-commenting` builds machine-parseable context tags (`risk`, `deps`, `intent`, `test`)
 
 ### 🎯 **Multi-Source Skill Ecosystem** 
-- **130+ Skills** from 4 curated sources with intelligent conflict resolution
+- **150+ Skills** from 5 curated sources with intelligent conflict resolution
 - **Local-first**: Your custom skills always win conflicts
 - **Manifest-driven**: Upstream sources declare capabilities via `.omc-source/manifest.json`
 - **Selection-based**: Curate which upstream artifacts to install via `.agent/curation/*.json`
@@ -134,9 +134,9 @@ oh-my-codex implements a **manifest-driven upstream source management system** i
 ├── skills/
 │   ├── local/                    # 62 skills — local customizations (always win conflicts)
 │   └── upstream/
-│       ├── oh-my-codex/          # 36 skills — core execution modes  
+│       ├── oh-my-codex/          # 46 skills — core execution modes
 │       ├── superpowers/          # 14 skills — advanced patterns
-│       ├── ecc/                  # 30 selected skills — everything-claude-code (35 vendored)
+│       ├── ecc/                  # 27 selected skills — everything-claude-code (37 vendored)
 │       └── impeccable/           # 1 skill — Codex-native UI design workflow
 │           ├── .omc-source/
 │           │   └── manifest.json # source metadata + adaptation declarations
@@ -152,7 +152,7 @@ oh-my-codex implements a **manifest-driven upstream source management system** i
 
 **What `omcodex setup` does for ECC:**
 
-1. **Skill Integration**: Loads 30 selected ECC skills (from 35 vendored skills), filters by `ecc-codex-selection.json`, resolves conflicts via quality scoring (local wins)
+1. **Skill Integration**: Loads 27 selected ECC skills (from 37 vendored skills), filters by `ecc-codex-selection.json`, resolves conflicts via quality scoring (local wins)
 2. **Agent Registration**: Copies selected `.codex/agents/*.toml` → `~/.codex/agents/` and extracts `[agents.<name>]` sections from ECC's config.toml
 3. **MCP Server Integration**: Injects 6 MCP servers (GitHub, Context7, Exa, Memory, Playwright, Sequential Thinking) as managed blocks in `~/.codex/config.toml`
 4. **Documentation Supplements**: Appends ECC's `.codex/AGENTS.md` to global `~/.codex/AGENTS.md` via managed markers
@@ -235,7 +235,7 @@ oh-my-codex implements a sophisticated **source-of-truth** architecture:
 
 | Capability | Claude Code | Codex (oh‑my‑codex) |
 |---|---|---|
-| Skills‑based workflows | ✅ | ✅ (primary, 130+ merged skills) |
+| Skills‑based workflows | ✅ | ✅ (primary, 150+ merged skills) |
 | Multi-source upstream management | ✅ | ✅ (manifest-driven) |
 | Native subagent execution | ✅ | ✅ (spawn_agent patterns) |
 | Plan Mode | ⚠️ plugin‑driven | ✅ native (0.9+ with config) |
@@ -372,7 +372,7 @@ This is intentionally different from `oh-my-claudecode`: the center of gravity h
 # 1. Install globally
 npm install -g oh-my-codex-cli
 
-# 2. Setup everything (130+ skills, 3 Codex agents, 11 MCP server entries)
+# 2. Setup everything (150+ skills, 3 Codex agents, 11 MCP server entries)
 omcodex setup
 
 # 3. Start building
@@ -420,7 +420,7 @@ team: coordinate multiple agents to implement feature X
 ## Recent Improvements
 
 ### 🆕 **Version 0.2.8+ Features**
-- **everything-claude-code Integration**: 30 selected skills (35 vendored) with multi-language rules and MCP servers
+- **everything-claude-code Integration**: 27 selected skills (37 vendored) with multi-language rules and MCP servers
 - **Impeccable Integration**: Codex-native frontend design skill vendored as an upstream source with portable script path resolution
 - **Manifest-Driven Sources**: Upstream source management via `.omc-source/manifest.json` declarations
 - **Selection-Based Curation**: Install only desired artifacts via `.agent/curation/*.json` allowlists

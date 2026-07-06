@@ -5,6 +5,17 @@ All notable changes to `oh-my-codex-cli` are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-07-06
+
+### Changed
+- Refreshed vendored upstream skills from oh-my-codex, superpowers, ECC, and
+  Impeccable.
+- Updated the generated skill catalogs and README source counts to reflect the
+  current merged runtime set.
+- Aligned the curated ECC Codex selection with the upstream `.agents/skills`
+  subset, including newly selected ECC skills and removed entries that are no
+  longer present in that Codex-facing upstream surface.
+
 ## [1.2.0] - 2026-06-12
 
 ### Added

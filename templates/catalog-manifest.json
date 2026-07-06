@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": "2026-06-12",
+  "catalogVersion": "2026-07-06",
   "skills": [
     {
       "name": ".codex",
@@ -124,6 +124,17 @@
       "composes": []
     },
     {
+      "name": "ask",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
       "name": "ask-claude",
       "category": "utility",
       "status": "active",
@@ -168,6 +179,28 @@
       "composes": []
     },
     {
+      "name": "autoresearch",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "autoresearch-goal",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
       "name": "backend-patterns",
       "category": "utility",
       "status": "active",
@@ -190,11 +223,44 @@
       "composes": []
     },
     {
+      "name": "benchmark-methodology",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "best-practice-research",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
       "name": "brainstorming",
       "category": "utility",
       "status": "active",
       "core": false,
       "source": "superpowers",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "brand-discovery",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
       "version": "0.1.0",
       "layer": null,
       "intent": null,
@@ -256,17 +322,6 @@
       "composes": []
     },
     {
-      "name": "claude-api",
-      "category": "utility",
-      "status": "active",
-      "core": false,
-      "source": "ecc",
-      "version": "0.1.0",
-      "layer": null,
-      "intent": null,
-      "composes": []
-    },
-    {
       "name": "code-review",
       "category": "shortcut",
       "status": "active",
@@ -285,6 +340,28 @@
       "source": "fork",
       "version": "0.1.0",
       "layer": "domain",
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "competitive-platform-analysis",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "competitive-report-structure",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
       "intent": null,
       "composes": []
     },
@@ -411,6 +488,17 @@
     },
     {
       "name": "deepsearch",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "design",
       "category": "utility",
       "status": "active",
       "core": false,
@@ -690,7 +778,7 @@
       "status": "active",
       "core": false,
       "source": "impeccable",
-      "version": "0.1.0",
+      "version": "3.9.1",
       "layer": null,
       "intent": null,
       "composes": []
@@ -784,6 +872,17 @@
       "composes": []
     },
     {
+      "name": "mle-workflow",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "ecc",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
       "name": "multi-model-research",
       "category": "utility",
       "status": "active",
@@ -846,6 +945,17 @@
       "source": "fork",
       "version": "0.1.0",
       "layer": "utility",
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "performance-goal",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": null,
       "intent": null,
       "composes": []
     },
@@ -923,6 +1033,17 @@
       "source": "fork",
       "version": "0.1.0",
       "layer": "domain",
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "prometheus-strict",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": null,
       "intent": null,
       "composes": []
     },
@@ -1334,6 +1455,17 @@
       "composes": []
     },
     {
+      "name": "ultragoal",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
       "name": "ultrapilot",
       "category": "utility",
       "status": "active",
@@ -1455,6 +1587,17 @@
       "composes": []
     },
     {
+      "name": "visual-ralph",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
       "name": "visual-verdict",
       "category": "utility",
       "status": "active",
@@ -1467,6 +1610,17 @@
     },
     {
       "name": "web-clone",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "oh-my-codex",
+      "version": "0.1.0",
+      "layer": null,
+      "intent": null,
+      "composes": []
+    },
+    {
+      "name": "wiki",
       "category": "utility",
       "status": "active",
       "core": false,

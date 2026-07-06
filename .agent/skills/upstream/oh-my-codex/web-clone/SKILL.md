@@ -1,18 +1,11 @@
 ---
 name: web-clone
-description: URL-driven website cloning with visual + functional verification
+description: Web Clone deprecated shim
 ---
 
-<Purpose>
-Clone a target website from its URL, replicating both visual appearance and core interactive functionality. Uses Playwright MCP for live page extraction, LLM-driven code generation, and iterative verification with `$visual-verdict` for visual scoring.
-</Purpose>
+# Web Clone deprecated
 
-<Use_When>
-- User provides a target URL and wants the site replicated as working code
-- User says "clone site", "clone website", "copy webpage", or "web-clone"
-- Task requires both visual fidelity AND functional parity with the original
-- Reference is a live URL (not a static screenshot — use `$visual-verdict` for screenshot-only tasks)
-</Use_When>
+Hard-deprecated. Do not invoke or route this skill. Use `$visual-ralph` directly for live-URL visual implementation and visual QA workflows.
 
 <Do_Not_Use_When>
 - User only has screenshot references without a live URL — use `$visual-verdict` directly
@@ -45,7 +38,6 @@ Excluded:
 <Prerequisites>
 Playwright MCP server must be available for browser automation.
 
-1. Before first tool use, call `ToolSearch("browser")` or `ToolSearch("playwright")` to discover available browser tools.
 2. If no browser tools are found, instruct the user:
    ```
    Playwright MCP is required. Configure it:
@@ -61,7 +53,6 @@ Playwright MCP server must be available for browser automation.
 </Inputs>
 
 <Tool_Usage>
-- Before first MCP tool use, call `ToolSearch("browser")` or `ToolSearch("playwright")` to discover deferred Playwright MCP tools.
 - If no browser tools are found, stop immediately and instruct the user to configure Playwright MCP.
 - Use `browser_snapshot` (accessibility tree) for structural understanding — it is far more token-efficient than screenshots.
 - Use `browser_take_screenshot` only when visual verification is needed (Pass 1 baseline, Pass 4 comparison).

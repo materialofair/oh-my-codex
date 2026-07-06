@@ -1,11 +1,11 @@
 ---
 name: tdd
-description: Test-Driven Development enforcement skill - write tests first, always
+description: TDD deprecated shim
 ---
 
-# TDD Mode
+# TDD deprecated
 
-[TDD MODE ACTIVATED]
+Hard-deprecated. Do not invoke or route this skill. Keep test-first discipline inside the active implementation workflow and verify with the project test suite.
 
 ## The Iron Law
 
@@ -99,8 +99,6 @@ The tdd-guide agent SHOULD consult Codex for test strategy validation.
 - Small, isolated functionality
 
 ### Tool Usage
-Before first MCP tool use, call `ToolSearch("mcp")` to discover deferred MCP tools.
-Use `mcp__x__ask_codex` with `agent_role: "tdd-guide"`.
-If ToolSearch finds no MCP tools, fall back to the `test-engineer` agent.
+Prefer native `test-engineer` consultation or CLI-backed ask surfaces when available. Optional MCP compatibility ask tools may be used only when already enabled. If consultation tools are unavailable, fall back to the `test-engineer` agent.
 
 **Remember:** The discipline IS the value. Shortcuts destroy the benefit.

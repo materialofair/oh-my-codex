@@ -1,11 +1,11 @@
 ---
 name: ecomode
-description: Token-efficient model routing modifier
+description: Ecomode deprecated shim
 ---
 
-# Ecomode Skill
+# Ecomode deprecated
 
-Token-efficient model routing. This is a **MODIFIER**, not a standalone execution mode.
+Hard-deprecated. Do not invoke or route this skill. Use `$ultrawork` directly for maintained high-throughput execution workflows.
 
 ## What Ecomode Does
 
@@ -47,7 +47,7 @@ Ecomode is a modifier that combines with execution modes:
 
 **FIRST ACTION:** Before delegating any work, read the agent reference file:
 ```
-Read file: docs/shared/agent-tiers.md
+Read file: references/agent-tiers.md
 ```
 This provides the complete agent tier matrix, MCP tool assignments, and selection guidance.
 
@@ -55,16 +55,16 @@ This provides the complete agent tier matrix, MCP tool assignments, and selectio
 
 ```
 // PREFERRED - Use for most tasks
-delegate(role="executor", tier="LOW", task="...")
-delegate(role="explore", tier="LOW", task="...")
-delegate(role="architect", tier="LOW", task="...")
+use /prompts:executor for this scoped task
+use /prompts:explore for this scoped task
+use /prompts:architect for this scoped task
 
 // FALLBACK - Only if LOW fails
-delegate(role="executor", tier="STANDARD", task="...")
-delegate(role="architect", tier="STANDARD", task="...")
+use /prompts:executor for this scoped task
+use /prompts:architect for this scoped task
 
 // AVOID - Only for planning/critique if essential
-delegate(role="planner", tier="THOROUGH", task="...")
+use /prompts:planner for this scoped task
 ```
 
 ## Delegation Enforcement
@@ -104,11 +104,11 @@ Set in `~/.codex/.omx-config.json`:
 
 ## State Management
 
-Use `omx_state` MCP tools for ecomode lifecycle state.
+Use the CLI-first state surface (`omx state ... --json`) for ecomode lifecycle state. If explicit MCP compatibility tools are already available, equivalent `omx_state` calls are optional compatibility, not the default.
 
 - **On activation**:
-  `state_write({mode: "ecomode", active: true})`
+  `omx state write --input '{"mode":"ecomode","active":true}' --json`
 - **On deactivation/completion**:
-  `state_write({mode: "ecomode", active: false})`
+  `omx state write --input '{"mode":"ecomode","active":false}' --json`
 - **On cancellation/cleanup**:
-  run `$cancel` (which should call `state_clear(mode="ecomode")`)
+  run `$cancel` (which should call `omx state clear --input '{"mode":"ecomode"}' --json`)

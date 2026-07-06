@@ -5,7 +5,7 @@ const { spawnSync } = require('child_process');
 const { tryReadCatalogManifest } = require('../catalog/reader');
 
 function checkCodexCli() {
-  const result = spawnSync('codex', ['--version'], { encoding: 'utf8' });
+  const result = spawnSync('sh', ['-c', 'command -v codex'], { encoding: 'utf8' });
   return !result.error && result.status === 0;
 }
 

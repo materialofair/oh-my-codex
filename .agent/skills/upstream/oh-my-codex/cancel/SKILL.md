@@ -56,7 +56,7 @@ For Ralph-targeted cancellation (standalone or linked), completion is defined by
 See: `docs/contracts/ralph-cancel-contract.md`.
 
 Active modes are still cancelled in dependency order:
-1. Autopilot (includes linked ralph/ultraqa/ecomode cleanup)
+1. Autopilot (includes linked ultragoal/ultraqa/ecomode cleanup plus explicit legacy Ralph cleanup)
 2. Ralph (cleans its linked ultrawork or ecomode)
 3. Ultrawork (standalone)
 4. Ecomode (standalone)
@@ -374,7 +374,7 @@ Mode-specific subsections below describe what extra cleanup each handler perform
 
 ## Notes
 
-- **Dependency-aware**: Autopilot cancellation cleans up Ralph and UltraQA
+- **Dependency-aware**: Autopilot cancellation cleans up Ultragoal/UltraQA state and any explicit legacy Ralph state
 - **Link-aware**: Ralph cancellation cleans up linked Ultrawork or Ecomode
 - **Safe**: Only clears linked Ultrawork, preserves standalone Ultrawork
 - **Local-only**: Clears state files in `.omx/state/` directory

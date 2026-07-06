@@ -1,25 +1,12 @@
 ---
 name: swarm
-description: N coordinated agents on shared task list (compatibility facade over team)
+description: Deprecated compatibility shim for team execution
 ---
 
-# Swarm (Compatibility Facade)
+# Swarm compatibility shim
 
-Swarm is a compatibility alias for the `/team` skill. All swarm invocations are routed to the Team skill's staged pipeline.
+Hard-deprecated. Do not invoke or route this skill for new work.
 
-## Usage
+Use `$team` or `omx team` directly for coordinated multi-agent execution. This file exists only to preserve the public/catalog-visible `swarm` skill contract while Team mode owns coordinated execution.
 
-```
-/swarm N:agent-type "task description"
-/swarm "task description"
-```
-
-## Behavior
-
-This skill is identical to `/team`. Invoke the Team skill with the same arguments:
-
-```
-/team <arguments>
-```
-
-Follow the Team skill's full documentation for staged pipeline, agent routing, and coordination semantics.
+Task: {{ARGUMENTS}}

@@ -1,36 +1,16 @@
 ---
 name: frontend-ui-ux
-description: Designer-developer for UI/UX work
+description: Deprecated compatibility shim for frontend UI/UX work; use $design or $visual-ralph
 ---
 
-# Frontend UI/UX Command
+# Frontend UI/UX compatibility shim
 
-Routes frontend design work to Codex-native design and implementation workflows.
+Hard-deprecated. Do not invoke or route this skill for new work.
 
-## Usage
+Use `$design` when the task needs product/design context, UX guidance, frontend planning, design-system alignment, or a repo-local `DESIGN.md` source of truth.
 
-```
-/frontend-ui-ux <design task>
-```
+Use `$visual-ralph` when the task needs implementation against an approved generated/static/live-URL visual reference with screenshot capture, Visual Ralph verdict scoring, and pixel-diff evidence.
 
-## Routing
-
-### Preferred: Codex Frontend Workflow
-Use the repository's existing frontend stack, design system, and local docs first.
-For substantial UI work, use the `frontend-design` or `frontend-patterns` skill when applicable.
-
-### Optional Read-Only Review
-For independent critique, dispatch a read-only reviewer/explorer child agent:
-
-```
-spawn_agent(agent_type="explorer", message="Read-only UI/UX exploration: {{ARGUMENTS}}")
-spawn_agent(agent_type="reviewer", message="Read-only UI/UX risk review: {{ARGUMENTS}}")
-```
-
-## Capabilities
-- Component design and implementation
-- Responsive layouts
-- Design system consistency
-- Accessibility compliance
+This file exists only to preserve the public/catalog-visible `frontend-ui-ux` compatibility contract while canonical design guidance is handled by `$design` and measured visual implementation is handled by `$visual-ralph`.
 
 Task: {{ARGUMENTS}}

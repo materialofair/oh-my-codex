@@ -1,26 +1,12 @@
 ---
 name: ask-gemini
-description: Deprecated compatibility stub. Prefer Codex-native multi-agent research.
+description: Deprecated compatibility shim for Gemini advisor requests
 ---
 
-# Ask Gemini (Deprecated)
+# Ask Gemini compatibility shim
 
-This compatibility command no longer executes an external model CLI by default.
+Hard-deprecated. Do not invoke or route this skill for new work.
 
-Use Codex-native alternatives instead:
-
-- `$multi-model-research <question>` for source-backed research
-- `$consensus <decision>` for multi-perspective decision making
-- `$thinkdeep <question>` for structured reasoning
-- `$architect-planner <system design>` for architecture planning
-
-## Behavior
-
-When invoked:
-
-1. Explain that this compatibility command is deprecated.
-2. Ask whether the user wants to continue with a Codex-native workflow.
-3. If yes, route to the closest local skill listed above.
-4. Do not run external model commands or write external-advisor artifacts.
+Use `$ask gemini <question>` or `omx ask gemini "<question>"` directly for Gemini advisor workflows. This file exists only to preserve the public/catalog-visible `ask-gemini` skill contract while the canonical `$ask` workflow owns provider selection.
 
 Task: {{ARGUMENTS}}
