@@ -237,7 +237,7 @@ docs-researcher subagent 可选用途 (.codex/agents/docs-researcher.toml):
   - 防止幻觉 prior-art 进 ResearchPack
 
 主线 Codex 角色:
-  - 编排者: 派发 spawn_agent → wait → close_agent
+  - 编排者: 派发 spawn_agent -> wait_agent -> close_agent
   - 撰写者: 唯一可写实体（三个 subagent 全 read-only）
   - 仲裁者: 综合 subagent 报告并按"三性优先 > 完整性"收敛冲突
 ```

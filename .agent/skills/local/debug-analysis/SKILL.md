@@ -67,7 +67,7 @@ git log --oneline -5
 
 ```text
 spawn_agent(agent_type="explorer", message="<trace prompt>")
-wait
+wait_agent
 close_agent
 ```
 

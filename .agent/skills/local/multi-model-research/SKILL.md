@@ -56,7 +56,7 @@ layer: research
 spawn_agent(agent_type="explorer", message="<architecture and repo evidence task>")
 spawn_agent(agent_type="reviewer", message="<risk and correctness task>")
 spawn_agent(agent_type="docs-researcher", message="<official docs verification task>")
-wait
+wait_agent
 close_agent
 ```
 

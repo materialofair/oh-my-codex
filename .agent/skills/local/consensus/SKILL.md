@@ -51,7 +51,7 @@ layer: research
 spawn_agent(agent_type="explorer", message="<architecture/context perspective>")
 spawn_agent(agent_type="reviewer", message="<risk/correctness perspective>")
 spawn_agent(agent_type="docs-researcher", message="<docs/facts verification perspective>")
-wait
+wait_agent
 close_agent
 ```
 

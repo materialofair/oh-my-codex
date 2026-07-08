@@ -77,7 +77,7 @@ layer: research
 ```text
 spawn_agent(agent_type="explorer", message="<explore evidence for/against options>")
 spawn_agent(agent_type="reviewer", message="<challenge assumptions and risks>")
-wait
+wait_agent
 close_agent
 ```
 

@@ -46,12 +46,12 @@ $research report <session-id>
 
 ## Native Subagent Protocol (Codex)
 
-Codex supports native subagents. Delegate with `spawn_agent`, coordinate with `send_input`, collect via `wait`, and clean up with `close_agent`.
+Codex supports native subagents. Delegate with `spawn_agent`, coordinate with `send_input`, collect via `wait_agent`, and clean up with `close_agent`.
 
 Minimal orchestration pattern:
 
 ```text
-spawn_agent -> send_input (optional) -> wait -> close_agent
+spawn_agent -> send_input (optional) -> wait_agent -> close_agent
 ```
 
 Fallback: if delegation is unavailable, execute stages sequentially in one thread.

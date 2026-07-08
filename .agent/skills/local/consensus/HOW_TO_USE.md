@@ -15,7 +15,7 @@ spawn_agent(agent_type="reviewer", message="<risk review task>")
 spawn_agent(agent_type="docs-researcher", message="<docs verification task>")
 ```
 
-3. Collect with `wait` and clean up with `close_agent`.
+3. Collect with `wait_agent` and clean up with `close_agent`.
 4. Synthesize agreements, disagreements, assumptions, and final recommendation.
 
 ## Example Prompts

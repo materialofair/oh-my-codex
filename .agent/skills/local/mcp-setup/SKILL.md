@@ -38,7 +38,7 @@ Approval tip: for trusted MCP tools, use "allow and remember" to avoid repeated 
 
 ## Native Subagent Protocol (Codex)
 
-Codex supports native subagents. Delegate with `spawn_agent`, coordinate with `send_input`, collect via `wait`, and clean up with `close_agent`.
+Codex supports native subagents. Delegate with `spawn_agent`, coordinate with `send_input`, collect via `wait_agent`, and clean up with `close_agent`.
 
 Execution preference:
 1. Use native subagents first for independent workstreams (parallel when possible).
@@ -47,7 +47,7 @@ Execution preference:
 
 Minimal orchestration pattern:
 ```text
-spawn_agent -> send_input (optional) -> wait -> close_agent
+spawn_agent -> send_input (optional) -> wait_agent -> close_agent
 ```
 
 > Codex invocation: use `$mcp-setup ...` or `mcp-setup: ...`

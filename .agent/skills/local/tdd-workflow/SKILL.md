@@ -50,12 +50,12 @@ Use this skill when implementation has not started and you need strict test-firs
 
 ## Native Subagent Protocol (Codex)
 
-Codex supports native subagents. Delegate with `spawn_agent`, coordinate with `send_input`, collect via `wait`, and clean up with `close_agent`.
+Codex supports native subagents. Delegate with `spawn_agent`, coordinate with `send_input`, collect via `wait_agent`, and clean up with `close_agent`.
 
 Minimal orchestration pattern:
 
 ```text
-spawn_agent -> send_input (optional) -> wait -> close_agent
+spawn_agent -> send_input (optional) -> wait_agent -> close_agent
 ```
 
 Fallback: if delegation is unavailable, execute the same phases sequentially in a single thread.

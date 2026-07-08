@@ -14,7 +14,7 @@ layer: orchestration
 
 ## Native Subagent Protocol (Codex)
 
-Codex supports native subagents. Delegate with `spawn_agent`, coordinate with `send_input`, collect via `wait`, and clean up with `close_agent`.
+Codex supports native subagents. Delegate with `spawn_agent`, coordinate with `send_input`, collect via `wait_agent`, and clean up with `close_agent`.
 
 Execution preference:
 1. Use native subagents first for independent workstreams (parallel when possible).
@@ -23,13 +23,13 @@ Execution preference:
 
 Minimal orchestration pattern:
 ```text
-spawn_agent -> send_input (optional) -> wait -> close_agent
+spawn_agent -> send_input (optional) -> wait_agent -> close_agent
 ```
 
 Codex subagent profile mapping:
 - `code-explorer` intent -> `agent_type: explorer`
 - `code-architect` / `code-reviewer` / `code-executor` intents -> `agent_type: worker` with role-specific prompt
-- Parallel fan-out: spawn multiple agents, then `wait` and synthesize in main thread
+- Parallel fan-out: spawn multiple agents, then `wait_agent` and synthesize in main thread
 
 > Codex invocation: use `start-dev: ...` or `$start-dev ...`
 
@@ -148,7 +148,7 @@ Code Examples Available:
    - **Explorer 1**: Similar feature tracing
    - **Explorer 2**: Architecture pattern analysis
    - **Explorer 3** (deep mode only): Integration points mapping
-   - Codex execution: spawn 2-3 `explorer` subagents in parallel, then `wait` for completion
+   - Codex execution: spawn 2-3 `explorer` subagents in parallel, then `wait_agent` for completion
 3. Identify 5-10 key files to read
 4. Extract patterns, abstractions, and conventions
 5. **Cross-reference with loaded pattern library**

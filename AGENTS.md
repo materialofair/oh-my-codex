@@ -4,7 +4,7 @@
 
 Skill pack and workflow orchestration for **OpenAI Codex CLI**.
 
-**Version:** 1.3.0
+**Version:** 1.3.1
 **Purpose:** Make Codex behave like a multi-agent conductor using structured skills
 
 ## Purpose
@@ -92,7 +92,7 @@ Repository convention:
 
 ### Compatibility Notes
 
-Codex does **not** support Claude Code plugins, interception lifecycle APIs, or HUD. Any mention of:
+Codex has native plugin, skill, and hook surfaces, but they are **not** Claude Code plugin/interception surfaces. Any mention of:
 - Claude Code plugin commands
 - `.claude/` plugin cache paths
 - Claude Code-specific CLI commands

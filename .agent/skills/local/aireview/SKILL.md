@@ -19,10 +19,10 @@ All review output should be in Chinese unless the user asks otherwise.
 
 ## Native Subagent Protocol
 
-Codex supports read-only child agents. Delegate with `spawn_agent`, collect with `wait`, and clean up with `close_agent`.
+Codex supports read-only child agents. Delegate with `spawn_agent`, collect with `wait_agent`, and clean up with `close_agent`.
 
 ```text
-spawn_agent -> wait -> close_agent
+spawn_agent -> wait_agent -> close_agent
 ```
 
 No external model CLI is required. Deep mode is implemented with Codex child agents.

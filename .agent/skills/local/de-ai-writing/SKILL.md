@@ -28,14 +28,14 @@ Structure inspiration: <https://github.com/op7418/Humanizer-zh/blob/main/SKILL.m
 
 ## Native Subagent Protocol (Codex)
 
-Codex supports native subagents. Delegate with `spawn_agent`, coordinate with `send_input`, collect via `wait`, and clean up with `close_agent`.
+Codex supports native subagents. Delegate with `spawn_agent`, coordinate with `send_input`, collect via `wait_agent`, and clean up with `close_agent`.
 
 Execution preference:
 1. Use native subagents first for independent workstreams (parallel when possible).
 2. Merge results in main thread and run final verification.
 3. Fallback only when delegation is blocked: use the `[ANALYST]`/`[ARCHITECT]`/`[EXECUTOR]`/`[REVIEWER]` structure in a single response.
 
-Minimal orchestration: `spawn_agent → send_input (optional) → wait → close_agent`
+Minimal orchestration: `spawn_agent -> send_input (optional) -> wait_agent -> close_agent`
 
 > Codex invocation: `$de-ai-writing ...` or `de-ai-writing: ...`
 

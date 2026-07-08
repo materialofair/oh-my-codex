@@ -5,6 +5,17 @@ All notable changes to `oh-my-codex-cli` are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.1] - 2026-07-08
+
+### Fixed
+- Updated generated Codex config handling for current CLI schema by keeping
+  `features.multi_agent` and removing legacy `child_agents_md` and
+  `collaboration_modes` flags.
+- Refreshed Codex CLI documentation and local skill orchestration examples to
+  use the current `wait_agent` subagent primitive and native `/plan` behavior.
+- Clarified Codex plugin/hook positioning: native Codex hooks exist, while
+  oh-my-codex still defaults to notify-driven extensions.
+
 ## [1.3.0] - 2026-07-06
 
 ### Changed

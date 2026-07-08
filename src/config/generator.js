@@ -32,8 +32,6 @@ function upsertFeatureFlags(config) {
     const append = [
       '[features]',
       'multi_agent = true',
-      'child_agents_md = true',
-      'collaboration_modes = true',
       '',
     ].join('\n');
     return `${config.trimEnd()}\n\n${append}`.trim() + '\n';
@@ -49,9 +47,14 @@ function upsertFeatureFlags(config) {
 
   const featureKeys = new Map([
     ['multi_agent', 'multi_agent = true'],
-    ['child_agents_md', 'child_agents_md = true'],
-    ['collaboration_modes', 'collaboration_modes = true'],
   ]);
+
+  for (let i = end - 1; i > start; i -= 1) {
+    if (/^\s*(child_agents_md|collaboration_modes)\s*=/.test(lines[i])) {
+      lines.splice(i, 1);
+      end -= 1;
+    }
+  }
 
   for (const [key, value] of featureKeys.entries()) {
     let found = false;

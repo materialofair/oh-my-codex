@@ -11,7 +11,7 @@
 
 ### 2026-05-27 架构迁移注记
 
-原方案依赖已淘汰的 legacy MCP server 实现外部多模型协作。本 skill 现在通过 Codex CLI 一等公民的 child agent 协议（`spawn_agent` / `wait` / `close_agent`）派发本仓 `.codex/agents/` 中的只读 child agent 完成评审，跟 `ultrapilot` / `research` / `subagent-driven-development` 等 skill 使用同一套协议。
+原方案依赖已淘汰的 legacy MCP server 实现外部多模型协作。本 skill 现在通过 Codex CLI 一等公民的 child agent 协议（`spawn_agent` / `wait_agent` / `close_agent`）派发本仓 `.codex/agents/` 中的只读 child agent 完成评审，跟 `ultrapilot` / `research` / `subagent-driven-development` 等 skill 使用同一套协议。
 
 | 旧（zen-mcp）            | 新（Codex CLI 原生）                            | 用途                              |
 |--------------------------|-------------------------------------------------|-----------------------------------|
@@ -180,7 +180,7 @@ exa-code MCP:
   - 工具: mcp__exa__get_code_context_exa
   - 优势: 高质量专利案例和技术术语
 
-Codex 原生 child agent (spawn_agent / wait / close_agent):
+Codex 原生 child agent (spawn_agent / wait_agent / close_agent):
   - explorer (.codex/agents/explorer.toml):
       Phase 1.3 发明架构分析 + 保护策略
       Phase 3.3 文档技术完整性审查
@@ -489,7 +489,7 @@ Implement阶段:
 
 ### Codex CLI 平台
 
-- **原生 child agent (spawn_agent / wait / close_agent)**
+- **原生 child agent (spawn_agent / wait_agent / close_agent)**
   - Agent 配置: `.codex/agents/*.toml`（本仓自带 reviewer / explorer / docs-researcher）
   - 主配置: `.codex/config.toml`（已启用 `multi_agent = true`）
   - 调用约定: `.agent/skills/upstream/superpowers/using-superpowers/references/codex-tools.md`

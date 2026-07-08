@@ -29,15 +29,13 @@ Codex will automatically load skills from both locations.
 Note: The installer prefers `.agent/skills` when present, and falls back to `.codex/skills`.
 In this repository, `.agent/skills` is the maintained source directory. `.codex/skills` is a runtime destination, not a second source tree.
 
-## Enable Codex Plan Mode (0.9+)
+## Codex Plan Mode
 
-Codex supports native plan mode when you enable collaboration modes in `config.toml`:
-```
-[features]
-collaboration_modes = true
-```
+Current Codex CLI builds include `/plan` as a built-in slash command. No
+`collaboration_modes` feature flag is required.
 
-Use our script to set it automatically:
+The legacy compatibility flag is still accepted by this repository's wrapper,
+but it is a no-op:
 ```bash
 ./scripts/generate-codex-mcp-config.sh --enable-collab
 ```
@@ -70,12 +68,14 @@ codex mcp list
 - Skill learning and local skill management
 
 ### Not Supported (Codex limitations)
-- Claude Code marketplace plugin install
-- Claude Code-style execution interception lifecycle (pre/post tool interception)
+- Claude Code marketplace plugin install semantics
+- Claude Code-style hook/interception semantics
 - Claude Code-specific CLI commands
 - Claude Code plugin cache locations
 
-Codex does support event notifications via `notify`. In this project, all extensibility is event-driven notify dispatch, not execution interception.
+Codex has native plugins, skills, and hooks. This project currently keeps its
+runtime extensions event-driven through `notify`, and does not install Codex
+hooks by default.
 
 ## Notify Extension Workflow
 

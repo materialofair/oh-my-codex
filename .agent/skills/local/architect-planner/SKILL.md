@@ -76,7 +76,7 @@ fi
 
 ```text
 spawn_agent(agent_type="explorer", message="<architecture exploration prompt>")
-wait
+wait_agent
 close_agent
 ```
 

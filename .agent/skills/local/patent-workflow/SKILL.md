@@ -42,7 +42,7 @@ Research阶段 (Planner) → Plan阶段 (Planner) → Implement阶段 (Writer + 
 Codex CLI 支持原生 child agent。本 skill 在三个阶段都通过 `spawn_agent` 派发只读 subagent，主线 Codex 负责撰写与综合。最小编排：
 
 ```text
-spawn_agent -> (send_input 可选) -> wait -> close_agent
+spawn_agent -> (send_input 可选) -> wait_agent -> close_agent
 ```
 
 **派发到哪个 agent_type**（对应 `.codex/agents/*.toml` 已有定义）：
@@ -193,7 +193,7 @@ Execute this now. Output ONLY the structured response specified above.
 
 ### Step 1.3: 派发 explorer subagent 做发明架构分析（5分钟）
 
-`spawn_agent(agent_type="explorer", message=<下方框架>)`，主线 `wait` 取回结果后 `close_agent`。
+`spawn_agent(agent_type="explorer", message=<下方框架>)`，主线 `wait_agent` 取回结果后 `close_agent`。
 
 **Message 框架**（已套上 Codex 推荐的 XML 包装）：
 
@@ -381,7 +381,7 @@ Execute this now. Output ONLY the structured markdown report.
 
 ### Step 2.3: 派发 reviewer subagent 做权利要求对抗审查（5分钟）
 
-`spawn_agent(agent_type="reviewer", message=<下方框架>)`，`wait` 取回 → `close_agent`。
+`spawn_agent(agent_type="reviewer", message=<下方框架>)`，`wait_agent` 取回 → `close_agent`。
 
 **为什么选 `reviewer`**：`.codex/agents/reviewer.toml` 默认 `model_reasoning_effort = "high"` + `sandbox_mode = "read-only"` + "Review like an owner, lead with concrete findings" —— 与权利要求需要承受审查员/规避者/诉讼三方压力测试的特性高度匹配。
 
@@ -671,7 +671,7 @@ def calculate_irr(document):
 
 ### Step 3.3: 并行派发两个 subagent 复审已撰写文档（10分钟）
 
-**编排模式**：在同一条响应中发两次 `spawn_agent`（一个 `explorer`、一个 `reviewer`），各自带独立 message，主线 `wait` 收集两份报告后做综合修订，最后 `close_agent`。
+**编排模式**：在同一条响应中发两次 `spawn_agent`（一个 `explorer`、一个 `reviewer`），各自带独立 message，主线 `wait_agent` 收集两份报告后做综合修订，最后 `close_agent`。
 
 **派发 1 — explorer subagent（技术完整性审计）**:
 
@@ -719,7 +719,7 @@ Input: 权利要求书全文 + ResearchPack 中已授权 prior art 的 claim 范
 Execute this now. Output ONLY the structured diff list.
 ```
 
-**主线综合修订**（两个 `wait` 都返回后）:
+**主线综合修订**（两个 `wait_agent` 都返回后）:
 1. 收齐两份 markdown 报告
 2. 冲突仲裁：explorer "要补" vs reviewer "要删" 冲突时，按 **"先满足三性，再满足完整性"** 排序
 3. 主线 Codex 落盘修订专利文档
@@ -978,7 +978,7 @@ docs-researcher subagent (可选, .codex/agents/docs-researcher.toml):
   - "Verify against primary documentation, do not invent" 默认指令直接复用
 
 主线 Codex 角色:
-  - 编排者: 在三个阶段的关键节点 spawn_agent → wait → close_agent
+  - 编排者: 在三个阶段的关键节点 spawn_agent -> wait_agent -> close_agent
   - 撰写者: 唯一可写实体（三个 subagent 全 read-only）
   - 仲裁者: explorer "要补" 与 reviewer "要删" 冲突时按"三性优先 > 完整性"收敛
   - 可选 escalation: 评分仍 <90 时调用 santa-method skill 走双独立 reviewer 对抗收敛

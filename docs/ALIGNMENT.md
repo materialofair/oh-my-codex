@@ -5,7 +5,7 @@ This document tracks what is aligned, what is partially aligned, and what cannot
 ## ✅ Aligned (Implemented)
 
 - **Skills system**: Repository skill sources live in `.agent/skills/` and are installed into Codex runtime skill directories.
-- **Native multi-agent orchestration**: Core skills use `spawn_agent`/`send_input`/`wait` patterns.
+- **Native multi-agent orchestration**: Core skills use `spawn_agent`/`send_input`/`wait_agent` patterns.
 - **MCP configuration**: `omcodex setup` writes Codex MCP config blocks (`omcodex_state`, `omcodex_memory`, `omcodex_trace`).
 - **Docs & entrypoints**: `README.md`, `docs/CODEX.md`, `AGENTS.md` are Codex-first.
 - **Event-driven notify extension**: `omcodex notify` provides additive plugin-style extensions.

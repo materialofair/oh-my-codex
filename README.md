@@ -106,7 +106,7 @@ project_doc_max_bytes = 65536
 ### 🤖 **Agent & MCP Integration**
 - **3 Codex Agents**: explorer, reviewer, docs-researcher
 - **11 Managed MCP Server Entries**: oh-my-codex state/memory/trace/skills/docs entries plus GitHub, Context7, Exa, Memory, Playwright, Sequential Thinking
-- **Native subagent orchestration**: `spawn_agent` + `send_input` + `wait` + `close_agent` patterns
+- **Native subagent orchestration**: `spawn_agent` + `send_input` + `wait_agent` + `close_agent` patterns
 - **Role prompt catalog**: Installed under `.codex/prompts/` with upstream supplements
 
 ### 🔧 **Enterprise Tooling**
@@ -119,7 +119,7 @@ project_doc_max_bytes = 65536
 ### 🛡️ **Rules & Guardrails**
 - **Multi-language support**: TypeScript, Python, Go, Swift, PHP, Java, Kotlin, Perl, C++
 - **Domain-specific**: coding, security, testing, performance, git workflow, patterns
-- **Plan mode enabled** (Codex 0.9+) with MCP runtime integration
+- **Plan mode ready**: Codex CLI provides `/plan` natively; no legacy collaboration flag required
 
 ---
 
@@ -194,9 +194,12 @@ Then `omcodex setup --force` to apply changes.
 
 ## Notify Positioning
 
-Codex does not provide Claude Code style interception lifecycle support (for example pre/post tool interception).
+Codex has native plugin, skill, and hook surfaces. Those are distinct from
+Claude Code marketplace plugins and Claude-style interception semantics.
 
-In this project, extensions are event-driven and built on top of Codex notifications (`notify`), not execution interception.
+In this project, runtime extensions remain event-driven and built on top of
+Codex notifications (`notify`). oh-my-codex does not install Codex hooks by
+default.
 
 Use the notify extension workflow:
 
@@ -237,11 +240,11 @@ oh-my-codex implements a sophisticated **source-of-truth** architecture:
 |---|---|---|
 | Skills‑based workflows | ✅ | ✅ (primary, 150+ merged skills) |
 | Multi-source upstream management | ✅ | ✅ (manifest-driven) |
-| Native subagent execution | ✅ | ✅ (spawn_agent patterns) |
-| Plan Mode | ⚠️ plugin‑driven | ✅ native (0.9+ with config) |
+| Native subagent execution | ✅ | ✅ (`spawn_agent` / `wait_agent` patterns) |
+| Plan Mode | ⚠️ plugin‑driven | ✅ native `/plan` command |
 | MCP support | ✅ | ✅ (config.toml / CLI, 11 managed server entries) |
 | Agent orchestration | ✅ | ✅ (3 Codex agents + native subagent patterns) |
-| Hooks & interception | ✅ | ❌ (notify-driven extensions only) |
+| Hooks & interception | ✅ | ⚠️ Codex hooks exist; this repo defaults to notify-driven extensions |
 
 ---
 
