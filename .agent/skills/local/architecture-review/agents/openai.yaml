@@ -1,0 +1,4 @@
+interface:
+  display_name: "Architecture Review"
+  short_description: "Review boundaries, coupling, and evolution risk"
+  default_prompt: "Use $architecture-review to review this design or implementation for layering, coupling, extensibility, and architecture drift."

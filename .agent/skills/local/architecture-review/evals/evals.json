@@ -1,0 +1,171 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "id": "route-explicit-name",
+      "type": "route",
+      "query": "Use $architecture-review on the payment module",
+      "expectedTopSkill": "architecture-review",
+      "minConfidence": 0.4
+    },
+    {
+      "id": "route-design-en",
+      "type": "route",
+      "query": "architecture review for this service boundary design",
+      "expectedTopSkill": "architecture-review",
+      "minConfidence": 0.5
+    },
+    {
+      "id": "route-drift-en",
+      "type": "route",
+      "query": "check architecture drift after this refactor",
+      "expectedTopSkill": "architecture-review",
+      "minConfidence": 0.5
+    },
+    {
+      "id": "route-review-zh",
+      "type": "route",
+      "query": "请对这个支付方案做架构评审",
+      "expectedTopSkill": "architecture-review",
+      "minConfidence": 0.5
+    },
+    {
+      "id": "route-health-zh",
+      "type": "route",
+      "query": "对整个项目做一次架构健康检查",
+      "expectedTopSkill": "architecture-review",
+      "minConfidence": 0.5
+    },
+    {
+      "id": "route-dependency-zh",
+      "type": "route",
+      "query": "检查模块之间的依赖方向",
+      "expectedTopSkill": "architecture-review",
+      "minConfidence": 0.5
+    },
+    {
+      "id": "route-coupling-zh",
+      "type": "route",
+      "query": "检查这个功能引入的架构耦合",
+      "expectedTopSkill": "architecture-review",
+      "minConfidence": 0.5
+    },
+    {
+      "id": "route-layering-zh",
+      "type": "route",
+      "query": "检查这个功能的分层是否合理",
+      "expectedTopSkill": "architecture-review",
+      "minConfidence": 0.5
+    },
+    {
+      "id": "route-decoupling-zh",
+      "type": "route",
+      "query": "对支付模块进行解耦分析",
+      "expectedTopSkill": "architecture-review",
+      "minConfidence": 0.5
+    },
+    {
+      "id": "route-extensibility-zh",
+      "type": "route",
+      "query": "审查这个模块的扩展性",
+      "expectedTopSkill": "architecture-review",
+      "minConfidence": 0.5
+    },
+    {
+      "id": "route-boundary-en",
+      "type": "route",
+      "query": "review module boundaries and change amplification",
+      "expectedTopSkill": "architecture-review",
+      "minConfidence": 0.5
+    },
+    {
+      "id": "route-ordinary-review",
+      "type": "route",
+      "query": "review this code for correctness and bugs",
+      "expectedTopSkill": "code-review"
+    },
+    {
+      "id": "route-security-review",
+      "type": "route",
+      "query": "security review the authentication changes",
+      "expectedTopSkill": "security-review"
+    },
+    {
+      "id": "route-build-fix",
+      "type": "route",
+      "query": "fix this compile error",
+      "expectedTopSkill": "build-fix"
+    },
+    {
+      "id": "route-ui-design",
+      "type": "route",
+      "query": "polish this frontend dashboard UI",
+      "expectedTopSkill": "impeccable"
+    },
+    {
+      "id": "route-new-architecture",
+      "type": "route",
+      "query": "design a new system architecture from scratch",
+      "expectedTopSkill": "architect-planner",
+      "forbiddenSkills": ["architecture-review"]
+    },
+    {
+      "id": "contract-modes-and-status",
+      "type": "content",
+      "files": ["SKILL.md"],
+      "mustContain": [
+        "Choose exactly one primary mode",
+        "`design`",
+        "`change`",
+        "`system`",
+        "CLEAR",
+        "WATCH",
+        "BLOCK",
+        "INCONCLUSIVE"
+      ]
+    },
+    {
+      "id": "contract-evidence-fields",
+      "type": "content",
+      "files": ["references/report-format.md"],
+      "mustContain": [
+        "Evidence:",
+        "Boundary expectation:",
+        "Scenario:",
+        "Impact:",
+        "Recommendation:",
+        "Tradeoff:",
+        "Confidence:"
+      ]
+    },
+    {
+      "id": "contract-false-positive-guards",
+      "type": "content",
+      "files": ["references/architecture-smells.md"],
+      "mustContain": [
+        "Every concrete dependency needs an interface",
+        "Every database access needs a repository",
+        "More layers mean better separation",
+        "Events always decouple"
+      ]
+    },
+    {
+      "id": "behavior-design-mode",
+      "type": "behavior",
+      "prompt": "Review this proposed payment provider architecture before implementation. State the selected mode and use the mode-specific report.",
+      "expectedContains": ["Mode: design", "Status:", "Scenario Checks"]
+    },
+    {
+      "id": "behavior-change-mode",
+      "type": "behavior",
+      "prompt": "Review the completed payment provider feature as an architecture change. State the selected mode and use the mode-specific report.",
+      "expectedContains": ["Mode: change", "Status:", "Before / After"]
+    },
+    {
+      "id": "behavior-system-mode",
+      "type": "behavior",
+      "prompt": "Perform a periodic architecture health review of the repository. State the selected mode and use the mode-specific report.",
+      "expectedContains": ["Mode: system", "Status:", "Sampling Strategy"]
+    }
+  ]
+}
