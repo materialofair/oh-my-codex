@@ -226,6 +226,35 @@ test_cases:
     priority: HIGH
 ```
 
+## Automated Runner
+
+Run a skill's bundled regression cases with:
+
+```bash
+node .agent/skills/local/skill-tester/scripts/run-skill-tests.js \
+  --skill-path .agent/skills/local/<skill-name> \
+  --mode static
+```
+
+The runner loads `<skill-path>/evals/evals.json` by default. Override it with
+`--cases <path>`.
+
+Supported case types:
+
+- `route` checks top/allowed/forbidden skills and minimum confidence through the repository router.
+- `content` checks required or forbidden text across files inside the skill directory.
+- `behavior` sends a read-only prompt to an explicitly configured runner and validates its output.
+
+Supported modes:
+
+- `static` runs deterministic route/content cases and reports behavior cases as skipped.
+- `auto` runs behavior cases only when `--runner` or `--runner-cmd` is supplied.
+- `runner` requires a runner and fails if behavior replay cannot execute.
+
+Use `--runner codex` for an ephemeral, read-only Codex replay, or
+`--runner-cmd '<command>'` for a custom stdin-based runner. Never enable an
+external runner implicitly.
+
 ## Test Coverage Goals
 
 | Skill Type | Target Coverage |

@@ -40,6 +40,19 @@ Result: ✅ 15.504 (PASS)
 
 - `SKILL.md` - Testing methodology and patterns
 - `README.md` - This file
+- `scripts/run-skill-tests.js` - Deterministic route/content tests plus optional read-only behavior replay
+
+## Automated Regression
+
+```bash
+node .agent/skills/local/skill-tester/scripts/run-skill-tests.js \
+  --skill-path .agent/skills/local/architecture-review \
+  --mode static
+```
+
+Skills can bundle cases at `evals/evals.json`. Static mode never invokes an
+external model; pass `--runner codex --mode runner` explicitly when behavior
+replay is required.
 
 ## TDD Integration
 
