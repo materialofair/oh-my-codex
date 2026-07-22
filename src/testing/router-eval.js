@@ -17,11 +17,10 @@ function evaluateCase(root, caseItem, limit) {
     details.push(`expected top skill=${caseItem.expectedTopSkill}, received=${recommendedSkills[0] || 'none'}`);
   }
 
-  for (const skill of caseItem.expectedAnySkills || []) {
-    if (!recommendedSkills.includes(skill)) {
-      pass = false;
-      details.push(`missing expected skill=${skill}`);
-    }
+  const expectedAnySkills = caseItem.expectedAnySkills || [];
+  if (expectedAnySkills.length > 0 && !expectedAnySkills.some((skill) => recommendedSkills.includes(skill))) {
+    pass = false;
+    details.push(`missing any expected skill=${expectedAnySkills.join(',')}`);
   }
 
   for (const skill of caseItem.forbiddenSkills || []) {
