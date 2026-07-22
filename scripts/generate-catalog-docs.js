@@ -3,6 +3,8 @@
 const fs = require('fs');
 const path = require('path');
 const { validateCatalogManifest, summarizeCatalogCounts } = require('../src/catalog/schema');
+const intentRegistry = require('../src/harness/intent-registry.json');
+const layerMap = require('../src/harness/layer-map.json');
 
 const root = path.resolve(__dirname, '..');
 const localSkillsRoot = path.join(root, '.agent', 'skills', 'local');
@@ -24,6 +26,7 @@ const CATEGORY_MAP = new Map([
   ['swarm', 'execution'],
   ['ralplan', 'planning'],
   ['plan', 'planning'],
+  ['architecture-review', 'shortcut'],
   ['code-review', 'shortcut'],
   ['security-review', 'shortcut'],
   ['tdd', 'shortcut'],
@@ -31,6 +34,23 @@ const CATEGORY_MAP = new Map([
 ]);
 
 const CORE = new Set(['autopilot', 'ralph', 'ultrawork', 'swarm', 'plan']);
+
+function buildLayerIndex() {
+  const index = new Map();
+  for (const [layer, skills] of Object.entries(layerMap)) {
+    for (const skill of skills) index.set(skill, layer);
+  }
+  return index;
+}
+
+function buildIntentIndex() {
+  const index = new Map();
+  for (const [intent, group] of Object.entries(intentRegistry)) {
+    index.set(group.canonical, intent);
+    for (const variant of Object.keys(group.variants || {})) index.set(variant, intent);
+  }
+  return index;
+}
 
 function parseSkillMetadata(skillPath) {
   const skillFile = path.join(skillPath, 'SKILL.md');
@@ -97,9 +117,11 @@ function detectPrompts() {
     .sort();
 }
 
-function buildManifest() {
+function buildManifest(options = {}) {
   const skillsData = detectSkills();
   const promptNames = detectPrompts();
+  const layerIndex = buildLayerIndex();
+  const intentIndex = buildIntentIndex();
 
   const skills = skillsData.map((skillData) => {
     const { name, metadata } = skillData;
@@ -110,8 +132,8 @@ function buildManifest() {
       core: CORE.has(name),
       source: metadata?.source || skillData.source || 'unknown',
       version: metadata?.version || '0.1.0',
-      layer: metadata?.layer || null,
-      intent: metadata?.intent || null,
+      layer: metadata?.layer || layerIndex.get(name) || null,
+      intent: metadata?.intent || intentIndex.get(name) || null,
       composes: metadata?.composes ? metadata.composes.replace(/[\[\]]/g, '').split(',').map((s) => s.trim()).filter(Boolean) : [],
     };
   });
@@ -125,7 +147,7 @@ function buildManifest() {
 
   return {
     schemaVersion: 1,
-    catalogVersion: new Date().toISOString().slice(0, 10),
+    catalogVersion: options.catalogVersion || new Date().toISOString().slice(0, 10),
     skills,
     agents,
   };
@@ -155,4 +177,11 @@ function main() {
   console.log(`Catalog generated: ${counts.skillCount} skills, ${counts.promptCount} prompts`);
 }
 
-main();
+if (require.main === module) main();
+
+module.exports = {
+  buildIntentIndex,
+  buildLayerIndex,
+  buildManifest,
+  detectSkills,
+};

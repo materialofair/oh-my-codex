@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": "2026-07-08",
+  "catalogVersion": "2026-07-22",
   "skills": [
     {
       "name": ".codex",
@@ -31,7 +31,7 @@
       "core": false,
       "source": "ecc",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "meta",
       "intent": null,
       "composes": []
     },
@@ -42,7 +42,7 @@
       "core": false,
       "source": "ecc",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "meta",
       "intent": null,
       "composes": []
     },
@@ -64,8 +64,8 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
-      "intent": null,
+      "layer": "quality",
+      "intent": "security",
       "composes": []
     },
     {
@@ -86,8 +86,8 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
-      "intent": null,
+      "layer": "foundation",
+      "intent": "debugging",
       "composes": []
     },
     {
@@ -97,7 +97,7 @@
       "core": false,
       "source": "ecc",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "domain",
       "intent": null,
       "composes": []
     },
@@ -113,13 +113,24 @@
       "composes": []
     },
     {
+      "name": "architecture-review",
+      "category": "shortcut",
+      "status": "active",
+      "core": false,
+      "source": "local",
+      "version": "0.1.0",
+      "layer": "quality",
+      "intent": "code-review",
+      "composes": []
+    },
+    {
       "name": "article-writing",
       "category": "utility",
       "status": "active",
       "core": false,
       "source": "ecc",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "domain",
       "intent": null,
       "composes": []
     },
@@ -141,7 +152,7 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "utility",
       "intent": null,
       "composes": []
     },
@@ -174,8 +185,8 @@
       "core": true,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
-      "intent": null,
+      "layer": "orchestration",
+      "intent": "execution",
       "composes": []
     },
     {
@@ -251,8 +262,8 @@
       "core": false,
       "source": "superpowers",
       "version": "0.1.0",
-      "layer": null,
-      "intent": null,
+      "layer": "research",
+      "intent": "research",
       "composes": []
     },
     {
@@ -273,7 +284,7 @@
       "core": false,
       "source": "ecc",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "domain",
       "intent": null,
       "composes": []
     },
@@ -284,7 +295,7 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "foundation",
       "intent": null,
       "composes": []
     },
@@ -295,7 +306,7 @@
       "core": false,
       "source": "ecc",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "domain",
       "intent": null,
       "composes": []
     },
@@ -306,7 +317,7 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "foundation",
       "intent": null,
       "composes": []
     },
@@ -328,8 +339,8 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
-      "intent": null,
+      "layer": "foundation",
+      "intent": "code-review",
       "composes": []
     },
     {
@@ -383,7 +394,7 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "utility",
       "intent": null,
       "composes": []
     },
@@ -405,7 +416,7 @@
       "core": false,
       "source": "ecc",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "domain",
       "intent": null,
       "composes": []
     },
@@ -460,8 +471,8 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
-      "intent": null,
+      "layer": "research",
+      "intent": "research",
       "composes": []
     },
     {
@@ -471,7 +482,7 @@
       "core": false,
       "source": "ecc",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "research",
       "intent": null,
       "composes": []
     },
@@ -493,7 +504,7 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "foundation",
       "intent": null,
       "composes": []
     },
@@ -515,7 +526,7 @@
       "core": false,
       "source": "superpowers",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "foundation",
       "intent": null,
       "composes": []
     },
@@ -526,7 +537,7 @@
       "core": false,
       "source": "ecc",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "orchestration",
       "intent": null,
       "composes": []
     },
@@ -537,7 +548,7 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "meta",
       "intent": null,
       "composes": []
     },
@@ -548,7 +559,7 @@
       "core": false,
       "source": "ecc",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "research",
       "intent": null,
       "composes": []
     },
@@ -581,7 +592,7 @@
       "core": false,
       "source": "ecc",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "domain",
       "intent": null,
       "composes": []
     },
@@ -592,7 +603,7 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "foundation",
       "intent": null,
       "composes": []
     },
@@ -658,7 +669,7 @@
       "core": false,
       "source": "ecc",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "research",
       "intent": null,
       "composes": []
     },
@@ -669,7 +680,7 @@
       "core": false,
       "source": "superpowers",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "orchestration",
       "intent": null,
       "composes": []
     },
@@ -680,7 +691,7 @@
       "core": false,
       "source": "ecc",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "domain",
       "intent": null,
       "composes": []
     },
@@ -691,7 +702,7 @@
       "core": false,
       "source": "superpowers",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "domain",
       "intent": null,
       "composes": []
     },
@@ -724,7 +735,7 @@
       "core": false,
       "source": "ecc",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "domain",
       "intent": null,
       "composes": []
     },
@@ -746,7 +757,7 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "foundation",
       "intent": null,
       "composes": []
     },
@@ -757,7 +768,7 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "meta",
       "intent": null,
       "composes": []
     },
@@ -768,7 +779,7 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "utility",
       "intent": null,
       "composes": []
     },
@@ -856,7 +867,7 @@
       "core": false,
       "source": "ecc",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "domain",
       "intent": null,
       "composes": []
     },
@@ -900,7 +911,7 @@
       "core": false,
       "source": "ecc",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "domain",
       "intent": null,
       "composes": []
     },
@@ -911,7 +922,7 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "foundation",
       "intent": null,
       "composes": []
     },
@@ -922,7 +933,7 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "meta",
       "intent": null,
       "composes": []
     },
@@ -966,8 +977,8 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
-      "intent": null,
+      "layer": "orchestration",
+      "intent": "execution",
       "composes": []
     },
     {
@@ -977,8 +988,8 @@
       "core": true,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
-      "intent": null,
+      "layer": "foundation",
+      "intent": "planning",
       "composes": []
     },
     {
@@ -988,7 +999,7 @@
       "core": false,
       "source": "fork",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "foundation",
       "intent": null,
       "composes": []
     },
@@ -999,7 +1010,7 @@
       "core": false,
       "source": "fork",
       "version": "\"2.10.0\"",
-      "layer": null,
+      "layer": "foundation",
       "intent": "planning",
       "composes": []
     },
@@ -1010,7 +1021,7 @@
       "core": false,
       "source": "ecc",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "domain",
       "intent": null,
       "composes": []
     },
@@ -1054,7 +1065,7 @@
       "core": false,
       "source": "local",
       "version": "\"1.1.0\"",
-      "layer": null,
+      "layer": "foundation",
       "intent": null,
       "composes": []
     },
@@ -1098,8 +1109,8 @@
       "core": true,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
-      "intent": null,
+      "layer": "orchestration",
+      "intent": "execution",
       "composes": []
     },
     {
@@ -1109,7 +1120,7 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "orchestration",
       "intent": null,
       "composes": []
     },
@@ -1120,8 +1131,8 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
-      "intent": null,
+      "layer": "orchestration",
+      "intent": "planning",
       "composes": []
     },
     {
@@ -1131,8 +1142,8 @@
       "core": false,
       "source": "superpowers",
       "version": "0.1.0",
-      "layer": null,
-      "intent": null,
+      "layer": "quality",
+      "intent": "code-review",
       "composes": []
     },
     {
@@ -1164,8 +1175,8 @@
       "core": false,
       "source": "superpowers",
       "version": "0.1.0",
-      "layer": null,
-      "intent": null,
+      "layer": "quality",
+      "intent": "code-review",
       "composes": []
     },
     {
@@ -1186,8 +1197,8 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
-      "intent": null,
+      "layer": "foundation",
+      "intent": "code-review",
       "composes": []
     },
     {
@@ -1197,8 +1208,8 @@
       "core": false,
       "source": "ecc",
       "version": "0.1.0",
-      "layer": null,
-      "intent": null,
+      "layer": "quality",
+      "intent": "security",
       "composes": []
     },
     {
@@ -1219,8 +1230,8 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
-      "intent": null,
+      "layer": "meta",
+      "intent": "skill-management",
       "composes": []
     },
     {
@@ -1307,7 +1318,7 @@
       "core": false,
       "source": "ecc",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "foundation",
       "intent": null,
       "composes": []
     },
@@ -1318,7 +1329,7 @@
       "core": false,
       "source": "superpowers",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "orchestration",
       "intent": null,
       "composes": []
     },
@@ -1329,8 +1340,8 @@
       "core": true,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
-      "intent": null,
+      "layer": "orchestration",
+      "intent": "execution",
       "composes": []
     },
     {
@@ -1340,8 +1351,8 @@
       "core": false,
       "source": "superpowers",
       "version": "0.1.0",
-      "layer": null,
-      "intent": null,
+      "layer": "foundation",
+      "intent": "debugging",
       "composes": []
     },
     {
@@ -1351,8 +1362,8 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
-      "intent": null,
+      "layer": "foundation",
+      "intent": "tdd",
       "composes": []
     },
     {
@@ -1384,8 +1395,8 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
-      "intent": null,
+      "layer": "orchestration",
+      "intent": "execution",
       "composes": []
     },
     {
@@ -1406,8 +1417,8 @@
       "core": false,
       "source": "superpowers",
       "version": "0.1.0",
-      "layer": null,
-      "intent": null,
+      "layer": "foundation",
+      "intent": "tdd",
       "composes": []
     },
     {
@@ -1439,7 +1450,7 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "utility",
       "intent": null,
       "composes": []
     },
@@ -1483,7 +1494,7 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "quality",
       "intent": null,
       "composes": []
     },
@@ -1494,8 +1505,8 @@
       "core": true,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
-      "intent": null,
+      "layer": "orchestration",
+      "intent": "execution",
       "composes": []
     },
     {
@@ -1527,7 +1538,7 @@
       "core": false,
       "source": "superpowers",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "domain",
       "intent": null,
       "composes": []
     },
@@ -1538,7 +1549,7 @@
       "core": false,
       "source": "superpowers",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "meta",
       "intent": null,
       "composes": []
     },
@@ -1549,8 +1560,8 @@
       "core": false,
       "source": "superpowers",
       "version": "0.1.0",
-      "layer": null,
-      "intent": null,
+      "layer": "foundation",
+      "intent": "verification",
       "composes": []
     },
     {
@@ -1582,7 +1593,7 @@
       "core": false,
       "source": "ecc",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "domain",
       "intent": null,
       "composes": []
     },
@@ -1604,7 +1615,7 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "utility",
       "intent": null,
       "composes": []
     },
@@ -1615,7 +1626,7 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "domain",
       "intent": null,
       "composes": []
     },
@@ -1637,7 +1648,7 @@
       "core": false,
       "source": "oh-my-codex",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "foundation",
       "intent": null,
       "composes": []
     },
@@ -1659,8 +1670,8 @@
       "core": false,
       "source": "superpowers",
       "version": "0.1.0",
-      "layer": null,
-      "intent": null,
+      "layer": "foundation",
+      "intent": "planning",
       "composes": []
     },
     {
@@ -1670,8 +1681,8 @@
       "core": false,
       "source": "superpowers",
       "version": "0.1.0",
-      "layer": null,
-      "intent": null,
+      "layer": "meta",
+      "intent": "skill-management",
       "composes": []
     },
     {
@@ -1681,7 +1692,7 @@
       "core": false,
       "source": "ecc",
       "version": "0.1.0",
-      "layer": null,
+      "layer": "domain",
       "intent": null,
       "composes": []
     }
