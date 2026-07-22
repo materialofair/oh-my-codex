@@ -32,6 +32,7 @@
   "code-review": {
     "canonical": "code-review",
     "variants": {
+      "architecture-review": { "source": "local", "role": "architecture boundaries and evolution review" },
       "aireview": { "source": "local", "role": "multi-agent review with confidence scoring" },
       "requesting-code-review": { "source": "superpowers", "role": "pre-review dispatch checklist" },
       "receiving-code-review": { "source": "superpowers", "role": "feedback response protocol" },

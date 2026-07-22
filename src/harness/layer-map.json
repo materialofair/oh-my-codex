@@ -41,7 +41,7 @@
     "project-analyze", "deep-research", "documentation-lookup", "exa-search"
   ],
   "quality": [
-    "aireview", "security-review", "ultraqa", "verification-loop",
+    "aireview", "architecture-review", "security-review", "ultraqa", "verification-loop",
     "quality-check", "quality-validation", "ai-slop-cleaner", "test-gen",
     "test-coverage", "tdd-generator", "tdd-workflow", "eval", "eval-harness",
     "requesting-code-review", "receiving-code-review", "refactor-clean",

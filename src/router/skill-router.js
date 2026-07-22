@@ -8,8 +8,44 @@ const layerMap = require('../harness/layer-map.json');
 const BOOST_RULES = [
   { skill: 'conductor', weight: 5, keywords: ['conductor', 'track', 'spec.md', 'plan.md', 'tracks.md', '长期项目上下文'] },
   { skill: 'de-ai-writing', weight: 4, keywords: ['去ai味', 'ai味', '机器感', '像人写的', '自然中文', 'humanize', 'remove ai tone'] },
-  { skill: 'security-review', weight: 4, keywords: ['security', '鉴权', '漏洞', '安全'] },
+  { skill: 'security-review', weight: 4, keywords: ['security', 'oauth', 'auth flow', 'authentication', 'authorization', '鉴权', '漏洞', '安全'] },
   { skill: 'build-fix', weight: 4, keywords: ['build error', 'compile', 'type error', '报错'] },
+  {
+    skill: 'architect-planner',
+    weight: 8,
+    keywords: [
+      'new system architecture',
+      'architecture from scratch',
+      'architectural design from scratch',
+      'design a new architecture',
+      '架构设计',
+      '设计新架构',
+      '从零设计架构',
+      '技术架构方案',
+    ],
+  },
+  {
+    skill: 'architecture-review',
+    weight: 7,
+    keywords: [
+      'architecture review',
+      'architectural review',
+      'architecture drift',
+      'module boundaries',
+      'layer boundaries',
+      'change amplification',
+      'extensibility',
+      'decoupling',
+      '架构审查',
+      '架构评审',
+      '架构健康',
+      '依赖方向',
+      '架构耦合',
+      '分层',
+      '解耦',
+      '扩展性',
+    ],
+  },
   { skill: 'code-review', weight: 4, keywords: ['review', 'code review', '审查', '评审'] },
   {
     skill: 'impeccable',
@@ -128,12 +164,21 @@ function routeTaskToSkills(taskDescription, options = {}) {
     if (hits > 0) boostScores.set(rule.skill, hits * rule.weight);
   }
 
+  // The architecture-review description contains explicit negative boundaries
+  // (for example, new architecture design). Require a positive architecture
+  // signal so the bag-of-words scorer cannot turn those negatives into matches.
+  const suppressedSkills = new Set();
+  if (!boostScores.has('architecture-review') && !taskText.includes('architecture-review')) {
+    suppressedSkills.add('architecture-review');
+  }
+
   // Phase 2: Dynamic scoring from all skill descriptions
   const dynamicScores = new Map();
   const dynamicMetadata = new Map();
   if (dynamicSkillSource) {
     for (const [name, skill] of dynamicSkillSource) {
       if (available && !available.has(name)) continue;
+      if (suppressedSkills.has(name)) continue;
       const score = scoreSkill(taskTokens, taskText, skill);
       if (score > 0) dynamicScores.set(name, score);
       dynamicMetadata.set(name, skill.metadata || {});

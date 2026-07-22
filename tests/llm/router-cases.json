@@ -14,6 +14,25 @@
     "minConfidence": 0.3
   },
   {
+    "id": "architecture_review_change_zh",
+    "query": "检查这个功能的分层、解耦和扩展性是否合理",
+    "expectedTopSkill": "architecture-review",
+    "minConfidence": 0.5
+  },
+  {
+    "id": "architecture_review_boundaries_en",
+    "query": "review module boundaries and change amplification",
+    "expectedTopSkill": "architecture-review",
+    "minConfidence": 0.5
+  },
+  {
+    "id": "architecture_design_from_scratch",
+    "query": "design a new system architecture from scratch",
+    "expectedTopSkill": "architect-planner",
+    "forbiddenSkills": ["architecture-review"],
+    "minConfidence": 0.5
+  },
+  {
     "id": "conductor_setup",
     "query": "Use conductor to initialize this project and create track/spec/plan artifacts",
     "expectedTopSkill": "conductor",
