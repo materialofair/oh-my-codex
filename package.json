@@ -1,6 +1,6 @@
 {
   "name": "oh-my-codex-cli",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Codex skill pack and workflow orchestration",
   "bin": {
     "omcodex": "bin/omcodex.js"
@@ -28,7 +28,7 @@
     "source:status": "node bin/omcodex.js source status",
     "source:skills:sync": "./scripts/sync-upstream-skills.sh --source all",
     "source:skills:sync:omc": "./scripts/sync-upstream-skills.sh --source oh-my-codex",
-    "source:skills:sync:sp": "./scripts/sync-upstream-skills.sh --source superpowers",
+    "source:skills:sync:grill-me": "./scripts/sync-upstream-skills.sh --source grill-me",
     "source:skills:sync:impeccable": "./scripts/sync-upstream-skills.sh --source impeccable",
     "source:skills:sync:ecc": "./scripts/sync-ecc.sh",
     "skill:migrate": "node scripts/migrate-skill-metadata.js",

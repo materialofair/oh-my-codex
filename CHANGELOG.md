@@ -5,6 +5,14 @@ All notable changes to `oh-my-codex-cli` are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2026-08-22
+
+### Changed
+- Removed the `superpowers` upstream skill source and replaced it with
+  `grill-me` (from mattpocock/skills): 2 skills — relentless plan/design
+  interview (`grill-me` + `grilling`). Updated sync script, source registry,
+  harness metadata, catalogs, and docs.
+
 ## [1.4.0] - 2026-07-22
 
 ### Added
