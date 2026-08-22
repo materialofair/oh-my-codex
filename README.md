@@ -13,7 +13,7 @@ A curated collection of **150+ merged skills**, **3 Codex agents**, and **11 man
 **Upstream Sources:**
 - 🏠 **Local** (62 skills) — Custom skills for your workflow
 - 🔧 **oh-my-codex** (46 skills) — Core execution modes and workflows
-- ⚡ **superpowers** (14 skills) — Advanced patterns and utilities
+- ⚡ **grill-me** (2 skills) — Relentless plan/design interview
 - 🌍 **everything-claude-code** (27 selected skills; 37 vendored) — Multi-language rules, MCP configs, specialized agents
 - 🎨 **Impeccable** (1 skill) — Codex-native frontend design and live UI iteration
 
@@ -135,7 +135,7 @@ oh-my-codex implements a **manifest-driven upstream source management system** i
 │   ├── local/                    # 62 skills — local customizations (always win conflicts)
 │   └── upstream/
 │       ├── oh-my-codex/          # 46 skills — core execution modes
-│       ├── superpowers/          # 14 skills — advanced patterns
+│       ├── grill-me/             # 2 skills — relentless design interview
 │       ├── ecc/                  # 27 selected skills — everything-claude-code (37 vendored)
 │       └── impeccable/           # 1 skill — Codex-native UI design workflow
 │           ├── .omc-source/

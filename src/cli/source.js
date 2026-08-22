@@ -11,7 +11,7 @@ function listSources() {
   const active = getActiveSource();
   const originUrl = checkGitRemote('origin');
   const upstreamUrl = checkGitRemote('upstream');
-  const superpowersUrl = checkGitRemote('superpowers');
+  const grillMeUrl = checkGitRemote('grill-me');
 
   console.log('Available sources:');
   console.log('');
@@ -26,12 +26,12 @@ function listSources() {
     console.log('  git remote add upstream https://github.com/Yeachan-Heo/oh-my-codex.git');
   }
   console.log('');
-  console.log('○ superpowers (upstream)');
-  if (superpowersUrl) {
-    console.log(`  ${superpowersUrl}`);
+  console.log('○ grill-me (upstream)');
+  if (grillMeUrl) {
+    console.log(`  ${grillMeUrl}`);
   } else {
     console.log('  Not configured. Run:');
-    console.log('  git remote add superpowers https://github.com/obra/superpowers.git');
+    console.log('  git remote add grill-me https://github.com/mattpocock/skills.git');
   }
 }
 

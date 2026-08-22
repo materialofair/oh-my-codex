@@ -189,7 +189,6 @@ Codex 原生 child agent (spawn_agent / wait_agent / close_agent):
       Phase 3.3 权利要求授权率复审
   - docs-researcher (.codex/agents/docs-researcher.toml, 可选):
       Phase 1.2 校验 prior-art 引用真实性
-  - 调用约定: .agent/skills/upstream/superpowers/using-superpowers/references/codex-tools.md
 
 WebSearch:
   - 补充中文专利信息检索
@@ -492,7 +491,6 @@ Implement阶段:
 - **原生 child agent (spawn_agent / wait_agent / close_agent)**
   - Agent 配置: `.codex/agents/*.toml`（本仓自带 reviewer / explorer / docs-researcher）
   - 主配置: `.codex/config.toml`（已启用 `multi_agent = true`）
-  - 调用约定: `.agent/skills/upstream/superpowers/using-superpowers/references/codex-tools.md`
 
 - **exa-code MCP**: 代码和文档检索
   - 工具: mcp__exa__get_code_context_exa

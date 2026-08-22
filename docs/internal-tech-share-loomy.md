@@ -29,7 +29,7 @@
 ![AI 技能工作台：把散落能力收进可治理的本地工作台](assets/internal-tech-share-ai-skill-workbench/workbench-hero.png)
 在讲loomy之前，我想讲我今年一年份就开发的一个工具，它最早叫 `oh-my-codex`，本来只是个很小的本地配置管理工具，用来对付 Codex 日常里的几个重复麻烦：skills 散在不同目录、prompts 和 rules 要手动复制、AGENTS.md 老得重整、MCP 配置每个环境都得维护、常用工作流只能靠脑子记。这些事单看都不大，可任务一复杂就会拖累 AI 编程的稳定性。真正拖慢交付的，往往是上下文不稳、执行方式没法复用、验证靠临时发挥。
 
-做 loomy 的时候，这套早就攒好的工具正好派上用场。它后来也从“复制配置”长成了“治理能力来源”：现在 `oh-my-codex` 面向 OpenAI Codex CLI，NPM 包名是 `oh-my-codex-cli`，当前版本 `1.1.7`，定位是 skill pack 和 workflow orchestration 工具，会把 Local、oh-my-codex、superpowers、ECC 等来源的 skills 筛选、合并、处理冲突，再装进 Codex 运行时。
+做 loomy 的时候，这套早就攒好的工具正好派上用场。它后来也从“复制配置”长成了“治理能力来源”：现在 `oh-my-codex` 面向 OpenAI Codex CLI，NPM 包名是 `oh-my-codex-cli`，当前版本 `1.1.7`，定位是 skill pack 和 workflow orchestration 工具，会把 Local、oh-my-codex、grill-me、ECC 等来源的 skills 筛选、合并、处理冲突，再装进 Codex 运行时。
 
 对应地，`claudecode-omc` 面向 Claude Code。两者的运行时边界不一样：Claude Code 有 commands、agents、hooks、CLAUDE.md、settings、HUD；Codex 主要围绕 skills、AGENTS.md、`.codex/config.toml`、MCP servers、`.codex/agents/*.toml` 和 notify 扩展。所以这两个项目不是互相照搬一份代码，而是把同一套治理思路放进两个不同的运行时。
 
@@ -38,7 +38,7 @@
 - 自己攒的 AI 编程能力散落在提示词、配置、临时记忆和上游仓库里，换个项目就得重搭。
 - skill、agent、command、MCP 的来源越来越多，光靠脑子记名字、手动挑，成本越来越高。
 - 上游能力一更新，要是没有 local-first 和冲突治理，自己长期调出来的经验容易被悄悄覆盖。
-- 想吸收 superpowers、BMAD 这些上游工作流的方法论，又怕它们的原则、闸门和我自己 track 里的代码事实混在一起，越攒越乱、没法稳定复用。
+- 想吸收 grill-me、BMAD 这些上游工作流的方法论，又怕它们的原则、闸门和我自己 track 里的代码事实混在一起，越攒越乱、没法稳定复用。
 - setup、验证、review、debug 这些链路不稳，同一套流程很难在不同项目、不同会话里复现。
 
 # 提效场景介绍
@@ -57,7 +57,7 @@
 │   ├── local/
 │   └── upstream/
 │       ├── oh-my-codex/
-│       ├── superpowers/
+│       ├── grill-me/
 │       └── ecc/
 └── curation/
 ```
@@ -66,7 +66,7 @@
 
 ![Local-first 多源工作台架构](assets/internal-tech-share-ai-skill-workbench/local-first-architecture.png)
 
-达到的效果：上游能力可以被吸收，但不会悄悄接管本地经验。可以先把自己的最佳实践沉淀在 local，再按需引入 oh-my-codex、superpowers、ECC 等来源。能力扩展从”复制目录”变成”同步、声明、筛选、合并、安装”。
+达到的效果：上游能力可以被吸收，但不会悄悄接管本地经验。可以先把自己的最佳实践沉淀在 local，再按需引入 oh-my-codex、grill-me、ECC 等来源。能力扩展从”复制目录”变成”同步、声明、筛选、合并、安装”。
 
 案例经验总结：AI 能力治理不能只追求数量。skill 多了以后，关键问题会从”有没有”变成”谁进入运行时、谁覆盖谁、谁只是参考”。local-first 可以保护长期调出来的工作方式，让上游成为输入，而不是最终答案。
 
@@ -84,14 +84,14 @@
 
 ## 场景三：把上游工作流方法论归档进 conductor（intent 层治理）
 
-要解决的问题：场景一、二治理的是“能力来源”——skill、agent、MCP 谁进运行时、谁覆盖谁。但还有一类来源同样会越攒越乱：方法论。superpowers 的 brainstorming / TDD / verification、BMAD-METHOD 的 PRD / 架构 / story / QA，这些上游工作流沉淀下来的是“该怎么做”的文档。做大功能时我会用 conductor 把一个需求拆成跨多会话的 track（Context→Spec→Plan→Implement，落到 `.omc/conductor/tracks/<slug>/` 的 `spec.md` / `plan.md` / `review.md`）。问题是：如果把上游方法论直接抄进这些 track 文件，方法论（原则、阶段闸门、检查清单）就会和代码事实（文件名、行号、测试数）混在一起。下次重跑、上游一更新，要么互相覆盖，要么我自己写的项目内容被冲掉，track 越用越不敢动。
+要解决的问题：场景一、二治理的是“能力来源”——skill、agent、MCP 谁进运行时、谁覆盖谁。但还有一类来源同样会越攒越乱：方法论。grill-me 的 relentless interview、BMAD-METHOD 的 PRD / 架构 / story / QA，这些上游工作流沉淀下来的是“该怎么做”的文档。做大功能时我会用 conductor 把一个需求拆成跨多会话的 track（Context→Spec→Plan→Implement，落到 `.omc/conductor/tracks/<slug>/` 的 `spec.md` / `plan.md` / `review.md`）。问题是：如果把上游方法论直接抄进这些 track 文件，方法论（原则、阶段闸门、检查清单）就会和代码事实（文件名、行号、测试数）混在一起。下次重跑、上游一更新，要么互相覆盖，要么我自己写的项目内容被冲掉，track 越用越不敢动。
 
-实践方式：用 `conductor-distill` 把上游方法论“提炼并归档”进当前 track，而不是手抄。它从 superpowers / BMAD 的源文档里只抽 intent 层信号——原则、闸门、清单、角色期望——按固定映射写进 `spec.md` / `plan.md` / `review.md`。关键是两条硬约束：
+实践方式：用 `conductor-distill` 把上游方法论“提炼并归档”进当前 track，而不是手抄。它从 grill-me / BMAD 的源文档里只抽 intent 层信号——原则、闸门、清单、角色期望——按固定映射写进 `spec.md` / `plan.md` / `review.md`。关键是两条硬约束：
 
 - **只写在 marker block 里**：每段归档内容都用 `<!-- conductor:distilled BEGIN source=... -->` 包起来，幂等、可整块替换；block 之外的人工内容和代码内容一律原样保留，`--refresh` 时按 `source=` 精确换掉旧块，重跑不会污染其它内容。
 - **intent 层 vs fact 层严格分离**：distilled block 里绝不写本仓库的文件名、代码符号、分支、测试结果——“就算仓库是空的这段也读得通”。代码拥有的事实留给代码，方法论留给文档，两层不抢地盘。
 
-映射大致是：superpowers/brainstorming → spec 的“未批准不实现”设计闸门；writing-plans → plan 的小步骤粒度；TDD → plan 的 red-green-refactor 加 review 的 TDD 检查；verification-before-completion → review 的“先证据后结论”清单；BMAD 的 agent-pm / template-prd → spec 的 PRD 骨架，agent-qa → review 的 NFR / 风险 / 可追溯检查。
+映射大致是：grill-me/grilling → spec 的“未批准不实现”设计闸门与决策树访谈；BMAD 的 agent-pm / template-prd → spec 的 PRD 骨架，agent-qa → review 的 NFR / 风险 / 可追溯检查。
 
 <!-- 配图建议：conductor-distill 的 intent 层 / fact 层分离与 marker block 归档示意（建议 assets/internal-tech-share-ai-skill-workbench/conductor-distill-intent-layer.png）-->
 

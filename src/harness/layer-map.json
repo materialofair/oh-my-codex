@@ -1,22 +1,21 @@
 {
   "foundation": [
     "plan", "verify", "tdd", "code-review", "build-fix", "analyze",
-    "deepsearch", "systematic-debugging", "verification-before-completion",
-    "writing-plans", "dispatching-parallel-agents", "note", "git-master", "cancel",
-    "ecomode", "worker", "test-driven-development", "planning-methodology",
+    "deepsearch", "note", "git-master", "cancel", "grill-me", "grilling",
+    "ecomode", "worker", "planning-methodology",
     "planning-with-files", "review", "prompt-optimizer", "strategic-compact"
   ],
   "orchestration": [
     "autopilot", "ralph", "ultrawork", "ultrapilot", "team", "swarm",
-    "pipeline", "conductor", "start-dev", "executing-plans",
-    "subagent-driven-development", "ralph-init", "ralplan", "dmux-workflows"
+    "pipeline", "conductor", "start-dev",
+    "ralph-init", "ralplan", "dmux-workflows"
   ],
   "domain": [
     "backend-patterns", "frontend-patterns", "frontend-design", "frontend-ui-ux",
     "ui-ux-pro-max", "electron-driver", "e2e", "bdd-generator", "patent-workflow",
     "de-ai-writing", "content-research-writer", "writer-memory", "web-clone",
     "quick-init-project", "project-session-manager", "coding-standards",
-    "finishing-a-development-branch", "using-git-worktrees", "api-design",
+    "api-design",
     "article-writing", "brand-voice", "bun-runtime", "claude-api",
     "content-engine", "e2e-testing", "fal-ai-media", "frontend-slides",
     "mcp-server-patterns", "nextjs-turbopack", "product-capability",
@@ -25,7 +24,7 @@
   "meta": [
     "skill", "skill-create", "skill-debugger", "skill-development",
     "skill-doc-generator", "skill-quality-analyzer", "skill-tester",
-    "local-skills-setup", "writing-skills", "using-superpowers",
+    "local-skills-setup",
     "release", "deepinit", "omx-setup", "doctor", "help",
     "agent-introspection-debugging", "agent-sort"
   ],
@@ -37,14 +36,14 @@
   ],
   "research": [
     "research", "multi-model-research", "consensus", "thinkdeep",
-    "debug-analysis", "architect-planner", "brainstorming", "deep-interview",
+    "debug-analysis", "architect-planner", "deep-interview",
     "project-analyze", "deep-research", "documentation-lookup", "exa-search"
   ],
   "quality": [
     "aireview", "architecture-review", "security-review", "ultraqa", "verification-loop",
     "quality-check", "quality-validation", "ai-slop-cleaner", "test-gen",
     "test-coverage", "tdd-generator", "tdd-workflow", "eval", "eval-harness",
-    "requesting-code-review", "receiving-code-review", "refactor-clean",
+    "refactor-clean",
     "evolve"
   ]
 }

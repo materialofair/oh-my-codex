@@ -349,7 +349,6 @@ PYTHON_BIN="${PYTHON_BIN:-$(command -v python3 || command -v python || true)}"
 - **原生 child agent (spawn_agent)**: 派发 / 等待 / 关闭 only-read subagent
   - 配置位置: `.codex/agents/*.toml`
   - 默认 agent: `reviewer.toml`、`explorer.toml`、`docs-researcher.toml`
-  - 调用约定参考: `.agent/skills/upstream/superpowers/using-superpowers/references/codex-tools.md`
 
 - **exa-code MCP**: 专利文献和代码检索
   - 工具: `mcp__exa__get_code_context_exa`

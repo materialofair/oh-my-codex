@@ -164,7 +164,7 @@ the prompt asks for durable context, a track, spec/plan/review artifacts, or
 multi-session continuity. Do not force `conductor` for TRIVIAL/LOW tasks; that
 adds ceremony without improving execution.
 
-When using superpowers or any other workflow, check whether it changes the
+When using grill-me or any other workflow, check whether it changes the
 project's durable intent layer:
 
 - Requirements, scope, acceptance criteria, architecture, workflow rules, or

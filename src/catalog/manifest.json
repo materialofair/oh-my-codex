@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": "2026-07-22",
+  "catalogVersion": "2026-08-22",
   "skills": [
     {
       "name": ".codex",
@@ -253,17 +253,6 @@
       "version": "0.1.0",
       "layer": null,
       "intent": null,
-      "composes": []
-    },
-    {
-      "name": "brainstorming",
-      "category": "utility",
-      "status": "active",
-      "core": false,
-      "source": "superpowers",
-      "version": "0.1.0",
-      "layer": "research",
-      "intent": "research",
       "composes": []
     },
     {
@@ -520,17 +509,6 @@
       "composes": []
     },
     {
-      "name": "dispatching-parallel-agents",
-      "category": "utility",
-      "status": "active",
-      "core": false,
-      "source": "superpowers",
-      "version": "0.1.0",
-      "layer": "foundation",
-      "intent": null,
-      "composes": []
-    },
-    {
       "name": "dmux-workflows",
       "category": "utility",
       "status": "active",
@@ -674,33 +652,11 @@
       "composes": []
     },
     {
-      "name": "executing-plans",
-      "category": "utility",
-      "status": "active",
-      "core": false,
-      "source": "superpowers",
-      "version": "0.1.0",
-      "layer": "orchestration",
-      "intent": null,
-      "composes": []
-    },
-    {
       "name": "fal-ai-media",
       "category": "utility",
       "status": "active",
       "core": false,
       "source": "ecc",
-      "version": "0.1.0",
-      "layer": "domain",
-      "intent": null,
-      "composes": []
-    },
-    {
-      "name": "finishing-a-development-branch",
-      "category": "utility",
-      "status": "active",
-      "core": false,
-      "source": "superpowers",
       "version": "0.1.0",
       "layer": "domain",
       "intent": null,
@@ -759,6 +715,28 @@
       "version": "0.1.0",
       "layer": "foundation",
       "intent": null,
+      "composes": []
+    },
+    {
+      "name": "grill-me",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "grill-me",
+      "version": "0.1.0",
+      "layer": "foundation",
+      "intent": "planning",
+      "composes": []
+    },
+    {
+      "name": "grilling",
+      "category": "utility",
+      "status": "active",
+      "core": false,
+      "source": "grill-me",
+      "version": "0.1.0",
+      "layer": "foundation",
+      "intent": "planning",
       "composes": []
     },
     {
@@ -1136,17 +1114,6 @@
       "composes": []
     },
     {
-      "name": "receiving-code-review",
-      "category": "utility",
-      "status": "active",
-      "core": false,
-      "source": "superpowers",
-      "version": "0.1.0",
-      "layer": "quality",
-      "intent": "code-review",
-      "composes": []
-    },
-    {
       "name": "refactor-clean",
       "category": "utility",
       "status": "active",
@@ -1166,17 +1133,6 @@
       "version": "0.1.0",
       "layer": "meta",
       "intent": null,
-      "composes": []
-    },
-    {
-      "name": "requesting-code-review",
-      "category": "utility",
-      "status": "active",
-      "core": false,
-      "source": "superpowers",
-      "version": "0.1.0",
-      "layer": "quality",
-      "intent": "code-review",
       "composes": []
     },
     {
@@ -1323,17 +1279,6 @@
       "composes": []
     },
     {
-      "name": "subagent-driven-development",
-      "category": "utility",
-      "status": "active",
-      "core": false,
-      "source": "superpowers",
-      "version": "0.1.0",
-      "layer": "orchestration",
-      "intent": null,
-      "composes": []
-    },
-    {
       "name": "swarm",
       "category": "execution",
       "status": "active",
@@ -1342,17 +1287,6 @@
       "version": "0.1.0",
       "layer": "orchestration",
       "intent": "execution",
-      "composes": []
-    },
-    {
-      "name": "systematic-debugging",
-      "category": "utility",
-      "status": "active",
-      "core": false,
-      "source": "superpowers",
-      "version": "0.1.0",
-      "layer": "foundation",
-      "intent": "debugging",
       "composes": []
     },
     {
@@ -1408,17 +1342,6 @@
       "version": "0.1.0",
       "layer": "quality",
       "intent": "testing",
-      "composes": []
-    },
-    {
-      "name": "test-driven-development",
-      "category": "utility",
-      "status": "active",
-      "core": false,
-      "source": "superpowers",
-      "version": "0.1.0",
-      "layer": "foundation",
-      "intent": "tdd",
       "composes": []
     },
     {
@@ -1532,39 +1455,6 @@
       "composes": []
     },
     {
-      "name": "using-git-worktrees",
-      "category": "utility",
-      "status": "active",
-      "core": false,
-      "source": "superpowers",
-      "version": "0.1.0",
-      "layer": "domain",
-      "intent": null,
-      "composes": []
-    },
-    {
-      "name": "using-superpowers",
-      "category": "utility",
-      "status": "active",
-      "core": false,
-      "source": "superpowers",
-      "version": "0.1.0",
-      "layer": "meta",
-      "intent": null,
-      "composes": []
-    },
-    {
-      "name": "verification-before-completion",
-      "category": "utility",
-      "status": "active",
-      "core": false,
-      "source": "superpowers",
-      "version": "0.1.0",
-      "layer": "foundation",
-      "intent": "verification",
-      "composes": []
-    },
-    {
       "name": "verification-loop",
       "category": "utility",
       "status": "active",
@@ -1661,28 +1551,6 @@
       "version": "0.1.0",
       "layer": "domain",
       "intent": null,
-      "composes": []
-    },
-    {
-      "name": "writing-plans",
-      "category": "utility",
-      "status": "active",
-      "core": false,
-      "source": "superpowers",
-      "version": "0.1.0",
-      "layer": "foundation",
-      "intent": "planning",
-      "composes": []
-    },
-    {
-      "name": "writing-skills",
-      "category": "utility",
-      "status": "active",
-      "core": false,
-      "source": "superpowers",
-      "version": "0.1.0",
-      "layer": "meta",
-      "intent": "skill-management",
       "composes": []
     },
     {

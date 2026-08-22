@@ -18,7 +18,7 @@ const ROOT = path.resolve(__dirname, '..');
 const SKILL_DIRS = [
   path.join(ROOT, '.agent', 'skills', 'local'),
   path.join(ROOT, '.agent', 'skills', 'upstream', 'oh-my-codex'),
-  path.join(ROOT, '.agent', 'skills', 'upstream', 'superpowers'),
+  path.join(ROOT, '.agent', 'skills', 'upstream', 'grill-me'),
 ];
 
 // Build reverse lookups

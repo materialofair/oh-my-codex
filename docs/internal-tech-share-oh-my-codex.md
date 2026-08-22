@@ -106,7 +106,7 @@
 
 - `Local`：本地自定义技能，是自己的 source of truth；
 - `oh-my-codex`：核心执行模式和工作流；
-- `superpowers`：更强的开发方法论；
+- `grill-me`：需求/设计拷问式访谈；
 - `everything-claude-code / ECC`：跨语言规则、MCP 配置和专业 agents。
 
 这意味着项目的核心不再是“我写了多少 skill”，而是“我如何治理这些来源”。
@@ -121,7 +121,7 @@
 │   ├── local/
 │   └── upstream/
 │       ├── oh-my-codex/
-│       ├── superpowers/
+│       ├── grill-me/
 │       └── ecc/
 ├── curation/
 └── sources.json
@@ -365,7 +365,7 @@ fork 更成熟的项目当然是一个合理选择。
 flowchart TD
     local[".agent/skills/local<br/>local source of truth"]
     omc[".agent/skills/upstream/oh-my-codex<br/>core workflows"]
-    sp[".agent/skills/upstream/superpowers<br/>development methodology"]
+    grill[".agent/skills/upstream/grill-me<br/>design interview"]
     ecc[".agent/skills/upstream/ecc<br/>Codex assets from ECC"]
 
     manifest[".omc-source/manifest.json<br/>provenance and asset declarations"]
@@ -381,7 +381,7 @@ flowchart TD
 
     local --> merger
     omc --> merger
-    sp --> merger
+    grill --> merger
     ecc --> manifest
     manifest --> curation
     curation --> merger

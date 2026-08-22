@@ -42,7 +42,7 @@ npx oh-my-codex-cli setup
 ```
 
 安装内容包括：
-- **Skills** → `~/.codex/skills/`（来自 local、oh-my-codex、superpowers、ECC、Impeccable 等来源）
+- **Skills** → `~/.codex/skills/`（来自 local、oh-my-codex、grill-me、ECC、Impeccable 等来源）
 - **角色 Prompt** → `~/.codex/prompts/`
 - **Rules** → `~/.codex/rules/`
 - **MCP 配置 + Plan 模式** → `~/.codex/config.toml`

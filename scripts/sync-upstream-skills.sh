@@ -6,10 +6,10 @@ SKIP_FETCH="false"
 SOURCE="all"
 
 # Upstream source definitions (parallel arrays for bash 3 compat)
-UPSTREAM_NAMES=("oh-my-codex" "superpowers" "impeccable")
-UPSTREAM_REMOTES=("upstream" "superpowers" "impeccable")
-UPSTREAM_REFS=("upstream/main" "superpowers/main" "impeccable/main")
-UPSTREAM_URLS=("https://github.com/Yeachan-Heo/oh-my-codex.git" "https://github.com/obra/superpowers.git" "https://github.com/pbakaus/impeccable.git")
+UPSTREAM_NAMES=("oh-my-codex" "grill-me" "impeccable")
+UPSTREAM_REMOTES=("upstream" "grill-me" "impeccable")
+UPSTREAM_REFS=("upstream/main" "grill-me/main" "impeccable/main")
+UPSTREAM_URLS=("https://github.com/Yeachan-Heo/oh-my-codex.git" "https://github.com/mattpocock/skills.git" "https://github.com/pbakaus/impeccable.git")
 
 usage() {
   cat <<'EOF'
@@ -18,13 +18,13 @@ Usage: ./scripts/sync-upstream-skills.sh [options]
 Sync upstream skills into .agent/skills/upstream/<source>/ for local merge/governance.
 
 Options:
-  --source <name>   Upstream source to sync: oh-my-codex | superpowers | impeccable | all (default: all)
+  --source <name>   Upstream source to sync: oh-my-codex | grill-me | impeccable | all (default: all)
   --skip-fetch      Skip git fetch
   --help            Show this help
 
 Sources:
   oh-my-codex    https://github.com/Yeachan-Heo/oh-my-codex (remote: upstream)
-  superpowers    https://github.com/obra/superpowers (remote: superpowers)
+  grill-me       https://github.com/mattpocock/skills (remote: grill-me)
   impeccable     https://github.com/pbakaus/impeccable (remote: impeccable)
 EOF
 }
@@ -281,18 +281,24 @@ sync_source() {
     return 1
   fi
 
-  # Detect skills directory in upstream
+  # Detect skills directory in upstream (grill-me pulls two skills from mattpocock/skills)
   local skills_dir=""
-  for candidate in "skills" ".agent/skills" ".agents/skills" ".codex/skills"; do
-    if git cat-file -e "$ref:$candidate" 2>/dev/null; then
-      skills_dir="$candidate"
-      break
-    fi
-  done
+  local grill_me_paths=()
+  if [[ "$name" == "grill-me" ]]; then
+    skills_dir="skills/productivity"
+    grill_me_paths=("skills/productivity/grill-me" "skills/productivity/grilling")
+  else
+    for candidate in "skills" ".agent/skills" ".agents/skills" ".codex/skills"; do
+      if git cat-file -e "$ref:$candidate" 2>/dev/null; then
+        skills_dir="$candidate"
+        break
+      fi
+    done
 
-  if [[ -z "$skills_dir" ]]; then
-    echo "  No skills directory found in $ref" >&2
-    return 1
+    if [[ -z "$skills_dir" ]]; then
+      echo "  No skills directory found in $ref" >&2
+      return 1
+    fi
   fi
 
   # Extract skills to target
@@ -301,10 +307,17 @@ sync_source() {
 
   local tmp_dir
   tmp_dir=$(mktemp -d)
-  git archive "$ref" "$skills_dir" | tar -x -C "$tmp_dir"
+  if [[ ${#grill_me_paths[@]} -gt 0 ]]; then
+    git archive "$ref" "${grill_me_paths[@]}" | tar -x -C "$tmp_dir"
+    for src_path in "${grill_me_paths[@]}"; do
+      cp -R "$tmp_dir/$src_path" "$target_dir/"
+    done
+  else
+    git archive "$ref" "$skills_dir" | tar -x -C "$tmp_dir"
 
-  # Copy skills (handle nested paths like .agent/skills/)
-  cp -R "$tmp_dir/$skills_dir"/* "$target_dir/"
+    # Copy skills (handle nested paths like .agent/skills/)
+    cp -R "$tmp_dir/$skills_dir"/* "$target_dir/"
+  fi
   rm -rf "$tmp_dir"
 
   local count
